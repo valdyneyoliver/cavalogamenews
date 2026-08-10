@@ -58,7 +58,8 @@ fetch("posts.json")
     const container = document.getElementById("news");
     posts.forEach(post => {
       container.innerHTML += `
-        <div class="card">
+        <a href="${post.link}" style="text-decoration:none;color:inherit;">
+  <div class="card">
           <img src="${post.imagem}" alt="${post.titulo}">
           <div class="card-content">
             <div class="category">${post.categoria}</div>
@@ -67,6 +68,7 @@ fetch("posts.json")
             <p>${post.resumo}</p>
           </div>
         </div>
+        </a>
       `;
     });
   })
