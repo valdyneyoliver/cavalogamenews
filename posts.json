@@ -4,12 +4,15 @@
     "categoria": "Rumores",
     "data": "10/08/2026",
     "imagem": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200",
-    "resumo": "Rumores recentes indicam que a Rockstar pode divulgar novidades sobre GTA 6 nas próximas semanas."
+    "resumo": "Rumores recentes indicam que a Rockstar pode divulgar novidades sobre GTA 6 nas próximas semanas.",
+    "link": "gta6.html"
   },
   {
     "titulo": "EA Sports FC 26 revela novas melhorias na jogabilidade",
     "categoria": "EA FC",
     "data": "10/08/2026",
     "imagem": "https://images.unsplash.com/photo-1542751110-97427bbecf20?w=1200",
-    "resumo": "A EA anunciou mudanças importantes na movimentação dos jogadores e nos modos online."
+    "resumo": "A EA anunciou mudanças importantes na movimentação dos jogadores e nos modos online.",
+    "link": "eafc26.html"
   }
+]
