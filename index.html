@@ -21,6 +21,79 @@
     .date { color:#aaa; font-size:12px; margin:6px 0 12px; }
     .card h3 { margin-bottom:10px; }
     footer { background:#1a1a1a; text-align:center; padding:20px; margin-top:40px; color:#aaa; }
+    .featured-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.featured {
+  position: relative;
+  height: 430px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  background: #1b1b1b;
+}
+
+.featured img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.featured-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 35px;
+  background: linear-gradient(
+    transparent,
+    rgba(0,0,0,0.95)
+  );
+}
+
+.featured-overlay h2 {
+  font-size: 34px;
+  margin: 10px 0;
+  max-width: 800px;
+}
+
+.featured-overlay p {
+  color: #ddd;
+  max-width: 700px;
+  margin-bottom: 15px;
+}
+
+.read-button {
+  display: inline-block;
+  background: #00ff88;
+  color: #111;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.featured:hover img {
+  transform: scale(1.03);
+  transition: 0.3s;
+}
+
+@media (max-width: 600px) {
+  .featured {
+    height: 380px;
+  }
+
+  .featured-overlay {
+    padding: 20px;
+  }
+
+  .featured-overlay h2 {
+    font-size: 24px;
+  }
+}
   </style>
 </head>
 <body>
@@ -59,15 +132,11 @@
 fetch("posts.json")
   .then(r => r.json())
   .then(posts => {
-    const container = document.getElementById("news");
-    <script>
-fetch("posts.json")
-  .then(r => r.json())
-  .then(posts => {
 
     const featured = document.getElementById("featured");
     const container = document.getElementById("news");
 
+    // Primeira notícia = destaque
     if (posts.length > 0) {
 
       const principal = posts[0];
@@ -75,9 +144,11 @@ fetch("posts.json")
       featured.innerHTML = `
         <a href="${principal.link}" class="featured-link">
           <article class="featured">
+
             <img src="${principal.imagem}" alt="${principal.titulo}">
 
             <div class="featured-overlay">
+
               <span class="category">${principal.categoria}</span>
 
               <h2>${principal.titulo}</h2>
@@ -87,16 +158,20 @@ fetch("posts.json")
               <p>${principal.resumo}</p>
 
               <span class="read-button">LER NOTÍCIA →</span>
+
             </div>
+
           </article>
         </a>
       `;
     }
 
+    // Restante das notícias
     posts.slice(1).forEach(post => {
 
       container.innerHTML += `
         <a href="${post.link}" style="text-decoration:none;color:inherit;">
+
           <div class="card">
 
             <img src="${post.imagem}" alt="${post.titulo}">
@@ -114,6 +189,7 @@ fetch("posts.json")
             </div>
 
           </div>
+
         </a>
       `;
 
@@ -121,27 +197,10 @@ fetch("posts.json")
 
   })
   .catch(() => {
+
     document.getElementById("news").innerHTML =
       "<p>Nenhuma notícia encontrada.</p>";
-  });
-</script>
-      container.innerHTML += `
-  <a href="${post.link}" style="text-decoration:none;color:inherit;">
-    <div class="card">
-      <img src="${post.imagem}" alt="${post.titulo}">
-      <div class="card-content">
-        <div class="category">${post.categoria}</div>
-        <div class="date">${post.data}</div>
-        <h3>${post.titulo}</h3>
-        <p>${post.resumo}</p>
-      </div>
-    </div>
-  </a>
-`;
-    });
-  })
-  .catch(() => {
-    document.getElementById("news").innerHTML = "<p>Nenhuma notícia encontrada.</p>";
+
   });
 </script>
 
