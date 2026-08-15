@@ -5,6 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CavaloGameNews</title>
   <style>
+    .search-box {
+  margin-top: 18px;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 450px;
+  padding: 12px 16px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #1b1b1b;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-box input:focus {
+  border-color: #00ff88;
+}
+
+.search-box input::placeholder {
+  color: #888;
+}
     * { margin:0; padding:0; box-sizing:border-box; font-family:Arial, sans-serif; }
     body { background:#111; color:#fff; }
     header { background:#1a1a1a; padding:20px; border-bottom:3px solid #00ff88; }
@@ -101,6 +124,14 @@
 <header>
   <img src="img/logo.svg" alt="CavaloGameNews" style="height:64px;">
   <nav>
+    <div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔎 Buscar notícia..."
+    onkeyup="buscarNoticias()"
+  >
+</div>
   <a href="#" onclick="filtrarNoticias('todos'); return false;">Início</a>
   <a href="#" onclick="filtrarNoticias('Xbox'); return false;">Xbox</a>
   <a href="#" onclick="filtrarNoticias('PlayStation'); return false;">PlayStation</a>
@@ -255,6 +286,63 @@ fetch("posts.json")
 
             </div>
 
+          </a>
+        `;
+
+      });
+
+    });
+}
+  function buscarNoticias() {
+
+  const termo = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase()
+    .trim();
+
+  const container = document.getElementById("news");
+  const featured = document.getElementById("featured");
+
+  featured.innerHTML = "";
+  container.innerHTML = "";
+
+  fetch("posts.json")
+    .then(r => r.json())
+    .then(posts => {
+
+      const resultados = posts.filter(post =>
+        post.titulo.toLowerCase().includes(termo) ||
+        post.resumo.toLowerCase().includes(termo) ||
+        post.categoria.toLowerCase().includes(termo)
+      );
+
+      if (resultados.length === 0) {
+        container.innerHTML = "<p>Nenhuma notícia encontrada.</p>";
+        return;
+      }
+
+      resultados.forEach(post => {
+
+        container.innerHTML += `
+          <a href="${post.link}" style="text-decoration:none;color:inherit;">
+            <div class="card">
+
+              <img src="${post.imagem}" alt="${post.titulo}">
+
+              <div class="card-content">
+
+                <div class="category">${post.categoria}</div>
+
+                <div class="date">${post.data}</div>
+
+                <h3>${post.titulo}</h3>
+
+                <p>${post.resumo}</p>
+
+              </div>
+
+            </div>
           </a>
         `;
 
