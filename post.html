@@ -1,1 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>CavaloGameNews</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #111;
+      color: #fff;
+    }
+
+    header {
+      background: #0f1115;
+      padding: 20px 30px;
+      border-bottom: 3px solid #00ff88;
+    }
+
+    header a {
+      color: #00ff88;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .article {
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
+
+    .category {
+      color: #00ff88;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 46px;
+      line-height: 1.15;
+      margin-bottom: 15px;
+    }
+
+    .info {
+      color: #999;
+      margin-bottom: 25px;
+    }
+
+    .cover {
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      margin-bottom: 30px;
+    }
+
+    .text {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .text p {
+      color: #ddd;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      background: #00ff88;
+      color: #111;
+      padding: 12px 20px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      background: #1a1a1a;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .article {
+        width: 92%;
+      }
+
+      .text p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">← Voltar para o CavaloGameNews</a>
+</header>
+
+<main class="article" id="article">
+  <p>Carregando notícia...</p>
+</main>
+
+<footer>
+  © 2026 CavaloGameNews - Todos os direitos reservados.
+</footer>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+fetch("posts.json")
+  .then(response => response.json())
+  .then(posts => {
+
+    const post = posts.find(p => p.id === id);
+
+    if (!post) {
+      document.getElementById("article").innerHTML = `
+        <h1>Notícia não encontrada</h1>
+        <a class="back-button" href="index.html">
+          ← Voltar para as notícias
+        </a>
+      `;
+      return;
+    }
+
+    document.title = post.titulo + " - CavaloGameNews";
+
+    document.getElementById("article").innerHTML = `
+
+      <div class="category">
+        ${post.categoria}
+      </div>
+
+      <h1>
+        ${post.titulo}
+      </h1>
+
+      <div class="info">
+        ${post.data} · CavaloGameNews
+      </div>
+
+      <img
+        class="cover"
+        src="${post.imagem}"
+        alt="${post.titulo}"
+      >
+
+      <div class="text">
+
+        <p>
+          ${post.resumo}
+        </p>
+
+        <p>
+          Esta é uma notícia do CavaloGameNews. 
+          Acompanhe o site para mais informações e novidades
+          sobre o mundo dos games.
+        </p>
+
+        <a class="back-button" href="index.html">
+          ← Voltar para as notícias
+        </a>
+
+      </div>
+
+    `;
+
+  })
+  .catch(() => {
+
+    document.getElementById("article").innerHTML = `
+      <h1>Erro ao carregar a notícia</h1>
+      <a class="back-button" href="index.html">
+        ← Voltar para as notícias
+      </a>
+    `;
+
+  });
+
+</script>
+
+</body>
+</html>
