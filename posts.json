@@ -1,5 +1,6 @@
 [
   {
+    "id": "gta6",
     "titulo": "GTA 6 pode ganhar novo trailer ainda este mês",
     "categoria": "Rumores",
     "data": "10/08/2026",
@@ -8,6 +9,7 @@
     "link": "gta6.html"
   },
   {
+  "id": "xbox-game-pass",
   "titulo": "Xbox anuncia novos jogos para o Game Pass",
   "categoria": "Xbox",
   "data": "10/08/2026",
@@ -16,6 +18,7 @@
   "link": "xboxgamepass.html"
   },
   {
+  "id": "no-mans-sky",
   "titulo": "No Man’s Sky Comemora seu 10° Aniversário",
   "categoria": "novidades",
   "data": "10/08/2026",
