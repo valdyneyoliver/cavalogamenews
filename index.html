@@ -174,7 +174,7 @@ fetch("posts.json")
       const principal = posts[0];
 
       featured.innerHTML = `
-        <a href="${principal.link}" class="featured-link">
+        <a href="post.html?id=${principal.id}" class="featured-link">
           <article class="featured">
 
             <img src="${principal.imagem}" alt="${principal.titulo}">
@@ -202,7 +202,7 @@ fetch("posts.json")
     posts.slice(1).forEach(post => {
 
       container.innerHTML += `
-        <a href="${post.link}" style="text-decoration:none;color:inherit;">
+        <a href="post.html?id=${post.id}" style="text-decoration:none;color:inherit;">
 
           <div class="card">
 
@@ -266,7 +266,7 @@ fetch("posts.json")
       filtradas.forEach(post => {
 
         container.innerHTML += `
-          <a href="${post.link}" style="text-decoration:none;color:inherit;">
+          <a href="post.html?id=${post.id}" style="text-decoration:none;color:inherit;">
 
             <div class="card">
 
