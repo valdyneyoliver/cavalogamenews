@@ -8,31 +8,31 @@
     "resumo": "Rumores recentes indicam que a Rockstar pode divulgar novidades sobre GTA 6 nas próximas semanas.",
     "link": "gta6.html",
     "conteudo": [
-    "Rumores recentes indicam que a Rockstar Games pode divulgar novidades sobre GTA 6 ainda este mês.",
-    "Fontes da comunidade apontam movimentações relacionadas ao marketing do jogo, aumentando as expectativas dos fãs.",
-    "Até o momento, a Rockstar não confirmou oficialmente a informação. A comunidade continua acompanhando qualquer novidade sobre um dos jogos mais aguardados dos últimos anos."
-  ]
+      "Rumores recentes indicam que a Rockstar Games pode divulgar novidades sobre GTA 6 ainda este mês.",
+      "Fontes da comunidade apontam movimentações relacionadas ao marketing do jogo, aumentando as expectativas dos fãs.",
+      "Até o momento, a Rockstar não confirmou oficialmente a informação. A comunidade continua acompanhando qualquer novidade sobre um dos jogos mais aguardados dos últimos anos."
+    ]
   },
   {
-  "id": "xbox-game-pass",
-  "titulo": "Xbox anuncia novos jogos para o Game Pass",
-  "categoria": "Xbox",
-  "data": "10/08/2026",
-  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/XGP_ComingSoon040826_16x9_FBXTH_N_CW90_GBL_MGP_N_N_1_EN-US-663e8f1d643e32f2c606-1536x864.jpg",
-  "resumo": "A Microsoft revelou uma nova leva de jogos que chegarão ao Xbox Game Pass ainda neste mês.",
-  "link": "xboxgamepass.html"
+    "id": "xbox-game-pass",
+    "titulo": "Xbox anuncia novos jogos para o Game Pass",
+    "categoria": "Xbox",
+    "data": "10/08/2026",
+    "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/XGP_ComingSoon040826_16x9_FBXTH_N_CW90_GBL_MGP_N_N_1_EN-US-663e8f1d643e32f2c606-1536x864.jpg",
+    "resumo": "A Microsoft revelou uma nova leva de jogos que chegarão ao Xbox Game Pass ainda neste mês.",
+    "link": "xboxgamepass.html"
   },
   {
-  "id": "no-mans-sky",
-  "titulo": "No Man’s Sky Comemora seu 10° Aniversário",
-  "categoria": "novidades",
-  "data": "10/08/2026",
-  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/No_Mans_Sky_Hero_Art_1920x1080-da85d0261997dc9d2161-1536x864.jpg",
-  "resumo": "Após 10 anos e quase 40 grandes atualizações gratuitas, o O Céu de Ninguém sandbox cresceu exponencialmente. Apresentamos animais de estimação, mechs, navios vivos, expedições, assentamentos, exocraft, construção de bases e várias revisões mundiais. .",
-  "link": ""
-  }, 
+    "id": "no-mans-sky",
+    "titulo": "No Man’s Sky Comemora seu 10° Aniversário",
+    "categoria": "Novidades",
+    "data": "10/08/2026",
+    "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/No_Mans_Sky_Hero_Art_1920x1080-da85d0261997dc9d2161-1536x864.jpg",
+    "resumo": "Após 10 anos e quase 40 grandes atualizações gratuitas, No Man’s Sky cresceu exponencialmente.",
+    "link": ""
+  },
   {
-    "id": "Gears-of-War",
+    "id": "gears-of-war",
     "titulo": "Gears of War: E-Day Limited Edition XBOX Wireless Controllers",
     "categoria": "Xbox",
     "data": "15/08/2026",
@@ -40,7 +40,9 @@
     "resumo": "Prepare-se para o Dia de Emergência com os Controladores Sem Fio XBOX da Edição Limitada Gears of War: E-Day.",
     "link": "",
     "conteudo": [
-      "Para comemorar o lançamento do Gears of War: Dia E, estamos dando aos fãs duas novas maneiras de mergulhar em um dos universos mais icônicos dos jogos. A partir de hoje, os fãs podem pré-encomendar o Gears of War: E-Day Limited Edition XBOX Wireless Controller em varejistas participantes em todo o mundo. A partir de 30 de setembro, os jogadores também podem projetar seus próprios Gears of War: Dia E controlador com XBOX Design Lab. Juntas, essas ofertas prestam homenagem ao Dia do Surgimento com hardware inspirado nos símbolos, cicatrizes e batalhas que definiram a guerra da humanidade contra a Horda Locust."
+      "Para comemorar o lançamento do Gears of War: Dia E, estamos dando aos fãs duas novas maneiras de mergulhar em um dos universos mais icônicos dos jogos.",
+      "A partir de hoje, os fãs podem pré-encomendar o Gears of War: E-Day Limited Edition XBOX Wireless Controller em varejistas participantes em todo o mundo.",
+      "A partir de 30 de setembro, os jogadores também podem projetar seus próprios controles de Gears of War: E-Day com o XBOX Design Lab."
     ]
   }
 ]
