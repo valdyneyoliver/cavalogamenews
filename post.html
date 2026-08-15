@@ -171,22 +171,15 @@ fetch("posts.json")
 
       <div class="text">
 
-        <p>
-          ${post.resumo}
-        </p>
+  ${post.conteudo.map(paragrafo => `
+    <p>${paragrafo}</p>
+  `).join("")}
 
-        <p>
-          Esta é uma notícia do CavaloGameNews. 
-          Acompanhe o site para mais informações e novidades
-          sobre o mundo dos games.
-        </p>
+  <a class="back-button" href="index.html">
+    ← Voltar para as notícias
+  </a>
 
-        <a class="back-button" href="index.html">
-          ← Voltar para as notícias
-        </a>
-
-      </div>
-
+</div>
     `;
 
   })
