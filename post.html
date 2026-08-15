@@ -171,9 +171,9 @@ fetch("posts.json")
 
       <div class="text">
 
-  ${post.conteudo.map(paragrafo => `
-    <p>${paragrafo}</p>
-  `).join("")}
+  ${(post.conteudo || [post.resumo]).map(paragrafo => `
+  <p>${paragrafo}</p>
+`).join("")}
 
   <a class="back-button" href="index.html">
     ← Voltar para as notícias
