@@ -145,24 +145,26 @@
 
 <header>
   <img src="img/logo.svg" alt="CavaloGameNews" style="height:64px;">
+
   <nav>
-<div class="container">
 
-  <div id="featured"></div>
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="🔎 Buscar notícia..."
+        onkeyup="buscarNoticias()"
+      >
+    </div>
 
-  <h2 style="margin:30px 0 20px;color:#00ff88;">Últimas Notícias</h2>
+    <a href="#" onclick="filtrarNoticias('todos'); return false;">Início</a>
+    <a href="#" onclick="filtrarNoticias('Xbox'); return false;">Xbox</a>
+    <a href="#" onclick="filtrarNoticias('PlayStation'); return false;">PlayStation</a>
+    <a href="#" onclick="filtrarNoticias('PC'); return false;">PC</a>
+    <a href="#" onclick="filtrarNoticias('Mobile'); return false;">Mobile</a>
+    <a href="#" onclick="filtrarNoticias('Novidades'); return false;">Novidades</a>
 
-  <div id="news" class="news-grid"></div>
-
-</div>
-</div>
-  <a href="#" onclick="filtrarNoticias('todos'); return false;">Início</a>
-  <a href="#" onclick="filtrarNoticias('Xbox'); return false;">Xbox</a>
-  <a href="#" onclick="filtrarNoticias('PlayStation'); return false;">PlayStation</a>
-  <a href="#" onclick="filtrarNoticias('PC'); return false;">PC</a>
-  <a href="#" onclick="filtrarNoticias('Mobile'); return false;">Mobile</a>
-  <a href="#" onclick="filtrarNoticias('Novidades'); return false;">Novidades</a>
-</nav>
+  </nav>
 </header>
 
 <section class="hero">
@@ -171,13 +173,6 @@
 </section>
 
 <div class="container">
-  <div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔎 Pesquisar notícia..."
-  >
-</div>
 
   <div id="featured"></div>
 
