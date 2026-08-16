@@ -88,6 +88,55 @@
       font-weight: bold;
     }
 
+    .related {
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid #333;
+    }
+
+    .related h2 {
+      color: #00ff88;
+      margin-bottom: 20px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .related-card {
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #fff;
+      display: block;
+    }
+
+    .related-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .related-content {
+      padding: 12px;
+    }
+
+    .related-content h3 {
+      font-size: 17px;
+      margin-top: 6px;
+    }
+
+    .related-card:hover {
+      border-color: #00ff88;
+      transform: translateY(-3px);
+      transition: 0.2s;
+    }
+
     footer {
       background: #1a1a1a;
       text-align: center;
@@ -140,6 +189,7 @@ fetch("posts.json")
     if (!post) {
       document.getElementById("article").innerHTML = `
         <h1>Notícia não encontrada</h1>
+
         <a class="back-button" href="index.html">
           ← Voltar para as notícias
         </a>
@@ -171,22 +221,65 @@ fetch("posts.json")
 
       <div class="text">
 
-  ${(post.conteudo || [post.resumo]).map(paragrafo => `
-  <p>${paragrafo}</p>
-`).join("")}
+        ${(post.conteudo || [post.resumo]).map(paragrafo => `
+          <p>${paragrafo}</p>
+        `).join("")}
 
-  <a class="back-button" href="index.html">
-    ← Voltar para as notícias
-  </a>
+        <a class="back-button" href="index.html">
+          ← Voltar para as notícias
+        </a>
 
-</div>
+        <div id="related" class="related">
+          <h2>Mais notícias</h2>
+          <div id="related-grid" class="related-grid"></div>
+        </div>
+
+      </div>
     `;
+
+    // Escolhe outras notícias, sem mostrar a notícia atual
+    const relatedPosts = posts
+      .filter(p => p.id !== post.id)
+      .slice(0, 3);
+
+    const relatedGrid = document.getElementById("related-grid");
+
+    relatedPosts.forEach(related => {
+
+      relatedGrid.innerHTML += `
+        <a
+          href="post.html?id=${related.id}"
+          class="related-card"
+        >
+
+          <img
+            src="${related.imagem}"
+            alt="${related.titulo}"
+          >
+
+          <div class="related-content">
+
+            <div class="category">
+              ${related.categoria}
+            </div>
+
+            <h3>
+              ${related.titulo}
+            </h3>
+
+          </div>
+
+        </a>
+      `;
+
+    });
 
   })
   .catch(() => {
 
     document.getElementById("article").innerHTML = `
       <h1>Erro ao carregar a notícia</h1>
+
       <a class="back-button" href="index.html">
         ← Voltar para as notícias
       </a>
