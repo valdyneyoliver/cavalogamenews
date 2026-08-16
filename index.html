@@ -146,13 +146,15 @@
 <header>
   <img src="img/logo.svg" alt="CavaloGameNews" style="height:64px;">
   <nav>
-    <div class="search-box">
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="🔎 Buscar notícia..."
-    onkeyup="buscarNoticias()"
-  >
+<div class="container">
+
+  <div id="featured"></div>
+
+  <h2 style="margin:30px 0 20px;color:#00ff88;">Últimas Notícias</h2>
+
+  <div id="news" class="news-grid"></div>
+
+</div>
 </div>
   <a href="#" onclick="filtrarNoticias('todos'); return false;">Início</a>
   <a href="#" onclick="filtrarNoticias('Xbox'); return false;">Xbox</a>
