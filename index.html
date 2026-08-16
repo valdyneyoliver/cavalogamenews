@@ -263,6 +263,24 @@ fetch("posts.json")
       "<p>Nenhuma notícia encontrada.</p>";
 
   });
+  document.getElementById("searchInput").addEventListener("input", function () {
+
+  const termo = this.value.toLowerCase().trim();
+  const cards = document.querySelectorAll("#news > a");
+
+  cards.forEach(card => {
+
+    const texto = card.textContent.toLowerCase();
+
+    if (texto.includes(termo)) {
+      card.style.display = "";
+    } else {
+      card.style.display = "none";
+    }
+
+  });
+
+});
   function filtrarNoticias(categoria) {
 
   const container = document.getElementById("news");
