@@ -251,6 +251,21 @@
         gap: 12px;
       }
     }
+    .logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-area img {
+  height: 64px;
+}
+
+.logo-area span {
+  color: #00ff88;
+  font-size: 24px;
+  font-weight: bold;
+}
   </style>
 </head>
 
@@ -258,10 +273,10 @@
 
 <header>
 
-  <img
-    src="img/logo.svg"
-    alt="CavaloGameNews"
-  >
+  <div class="logo-area">
+  <img src="img/logo.svg" alt="CavaloGameNews">
+  <span>CavaloGameNews</span>
+</div>
 
   <nav>
 
