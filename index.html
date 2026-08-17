@@ -347,14 +347,9 @@
 
   <!-- TÍTULO -->
 
-  <h2
-    style="
-      margin:30px 0 20px;
-      color:#00ff88;
-    "
-  >
-    Últimas Notícias
-  </h2>
+  <h2 id="tituloNoticias" style="margin:30px 0 20px;color:#00ff88;">
+  Últimas Notícias
+</h2>
 
   <!-- NOTÍCIAS -->
 
@@ -533,6 +528,13 @@ function carregarNoticias() {
 ========================= */
 
 function filtrarNoticias(categoria) {
+  const titulo = document.getElementById("tituloNoticias");
+
+if (categoria === "todos") {
+  titulo.textContent = "Últimas Notícias";
+} else {
+  titulo.textContent = "Notícias de " + categoria;
+}
 
   const container =
     document.getElementById("news");
