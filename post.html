@@ -7,280 +7,169 @@
   <title>CavaloGameNews</title>
 
   <style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
+   * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-body {
-  background: #111;
-  color: #fff;
-}
-
-/* =========================
-   CABEÇALHO
-========================= */
-
+    body {
+      background: #111;
+      color: #fff;
+    }
 header {
-  background: #1a1a1a;
-  padding: 8px 20px;
-  border-bottom: 3px solid #00ff88;
-}
-
-header img {
-  height: 120px;
-  width: auto;
-  display: block;
-}
-
+      background: #0f1115;
+      padding: 20px 30px;
+      border-bottom: 3px solid #00ff88;
+    }
 nav {
-  margin-top: 5px;
+  margin-top: 0;
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
-  align-items: center;
 }
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #00ff88;
-}
-
-/* =========================
-   BUSCA
-========================= */
 
 .search-box {
-  width: 100%;
-  margin-bottom: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.search-box input {
-  width: 100%;
-  max-width: 450px;
-  padding: 12px 16px;
-  background: #1b1b1b;
-  color: #fff;
-  border: 1px solid #333;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-}
+    header a {
+      color: #00ff88;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.search-box input:focus {
-  border-color: #00ff88;
-}
+    .article {
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
 
-.search-box input::placeholder {
-  color: #888;
-}
+    .category {
+      color: #00ff88;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
 
-/* =========================
-   HERO
-========================= */
+    h1 {
+      font-size: 46px;
+      line-height: 1.15;
+      margin-bottom: 15px;
+    }
 
-.hero {
-  background: linear-gradient(90deg, #00ff88, #007744);
-  padding: 40px 20px;
-  text-align: center;
-  color: #111;
-}
+    .info {
+      color: #999;
+      margin-bottom: 25px;
+    }
 
-.hero h2 {
-  margin-bottom: 10px;
-}
+    .cover {
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+      margin-bottom: 30px;
+    }
 
-/* =========================
-   CONTAINER
-========================= */
+    .text {
+      max-width: 800px;
+      margin: auto;
+    }
 
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: 30px auto;
-}
+    .text p {
+      color: #ddd;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
 
-/* =========================
-   NOTÍCIA PRINCIPAL
-========================= */
+    .back-button {
+      display: inline-block;
+      margin-top: 20px;
+      background: #00ff88;
+      color: #111;
+      padding: 12px 20px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.featured-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+    .related {
+      margin-top: 50px;
+      padding-top: 30px;
+      border-top: 1px solid #333;
+    }
 
-.featured {
-  position: relative;
-  height: 430px;
-  border-radius: 16px;
-  overflow: hidden;
-  margin-bottom: 30px;
-  background: #1b1b1b;
-}
+    .related h2 {
+      color: #00ff88;
+      margin-bottom: 20px;
+    }
 
-.featured img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: 0.3s;
-}
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
 
-.featured-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 35px;
-  background: linear-gradient(
-    transparent,
-    rgba(0, 0, 0, 0.95)
-  );
-}
+    .related-card {
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #fff;
+      display: block;
+    }
 
-.featured-overlay h2 {
-  font-size: 34px;
-  margin: 10px 0;
-  max-width: 800px;
-}
+    .related-card img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      display: block;
+    }
 
-.featured-overlay p {
-  color: #ddd;
-  max-width: 700px;
-  margin-bottom: 15px;
-}
+    .related-content {
+      padding: 12px;
+    }
 
-.read-button {
-  display: inline-block;
-  background: #00ff88;
-  color: #111;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-weight: bold;
-}
+    .related-content h3 {
+      font-size: 17px;
+      margin-top: 6px;
+    }
 
-.featured:hover img {
-  transform: scale(1.03);
-}
+    .related-card:hover {
+      border-color: #00ff88;
+      transform: translateY(-3px);
+      transition: 0.2s;
+    }
 
-/* =========================
-   NOTÍCIAS
-========================= */
+    footer {
+      background: #1a1a1a;
+      text-align: center;
+      padding: 25px;
+      margin-top: 50px;
+      color: #888;
+    }
 
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(260px, 1fr)
-  );
-  gap: 20px;
-}
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 30px;
+      }
 
-.news-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+      .article {
+        width: 92%;
+      }
 
-.card {
-  background: #1b1b1b;
-  border: 1px solid #333;
-  border-radius: 12px;
-  overflow: hidden;
+      .text p {
+        font-size: 16px;
+      }
+    }
+    nav a {
   transition: 0.2s;
-}
-
-.card:hover {
-  border-color: #00ff88;
-  transform: translateY(-3px);
-}
-
-.card img {
-  width: 100%;
-  height: 170px;
-  object-fit: cover;
-  display: block;
-}
-
-.card-content {
-  padding: 15px;
-}
-
-.category {
-  color: #00ff88;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.date {
-  color: #aaa;
-  font-size: 12px;
-  margin: 6px 0 12px;
-}
-
-.card h3 {
-  margin-bottom: 10px;
-}
-
-.card p {
-  color: #ccc;
-  line-height: 1.5;
-}
-
-/* =========================
-   RODAPÉ
-========================= */
-
-footer {
-  background: #1a1a1a;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-  color: #aaa;
-}
-
-/* =========================
-   CELULAR
-========================= */
-
-@media (max-width: 600px) {
-
-  header {
-    padding: 5px 15px;
-  }
-
-  header img {
-    height: 100px;
-  }
-
-  nav {
-    gap: 12px;
-  }
-
-  .featured {
-    height: 380px;
-  }
-
-  .featured-overlay {
-    padding: 20px;
-  }
-
-  .featured-overlay h2 {
-    font-size: 24px;
-  }
-
-  .container {
-    width: 92%;
-  }
 }
   </style>
 </head>
