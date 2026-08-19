@@ -77,7 +77,7 @@
       margin-bottom: 30px;
     }
 
-    /* VÍDEO DO YOUTUBE */
+    /* VÍDEOS */
 
     .video-container {
       width: 100%;
@@ -85,12 +85,14 @@
       aspect-ratio: 16 / 9;
     }
 
-    .video-container iframe {
+    .video-container iframe,
+    .video-container video {
       width: 100%;
       height: 100%;
       border: 0;
       border-radius: 14px;
       display: block;
+      background: #000;
     }
 
     .text {
@@ -231,6 +233,43 @@ fetch("posts.json")
 
     document.title = post.titulo + " - CavaloGameNews";
 
+    // Detecta automaticamente o tipo de vídeo
+    let videoHTML = "";
+
+    if (post.video) {
+
+      // Vídeo do PC (.mp4)
+      if (
+        post.video.toLowerCase().endsWith(".mp4") ||
+        post.video.toLowerCase().startsWith("videos/")
+      ) {
+
+        videoHTML = `
+          <div class="video-container">
+            <video controls preload="metadata">
+              <source src="${post.video}" type="video/mp4">
+              Seu navegador não suporta vídeos.
+            </video>
+          </div>
+        `;
+
+      } 
+      // Vídeo do YouTube
+      else {
+
+        videoHTML = `
+          <div class="video-container">
+            <iframe
+              src="https://www.youtube.com/embed/${post.video}"
+              title="${post.titulo}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        `;
+      }
+    }
+
     document.getElementById("article").innerHTML = `
 
       <div class="category">
@@ -251,16 +290,7 @@ fetch("posts.json")
         alt="${post.titulo}"
       >
 
-      ${post.video ? `
-        <div class="video-container">
-          <iframe
-            src="https://www.youtube.com/embed/${post.video}"
-            title="${post.titulo}"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-      ` : ""}
+      ${videoHTML}
 
       <div class="text">
 
@@ -333,4 +363,3 @@ fetch("posts.json")
 
 </body>
 </html>
-```
