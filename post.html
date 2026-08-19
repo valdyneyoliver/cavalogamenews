@@ -7,6 +7,19 @@
   <title>CavaloGameNews</title>
 
   <style>
+    .video-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 30px auto;
+}
+
+.video-container video {
+  width: 100%;
+  max-height: 550px;
+  border-radius: 14px;
+  display: block;
+  background: #000;
+}
    * {
       box-sizing: border-box;
       margin: 0;
@@ -227,12 +240,21 @@ fetch("posts.json")
       </div>
 
       <img
-        class="cover"
-        src="${post.imagem}"
-        alt="${post.titulo}"
-      >
+  class="cover"
+  src="${post.imagem}"
+  alt="${post.titulo}"
+>
 
-      <div class="text">
+${post.video ? `
+  <div class="video-container">
+    <video controls preload="metadata">
+      <source src="${post.video}" type="video/mp4">
+      Seu navegador não suporta vídeos.
+    </video>
+  </div>
+` : ""}
+
+<div class="text">
 
         ${(post.conteudo || [post.resumo]).map(paragrafo => `
           <p>${paragrafo}</p>
