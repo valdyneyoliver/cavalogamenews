@@ -1,4 +1,19 @@
 [
+{
+  "id": "teste-video-cavalogamenews",
+  "titulo": "CavaloGameNews testa novo recurso de vídeos nas notícias",
+  "categoria": "Notícias",
+  "data": "19/08/2026",
+  "imagem": "https://placehold.co/1536x864/111111/00ff88?text=CavaloGameNews",
+  "resumo": "O CavaloGameNews está testando um novo recurso que permite adicionar vídeos diretamente nas notícias.",
+  "link": "",
+  "video": "https://www.youtube.com/watch?v=W_PmEPTvn7g",
+  "conteudo": [
+    "Esta é uma notícia de teste criada para verificar o funcionamento do novo sistema de vídeos do CavaloGameNews.",
+    "O vídeo será exibido diretamente dentro da página da notícia, logo abaixo da imagem principal.",
+    "Se tudo funcionar corretamente, o mesmo sistema poderá ser usado nas próximas notícias do site."
+  ]
+},
   {
   "id": "xbox-game-pass-agosto-2026-onda-2",
   "titulo": "Xbox Game Pass recebe novos jogos na segunda leva de agosto",
