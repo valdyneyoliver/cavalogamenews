@@ -79,9 +79,14 @@
 
     /* VÍDEOS */
 
-    .video-container {
+    .videos-container {
       width: 100%;
       margin: 30px 0;
+    }
+
+    .video-container {
+      width: 100%;
+      margin-bottom: 30px;
       aspect-ratio: 16 / 9;
     }
 
@@ -233,40 +238,89 @@ fetch("posts.json")
 
     document.title = post.titulo + " - CavaloGameNews";
 
-    // Detecta automaticamente o tipo de vídeo
-    let videoHTML = "";
+    // Cria os vídeos da notícia
+    let videosHTML = "";
 
-    if (post.video) {
+    if (post.videos && Array.isArray(post.videos)) {
 
-      // Vídeo do PC (.mp4)
+      videosHTML = `
+        <div class="videos-container">
+
+          ${post.videos.map(video => {
+
+            // Vídeo do PC
+            if (
+              video.toLowerCase().endsWith(".mp4") ||
+              video.toLowerCase().startsWith("videos/")
+            ) {
+
+              return `
+                <div class="video-container">
+                  <video controls preload="metadata">
+                    <source src="${video}" type="video/mp4">
+                    Seu navegador não suporta vídeos.
+                  </video>
+                </div>
+              `;
+
+            }
+
+            // Vídeo do YouTube
+            return `
+              <div class="video-container">
+                <iframe
+                  src="https://www.youtube.com/embed/${video}"
+                  title="${post.titulo}"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen>
+                </iframe>
+              </div>
+            `;
+
+          }).join("")}
+
+        </div>
+      `;
+
+    }
+
+    // Compatibilidade com o sistema antigo:
+    // Se existir "video" em vez de "videos", continua funcionando.
+    else if (post.video) {
+
+      let video = post.video;
+
       if (
-        post.video.toLowerCase().endsWith(".mp4") ||
-        post.video.toLowerCase().startsWith("videos/")
+        video.toLowerCase().endsWith(".mp4") ||
+        video.toLowerCase().startsWith("videos/")
       ) {
 
-        videoHTML = `
-          <div class="video-container">
-            <video controls preload="metadata">
-              <source src="${post.video}" type="video/mp4">
-              Seu navegador não suporta vídeos.
-            </video>
+        videosHTML = `
+          <div class="videos-container">
+            <div class="video-container">
+              <video controls preload="metadata">
+                <source src="${video}" type="video/mp4">
+                Seu navegador não suporta vídeos.
+              </video>
+            </div>
           </div>
         `;
 
-      } 
-      // Vídeo do YouTube
-      else {
+      } else {
 
-        videoHTML = `
-          <div class="video-container">
-            <iframe
-              src="https://www.youtube.com/embed/${post.video}"
-              title="${post.titulo}"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
+        videosHTML = `
+          <div class="videos-container">
+            <div class="video-container">
+              <iframe
+                src="https://www.youtube.com/embed/${video}"
+                title="${post.titulo}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
           </div>
         `;
+
       }
     }
 
@@ -290,7 +344,7 @@ fetch("posts.json")
         alt="${post.titulo}"
       >
 
-      ${videoHTML}
+      ${videosHTML}
 
       <div class="text">
 
