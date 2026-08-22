@@ -2,7 +2,9 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>CavaloGameNews</title>
@@ -31,10 +33,6 @@
       color: #00ff88;
       text-decoration: none;
       font-weight: bold;
-    }
-
-    header a:hover {
-      color: #fff;
     }
 
     .article {
@@ -71,16 +69,6 @@
       margin-bottom: 30px;
     }
 
-    /* =========================
-       RESUMO
-    ========================= */
-
-    .summary {
-      color: #ccc;
-      font-size: 19px;
-      line-height: 1.7;
-      margin-bottom: 30px;
-    }
 
     /* =========================
        VÍDEOS
@@ -93,8 +81,8 @@
 
     .video-container {
       width: 100%;
-      margin-bottom: 30px;
       aspect-ratio: 16 / 9;
+      margin-bottom: 30px;
       background: #000;
       border-radius: 14px;
       overflow: hidden;
@@ -113,6 +101,7 @@
       object-fit: contain;
     }
 
+
     /* =========================
        TEXTO
     ========================= */
@@ -129,6 +118,7 @@
       margin-bottom: 25px;
     }
 
+
     /* =========================
        BOTÃO VOLTAR
     ========================= */
@@ -144,9 +134,6 @@
       font-weight: bold;
     }
 
-    .back-button:hover {
-      background: #00cc6d;
-    }
 
     /* =========================
        MAIS NOTÍCIAS
@@ -169,6 +156,7 @@
         auto-fit,
         minmax(220px, 1fr)
       );
+
       gap: 20px;
     }
 
@@ -180,12 +168,6 @@
       text-decoration: none;
       color: #fff;
       display: block;
-      transition: 0.2s;
-    }
-
-    .related-card:hover {
-      border-color: #00ff88;
-      transform: translateY(-3px);
     }
 
     .related-card img {
@@ -202,8 +184,14 @@
     .related-content h3 {
       font-size: 17px;
       margin-top: 6px;
-      line-height: 1.4;
     }
+
+    .related-card:hover {
+      border-color: #00ff88;
+      transform: translateY(-3px);
+      transition: 0.2s;
+    }
+
 
     /* =========================
        RODAPÉ
@@ -216,6 +204,7 @@
       margin-top: 50px;
       color: #888;
     }
+
 
     /* =========================
        CELULAR
@@ -235,29 +224,33 @@
         font-size: 16px;
       }
 
-      .summary {
-        font-size: 17px;
-      }
-
     }
 
   </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-  <a href="index.html">
+  <a href="../index.html">
     ← Voltar para o CavaloGameNews
   </a>
 
 </header>
 
 
-<main class="article" id="article">
+<main
+  class="article"
+  id="article"
+>
 
-  <p>Carregando notícia...</p>
+  <p>
+    Carregando notícia...
+  </p>
 
 </main>
 
@@ -271,39 +264,22 @@
 
 <script>
 
+
 /* =========================
    PEGAR ID DA NOTÍCIA
 ========================= */
 
-const params = new URLSearchParams(
-  window.location.search
-);
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
 
-const id = params.get("id");
-
-
-/* =========================
-   TRANSFORMAR TEXTO EM HTML SEGURO
-========================= */
-
-function escaparHTML(texto) {
-
-  if (texto === null || texto === undefined) {
-    return "";
-  }
-
-  return String(texto)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
+const id =
+  params.get("id");
 
 
 /* =========================
-   YOUTUBE
+   CONVERTER YOUTUBE
 ========================= */
 
 function pegarYoutubeID(video) {
@@ -312,7 +288,8 @@ function pegarYoutubeID(video) {
     return null;
   }
 
-  video = String(video).trim();
+  video =
+    String(video).trim();
 
 
   /* ID direto */
@@ -328,9 +305,10 @@ function pegarYoutubeID(video) {
 
   /* youtube.com/watch?v= */
 
-  let resultado = video.match(
-    /youtube\.com\/watch\?v=([^&]+)/i
-  );
+  let resultado =
+    video.match(
+      /youtube\.com\/watch\?v=([^&]+)/i
+    );
 
   if (resultado) {
     return resultado[1];
@@ -339,9 +317,10 @@ function pegarYoutubeID(video) {
 
   /* youtu.be */
 
-  resultado = video.match(
-    /youtu\.be\/([^?&]+)/i
-  );
+  resultado =
+    video.match(
+      /youtu\.be\/([^?&]+)/i
+    );
 
   if (resultado) {
     return resultado[1];
@@ -350,20 +329,22 @@ function pegarYoutubeID(video) {
 
   /* youtube.com/embed */
 
-  resultado = video.match(
-    /youtube\.com\/embed\/([^?&]+)/i
-  );
+  resultado =
+    video.match(
+      /youtube\.com\/embed\/([^?&]+)/i
+    );
 
   if (resultado) {
     return resultado[1];
   }
 
 
-  /* Shorts */
+  /* youtube shorts */
 
-  resultado = video.match(
-    /youtube\.com\/shorts\/([^?&]+)/i
-  );
+  resultado =
+    video.match(
+      /youtube\.com\/shorts\/([^?&]+)/i
+    );
 
   if (resultado) {
     return resultado[1];
@@ -376,10 +357,10 @@ function pegarYoutubeID(video) {
 
 
 /* =========================
-   VÍDEOS
+   CRIAR VÍDEOS
 ========================= */
 
-function gerarVideos(videos, titulo) {
+function criarVideos(videos, titulo) {
 
   if (!videos) {
     return "";
@@ -405,12 +386,8 @@ function gerarVideos(videos, titulo) {
     }
 
 
-    video = String(video).trim();
-
-
-    if (!video) {
-      return;
-    }
+    video =
+      String(video).trim();
 
 
     /* =========================
@@ -429,9 +406,9 @@ function gerarVideos(videos, titulo) {
 
           <iframe
 
-            src="https://www.youtube.com/embed/${encodeURIComponent(youtubeID)}"
+            src="https://www.youtube.com/embed/${youtubeID}"
 
-            title="${escaparHTML(titulo)}"
+            title="${titulo}"
 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 
@@ -452,10 +429,6 @@ function gerarVideos(videos, titulo) {
        VÍDEO LOCAL
     ========================= */
 
-    const videoLower =
-      video.toLowerCase();
-
-
     const extensoes = [
       ".mp4",
       ".webm",
@@ -468,25 +441,63 @@ function gerarVideos(videos, titulo) {
     const ehVideoLocal =
       extensoes.some(
         extensao =>
-          videoLower.endsWith(extensao)
+          video.toLowerCase().endsWith(extensao)
       );
 
 
     if (ehVideoLocal) {
 
+      let caminho = video;
+
+
+      /*
+        Como o post está dentro de:
+
+        /noticias/
+
+        precisamos voltar uma pasta
+        para encontrar:
+
+        /videos/
+      */
+
+      if (
+        !video.startsWith("http://") &&
+        !video.startsWith("https://") &&
+        !video.startsWith("../")
+      ) {
+
+        caminho =
+          "../" + video;
+
+      }
+
+
       let tipo = "video/mp4";
 
 
-      if (videoLower.endsWith(".webm")) {
+      if (
+        video.toLowerCase().endsWith(".webm")
+      ) {
+
         tipo = "video/webm";
+
       }
 
-      else if (videoLower.endsWith(".ogg")) {
+      else if (
+        video.toLowerCase().endsWith(".ogg")
+      ) {
+
         tipo = "video/ogg";
+
       }
 
-      else if (videoLower.endsWith(".mov")) {
+      else if (
+        video.toLowerCase().endsWith(".mov")
+      ) {
+
         tipo = "video/quicktime";
+
       }
 
 
@@ -504,7 +515,7 @@ function gerarVideos(videos, titulo) {
 
             <source
 
-              src="${escaparHTML(video)}"
+              src="${caminho}"
 
               type="${tipo}">
 
@@ -543,14 +554,14 @@ function gerarVideos(videos, titulo) {
    CARREGAR NOTÍCIA
 ========================= */
 
-fetch("posts.json")
+fetch("../posts.json")
 
   .then(response => {
 
     if (!response.ok) {
 
       throw new Error(
-        "Não foi possível carregar posts.json"
+        "Erro ao carregar posts.json"
       );
 
     }
@@ -563,14 +574,9 @@ fetch("posts.json")
   .then(posts => {
 
 
-    /* =========================
-       PROCURAR NOTÍCIA
-    ========================= */
-
     const post =
       posts.find(
-        noticia =>
-          noticia.id === id
+        p => p.id === id
       );
 
 
@@ -588,19 +594,11 @@ fetch("posts.json")
           Notícia não encontrada
         </h1>
 
-        <p class="summary">
-
-          O endereço dessa notícia
-          não existe ou o ID está incorreto.
-
-        </p>
-
         <a
           class="back-button"
-          href="index.html">
-
+          href="../index.html"
+        >
           ← Voltar para as notícias
-
         </a>
 
       `;
@@ -611,7 +609,7 @@ fetch("posts.json")
 
 
     /* =========================
-       TÍTULO DA ABA
+       TÍTULO DA PÁGINA
     ========================= */
 
     document.title =
@@ -620,23 +618,54 @@ fetch("posts.json")
 
 
     /* =========================
-       CONTEÚDO
+       VÍDEOS
     ========================= */
 
-    let conteudoHTML = "";
+    let videos = "";
 
 
     if (
-      Array.isArray(post.conteudo) &&
-      post.conteudo.length > 0
+      post.videos &&
+      Array.isArray(post.videos)
     ) {
 
-      conteudoHTML =
+      videos =
+        criarVideos(
+          post.videos,
+          post.titulo
+        );
+
+    }
+
+    else if (post.video) {
+
+      videos =
+        criarVideos(
+          [post.video],
+          post.titulo
+        );
+
+    }
+
+
+    /* =========================
+       CONTEÚDO
+    ========================= */
+
+    let conteudo = "";
+
+
+    if (
+      post.conteudo &&
+      Array.isArray(post.conteudo)
+    ) {
+
+      conteudo =
         post.conteudo
           .map(paragrafo => `
 
             <p>
-              ${escaparHTML(paragrafo)}
+              ${paragrafo}
             </p>
 
           `)
@@ -646,10 +675,10 @@ fetch("posts.json")
 
     else if (post.resumo) {
 
-      conteudoHTML = `
+      conteudo = `
 
         <p>
-          ${escaparHTML(post.resumo)}
+          ${post.resumo}
         </p>
 
       `;
@@ -658,38 +687,7 @@ fetch("posts.json")
 
 
     /* =========================
-       VÍDEOS
-    ========================= */
-
-    let videosHTML = "";
-
-
-    if (
-      Array.isArray(post.videos) &&
-      post.videos.length > 0
-    ) {
-
-      videosHTML =
-        gerarVideos(
-          post.videos,
-          post.titulo
-        );
-
-    }
-
-    else if (post.video) {
-
-      videosHTML =
-        gerarVideos(
-          [post.video],
-          post.titulo
-        );
-
-    }
-
-
-    /* =========================
-       HTML DA NOTÍCIA
+       MOSTRAR NOTÍCIA
     ========================= */
 
     document.getElementById(
@@ -698,21 +696,21 @@ fetch("posts.json")
 
       <div class="category">
 
-        ${escaparHTML(post.categoria)}
+        ${post.categoria}
 
       </div>
 
 
       <h1>
 
-        ${escaparHTML(post.titulo)}
+        ${post.titulo}
 
       </h1>
 
 
       <div class="info">
 
-        ${escaparHTML(post.data)}
+        ${post.data}
         ·
         CavaloGameNews
 
@@ -723,40 +721,39 @@ fetch("posts.json")
 
         class="cover"
 
-        src="${escaparHTML(post.imagem)}"
+        src="${post.imagem}"
 
-        alt="${escaparHTML(post.titulo)}"
+        alt="${post.titulo}"
 
       >
 
 
-      <div class="summary">
-
-        ${escaparHTML(post.resumo || "")}
-
-      </div>
-
-
-      ${videosHTML}
+      ${videos}
 
 
       <div class="text">
 
-        ${conteudoHTML}
+
+        ${conteudo}
 
 
         <a
 
           class="back-button"
 
-          href="index.html">
+          href="../index.html"
+
+        >
 
           ← Voltar para as notícias
 
         </a>
 
 
-        <div class="related">
+        <div
+          id="related"
+          class="related"
+        >
 
           <h2>
             Mais notícias
@@ -765,10 +762,11 @@ fetch("posts.json")
 
           <div
             id="related-grid"
-            class="related-grid">
-          </div>
+            class="related-grid"
+          ></div>
 
         </div>
+
 
       </div>
 
@@ -776,15 +774,14 @@ fetch("posts.json")
 
 
     /* =========================
-       NOTÍCIAS RELACIONADAS
+       MAIS NOTÍCIAS
     ========================= */
 
     const relatedPosts =
       posts
 
         .filter(
-          noticia =>
-            noticia.id !== post.id
+          p => p.id !== post.id
         )
 
         .slice(0, 3);
@@ -803,31 +800,35 @@ fetch("posts.json")
 
           <a
 
-            href="post.html?id=${encodeURIComponent(related.id)}"
+            href="post.html?id=${related.id}"
 
-            class="related-card">
+            class="related-card"
+
+          >
 
             <img
 
-              src="${escaparHTML(related.imagem)}"
+              src="${related.imagem}"
 
-              alt="${escaparHTML(related.titulo)}"
+              alt="${related.titulo}"
 
             >
 
 
-            <div class="related-content">
+            <div
+              class="related-content"
+            >
 
               <div class="category">
 
-                ${escaparHTML(related.categoria)}
+                ${related.categoria}
 
               </div>
 
 
               <h3>
 
-                ${escaparHTML(related.titulo)}
+                ${related.titulo}
 
               </h3>
 
@@ -861,18 +862,23 @@ fetch("posts.json")
         Erro ao carregar a notícia
       </h1>
 
-      <p class="summary">
+
+      <p style="color:#aaa;margin-top:15px;">
 
         Verifique se o arquivo
         <strong>posts.json</strong>
-        está na mesma pasta que o
-        <strong>post.html</strong>.
+        está funcionando.
 
       </p>
 
+
       <a
+
         class="back-button"
-        href="index.html">
+
+        href="../index.html"
+
+      >
 
         ← Voltar para as notícias
 
@@ -882,7 +888,9 @@ fetch("posts.json")
 
   });
 
+
 </script>
+
 
 </body>
 
