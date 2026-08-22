@@ -20,6 +20,7 @@ for post in posts:
 
     url = f"{BASE_URL}/noticias/{post_id}.html"
 
+    # Conteúdo da notícia
     paragrafos = post.get("conteudo", [post.get("resumo", "")])
 
     conteudo_html = ""
@@ -27,28 +28,134 @@ for post in posts:
     for paragrafo in paragrafos:
         conteudo_html += f"<p>{html.escape(paragrafo)}</p>"
 
+    # ==========================================
+    # 3 ÚLTIMAS NOTÍCIAS
+    # ==========================================
+
+    relacionadas = [
+        p for p in posts
+        if p.get("id") != post_id
+    ][:3]
+
+    related_html = ""
+
+    for related in relacionadas:
+
+        related_id = html.escape(related.get("id", ""))
+        related_titulo = html.escape(
+            related.get("titulo", "CavaloGameNews")
+        )
+        related_imagem = html.escape(
+            related.get("imagem", "")
+        )
+        related_categoria = html.escape(
+            related.get("categoria", "Notícias")
+        )
+        related_data = html.escape(
+            related.get("data", "")
+        )
+
+        related_html += f"""
+        <a
+            href="../noticias/{related_id}.html"
+            class="related-card"
+        >
+
+            <img
+                src="{related_imagem}"
+                alt="{related_titulo}"
+            >
+
+            <div class="related-content">
+
+                <div class="category">
+                    {related_categoria}
+                </div>
+
+                <div class="related-date">
+                    {related_data}
+                </div>
+
+                <h3>
+                    {related_titulo}
+                </h3>
+
+            </div>
+
+        </a>
+        """
+
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>{titulo} - CavaloGameNews</title>
 
-<meta name="description" content="{resumo}">
+<meta
+    name="description"
+    content="{resumo}"
+>
 
-<meta property="og:type" content="article">
-<meta property="og:title" content="{titulo}">
-<meta property="og:description" content="{resumo}">
-<meta property="og:image" content="{imagem}">
-<meta property="og:url" content="{url}">
-<meta property="og:site_name" content="CavaloGameNews">
+<!-- DISCORD / REDES SOCIAIS -->
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{titulo}">
-<meta name="twitter:description" content="{resumo}">
-<meta name="twitter:image" content="{imagem}">
+<meta
+    property="og:type"
+    content="article"
+>
+
+<meta
+    property="og:title"
+    content="{titulo}"
+>
+
+<meta
+    property="og:description"
+    content="{resumo}"
+>
+
+<meta
+    property="og:image"
+    content="{imagem}"
+>
+
+<meta
+    property="og:url"
+    content="{url}"
+>
+
+<meta
+    property="og:site_name"
+    content="CavaloGameNews"
+>
+
+<meta
+    name="twitter:card"
+    content="summary_large_image"
+>
+
+<meta
+    name="twitter:title"
+    content="{titulo}"
+>
+
+<meta
+    name="twitter:description"
+    content="{resumo}"
+>
+
+<meta
+    name="twitter:image"
+    content="{imagem}"
+>
+
 
 <style>
 
@@ -133,6 +240,63 @@ h1 {{
     font-weight: bold;
 }}
 
+.related {{
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+}}
+
+.related h2 {{
+    color: #00ff88;
+    margin-bottom: 20px;
+}}
+
+.related-grid {{
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}}
+
+.related-card {{
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+}}
+
+.related-card:hover {{
+    border-color: #00ff88;
+    transform: translateY(-3px);
+}}
+
+.related-card img {{
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+}}
+
+.related-content {{
+    padding: 12px;
+}}
+
+.related-content h3 {{
+    font-size: 17px;
+    margin-top: 6px;
+    line-height: 1.3;
+}}
+
+.related-date {{
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+}}
+
 footer {{
     background: #1a1a1a;
     text-align: center;
@@ -142,6 +306,7 @@ footer {{
 }}
 
 @media (max-width: 600px) {{
+
     h1 {{
         font-size: 30px;
     }}
@@ -153,51 +318,100 @@ footer {{
     .text p {{
         font-size: 16px;
     }}
+
 }}
 
 </style>
 
 </head>
 
+
 <body>
 
+
 <header>
-<a href="../index.html">← Voltar para o CavaloGameNews</a>
+
+<a href="../index.html">
+← Voltar para o CavaloGameNews
+</a>
+
 </header>
+
 
 <main class="article">
 
-<div class="category">{categoria}</div>
 
-<h1>{titulo}</h1>
+<div class="category">
+{categoria}
+</div>
+
+
+<h1>
+{titulo}
+</h1>
+
 
 <div class="info">
 {data} · CavaloGameNews
 </div>
 
+
 <img
-class="cover"
-src="{imagem}"
-alt="{titulo}"
+    class="cover"
+    src="{imagem}"
+    alt="{titulo}"
 >
+
 
 <div class="text">
 
+
 {conteudo_html}
 
-<a class="back-button" href="../index.html">
+
+<a
+    class="back-button"
+    href="../index.html"
+>
 ← Voltar para as notícias
 </a>
+
+
+<!-- =====================================
+     MAIS NOTÍCIAS
+===================================== -->
+
+<div class="related">
+
+<h2>
+Mais notícias
+</h2>
+
+
+<div class="related-grid">
+
+{related_html}
+
+</div>
+
+</div>
+
 
 </div>
 
 </main>
 
+
 <footer>
-© 2026 CavaloGameNews - Todos os direitos reservados.
+
+© 2026 CavaloGameNews -
+Todos os direitos reservados.
+
 </footer>
 
+
 </body>
+
 </html>
 """
 
@@ -206,4 +420,7 @@ alt="{titulo}"
     with open(caminho, "w", encoding="utf-8") as f:
         f.write(pagina)
 
-print(f"{len(posts)} notícias geradas com sucesso!")
+
+print(
+    f"{len(posts)} notícias geradas com sucesso!"
+)
