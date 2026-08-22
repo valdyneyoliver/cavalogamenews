@@ -1,322 +1,446 @@
 import json
 import os
 import html
+import re
 
-BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
+# ==============================
+# CONFIGURAÇÕES
+# ==============================
 
-with open("posts.json", "r", encoding="utf-8") as f:
-    posts = json.load(f)
+ARQUIVO_JSON = "noticias.json"
+PASTA_SAIDA = "noticias"
 
-os.makedirs("noticias", exist_ok=True)
+# ==============================
+# FUNÇÕES
+# ==============================
 
-for post in posts:
-    post_id = post["id"]
+def escapar(texto):
+    if texto is None:
+        return ""
+    return html.escape(str(texto))
 
-    titulo = html.escape(post.get("titulo", "CavaloGameNews"))
-    resumo = html.escape(post.get("resumo", ""))
-    imagem = html.escape(post.get("imagem", ""))
-    categoria = html.escape(post.get("categoria", "Notícias"))
-    data = html.escape(post.get("data", ""))
 
-    url = f"{BASE_URL}/noticias/{post_id}.html"
+def slug(texto):
+    texto = str(texto).lower()
+    texto = re.sub(r"[áàãâä]", "a", texto)
+    texto = re.sub(r"[éèêë]", "e", texto)
+    texto = re.sub(r"[íìîï]", "i", texto)
+    texto = re.sub(r"[óòõôö]", "o", texto)
+    texto = re.sub(r"[úùûü]", "u", texto)
+    texto = re.sub(r"[ç]", "c", texto)
+    texto = re.sub(r"[^a-z0-9]+", "-", texto)
+    return texto.strip("-")
 
-    # Conteúdo da notícia
-    paragrafos = post.get("conteudo", [post.get("resumo", "")])
 
-    conteudo_html = ""
+def youtube_id(url):
+    if not url:
+        return None
 
-    for paragrafo in paragrafos:
-        conteudo_html += f"<p>{html.escape(paragrafo)}</p>"
+    padroes = [
+        r"(?:youtube\.com/watch\?v=)([^&]+)",
+        r"(?:youtu\.be/)([^?&]+)",
+        r"(?:youtube\.com/embed/)([^?&]+)",
+        r"(?:youtube\.com/shorts/)([^?&]+)"
+    ]
 
-    # ==========================================
-    # 3 ÚLTIMAS NOTÍCIAS
-    # ==========================================
+    for padrao in padroes:
+        resultado = re.search(padrao, url)
+        if resultado:
+            return resultado.group(1)
 
-    relacionadas = [
-        p for p in posts
-        if p.get("id") != post_id
-    ][:3]
+    return None
 
-    related_html = ""
 
-    for related in relacionadas:
+def gerar_video(video):
+    """
+    Aceita:
+    - URL do YouTube
+    - arquivo local
+    - caminho relativo
+    """
 
-        related_id = html.escape(related.get("id", ""))
-        related_titulo = html.escape(
-            related.get("titulo", "CavaloGameNews")
-        )
-        related_imagem = html.escape(
-            related.get("imagem", "")
-        )
-        related_categoria = html.escape(
-            related.get("categoria", "Notícias")
-        )
-        related_data = html.escape(
-            related.get("data", "")
-        )
+    if not video:
+        return ""
 
-        related_html += f"""
-        <a
-            href="../noticias/{related_id}.html"
-            class="related-card"
-        >
+    video = str(video).strip()
 
-            <img
-                src="{related_imagem}"
-                alt="{related_titulo}"
-            >
+    # ==============================
+    # YOUTUBE
+    # ==============================
 
-            <div class="related-content">
+    video_id = youtube_id(video)
 
-                <div class="category">
-                    {related_categoria}
-                </div>
-
-                <div class="related-date">
-                    {related_data}
-                </div>
-
-                <h3>
-                    {related_titulo}
-                </h3>
-
-            </div>
-
-        </a>
+    if video_id:
+        return f"""
+        <div class="video-container">
+            <iframe
+                src="https://www.youtube.com/embed/{escapar(video_id)}"
+                title="Vídeo da notícia"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
         """
 
-    pagina = f"""<!DOCTYPE html>
+    # ==============================
+    # VÍDEO LOCAL
+    # ==============================
+
+    extensoes = (
+        ".mp4",
+        ".webm",
+        ".ogg",
+        ".mov",
+        ".m4v"
+    )
+
+    if video.lower().endswith(extensoes):
+
+        return f"""
+        <div class="video-container local-video">
+            <video controls preload="metadata">
+                <source src="../{escapar(video)}">
+                Seu navegador não suporta vídeos.
+            </video>
+        </div>
+        """
+
+    return ""
+
+
+def gerar_conteudo(conteudo):
+    if not conteudo:
+        return ""
+
+    resultado = ""
+
+    for item in conteudo:
+
+        if isinstance(item, str):
+            resultado += f"<p>{escapar(item)}</p>"
+            continue
+
+        tipo = item.get("tipo", "").lower()
+
+        # ==============================
+        # PARÁGRAFO
+        # ==============================
+
+        if tipo == "texto" or tipo == "paragrafo":
+            texto = item.get("texto", "")
+            resultado += f"<p>{escapar(texto)}</p>"
+
+        # ==============================
+        # TÍTULO
+        # ==============================
+
+        elif tipo == "titulo":
+            texto = item.get("texto", "")
+            resultado += f"<h2>{escapar(texto)}</h2>"
+
+        # ==============================
+        # SUBTÍTULO
+        # ==============================
+
+        elif tipo == "subtitulo":
+            texto = item.get("texto", "")
+            resultado += f"<h3>{escapar(texto)}</h3>"
+
+        # ==============================
+        # IMAGEM
+        # ==============================
+
+        elif tipo == "imagem":
+            imagem = item.get("imagem", "")
+            legenda = item.get("legenda", "")
+
+            resultado += f"""
+            <figure>
+                <img src="../{escapar(imagem)}" alt="{escapar(legenda)}">
+                {f'<figcaption>{escapar(legenda)}</figcaption>' if legenda else ''}
+            </figure>
+            """
+
+        # ==============================
+        # VÍDEO
+        # ==============================
+
+        elif tipo == "video":
+            video = item.get("video", "")
+
+            if not video:
+                video = item.get("url", "")
+
+            resultado += gerar_video(video)
+
+        # ==============================
+        # LISTA
+        # ==============================
+
+        elif tipo == "lista":
+            itens = item.get("itens", [])
+
+            resultado += "<ul>"
+
+            for lista_item in itens:
+                resultado += f"<li>{escapar(lista_item)}</li>"
+
+            resultado += "</ul>"
+
+        # ==============================
+        # NEGRITO
+        # ==============================
+
+        elif tipo == "negrito":
+            texto = item.get("texto", "")
+            resultado += f"<strong>{escapar(texto)}</strong>"
+
+    return resultado
+
+
+# ==============================
+# MODELO HTML
+# ==============================
+
+def gerar_html(noticia):
+
+    titulo = escapar(noticia.get("titulo", "Sem título"))
+    categoria = escapar(noticia.get("categoria", "Notícias"))
+    data = escapar(noticia.get("data", ""))
+    resumo = escapar(noticia.get("resumo", ""))
+    imagem = escapar(noticia.get("imagem", ""))
+
+    conteudo = noticia.get("conteudo", [])
+
+    corpo = gerar_conteudo(conteudo)
+
+    # ==============================
+    # VÍDEO PRINCIPAL
+    # ==============================
+
+    video_principal = ""
+
+    video = noticia.get("video", "")
+
+    if video:
+        video_principal = gerar_video(video)
+
+    # ==============================
+    # IMAGEM PRINCIPAL
+    # ==============================
+
+    imagem_principal = ""
+
+    if imagem:
+        imagem_principal = f"""
+        <div class="imagem-principal">
+            <img src="../{imagem}" alt="{titulo}">
+        </div>
+        """
+
+    # ==============================
+    # HTML
+    # ==============================
+
+    return f"""<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>{titulo} - CavaloGameNews</title>
 
-<meta
-    name="description"
-    content="{resumo}"
->
-
-<!-- DISCORD / REDES SOCIAIS -->
-
-<meta
-    property="og:type"
-    content="article"
->
-
-<meta
-    property="og:title"
-    content="{titulo}"
->
-
-<meta
-    property="og:description"
-    content="{resumo}"
->
-
-<meta
-    property="og:image"
-    content="{imagem}"
->
-
-<meta
-    property="og:url"
-    content="{url}"
->
-
-<meta
-    property="og:site_name"
-    content="CavaloGameNews"
->
-
-<meta
-    name="twitter:card"
-    content="summary_large_image"
->
-
-<meta
-    name="twitter:title"
-    content="{titulo}"
->
-
-<meta
-    name="twitter:description"
-    content="{resumo}"
->
-
-<meta
-    name="twitter:image"
-    content="{imagem}"
->
-
+<meta name="description" content="{resumo}">
 
 <style>
 
 * {{
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
 }}
 
 body {{
-    background: #111;
-    color: #fff;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0f0f0f;
+    color: #ffffff;
 }}
 
 header {{
-    background: #0f1115;
-    padding: 20px 30px;
-    border-bottom: 3px solid #00ff88;
+    background: #111111;
+    border-bottom: 1px solid #292929;
+    padding: 18px 20px;
 }}
 
-header a {{
-    color: #00ff88;
-    text-decoration: none;
-    font-weight: bold;
-}}
-
-.article {{
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
-}}
-
-.category {{
-    color: #00ff88;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}}
-
-h1 {{
-    font-size: 46px;
-    line-height: 1.15;
-    margin-bottom: 15px;
-}}
-
-.info {{
-    color: #999;
-    margin-bottom: 25px;
-}}
-
-.cover {{
-    width: 100%;
-    max-height: 560px;
-    object-fit: cover;
-    border-radius: 14px;
-    display: block;
-    margin-bottom: 30px;
-}}
-
-.text {{
-    max-width: 800px;
+.header-container {{
+    max-width: 1200px;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }}
 
-.text p {{
-    color: #ddd;
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 25px;
-}}
-
-.back-button {{
-    display: inline-block;
-    margin-top: 20px;
-    background: #00ff88;
-    color: #111;
-    padding: 12px 20px;
-    border-radius: 7px;
+.logo {{
+    color: #ffffff;
     text-decoration: none;
+    font-size: 24px;
     font-weight: bold;
 }}
 
-.related {{
-    margin-top: 50px;
-    padding-top: 30px;
-    border-top: 1px solid #333;
+.logo span {{
+    color: #ff6b00;
 }}
 
-.related h2 {{
-    color: #00ff88;
-    margin-bottom: 20px;
-}}
-
-.related-grid {{
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-}}
-
-.related-card {{
-    background: #1b1b1b;
-    border: 1px solid #333;
-    border-radius: 10px;
-    overflow: hidden;
+.voltar {{
+    color: #ffffff;
     text-decoration: none;
-    color: #fff;
-    display: block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #222222;
     transition: 0.2s;
 }}
 
-.related-card:hover {{
-    border-color: #00ff88;
-    transform: translateY(-3px);
+.voltar:hover {{
+    background: #ff6b00;
 }}
 
-.related-card img {{
+main {{
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}}
+
+.categoria {{
+    display: inline-block;
+    background: #ff6b00;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}}
+
+h1 {{
+    font-size: 42px;
+    line-height: 1.15;
+    margin: 0 0 15px;
+}}
+
+.data {{
+    color: #999999;
+    margin-bottom: 25px;
+}}
+
+.resumo {{
+    font-size: 19px;
+    line-height: 1.6;
+    color: #cccccc;
+    margin-bottom: 30px;
+}}
+
+.imagem-principal {{
     width: 100%;
-    height: 130px;
+    margin-bottom: 30px;
+}}
+
+.imagem-principal img {{
+    width: 100%;
+    max-height: 550px;
     object-fit: cover;
-    display: block;
+    border-radius: 12px;
 }}
 
-.related-content {{
-    padding: 12px;
+.artigo {{
+    font-size: 18px;
+    line-height: 1.8;
 }}
 
-.related-content h3 {{
-    font-size: 17px;
-    margin-top: 6px;
-    line-height: 1.3;
+.artigo p {{
+    margin: 0 0 22px;
 }}
 
-.related-date {{
-    color: #888;
-    font-size: 12px;
-    margin-top: 5px;
+.artigo h2 {{
+    font-size: 28px;
+    margin-top: 35px;
+}}
+
+.artigo h3 {{
+    font-size: 23px;
+    margin-top: 30px;
+}}
+
+.artigo ul {{
+    margin-bottom: 25px;
+}}
+
+.artigo li {{
+    margin-bottom: 10px;
+}}
+
+.artigo figure {{
+    margin: 30px 0;
+}}
+
+.artigo figure img {{
+    width: 100%;
+    border-radius: 10px;
+}}
+
+.artigo figcaption {{
+    text-align: center;
+    color: #999999;
+    font-size: 14px;
+    margin-top: 8px;
+}}
+
+.video-container {{
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 30px 0;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000000;
+}}
+
+.video-container iframe {{
+    width: 100%;
+    height: 100%;
+    border: none;
+}}
+
+.video-container video {{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000000;
 }}
 
 footer {{
-    background: #1a1a1a;
+    margin-top: 60px;
+    padding: 30px 20px;
     text-align: center;
-    padding: 25px;
-    margin-top: 50px;
-    color: #888;
+    color: #777777;
+    border-top: 1px solid #292929;
 }}
 
-@media (max-width: 600px) {{
+@media (max-width: 700px) {{
 
     h1 {{
         font-size: 30px;
     }}
 
-    .article {{
-        width: 92%;
+    .artigo {{
+        font-size: 16px;
     }}
 
-    .text p {{
-        font-size: 16px;
+    .header-container {{
+        flex-direction: column;
+        gap: 15px;
     }}
 
 }}
@@ -325,102 +449,169 @@ footer {{
 
 </head>
 
-
 <body>
-
 
 <header>
 
-<a href="../index.html">
-← Voltar para o CavaloGameNews
+<div class="header-container">
+
+<a class="logo" href="../index.html">
+Cavalo<span>GameNews</span>
 </a>
+
+<a class="voltar" href="../index.html">
+← Voltar
+</a>
+
+</div>
 
 </header>
 
+<main>
 
-<main class="article">
-
-
-<div class="category">
+<div class="categoria">
 {categoria}
 </div>
-
 
 <h1>
 {titulo}
 </h1>
 
-
-<div class="info">
-{data} · CavaloGameNews
+<div class="data">
+{data}
 </div>
 
-
-<img
-    class="cover"
-    src="{imagem}"
-    alt="{titulo}"
->
-
-
-<div class="text">
-
-
-{conteudo_html}
-
-
-<a
-    class="back-button"
-    href="../index.html"
->
-← Voltar para as notícias
-</a>
-
-
-<!-- =====================================
-     MAIS NOTÍCIAS
-===================================== -->
-
-<div class="related">
-
-<h2>
-Mais notícias
-</h2>
-
-
-<div class="related-grid">
-
-{related_html}
-
+<div class="resumo">
+{resumo}
 </div>
 
-</div>
+{imagem_principal}
 
+{video_principal}
 
-</div>
+<article class="artigo">
+
+{corpo}
+
+</article>
 
 </main>
 
-
 <footer>
 
-© 2026 CavaloGameNews -
-Todos os direitos reservados.
+© 2026 CavaloGameNews — Todas as notícias de games em um só lugar.
 
 </footer>
-
 
 </body>
 
 </html>
 """
 
-    caminho = f"noticias/{post_id}.html"
 
-    with open(caminho, "w", encoding="utf-8") as f:
-        f.write(pagina)
+# ==============================
+# GERAR NOTÍCIAS
+# ==============================
+
+def gerar_noticias():
+
+    if not os.path.exists(ARQUIVO_JSON):
+        print(f"ERRO: arquivo {ARQUIVO_JSON} não encontrado.")
+        return
+
+    try:
+
+        with open(
+            ARQUIVO_JSON,
+            "r",
+            encoding="utf-8"
+        ) as arquivo:
+
+            noticias = json.load(arquivo)
+
+    except Exception as erro:
+
+        print("ERRO ao ler o noticias.json:")
+        print(erro)
+        return
+
+    if not isinstance(noticias, list):
+
+        print("ERRO: noticias.json precisa conter uma lista de notícias.")
+        return
+
+    os.makedirs(
+        PASTA_SAIDA,
+        exist_ok=True
+    )
+
+    quantidade = 0
+
+    for noticia in noticias:
+
+        if not isinstance(noticia, dict):
+            continue
+
+        titulo = noticia.get(
+            "titulo",
+            "noticia"
+        )
+
+        identificador = noticia.get(
+            "id",
+            ""
+        )
+
+        if not identificador:
+            identificador = slug(titulo)
+
+        identificador = slug(identificador)
+
+        if not identificador:
+            identificador = "noticia"
+
+        arquivo_saida = os.path.join(
+            PASTA_SAIDA,
+            identificador + ".html"
+        )
+
+        try:
+
+            html_noticia = gerar_html(
+                noticia
+            )
+
+            with open(
+                arquivo_saida,
+                "w",
+                encoding="utf-8"
+            ) as arquivo:
+
+                arquivo.write(
+                    html_noticia
+                )
+
+            quantidade += 1
+
+            print(
+                f"OK: {arquivo_saida}"
+            )
+
+        except Exception as erro:
+
+            print(
+                f"ERRO ao gerar '{titulo}': {erro}"
+            )
+
+    print()
+    print(
+        f"Concluído! {quantidade} notícia(s) gerada(s)."
+    )
 
 
-print(
-    f"{len(posts)} notícias geradas com sucesso!"
-)
+# ==============================
+# EXECUTAR
+# ==============================
+
+if __name__ == "__main__":
+    gerar_noticias()
