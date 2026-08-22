@@ -380,7 +380,7 @@ function carregarNoticias() {
         featured.innerHTML = `
 
           <a
-            href="noticias/${principal.id}.html"
+            href="post.html?id=${principal.id}"
             class="featured-link"
           >
 
@@ -433,7 +433,7 @@ function carregarNoticias() {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
@@ -556,7 +556,7 @@ if (categoria === "todos") {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
@@ -693,7 +693,7 @@ function buscarNoticias() {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
