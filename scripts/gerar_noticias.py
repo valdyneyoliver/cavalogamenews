@@ -2,618 +2,308 @@ import json
 import os
 import html
 import re
+from urllib.parse import urlparse, parse_qs
 
-# ==============================
-# CONFIGURAÇÕES
-# ==============================
+BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
 
-ARQUIVO_JSON = "noticias.json"
-PASTA_SAIDA = "noticias"
+# =========================================================
+# CARREGAR POSTS
+# =========================================================
 
-# URL BASE DO SITE
-URL_BASE = "https://valdyneyoliver.github.io/cavalogamenews"
+with open("posts.json", "r", encoding="utf-8") as f:
+    posts = json.load(f)
 
-
-# ==============================
-# FUNÇÕES
-# ==============================
-
-def escapar(texto):
-    if texto is None:
-        return ""
-
-    return html.escape(str(texto), quote=True)
+os.makedirs("noticias", exist_ok=True)
 
 
-def slug(texto):
-    texto = str(texto).lower()
-
-    texto = re.sub(r"[áàãâä]", "a", texto)
-    texto = re.sub(r"[éèêë]", "e", texto)
-    texto = re.sub(r"[íìîï]", "i", texto)
-    texto = re.sub(r"[óòõôö]", "o", texto)
-    texto = re.sub(r"[úùûü]", "u", texto)
-    texto = re.sub(r"[ç]", "c", texto)
-
-    texto = re.sub(r"[^a-z0-9]+", "-", texto)
-
-    return texto.strip("-")
-
-
-# ==============================
-# URL
-# ==============================
-
-def eh_url(url):
-
-    if not url:
-        return False
-
-    url = str(url).strip().lower()
-
-    return (
-        url.startswith("http://")
-        or
-        url.startswith("https://")
-    )
-
-
-# ==============================
-# YOUTUBE
-# ==============================
+# =========================================================
+# FUNÇÃO PARA PEGAR ID DO YOUTUBE
+# =========================================================
 
 def youtube_id(url):
 
     if not url:
-        return None
+        return ""
 
-    url = str(url).strip()
+    url = url.strip()
 
-    # ID direto do YouTube
-    if re.fullmatch(r"[\w-]{11}", url):
+    # Se já for apenas o ID
+    if re.fullmatch(r"[A-Za-z0-9_-]{11}", url):
         return url
 
-    padroes = [
+    try:
+        parsed = urlparse(url)
 
-        r"(?:youtube\.com/watch\?v=)([^&]+)",
+        # youtube.com/watch?v=ID
+        if "youtube.com" in parsed.netloc:
+            query = parse_qs(parsed.query)
 
-        r"(?:youtu\.be/)([^?&]+)",
+            if "v" in query:
+                return query["v"][0]
 
-        r"(?:youtube\.com/embed/)([^?&]+)",
+        # youtu.be/ID
+        if "youtu.be" in parsed.netloc:
+            return parsed.path.strip("/").split("/")[0]
 
-        r"(?:youtube\.com/shorts/)([^?&]+)",
+        # youtube.com/embed/ID
+        if "/embed/" in parsed.path:
+            return parsed.path.split("/embed/")[1].split("/")[0]
 
-        r"(?:youtube-nocookie\.com/embed/)([^?&]+)"
+    except Exception:
+        pass
 
-    ]
-
-    for padrao in padroes:
-
-        resultado = re.search(
-            padrao,
-            url,
-            re.IGNORECASE
-        )
-
-        if resultado:
-            return resultado.group(1)
-
-    return None
+    return ""
 
 
-# ==============================
-# CAMINHO DE RECURSO
-# ==============================
+# =========================================================
+# GERAR BLOCO DE VÍDEOS
+# =========================================================
 
-def caminho_recurso(caminho):
+def gerar_videos(post):
 
-    if not caminho:
-        return ""
+    videos_html = ""
 
-    caminho = str(caminho).strip()
+    # -----------------------------------------------------
+    # NOVO FORMATO: "videos": [...]
+    # -----------------------------------------------------
 
-    # URL externa
-    if eh_url(caminho):
-        return caminho
+    videos = post.get("videos", [])
 
-    caminho = caminho.replace("\\", "/")
+    if isinstance(videos, list):
 
-    if caminho.startswith("./"):
-        caminho = caminho[2:]
+        for video in videos:
 
-    if caminho.startswith("../"):
-        return caminho
+            if not isinstance(video, dict):
+                continue
 
-    return "../" + caminho
+            tipo = video.get("tipo", "").lower().strip()
+            url = video.get("url", "").strip()
 
+            if not url:
+                continue
 
-# ==============================
-# URL ABSOLUTA
-# ==============================
+            # =========================
+            # YOUTUBE
+            # =========================
 
-def url_absoluta(caminho):
+            if tipo == "youtube":
 
-    if not caminho:
-        return ""
+                video_id = youtube_id(url)
 
-    caminho = str(caminho).strip()
+                if video_id:
 
-    # Já é URL
-    if eh_url(caminho):
-        return caminho
+                    videos_html += f"""
+                    <div class="video-container">
 
-    caminho = caminho.replace("\\", "/")
+                        <iframe
+                            src="https://www.youtube.com/embed/{html.escape(video_id)}"
+                            title="Vídeo da notícia"
+                            loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
 
-    # Remove ./ 
-    if caminho.startswith("./"):
-        caminho = caminho[2:]
+                    </div>
+                    """
 
-    # Remove ../
-    caminho = caminho.lstrip("./")
+            # =========================
+            # VÍDEO DO PC
+            # =========================
 
-    return URL_BASE + "/" + caminho
+            elif tipo in ["pc", "local", "arquivo"]:
 
+                video_url = html.escape(url)
 
-# ==============================
-# VÍDEOS
-# ==============================
+                videos_html += f"""
+                <div class="video-container">
 
-def gerar_videos(videos):
+                    <video
+                        controls
+                        preload="metadata"
+                    >
 
-    if not videos:
-        return ""
+                        <source
+                            src="../{video_url}"
+                            type="video/mp4"
+                        >
 
-    # Se for somente uma string
-    if isinstance(videos, str):
-        videos = [videos]
+                        Seu navegador não suporta vídeo HTML5.
 
-    resultado = ""
+                    </video>
 
-    for video in videos:
+                </div>
+                """
 
-        if not video:
-            continue
+    # -----------------------------------------------------
+    # COMPATIBILIDADE COM O FORMATO ANTIGO
+    # -----------------------------------------------------
 
-        video = str(video).strip()
+    # Se existir apenas:
+    #
+    # "video": "W_PmEPTvn7g"
+    #
+    # também funciona.
 
-        if not video:
-            continue
+    elif post.get("video"):
 
-        # ==============================
-        # YOUTUBE
-        # ==============================
-
-        video_id = youtube_id(video)
+        video_id = youtube_id(post.get("video", ""))
 
         if video_id:
 
-            resultado += f"""
-
-            <div class="video-container youtube-video">
+            videos_html += f"""
+            <div class="video-container">
 
                 <iframe
-                    src="https://www.youtube.com/embed/{escapar(video_id)}"
+                    src="https://www.youtube.com/embed/{html.escape(video_id)}"
                     title="Vídeo da notícia"
-                    frameborder="0"
+                    loading="lazy"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen>
                 </iframe>
 
             </div>
-
             """
 
-            continue
+    return videos_html
 
-        # ==============================
-        # VÍDEO LOCAL
-        # ==============================
 
-        extensoes = (
-            ".mp4",
-            ".webm",
-            ".ogg",
-            ".mov",
-            ".m4v"
+# =========================================================
+# GERAR TODAS AS NOTÍCIAS
+# =========================================================
+
+for post in posts:
+
+    post_id = post["id"]
+
+    titulo = html.escape(
+        post.get("titulo", "CavaloGameNews")
+    )
+
+    resumo = html.escape(
+        post.get("resumo", "")
+    )
+
+    imagem = html.escape(
+        post.get("imagem", "")
+    )
+
+    categoria = html.escape(
+        post.get("categoria", "Notícias")
+    )
+
+    data = html.escape(
+        post.get("data", "")
+    )
+
+    url = f"{BASE_URL}/noticias/{post_id}.html"
+
+
+    # =====================================================
+    # CONTEÚDO
+    # =====================================================
+
+    paragrafos = post.get(
+        "conteudo",
+        [post.get("resumo", "")]
+    )
+
+    conteudo_html = ""
+
+    for paragrafo in paragrafos:
+
+        conteudo_html += f"""
+        <p>
+            {html.escape(str(paragrafo))}
+        </p>
+        """
+
+
+    # =====================================================
+    # VÍDEOS
+    # =====================================================
+
+    videos_html = gerar_videos(post)
+
+
+    # =====================================================
+    # 3 ÚLTIMAS NOTÍCIAS
+    # =====================================================
+
+    relacionadas = [
+        p for p in posts
+        if p.get("id") != post_id
+    ][:3]
+
+
+    related_html = ""
+
+    for related in relacionadas:
+
+        related_id = html.escape(
+            related.get("id", "")
         )
 
-        if video.lower().endswith(extensoes):
-
-            caminho = caminho_recurso(video)
-
-            extensao = os.path.splitext(
-                video.lower()
-            )[1]
-
-            tipos_video = {
-
-                ".mp4": "video/mp4",
-
-                ".webm": "video/webm",
-
-                ".ogg": "video/ogg",
-
-                ".mov": "video/quicktime",
-
-                ".m4v": "video/mp4"
-
-            }
-
-            tipo_video = tipos_video.get(
-                extensao,
-                "video/mp4"
+        related_titulo = html.escape(
+            related.get(
+                "titulo",
+                "CavaloGameNews"
             )
+        )
 
-            resultado += f"""
+        related_imagem = html.escape(
+            related.get("imagem", "")
+        )
 
-            <div class="video-container local-video">
+        related_categoria = html.escape(
+            related.get(
+                "categoria",
+                "Notícias"
+            )
+        )
 
-                <video
-                    controls
-                    preload="metadata"
-                    playsinline>
+        related_data = html.escape(
+            related.get("data", "")
+        )
 
-                    <source
-                        src="{escapar(caminho)}"
-                        type="{tipo_video}">
 
-                    Seu navegador não suporta vídeos.
+        related_html += f"""
 
-                </video>
+        <a
+            href="../noticias/{related_id}.html"
+            class="related-card"
+        >
+
+            <img
+                src="{related_imagem}"
+                alt="{related_titulo}"
+            >
+
+            <div class="related-content">
+
+                <div class="category">
+                    {related_categoria}
+                </div>
+
+                <div class="related-date">
+                    {related_data}
+                </div>
+
+                <h3>
+                    {related_titulo}
+                </h3>
 
             </div>
 
-            """
-
-    return resultado
-
-
-# ==============================
-# CONTEÚDO DA NOTÍCIA
-# ==============================
-
-def gerar_conteudo(conteudo):
-
-    if not conteudo:
-        return ""
-
-    resultado = ""
-
-    for item in conteudo:
-
-        # ==============================
-        # TEXTO SIMPLES
-        # ==============================
-
-        if isinstance(item, str):
-
-            resultado += f"""
-            <p>{escapar(item)}</p>
-            """
-
-            continue
-
-        if not isinstance(item, dict):
-            continue
-
-        tipo = item.get(
-            "tipo",
-            ""
-        ).lower()
-
-        # ==============================
-        # TEXTO
-        # ==============================
-
-        if tipo in ("texto", "paragrafo"):
-
-            texto = item.get(
-                "texto",
-                ""
-            )
-
-            resultado += f"""
-            <p>{escapar(texto)}</p>
-            """
-
-        # ==============================
-        # TÍTULO
-        # ==============================
-
-        elif tipo == "titulo":
-
-            texto = item.get(
-                "texto",
-                ""
-            )
-
-            resultado += f"""
-            <h2>{escapar(texto)}</h2>
-            """
-
-        # ==============================
-        # SUBTÍTULO
-        # ==============================
-
-        elif tipo == "subtitulo":
-
-            texto = item.get(
-                "texto",
-                ""
-            )
-
-            resultado += f"""
-            <h3>{escapar(texto)}</h3>
-            """
-
-        # ==============================
-        # IMAGEM
-        # ==============================
-
-        elif tipo == "imagem":
-
-            imagem = item.get(
-                "imagem",
-                ""
-            )
-
-            legenda = item.get(
-                "legenda",
-                ""
-            )
-
-            if imagem:
-
-                caminho_imagem = caminho_recurso(
-                    imagem
-                )
-
-                resultado += f"""
-
-                <figure>
-
-                    <img
-                        src="{escapar(caminho_imagem)}"
-                        alt="{escapar(legenda)}">
-
-                    {
-                        f'<figcaption>{escapar(legenda)}</figcaption>'
-                        if legenda
-                        else ''
-                    }
-
-                </figure>
-
-                """
-
-        # ==============================
-        # VÍDEO
-        # ==============================
-
-        elif tipo == "video":
-
-            videos = item.get(
-                "videos",
-                []
-            )
-
-            if not videos:
-
-                video = item.get(
-                    "video",
-                    ""
-                )
-
-                if not video:
-
-                    video = item.get(
-                        "url",
-                        ""
-                    )
-
-                if not video:
-
-                    video = item.get(
-                        "src",
-                        ""
-                    )
-
-                if video:
-                    videos = [video]
-
-            resultado += gerar_videos(
-                videos
-            )
-
-        # ==============================
-        # LISTA
-        # ==============================
-
-        elif tipo == "lista":
-
-            itens = item.get(
-                "itens",
-                []
-            )
-
-            resultado += "<ul>"
-
-            for lista_item in itens:
-
-                resultado += f"""
-                <li>{escapar(lista_item)}</li>
-                """
-
-            resultado += "</ul>"
-
-        # ==============================
-        # NEGRITO
-        # ==============================
-
-        elif tipo == "negrito":
-
-            texto = item.get(
-                "texto",
-                ""
-            )
-
-            resultado += f"""
-            <strong>{escapar(texto)}</strong>
-            """
-
-    return resultado
-
-
-# ==============================
-# GERAR HTML
-# ==============================
-
-def gerar_html(noticia):
-
-    titulo = escapar(
-        noticia.get(
-            "titulo",
-            "Sem título"
-        )
-    )
-
-    categoria = escapar(
-        noticia.get(
-            "categoria",
-            "Notícias"
-        )
-    )
-
-    data = escapar(
-        noticia.get(
-            "data",
-            ""
-        )
-    )
-
-    resumo = escapar(
-        noticia.get(
-            "resumo",
-            ""
-        )
-    )
-
-    imagem = noticia.get(
-        "imagem",
-        ""
-    )
-
-    conteudo = noticia.get(
-        "conteudo",
-        []
-    )
-
-    # ==============================
-    # ID
-    # ==============================
-
-    identificador = noticia.get(
-        "id",
-        ""
-    )
-
-    if not identificador:
-
-        identificador = slug(
-            noticia.get(
-                "titulo",
-                "noticia"
-            )
-        )
-
-    identificador = slug(
-        identificador
-    )
-
-    # ==============================
-    # URL DA NOTÍCIA
-    # ==============================
-
-    url_noticia = (
-        URL_BASE
-        + "/noticias/"
-        + identificador
-        + ".html"
-    )
-
-    # ==============================
-    # IMAGEM ABSOLUTA
-    # ==============================
-
-    imagem_absoluta = ""
-
-    if imagem:
-
-        imagem_absoluta = url_absoluta(
-            imagem
-        )
-
-    # ==============================
-    # CONTEÚDO
-    # ==============================
-
-    corpo = gerar_conteudo(
-        conteudo
-    )
-
-    # ==============================
-    # VÍDEOS PRINCIPAIS
-    # ==============================
-
-    videos = noticia.get(
-        "videos",
-        []
-    )
-
-    # Compatibilidade com "video"
-    if not videos:
-
-        video = noticia.get(
-            "video",
-            ""
-        )
-
-        if video:
-            videos = [video]
-
-    videos_principais = gerar_videos(
-        videos
-    )
-
-    # ==============================
-    # IMAGEM PRINCIPAL
-    # ==============================
-
-    imagem_principal = ""
-
-    if imagem:
-
-        caminho_imagem = caminho_recurso(
-            imagem
-        )
-
-        imagem_principal = f"""
-
-        <div class="imagem-principal">
-
-            <img
-                src="{escapar(caminho_imagem)}"
-                alt="{titulo}">
-
-        </div>
+        </a>
 
         """
 
-    # ==============================
-    # HTML
-    # ==============================
 
-    return f"""<!DOCTYPE html>
+    # =====================================================
+    # HTML DA NOTÍCIA
+    # =====================================================
+
+    pagina = f"""<!DOCTYPE html>
 
 <html lang="pt-BR">
 
@@ -621,324 +311,330 @@ def gerar_html(noticia):
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<title>{titulo} - CavaloGameNews</title>
+<title>
+{titulo} - CavaloGameNews
+</title>
+
 
 <meta
     name="description"
-    content="{resumo}">
+    content="{resumo}"
+>
 
-<!-- ==============================
+
+<!-- =================================================
      DISCORD / REDES SOCIAIS
-     ============================== -->
+================================================= -->
 
-<meta property="og:type" content="article">
+<meta
+    property="og:type"
+    content="article"
+>
 
 <meta
     property="og:title"
-    content="{titulo}">
+    content="{titulo}"
+>
 
 <meta
     property="og:description"
-    content="{resumo}">
-
-<meta
-    property="og:url"
-    content="{url_noticia}">
-
-<meta
-    property="og:site_name"
-    content="CavaloGameNews">
+    content="{resumo}"
+>
 
 <meta
     property="og:image"
-    content="{imagem_absoluta}">
+    content="{imagem}"
+>
 
 <meta
-    property="og:image:alt"
-    content="{titulo}">
+    property="og:url"
+    content="{url}"
+>
+
+<meta
+    property="og:site_name"
+    content="CavaloGameNews"
+>
+
 
 <meta
     name="twitter:card"
-    content="summary_large_image">
+    content="summary_large_image"
+>
 
 <meta
     name="twitter:title"
-    content="{titulo}">
+    content="{titulo}"
+>
 
 <meta
     name="twitter:description"
-    content="{resumo}">
+    content="{resumo}"
+>
 
 <meta
     name="twitter:image"
-    content="{imagem_absoluta}">
+    content="{imagem}"
+>
 
 
 <style>
 
+/* =================================================
+   GERAL
+================================================= */
+
 * {{
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }}
+
 
 body {{
-    margin: 0;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    background: #0f0f0f;
-
-    color: #ffffff;
+    background: #111;
+    color: #fff;
 }}
+
+
+/* =================================================
+   HEADER
+================================================= */
 
 header {{
-    background: #111111;
-
-    border-bottom:
-        1px solid #292929;
-
-    padding: 18px 20px;
+    background: #0f1115;
+    padding: 20px 30px;
+    border-bottom: 3px solid #00ff88;
 }}
 
-.header-container {{
-    max-width: 1200px;
 
-    margin: auto;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-}}
-
-.logo {{
-    color: #ffffff;
-
+header a {{
+    color: #00ff88;
     text-decoration: none;
-
-    font-size: 24px;
-
     font-weight: bold;
 }}
 
-.logo span {{
-    color: #ff6b00;
-}}
 
-.voltar {{
-    color: #ffffff;
+/* =================================================
+   ARTIGO
+================================================= */
 
-    text-decoration: none;
-
-    padding: 10px 16px;
-
-    border-radius: 8px;
-
-    background: #222222;
-
-    transition: 0.2s;
-}}
-
-.voltar:hover {{
-    background: #ff6b00;
-}}
-
-main {{
-    max-width: 900px;
-
+.article {{
+    width: 90%;
+    max-width: 1000px;
     margin: 40px auto;
-
-    padding: 0 20px;
 }}
 
-.categoria {{
-    display: inline-block;
 
-    background: #ff6b00;
-
-    color: #ffffff;
-
-    padding: 6px 12px;
-
-    border-radius: 6px;
-
-    font-size: 13px;
-
+.category {{
+    color: #00ff88;
+    font-size: 14px;
     font-weight: bold;
-
-    margin-bottom: 15px;
-}}
-
-h1 {{
-    font-size: 42px;
-
-    line-height: 1.15;
-
-    margin: 0 0 15px;
-}}
-
-.data {{
-    color: #999999;
-
-    margin-bottom: 25px;
-}}
-
-.resumo {{
-    font-size: 19px;
-
-    line-height: 1.6;
-
-    color: #cccccc;
-
-    margin-bottom: 30px;
-}}
-
-.imagem-principal {{
-    width: 100%;
-
-    margin-bottom: 30px;
-}}
-
-.imagem-principal img {{
-    display: block;
-
-    width: 100%;
-
-    max-height: 550px;
-
-    object-fit: cover;
-
-    border-radius: 12px;
-}}
-
-.artigo {{
-    font-size: 18px;
-
-    line-height: 1.8;
-}}
-
-.artigo p {{
-    margin: 0 0 22px;
-}}
-
-.artigo h2 {{
-    font-size: 28px;
-
-    margin-top: 35px;
-}}
-
-.artigo h3 {{
-    font-size: 23px;
-
-    margin-top: 30px;
-}}
-
-.artigo ul {{
-    margin-bottom: 25px;
-}}
-
-.artigo li {{
+    text-transform: uppercase;
     margin-bottom: 10px;
 }}
 
-.artigo figure {{
-    margin: 30px 0;
+
+h1 {{
+    font-size: 46px;
+    line-height: 1.15;
+    margin-bottom: 15px;
 }}
 
-.artigo figure img {{
-    display: block;
 
+.info {{
+    color: #999;
+    margin-bottom: 25px;
+}}
+
+
+/* =================================================
+   IMAGEM
+================================================= */
+
+.cover {{
     width: 100%;
-
-    max-width: 100%;
-
-    border-radius: 10px;
+    max-height: 560px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 30px;
 }}
 
-.artigo figcaption {{
-    text-align: center;
 
-    color: #999999;
+/* =================================================
+   TEXTO
+================================================= */
 
-    font-size: 14px;
-
-    margin-top: 8px;
+.text {{
+    max-width: 800px;
+    margin: auto;
 }}
 
-/* ==============================
+
+.text p {{
+    color: #ddd;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}}
+
+
+/* =================================================
    VÍDEOS
-   ============================== */
+================================================= */
 
 .video-container {{
-    position: relative;
-
     width: 100%;
-
-    aspect-ratio: 16 / 9;
-
     margin: 30px 0;
-
-    overflow: hidden;
-
-    border-radius: 12px;
-
-    background: #000000;
+    aspect-ratio: 16 / 9;
 }}
+
 
 .video-container iframe {{
-    display: block;
-
     width: 100%;
-
     height: 100%;
-
-    border: none;
+    border: 0;
+    border-radius: 14px;
+    display: block;
 }}
+
 
 .video-container video {{
-    display: block;
-
     width: 100%;
-
     height: 100%;
-
     object-fit: contain;
-
-    background: #000000;
+    background: #000;
+    border-radius: 14px;
+    display: block;
 }}
+
+
+/* =================================================
+   BOTÃO
+================================================= */
+
+.back-button {{
+    display: inline-block;
+    margin-top: 20px;
+    background: #00ff88;
+    color: #111;
+    padding: 12px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}}
+
+
+/* =================================================
+   MAIS NOTÍCIAS
+================================================= */
+
+.related {{
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+}}
+
+
+.related h2 {{
+    color: #00ff88;
+    margin-bottom: 20px;
+}}
+
+
+.related-grid {{
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 20px;
+}}
+
+
+.related-card {{
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+}}
+
+
+.related-card:hover {{
+    border-color: #00ff88;
+    transform: translateY(-3px);
+}}
+
+
+.related-card img {{
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+}}
+
+
+.related-content {{
+    padding: 12px;
+}}
+
+
+.related-content h3 {{
+    font-size: 17px;
+    margin-top: 6px;
+    line-height: 1.3;
+}}
+
+
+.related-date {{
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+}}
+
+
+/* =================================================
+   FOOTER
+================================================= */
 
 footer {{
-    margin-top: 60px;
-
-    padding: 30px 20px;
-
+    background: #1a1a1a;
     text-align: center;
-
-    color: #777777;
-
-    border-top:
-        1px solid #292929;
+    padding: 25px;
+    margin-top: 50px;
+    color: #888;
 }}
 
-@media (max-width: 700px) {{
+
+/* =================================================
+   CELULAR
+================================================= */
+
+@media (max-width: 600px) {{
 
     h1 {{
         font-size: 30px;
     }}
 
-    .artigo {{
-        font-size: 16px;
+    .article {{
+        width: 92%;
     }}
 
-    .header-container {{
-        flex-direction: column;
-
-        gap: 15px;
+    .text p {{
+        font-size: 16px;
     }}
 
 }}
@@ -947,75 +643,101 @@ footer {{
 
 </head>
 
+
 <body>
+
 
 <header>
 
-<div class="header-container">
-
-<a
-    class="logo"
-    href="../index.html">
-
-    Cavalo<span>GameNews</span>
-
+<a href="../index.html">
+← Voltar para o CavaloGameNews
 </a>
-
-<a
-    class="voltar"
-    href="../index.html">
-
-    ← Voltar
-
-</a>
-
-</div>
 
 </header>
 
-<main>
 
-<div class="categoria">
+<main class="article">
 
+
+<div class="category">
 {categoria}
-
 </div>
+
 
 <h1>
-
 {titulo}
-
 </h1>
 
-<div class="data">
 
-{data}
+<div class="info">
+{data} · CavaloGameNews
+</div>
+
+
+<img
+    class="cover"
+    src="{imagem}"
+    alt="{titulo}"
+>
+
+
+<!-- =================================================
+     VÍDEOS
+================================================= -->
+
+{videos_html}
+
+
+<div class="text">
+
+
+<!-- =================================================
+     CONTEÚDO
+================================================= -->
+
+{conteudo_html}
+
+
+<a
+    class="back-button"
+    href="../index.html"
+>
+← Voltar para as notícias
+</a>
+
+
+<!-- =================================================
+     MAIS NOTÍCIAS
+================================================= -->
+
+<div class="related">
+
+<h2>
+Mais notícias
+</h2>
+
+
+<div class="related-grid">
+
+{related_html}
 
 </div>
 
-<div class="resumo">
-
-{resumo}
-
 </div>
 
-{imagem_principal}
 
-{videos_principais}
-
-<article class="artigo">
-
-{corpo}
-
-</article>
+</div>
 
 </main>
 
+
 <footer>
 
-© 2026 CavaloGameNews — Todas as notícias de games em um só lugar.
+© 2026 CavaloGameNews -
+Todos os direitos reservados.
 
 </footer>
+
 
 </body>
 
@@ -1023,141 +745,22 @@ footer {{
 """
 
 
-# ==============================
-# GERAR TODAS AS NOTÍCIAS
-# ==============================
+    # =====================================================
+    # SALVAR
+    # =====================================================
 
-def gerar_noticias():
-
-    if not os.path.exists(
-        ARQUIVO_JSON
-    ):
-
-        print(
-            f"ERRO: arquivo {ARQUIVO_JSON} não encontrado."
-        )
-
-        return
-
-    try:
-
-        with open(
-            ARQUIVO_JSON,
-            "r",
-            encoding="utf-8"
-        ) as arquivo:
-
-            noticias = json.load(
-                arquivo
-            )
-
-    except Exception as erro:
-
-        print(
-            "ERRO ao ler o noticias.json:"
-        )
-
-        print(
-            erro
-        )
-
-        return
-
-    if not isinstance(
-        noticias,
-        list
-    ):
-
-        print(
-            "ERRO: noticias.json precisa conter uma lista de notícias."
-        )
-
-        return
-
-    os.makedirs(
-        PASTA_SAIDA,
-        exist_ok=True
-    )
-
-    quantidade = 0
-
-    for noticia in noticias:
-
-        if not isinstance(
-            noticia,
-            dict
-        ):
-
-            continue
-
-        titulo = noticia.get(
-            "titulo",
-            "noticia"
-        )
-
-        identificador = noticia.get(
-            "id",
-            ""
-        )
-
-        if not identificador:
-
-            identificador = slug(
-                titulo
-            )
-
-        identificador = slug(
-            identificador
-        )
-
-        if not identificador:
-
-            identificador = "noticia"
-
-        arquivo_saida = os.path.join(
-            PASTA_SAIDA,
-            identificador + ".html"
-        )
-
-        try:
-
-            html_noticia = gerar_html(
-                noticia
-            )
-
-            with open(
-                arquivo_saida,
-                "w",
-                encoding="utf-8"
-            ) as arquivo:
-
-                arquivo.write(
-                    html_noticia
-                )
-
-            quantidade += 1
-
-            print(
-                f"OK: {arquivo_saida}"
-            )
-
-        except Exception as erro:
-
-            print(
-                f"ERRO ao gerar '{titulo}': {erro}"
-            )
-
-    print()
-
-    print(
-        f"Concluído! {quantidade} notícia(s) gerada(s)."
-    )
+    caminho = f"noticias/{post_id}.html"
 
 
-# ==============================
-# EXECUTAR
-# ==============================
+    with open(
+        caminho,
+        "w",
+        encoding="utf-8"
+    ) as f:
 
-if __name__ == "__main__":
+        f.write(pagina)
 
-    gerar_noticias()
+
+print(
+    f"{len(posts)} notícias geradas com sucesso!"
+)
