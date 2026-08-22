@@ -27,7 +27,11 @@
   "imagem": "https://pbs.twimg.com/media/HQGpluOXcAAvLqy?format=jpg&name=large",
   "resumo": "RuneScape: Dragonwilds será lançado no Xbox Game Pass Ultimate no mesmo dia de sua chegada ao Xbox, em 15 de setembro.",
   "link": "",
-  "videos": ["dwuZB-3FGyg"],
+  "videos": [
+  {
+    "tipo": "youtube",
+    "url": "https://www.youtube.com/watch?v=JhfpDEYe2YI"
+  },
   "conteudo": [
     "A Xbox confirmou que RuneScape: Dragonwilds chegará ao Xbox Game Pass Ultimate no mesmo dia de seu lançamento para Xbox, marcado para 15 de setembro.",
     "O jogo de sobrevivência e aventura desenvolvido pela Jagex coloca os jogadores em um mundo de fantasia inspirado no universo de RuneScape, com exploração, construção e combate.",
