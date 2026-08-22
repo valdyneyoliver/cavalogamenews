@@ -10,6 +10,7 @@ import re
 ARQUIVO_JSON = "noticias.json"
 PASTA_SAIDA = "noticias"
 
+
 # ==============================
 # FUNÇÕES
 # ==============================
@@ -22,14 +23,35 @@ def escapar(texto):
 
 def slug(texto):
     texto = str(texto).lower()
+
     texto = re.sub(r"[áàãâä]", "a", texto)
     texto = re.sub(r"[éèêë]", "e", texto)
     texto = re.sub(r"[íìîï]", "i", texto)
     texto = re.sub(r"[óòõôö]", "o", texto)
     texto = re.sub(r"[úùûü]", "u", texto)
     texto = re.sub(r"[ç]", "c", texto)
+
     texto = re.sub(r"[^a-z0-9]+", "-", texto)
+
     return texto.strip("-")
+
+
+# ==============================
+# VERIFICAR URL
+# ==============================
+
+def eh_url(url):
+
+    if not url:
+        return False
+
+    url = str(url).strip().lower()
+
+    return (
+        url.startswith("http://")
+        or
+        url.startswith("https://")
+    )
 
 
 # ==============================
@@ -42,6 +64,10 @@ def youtube_id(url):
         return None
 
     url = str(url).strip()
+
+    # Se já for somente o ID do YouTube
+    if re.fullmatch(r"[\w-]{11}", url):
+        return url
 
     padroes = [
         r"(?:youtube\.com/watch\?v=)([^&]+)",
@@ -66,94 +92,141 @@ def youtube_id(url):
 
 
 # ==============================
-# VÍDEO
+# CAMINHO DE ARQUIVO
 # ==============================
 
-def gerar_video(video):
+def caminho_recurso(caminho):
 
-    if not video:
+    if not caminho:
         return ""
 
-    video = str(video).strip()
+    caminho = str(caminho).strip()
 
-    # ==============================
-    # YOUTUBE
-    # ==============================
+    # URL externa não precisa de alteração
+    if eh_url(caminho):
+        return caminho
 
-    video_id = youtube_id(video)
+    # Corrige barras do Windows
+    caminho = caminho.replace("\\", "/")
 
-    if video_id:
+    # Remove ./ do começo
+    if caminho.startswith("./"):
+        caminho = caminho[2:]
 
-        return f"""
-        <div class="video-container youtube-video">
+    # Se já começa com ../, mantém
+    if caminho.startswith("../"):
+        return caminho
 
-            <iframe
-                src="https://www.youtube.com/embed/{escapar(video_id)}"
-                title="Vídeo da notícia"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-        """
-
-    # ==============================
-    # VÍDEO LOCAL
-    # ==============================
-
-    extensoes = (
-        ".mp4",
-        ".webm",
-        ".ogg",
-        ".mov",
-        ".m4v"
-    )
-
-    if video.lower().endswith(extensoes):
-
-        # Remove ./ do começo caso exista
-        video = video.replace("\\", "/")
-
-        if video.startswith("./"):
-            video = video[2:]
-
-        # Se o vídeo já estiver dentro da pasta noticias,
-        # não adiciona ../
-        if video.startswith("noticias/"):
-
-            caminho_video = video
-
-        else:
-
-            # Como a página está dentro de /noticias/,
-            # precisamos voltar uma pasta.
-            caminho_video = "../" + video
-
-        return f"""
-        <div class="video-container local-video">
-
-            <video
-                controls
-                preload="metadata"
-                playsinline>
-
-                <source
-                    src="{escapar(caminho_video)}"
-                    type="video/{escapar(video.split('.')[-1].lower())}">
-
-                Seu navegador não suporta vídeos.
-
-            </video>
-
-        </div>
-        """
-
-    return ""
+    # Página está dentro de /noticias/
+    return "../" + caminho
 
 
 # ==============================
-# CONTEÚDO
+# VÍDEOS
+# ==============================
+
+def gerar_videos(videos):
+
+    if not videos:
+        return ""
+
+    # Se alguém colocar apenas uma string
+    if isinstance(videos, str):
+        videos = [videos]
+
+    resultado = ""
+
+    for video in videos:
+
+        if not video:
+            continue
+
+        video = str(video).strip()
+
+        if not video:
+            continue
+
+        # ==============================
+        # YOUTUBE
+        # ==============================
+
+        video_id = youtube_id(video)
+
+        if video_id:
+
+            resultado += f"""
+            <div class="video-container youtube-video">
+
+                <iframe
+                    src="https://www.youtube.com/embed/{escapar(video_id)}"
+                    title="Vídeo da notícia"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+            """
+
+            continue
+
+        # ==============================
+        # VÍDEO LOCAL
+        # ==============================
+
+        extensoes = (
+            ".mp4",
+            ".webm",
+            ".ogg",
+            ".mov",
+            ".m4v"
+        )
+
+        if video.lower().endswith(extensoes):
+
+            caminho = caminho_recurso(video)
+
+            extensao = os.path.splitext(
+                video.lower()
+            )[1]
+
+            tipos_video = {
+                ".mp4": "video/mp4",
+                ".webm": "video/webm",
+                ".ogg": "video/ogg",
+                ".mov": "video/quicktime",
+                ".m4v": "video/mp4"
+            }
+
+            tipo_video = tipos_video.get(
+                extensao,
+                "video/mp4"
+            )
+
+            resultado += f"""
+            <div class="video-container local-video">
+
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline>
+
+                    <source
+                        src="{escapar(caminho)}"
+                        type="{tipo_video}">
+
+                    Seu navegador não suporta vídeos.
+
+                </video>
+
+            </div>
+            """
+
+    return resultado
+
+
+# ==============================
+# CONTEÚDO DA NOTÍCIA
 # ==============================
 
 def gerar_conteudo(conteudo):
@@ -186,7 +259,7 @@ def gerar_conteudo(conteudo):
         ).lower()
 
         # ==============================
-        # PARÁGRAFO
+        # TEXTO / PARÁGRAFO
         # ==============================
 
         if tipo == "texto" or tipo == "paragrafo":
@@ -248,11 +321,15 @@ def gerar_conteudo(conteudo):
 
             if imagem:
 
+                caminho_imagem = caminho_recurso(
+                    imagem
+                )
+
                 resultado += f"""
                 <figure>
 
                     <img
-                        src="../{escapar(imagem)}"
+                        src="{escapar(caminho_imagem)}"
                         alt="{escapar(legenda)}">
 
                     {
@@ -270,27 +347,37 @@ def gerar_conteudo(conteudo):
 
         elif tipo == "video":
 
-            video = item.get(
-                "video",
-                ""
+            videos = item.get(
+                "videos",
+                []
             )
 
-            if not video:
+            if not videos:
 
                 video = item.get(
-                    "url",
+                    "video",
                     ""
                 )
 
-            if not video:
+                if not video:
 
-                video = item.get(
-                    "src",
-                    ""
-                )
+                    video = item.get(
+                        "url",
+                        ""
+                    )
 
-            resultado += gerar_video(
-                video
+                if not video:
+
+                    video = item.get(
+                        "src",
+                        ""
+                    )
+
+                if video:
+                    videos = [video]
+
+            resultado += gerar_videos(
+                videos
             )
 
         # ==============================
@@ -333,7 +420,7 @@ def gerar_conteudo(conteudo):
 
 
 # ==============================
-# MODELO HTML
+# GERAR HTML DA NOTÍCIA
 # ==============================
 
 def gerar_html(noticia):
@@ -366,11 +453,9 @@ def gerar_html(noticia):
         )
     )
 
-    imagem = escapar(
-        noticia.get(
-            "imagem",
-            ""
-        )
+    imagem = noticia.get(
+        "imagem",
+        ""
     )
 
     conteudo = noticia.get(
@@ -378,26 +463,37 @@ def gerar_html(noticia):
         []
     )
 
+    # ==============================
+    # CONTEÚDO
+    # ==============================
+
     corpo = gerar_conteudo(
         conteudo
     )
 
     # ==============================
-    # VÍDEO PRINCIPAL
+    # VÍDEOS PRINCIPAIS
     # ==============================
 
-    video_principal = ""
-
-    video = noticia.get(
-        "video",
-        ""
+    videos = noticia.get(
+        "videos",
+        []
     )
 
-    if video:
+    # Compatibilidade com "video"
+    if not videos:
 
-        video_principal = gerar_video(
-            video
+        video = noticia.get(
+            "video",
+            ""
         )
+
+        if video:
+            videos = [video]
+
+    videos_principais = gerar_videos(
+        videos
+    )
 
     # ==============================
     # IMAGEM PRINCIPAL
@@ -407,11 +503,15 @@ def gerar_html(noticia):
 
     if imagem:
 
+        caminho_imagem = caminho_recurso(
+            imagem
+        )
+
         imagem_principal = f"""
         <div class="imagem-principal">
 
             <img
-                src="../{imagem}"
+                src="{escapar(caminho_imagem)}"
                 alt="{titulo}">
 
         </div>
@@ -445,19 +545,29 @@ def gerar_html(noticia):
 
 body {{
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: #0f0f0f;
+
     color: #ffffff;
 }}
 
 header {{
     background: #111111;
-    border-bottom: 1px solid #292929;
+
+    border-bottom:
+        1px solid #292929;
+
     padding: 18px 20px;
 }}
 
 .header-container {{
     max-width: 1200px;
+
     margin: auto;
 
     display: flex;
@@ -469,9 +579,11 @@ header {{
 
 .logo {{
     color: #ffffff;
+
     text-decoration: none;
 
     font-size: 24px;
+
     font-weight: bold;
 }}
 
@@ -481,6 +593,7 @@ header {{
 
 .voltar {{
     color: #ffffff;
+
     text-decoration: none;
 
     padding: 10px 16px;
@@ -546,6 +659,11 @@ h1 {{
     margin-bottom: 30px;
 }}
 
+
+/* ==============================
+   IMAGEM PRINCIPAL
+   ============================== */
+
 .imagem-principal {{
     width: 100%;
 
@@ -553,6 +671,8 @@ h1 {{
 }}
 
 .imagem-principal img {{
+    display: block;
+
     width: 100%;
 
     max-height: 550px;
@@ -561,6 +681,11 @@ h1 {{
 
     border-radius: 12px;
 }}
+
+
+/* ==============================
+   ARTIGO
+   ============================== */
 
 .artigo {{
     font-size: 18px;
@@ -592,12 +717,21 @@ h1 {{
     margin-bottom: 10px;
 }}
 
+
+/* ==============================
+   IMAGENS DENTRO DA NOTÍCIA
+   ============================== */
+
 .artigo figure {{
     margin: 30px 0;
 }}
 
 .artigo figure img {{
+    display: block;
+
     width: 100%;
+
+    max-width: 100%;
 
     border-radius: 10px;
 }}
@@ -618,7 +752,6 @@ h1 {{
    ============================== */
 
 .video-container {{
-
     position: relative;
 
     width: 100%;
@@ -635,6 +768,7 @@ h1 {{
 }}
 
 .video-container iframe {{
+    display: block;
 
     width: 100%;
 
@@ -644,7 +778,6 @@ h1 {{
 }}
 
 .video-container video {{
-
     display: block;
 
     width: 100%;
@@ -657,8 +790,11 @@ h1 {{
 }}
 
 
-footer {{
+/* ==============================
+   RODAPÉ
+   ============================== */
 
+footer {{
     margin-top: 60px;
 
     padding: 30px 20px;
@@ -667,23 +803,26 @@ footer {{
 
     color: #777777;
 
-    border-top: 1px solid #292929;
+    border-top:
+        1px solid #292929;
 }}
+
+
+/* ==============================
+   CELULAR
+   ============================== */
 
 @media (max-width: 700px) {{
 
     h1 {{
-
         font-size: 30px;
     }}
 
     .artigo {{
-
         font-size: 16px;
     }}
 
     .header-container {{
-
         flex-direction: column;
 
         gap: 15px;
@@ -697,6 +836,7 @@ footer {{
 
 <body>
 
+
 <header>
 
 <div class="header-container">
@@ -708,6 +848,7 @@ footer {{
     Cavalo<span>GameNews</span>
 
 </a>
+
 
 <a
     class="voltar"
@@ -721,7 +862,9 @@ footer {{
 
 </header>
 
+
 <main>
+
 
 <div class="categoria">
 
@@ -729,11 +872,13 @@ footer {{
 
 </div>
 
+
 <h1>
 
 {titulo}
 
 </h1>
+
 
 <div class="data">
 
@@ -741,15 +886,19 @@ footer {{
 
 </div>
 
+
 <div class="resumo">
 
 {resumo}
 
 </div>
 
+
 {imagem_principal}
 
-{video_principal}
+
+{videos_principais}
+
 
 <article class="artigo">
 
@@ -757,13 +906,16 @@ footer {{
 
 </article>
 
+
 </main>
+
 
 <footer>
 
 © 2026 CavaloGameNews — Todas as notícias de games em um só lugar.
 
 </footer>
+
 
 </body>
 
@@ -772,7 +924,7 @@ footer {{
 
 
 # ==============================
-# GERAR NOTÍCIAS
+# GERAR TODAS AS NOTÍCIAS
 # ==============================
 
 def gerar_noticias():
@@ -909,4 +1061,3 @@ def gerar_noticias():
 if __name__ == "__main__":
 
     gerar_noticias()
-```
