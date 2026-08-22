@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>CavaloGameNews</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,22 +27,14 @@
       border-bottom: 3px solid #00ff88;
     }
 
-    nav {
-      margin-top: 0;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .search-box {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-
     header a {
       color: #00ff88;
       text-decoration: none;
       font-weight: bold;
+    }
+
+    header a:hover {
+      color: #fff;
     }
 
     .article {
@@ -77,7 +71,20 @@
       margin-bottom: 30px;
     }
 
-    /* VÍDEOS */
+    /* =========================
+       RESUMO
+    ========================= */
+
+    .summary {
+      color: #ccc;
+      font-size: 19px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    /* =========================
+       VÍDEOS
+    ========================= */
 
     .videos-container {
       width: 100%;
@@ -88,6 +95,9 @@
       width: 100%;
       margin-bottom: 30px;
       aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
     }
 
     .video-container iframe,
@@ -95,10 +105,17 @@
       width: 100%;
       height: 100%;
       border: 0;
-      border-radius: 14px;
       display: block;
       background: #000;
     }
+
+    .video-container video {
+      object-fit: contain;
+    }
+
+    /* =========================
+       TEXTO
+    ========================= */
 
     .text {
       max-width: 800px;
@@ -112,6 +129,10 @@
       margin-bottom: 25px;
     }
 
+    /* =========================
+       BOTÃO VOLTAR
+    ========================= */
+
     .back-button {
       display: inline-block;
       margin-top: 20px;
@@ -122,6 +143,14 @@
       text-decoration: none;
       font-weight: bold;
     }
+
+    .back-button:hover {
+      background: #00cc6d;
+    }
+
+    /* =========================
+       MAIS NOTÍCIAS
+    ========================= */
 
     .related {
       margin-top: 50px;
@@ -136,7 +165,10 @@
 
     .related-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+      );
       gap: 20px;
     }
 
@@ -148,6 +180,12 @@
       text-decoration: none;
       color: #fff;
       display: block;
+      transition: 0.2s;
+    }
+
+    .related-card:hover {
+      border-color: #00ff88;
+      transform: translateY(-3px);
     }
 
     .related-card img {
@@ -164,13 +202,12 @@
     .related-content h3 {
       font-size: 17px;
       margin-top: 6px;
+      line-height: 1.4;
     }
 
-    .related-card:hover {
-      border-color: #00ff88;
-      transform: translateY(-3px);
-      transition: 0.2s;
-    }
+    /* =========================
+       RODAPÉ
+    ========================= */
 
     footer {
       background: #1a1a1a;
@@ -180,7 +217,12 @@
       color: #888;
     }
 
+    /* =========================
+       CELULAR
+    ========================= */
+
     @media (max-width: 600px) {
+
       h1 {
         font-size: 30px;
       }
@@ -192,228 +234,656 @@
       .text p {
         font-size: 16px;
       }
+
+      .summary {
+        font-size: 17px;
+      }
+
     }
 
-    nav a {
-      transition: 0.2s;
-    }
   </style>
 </head>
 
 <body>
 
 <header>
-  <a href="index.html">← Voltar para o CavaloGameNews</a>
+
+  <a href="index.html">
+    ← Voltar para o CavaloGameNews
+  </a>
+
 </header>
 
+
 <main class="article" id="article">
+
   <p>Carregando notícia...</p>
+
 </main>
 
+
 <footer>
+
   © 2026 CavaloGameNews - Todos os direitos reservados.
+
 </footer>
+
 
 <script>
 
-const params = new URLSearchParams(window.location.search);
+/* =========================
+   PEGAR ID DA NOTÍCIA
+========================= */
+
+const params = new URLSearchParams(
+  window.location.search
+);
+
 const id = params.get("id");
 
-fetch("posts.json")
-  .then(response => response.json())
-  .then(posts => {
 
-    const post = posts.find(p => p.id === id);
+/* =========================
+   TRANSFORMAR TEXTO EM HTML SEGURO
+========================= */
 
-    if (!post) {
-      document.getElementById("article").innerHTML = `
-        <h1>Notícia não encontrada</h1>
+function escaparHTML(texto) {
 
-        <a class="back-button" href="index.html">
-          ← Voltar para as notícias
-        </a>
-      `;
+  if (texto === null || texto === undefined) {
+    return "";
+  }
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   YOUTUBE
+========================= */
+
+function pegarYoutubeID(video) {
+
+  if (!video) {
+    return null;
+  }
+
+  video = String(video).trim();
+
+
+  /* ID direto */
+
+  if (
+    /^[a-zA-Z0-9_-]{11}$/.test(video)
+  ) {
+
+    return video;
+
+  }
+
+
+  /* youtube.com/watch?v= */
+
+  let resultado = video.match(
+    /youtube\.com\/watch\?v=([^&]+)/i
+  );
+
+  if (resultado) {
+    return resultado[1];
+  }
+
+
+  /* youtu.be */
+
+  resultado = video.match(
+    /youtu\.be\/([^?&]+)/i
+  );
+
+  if (resultado) {
+    return resultado[1];
+  }
+
+
+  /* youtube.com/embed */
+
+  resultado = video.match(
+    /youtube\.com\/embed\/([^?&]+)/i
+  );
+
+  if (resultado) {
+    return resultado[1];
+  }
+
+
+  /* Shorts */
+
+  resultado = video.match(
+    /youtube\.com\/shorts\/([^?&]+)/i
+  );
+
+  if (resultado) {
+    return resultado[1];
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================
+   VÍDEOS
+========================= */
+
+function gerarVideos(videos, titulo) {
+
+  if (!videos) {
+    return "";
+  }
+
+
+  /* Se for apenas um vídeo */
+
+  if (!Array.isArray(videos)) {
+
+    videos = [videos];
+
+  }
+
+
+  let resultado = "";
+
+
+  videos.forEach(video => {
+
+    if (!video) {
       return;
     }
 
-    document.title = post.titulo + " - CavaloGameNews";
 
-    // Cria os vídeos da notícia
-    let videosHTML = "";
+    video = String(video).trim();
 
-    if (post.videos && Array.isArray(post.videos)) {
 
-      videosHTML = `
-        <div class="videos-container">
+    if (!video) {
+      return;
+    }
 
-          ${post.videos.map(video => {
 
-            // Vídeo do PC
-            if (
-              video.toLowerCase().endsWith(".mp4") ||
-              video.toLowerCase().startsWith("videos/")
-            ) {
+    /* =========================
+       YOUTUBE
+    ========================= */
 
-              return `
-                <div class="video-container">
-                  <video controls preload="metadata">
-                    <source src="${video}" type="video/mp4">
-                    Seu navegador não suporta vídeos.
-                  </video>
-                </div>
-              `;
+    const youtubeID =
+      pegarYoutubeID(video);
 
-            }
 
-            // Vídeo do YouTube
-            return `
-              <div class="video-container">
-                <iframe
-                  src="https://www.youtube.com/embed/${video}"
-                  title="${post.titulo}"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen>
-                </iframe>
-              </div>
-            `;
+    if (youtubeID) {
 
-          }).join("")}
+      resultado += `
+
+        <div class="video-container">
+
+          <iframe
+
+            src="https://www.youtube.com/embed/${encodeURIComponent(youtubeID)}"
+
+            title="${escaparHTML(titulo)}"
+
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+
+            allowfullscreen>
+
+          </iframe>
 
         </div>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* =========================
+       VÍDEO LOCAL
+    ========================= */
+
+    const videoLower =
+      video.toLowerCase();
+
+
+    const extensoes = [
+      ".mp4",
+      ".webm",
+      ".ogg",
+      ".mov",
+      ".m4v"
+    ];
+
+
+    const ehVideoLocal =
+      extensoes.some(
+        extensao =>
+          videoLower.endsWith(extensao)
+      );
+
+
+    if (ehVideoLocal) {
+
+      let tipo = "video/mp4";
+
+
+      if (videoLower.endsWith(".webm")) {
+        tipo = "video/webm";
+      }
+
+      else if (videoLower.endsWith(".ogg")) {
+        tipo = "video/ogg";
+      }
+
+      else if (videoLower.endsWith(".mov")) {
+        tipo = "video/quicktime";
+      }
+
+
+      resultado += `
+
+        <div class="video-container">
+
+          <video
+
+            controls
+
+            preload="metadata"
+
+            playsinline>
+
+            <source
+
+              src="${escaparHTML(video)}"
+
+              type="${tipo}">
+
+            Seu navegador não suporta vídeos.
+
+          </video>
+
+        </div>
+
       `;
 
     }
 
-    // Compatibilidade com o sistema antigo:
-    // Se existir "video" em vez de "videos", continua funcionando.
-    else if (post.video) {
+  });
 
-      let video = post.video;
 
-      if (
-        video.toLowerCase().endsWith(".mp4") ||
-        video.toLowerCase().startsWith("videos/")
-      ) {
+  if (!resultado) {
+    return "";
+  }
 
-        videosHTML = `
-          <div class="videos-container">
-            <div class="video-container">
-              <video controls preload="metadata">
-                <source src="${video}" type="video/mp4">
-                Seu navegador não suporta vídeos.
-              </video>
-            </div>
-          </div>
-        `;
 
-      } else {
+  return `
 
-        videosHTML = `
-          <div class="videos-container">
-            <div class="video-container">
-              <iframe
-                src="https://www.youtube.com/embed/${video}"
-                title="${post.titulo}"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-        `;
+    <div class="videos-container">
 
-      }
+      ${resultado}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   CARREGAR NOTÍCIA
+========================= */
+
+fetch("posts.json")
+
+  .then(response => {
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Não foi possível carregar posts.json"
+      );
+
     }
 
-    document.getElementById("article").innerHTML = `
+    return response.json();
+
+  })
+
+
+  .then(posts => {
+
+
+    /* =========================
+       PROCURAR NOTÍCIA
+    ========================= */
+
+    const post =
+      posts.find(
+        noticia =>
+          noticia.id === id
+      );
+
+
+    /* =========================
+       NOTÍCIA NÃO ENCONTRADA
+    ========================= */
+
+    if (!post) {
+
+      document.getElementById(
+        "article"
+      ).innerHTML = `
+
+        <h1>
+          Notícia não encontrada
+        </h1>
+
+        <p class="summary">
+
+          O endereço dessa notícia
+          não existe ou o ID está incorreto.
+
+        </p>
+
+        <a
+          class="back-button"
+          href="index.html">
+
+          ← Voltar para as notícias
+
+        </a>
+
+      `;
+
+      return;
+
+    }
+
+
+    /* =========================
+       TÍTULO DA ABA
+    ========================= */
+
+    document.title =
+      post.titulo +
+      " - CavaloGameNews";
+
+
+    /* =========================
+       CONTEÚDO
+    ========================= */
+
+    let conteudoHTML = "";
+
+
+    if (
+      Array.isArray(post.conteudo) &&
+      post.conteudo.length > 0
+    ) {
+
+      conteudoHTML =
+        post.conteudo
+          .map(paragrafo => `
+
+            <p>
+              ${escaparHTML(paragrafo)}
+            </p>
+
+          `)
+          .join("");
+
+    }
+
+    else if (post.resumo) {
+
+      conteudoHTML = `
+
+        <p>
+          ${escaparHTML(post.resumo)}
+        </p>
+
+      `;
+
+    }
+
+
+    /* =========================
+       VÍDEOS
+    ========================= */
+
+    let videosHTML = "";
+
+
+    if (
+      Array.isArray(post.videos) &&
+      post.videos.length > 0
+    ) {
+
+      videosHTML =
+        gerarVideos(
+          post.videos,
+          post.titulo
+        );
+
+    }
+
+    else if (post.video) {
+
+      videosHTML =
+        gerarVideos(
+          [post.video],
+          post.titulo
+        );
+
+    }
+
+
+    /* =========================
+       HTML DA NOTÍCIA
+    ========================= */
+
+    document.getElementById(
+      "article"
+    ).innerHTML = `
 
       <div class="category">
-        ${post.categoria}
+
+        ${escaparHTML(post.categoria)}
+
       </div>
+
 
       <h1>
-        ${post.titulo}
+
+        ${escaparHTML(post.titulo)}
+
       </h1>
 
+
       <div class="info">
-        ${post.data} · CavaloGameNews
+
+        ${escaparHTML(post.data)}
+        ·
+        CavaloGameNews
+
       </div>
 
+
       <img
+
         class="cover"
-        src="${post.imagem}"
-        alt="${post.titulo}"
+
+        src="${escaparHTML(post.imagem)}"
+
+        alt="${escaparHTML(post.titulo)}"
+
       >
+
+
+      <div class="summary">
+
+        ${escaparHTML(post.resumo || "")}
+
+      </div>
+
 
       ${videosHTML}
 
+
       <div class="text">
 
-        ${(post.conteudo || [post.resumo]).map(paragrafo => `
-          <p>${paragrafo}</p>
-        `).join("")}
+        ${conteudoHTML}
 
-        <a class="back-button" href="index.html">
+
+        <a
+
+          class="back-button"
+
+          href="index.html">
+
           ← Voltar para as notícias
+
         </a>
 
-        <div id="related" class="related">
-          <h2>Mais notícias</h2>
-          <div id="related-grid" class="related-grid"></div>
+
+        <div class="related">
+
+          <h2>
+            Mais notícias
+          </h2>
+
+
+          <div
+            id="related-grid"
+            class="related-grid">
+          </div>
+
         </div>
 
       </div>
+
     `;
 
-    // Escolhe outras notícias, sem mostrar a notícia atual
-    const relatedPosts = posts
-      .filter(p => p.id !== post.id)
-      .slice(0, 3);
 
-    const relatedGrid = document.getElementById("related-grid");
+    /* =========================
+       NOTÍCIAS RELACIONADAS
+    ========================= */
 
-    relatedPosts.forEach(related => {
+    const relatedPosts =
+      posts
 
-      relatedGrid.innerHTML += `
-        <a
-          href="post.html?id=${related.id}"
-          class="related-card"
-        >
+        .filter(
+          noticia =>
+            noticia.id !== post.id
+        )
 
-          <img
-            src="${related.imagem}"
-            alt="${related.titulo}"
-          >
+        .slice(0, 3);
 
-          <div class="related-content">
 
-            <div class="category">
-              ${related.categoria}
+    const relatedGrid =
+      document.getElementById(
+        "related-grid"
+      );
+
+
+    relatedPosts.forEach(
+      related => {
+
+        relatedGrid.innerHTML += `
+
+          <a
+
+            href="post.html?id=${encodeURIComponent(related.id)}"
+
+            class="related-card">
+
+            <img
+
+              src="${escaparHTML(related.imagem)}"
+
+              alt="${escaparHTML(related.titulo)}"
+
+            >
+
+
+            <div class="related-content">
+
+              <div class="category">
+
+                ${escaparHTML(related.categoria)}
+
+              </div>
+
+
+              <h3>
+
+                ${escaparHTML(related.titulo)}
+
+              </h3>
+
             </div>
 
-            <h3>
-              ${related.titulo}
-            </h3>
+          </a>
 
-          </div>
+        `;
 
-        </a>
-      `;
+      }
 
-    });
+    );
 
   })
-  .catch(() => {
 
-    document.getElementById("article").innerHTML = `
-      <h1>Erro ao carregar a notícia</h1>
 
-      <a class="back-button" href="index.html">
+  /* =========================
+     ERRO
+  ========================= */
+
+  .catch(error => {
+
+    console.error(error);
+
+
+    document.getElementById(
+      "article"
+    ).innerHTML = `
+
+      <h1>
+        Erro ao carregar a notícia
+      </h1>
+
+      <p class="summary">
+
+        Verifique se o arquivo
+        <strong>posts.json</strong>
+        está na mesma pasta que o
+        <strong>post.html</strong>.
+
+      </p>
+
+      <a
+        class="back-button"
+        href="index.html">
+
         ← Voltar para as notícias
+
       </a>
+
     `;
 
   });
+
 </script>
 
 </body>
+
 </html>
