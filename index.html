@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>CavaloGameNews - Notícias de Games</title>
-  <meta name="description" content="CavaloGameNews: notícias de Xbox, PlayStation, PC, Nintendo e tudo sobre o mundo dos games.">
+<meta name="description" content="CavaloGameNews: notícias de Xbox, PlayStation, PC, Nintendo e tudo sobre o mundo dos games.">
 
   <style>
     * {
@@ -52,26 +52,26 @@
     /* BUSCA */
 
     .search-box input {
-      width: 100%;
-      padding: 14px 18px;
-      background: #151515;
-      color: #fff;
-      border: 1px solid #333;
-      border-radius: 25px;
-      font-size: 16px;
-      outline: none;
-      transition: 0.25s;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    }
+  width: 100%;
+  padding: 14px 18px;
+  background: #151515;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.25s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
 
-    .search-box input:focus {
-      border-color: #00ff88;
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
-    }
+.search-box input:focus {
+  border-color: #00ff88;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
+}
 
-    .search-box input::placeholder {
-      color: #888;
-    }
+.search-box input::placeholder {
+  color: #888;
+}
 
     /* HERO */
 
@@ -249,6 +249,7 @@
         gap: 12px;
       }
     }
+    
   </style>
 </head>
 
@@ -256,16 +257,11 @@
 
 <header>
 
-  <img
-    src="img/logo.png"
-    alt="CavaloGameNews"
-    style="height:40px; width:auto; display:block;"
-  >
+  <img src="img/logo.png" alt="CavaloGameNews" style="height:40px; width:auto; display:block;">
 
   <nav>
 
     <!-- BUSCA -->
-
     <div class="search-box">
       <input
         type="text"
@@ -277,29 +273,17 @@
 
     <!-- CATEGORIAS -->
 
-    <a href="#" onclick="filtrarNoticias('todos'); return false;">
-      Início
-    </a>
+<a href="#" onclick="filtrarNoticias('todos'); return false;">Início</a>
 
-    <a href="#" onclick="filtrarNoticias('Notícias'); return false;">
-      Notícias
-    </a>
+<a href="#" onclick="filtrarNoticias('Notícias'); return false;">Notícias</a>
 
-    <a href="#" onclick="filtrarNoticias('Xbox'); return false;">
-      Xbox
-    </a>
+<a href="#" onclick="filtrarNoticias('Xbox'); return false;">Xbox</a>
 
-    <a href="#" onclick="filtrarNoticias('PlayStation'); return false;">
-      PlayStation
-    </a>
+<a href="#" onclick="filtrarNoticias('PlayStation'); return false;">PlayStation</a>
 
-    <a href="#" onclick="filtrarNoticias('PC'); return false;">
-      PC
-    </a>
+<a href="#" onclick="filtrarNoticias('PC'); return false;">PC</a>
 
-    <a href="#" onclick="filtrarNoticias('Mobile'); return false;">
-      Mobile
-    </a>
+<a href="#" onclick="filtrarNoticias('Mobile'); return false;">Mobile</a>
 
   </nav>
 
@@ -329,12 +313,9 @@
 
   <!-- TÍTULO -->
 
-  <h2
-    id="tituloNoticias"
-    style="margin:30px 0 20px;color:#00ff88;"
-  >
-    Últimas Notícias
-  </h2>
+  <h2 id="tituloNoticias" style="margin:30px 0 20px;color:#00ff88;">
+  Últimas Notícias
+</h2>
 
   <!-- NOTÍCIAS -->
 
@@ -353,6 +334,7 @@
   Todos os direitos reservados.
 
 </footer>
+
 
 <script>
 
@@ -382,6 +364,7 @@ function carregarNoticias() {
       const container =
         document.getElementById("news");
 
+
       featured.innerHTML = "";
       container.innerHTML = "";
 
@@ -397,7 +380,7 @@ function carregarNoticias() {
         featured.innerHTML = `
 
           <a
-            href="noticias/${principal.id}.html"
+            href="post.html?id=${principal.id}"
             class="featured-link"
           >
 
@@ -437,6 +420,7 @@ function carregarNoticias() {
           </a>
 
         `;
+
       }
 
 
@@ -449,7 +433,7 @@ function carregarNoticias() {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
@@ -495,11 +479,9 @@ function carregarNoticias() {
       console.error(error);
 
       document.getElementById("news").innerHTML = `
-
         <p>
           Nenhuma notícia encontrada.
         </p>
-
       `;
 
     });
@@ -512,20 +494,13 @@ function carregarNoticias() {
 ========================= */
 
 function filtrarNoticias(categoria) {
+  const titulo = document.getElementById("tituloNoticias");
 
-  const titulo =
-    document.getElementById("tituloNoticias");
-
-  if (categoria === "todos") {
-
-    titulo.textContent = "Últimas Notícias";
-
-  } else {
-
-    titulo.textContent =
-      "Notícias de " + categoria;
-
-  }
+if (categoria === "todos") {
+  titulo.textContent = "Últimas Notícias";
+} else {
+  titulo.textContent = "Notícias de " + categoria;
+}
 
   const container =
     document.getElementById("news");
@@ -546,6 +521,7 @@ function filtrarNoticias(categoria) {
 
 
   featured.innerHTML = "";
+
   container.innerHTML = "";
 
 
@@ -565,11 +541,9 @@ function filtrarNoticias(categoria) {
       if (filtradas.length === 0) {
 
         container.innerHTML = `
-
           <p>
             Nenhuma notícia encontrada nessa categoria.
           </p>
-
         `;
 
         return;
@@ -582,7 +556,7 @@ function filtrarNoticias(categoria) {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
@@ -626,11 +600,9 @@ function filtrarNoticias(categoria) {
     .catch(() => {
 
       container.innerHTML = `
-
         <p>
           Erro ao carregar notícias.
         </p>
-
       `;
 
     });
@@ -671,6 +643,7 @@ function buscarNoticias() {
 
 
   featured.innerHTML = "";
+
   container.innerHTML = "";
 
 
@@ -705,11 +678,9 @@ function buscarNoticias() {
       if (resultados.length === 0) {
 
         container.innerHTML = `
-
           <p>
             Nenhuma notícia encontrada.
           </p>
-
         `;
 
         return;
@@ -722,7 +693,7 @@ function buscarNoticias() {
         container.innerHTML += `
 
           <a
-            href="noticias/${post.id}.html"
+            href="post.html?id=${post.id}"
             class="news-link"
           >
 
@@ -766,11 +737,9 @@ function buscarNoticias() {
     .catch(() => {
 
       container.innerHTML = `
-
         <p>
           Erro ao pesquisar notícias.
         </p>
-
       `;
 
     });
