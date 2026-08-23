@@ -1,5 +1,28 @@
 [
   {
+  "id": "gamescom-2026",
+  "titulo": "Gamescom 2026 promete grandes anúncios e novidades para os fãs de games",
+  "categoria": "Notícias",
+  "data": "23/08/2026",
+  "imagem": "https://latam.gamescom.global/wp-content/uploads/2026/07/gamescom_PM_PK.webp",
+  "resumo": "A Gamescom 2026 está chegando com grandes empresas, jogos inéditos, trailers e novidades que prometem movimentar a indústria dos games.",
+  "link": "",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=Zzvzt3IjNik"
+    }
+  ],
+  "conteudo": [
+    "A Gamescom 2026 está prestes a começar e promete ser um dos grandes eventos do calendário gamer deste ano.",
+    "O evento será realizado em Colônia, na Alemanha, entre os dias 26 e 30 de agosto, reunindo empresas, desenvolvedores e jogadores de diversas partes do mundo.",
+    "Antes da abertura do evento, o Gamescom Opening Night Live acontece no dia 25 de agosto, trazendo trailers, anúncios e novidades sobre diversos jogos.",
+    "A edição deste ano contará com mais de 1.600 empresas de 67 países, aumentando ainda mais a expectativa dos fãs por grandes revelações.",
+    "Entre os destaques estão jogos como Persona 4 Revival, ACE COMBAT 8: WINGS OF THEVE e outros títulos que estarão presentes durante o evento.",
+    "A expectativa é que novos jogos e informações importantes sejam revelados ao longo da Gamescom 2026."
+  ]
+},
+  {
   "id": "marvels-wolverine-insomniac-vazamentos",
   "titulo": "Insomniac revelou Marvel’s Wolverine cedo para evitar vazamentos",
   "categoria": "PlayStation",
