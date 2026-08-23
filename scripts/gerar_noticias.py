@@ -6,6 +6,7 @@ from urllib.parse import urlparse, parse_qs
 
 BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
 
+
 # =========================================================
 # CARREGAR POSTS
 # =========================================================
@@ -13,11 +14,16 @@ BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
 with open("posts.json", "r", encoding="utf-8") as f:
     posts = json.load(f)
 
+
+# =========================================================
+# CRIAR PASTA NOTICIAS
+# =========================================================
+
 os.makedirs("noticias", exist_ok=True)
 
 
 # =========================================================
-# FUNÇÃO PARA PEGAR ID DO YOUTUBE
+# PEGAR ID DO YOUTUBE
 # =========================================================
 
 def youtube_id(url):
@@ -25,17 +31,19 @@ def youtube_id(url):
     if not url:
         return ""
 
-    url = url.strip()
+    url = str(url).strip()
 
-    # Se já for apenas o ID
+    # Se for apenas o ID do vídeo
     if re.fullmatch(r"[A-Za-z0-9_-]{11}", url):
         return url
 
     try:
+
         parsed = urlparse(url)
 
         # youtube.com/watch?v=ID
         if "youtube.com" in parsed.netloc:
+
             query = parse_qs(parsed.query)
 
             if "v" in query:
@@ -56,7 +64,7 @@ def youtube_id(url):
 
 
 # =========================================================
-# GERAR BLOCO DE VÍDEOS
+# GERAR VÍDEOS
 # =========================================================
 
 def gerar_videos(post):
@@ -64,27 +72,33 @@ def gerar_videos(post):
     videos_html = ""
 
     # -----------------------------------------------------
-    # NOVO FORMATO: "videos": [...]
+    # NOVO FORMATO
+    # "videos": []
     # -----------------------------------------------------
 
     videos = post.get("videos", [])
 
-    if isinstance(videos, list):
+    if isinstance(videos, list) and len(videos) > 0:
 
         for video in videos:
 
             if not isinstance(video, dict):
                 continue
 
-            tipo = video.get("tipo", "").lower().strip()
-            url = video.get("url", "").strip()
+            tipo = str(
+                video.get("tipo", "")
+            ).lower().strip()
+
+            url = str(
+                video.get("url", "")
+            ).strip()
 
             if not url:
                 continue
 
-            # =========================
-            # YOUTUBE
-            # =========================
+            # =================================================
+            # VÍDEO DO YOUTUBE
+            # =================================================
 
             if tipo == "youtube":
 
@@ -93,76 +107,75 @@ def gerar_videos(post):
                 if video_id:
 
                     videos_html += f"""
-                    <div class="video-container">
+<div class="video-container">
 
-                        <iframe
-                            src="https://www.youtube.com/embed/{html.escape(video_id)}"
-                            title="Vídeo da notícia"
-                            loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen>
-                        </iframe>
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
 
-                    </div>
-                    """
+</div>
+"""
 
-            # =========================
-            # VÍDEO DO PC
-            # =========================
+
+            # =================================================
+            # VÍDEO DO PC / ARQUIVO LOCAL
+            # =================================================
 
             elif tipo in ["pc", "local", "arquivo"]:
 
                 video_url = html.escape(url)
 
                 videos_html += f"""
-                <div class="video-container">
+<div class="video-container">
 
-                    <video
-                        controls
-                        preload="metadata"
-                    >
+<video
+    controls
+    preload="metadata"
+>
 
-                        <source
-                            src="../{video_url}"
-                            type="video/mp4"
-                        >
+<source
+    src="../{video_url}"
+    type="video/mp4"
+>
 
-                        Seu navegador não suporta vídeo HTML5.
+Seu navegador não suporta vídeo HTML5.
 
-                    </video>
+</video>
 
-                </div>
-                """
+</div>
+"""
+
 
     # -----------------------------------------------------
-    # COMPATIBILIDADE COM O FORMATO ANTIGO
+    # FORMATO ANTIGO
+    # "video": "ID ou link"
     # -----------------------------------------------------
-
-    # Se existir apenas:
-    #
-    # "video": "W_PmEPTvn7g"
-    #
-    # também funciona.
 
     elif post.get("video"):
 
-        video_id = youtube_id(post.get("video", ""))
+        video_id = youtube_id(
+            post.get("video", "")
+        )
 
         if video_id:
 
             videos_html += f"""
-            <div class="video-container">
+<div class="video-container">
 
-                <iframe
-                    src="https://www.youtube.com/embed/{html.escape(video_id)}"
-                    title="Vídeo da notícia"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
 
-            </div>
-            """
+</div>
+"""
 
     return videos_html
 
@@ -173,60 +186,75 @@ def gerar_videos(post):
 
 for post in posts:
 
-    post_id = post["id"]
+    post_id = str(
+        post.get("id", "")
+    )
+
+    if not post_id:
+        continue
+
 
     titulo = html.escape(
-        post.get("titulo", "CavaloGameNews")
+        str(post.get("titulo", "CavaloGameNews"))
     )
 
     resumo = html.escape(
-        post.get("resumo", "")
+        str(post.get("resumo", ""))
     )
 
     imagem = html.escape(
-        post.get("imagem", "")
+        str(post.get("imagem", ""))
     )
 
     categoria = html.escape(
-        post.get("categoria", "Notícias")
+        str(post.get("categoria", "Notícias"))
     )
 
     data = html.escape(
-        post.get("data", "")
+        str(post.get("data", ""))
     )
 
-    url = f"{BASE_URL}/noticias/{post_id}.html"
+
+    # URL DA NOTÍCIA
+
+    url = (
+        f"{BASE_URL}/noticias/"
+        f"{post_id}.html"
+    )
 
 
     # =====================================================
-    # CONTEÚDO
+    # GERAR CONTEÚDO
     # =====================================================
 
-    paragrafos = post.get(
-        "conteudo",
-        [post.get("resumo", "")]
-    )
+    paragrafos = post.get("conteudo")
+
+    if not isinstance(paragrafos, list):
+        paragrafos = [
+            post.get("resumo", "")
+        ]
+
 
     conteudo_html = ""
 
     for paragrafo in paragrafos:
 
         conteudo_html += f"""
-        <p>
-            {html.escape(str(paragrafo))}
-        </p>
-        """
+<p>
+{html.escape(str(paragrafo))}
+</p>
+"""
 
 
     # =====================================================
-    # VÍDEOS
+    # GERAR VÍDEOS
     # =====================================================
 
     videos_html = gerar_videos(post)
 
 
     # =====================================================
-    # 3 ÚLTIMAS NOTÍCIAS
+    # PEGAR 3 OUTRAS NOTÍCIAS
     # =====================================================
 
     relacionadas = [
@@ -237,70 +265,77 @@ for post in posts:
 
     related_html = ""
 
+
     for related in relacionadas:
 
         related_id = html.escape(
-            related.get("id", "")
+            str(related.get("id", ""))
         )
 
         related_titulo = html.escape(
-            related.get(
-                "titulo",
-                "CavaloGameNews"
+            str(
+                related.get(
+                    "titulo",
+                    "CavaloGameNews"
+                )
             )
         )
 
         related_imagem = html.escape(
-            related.get("imagem", "")
+            str(
+                related.get("imagem", "")
+            )
         )
 
         related_categoria = html.escape(
-            related.get(
-                "categoria",
-                "Notícias"
+            str(
+                related.get(
+                    "categoria",
+                    "Notícias"
+                )
             )
         )
 
         related_data = html.escape(
-            related.get("data", "")
+            str(
+                related.get("data", "")
+            )
         )
 
 
         related_html += f"""
+<a
+    href="../noticias/{related_id}.html"
+    class="related-card"
+>
 
-        <a
-            href="../noticias/{related_id}.html"
-            class="related-card"
-        >
+<img
+    src="{related_imagem}"
+    alt="{related_titulo}"
+>
 
-            <img
-                src="{related_imagem}"
-                alt="{related_titulo}"
-            >
+<div class="related-content">
 
-            <div class="related-content">
+<div class="category">
+{related_categoria}
+</div>
 
-                <div class="category">
-                    {related_categoria}
-                </div>
+<div class="related-date">
+{related_data}
+</div>
 
-                <div class="related-date">
-                    {related_data}
-                </div>
+<h3>
+{related_titulo}
+</h3>
 
-                <h3>
-                    {related_titulo}
-                </h3>
+</div>
 
-            </div>
-
-        </a>
-
-        """
+</a>
+"""
 
 
     # =====================================================
-    # HTML DA NOTÍCIA
+    # PÁGINA HTML
     # =====================================================
 
     pagina = f"""<!DOCTYPE html>
@@ -316,9 +351,17 @@ for post in posts:
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>
-{titulo} - CavaloGameNews
-</title>
+
+<!-- FAVICON DO CAVALO -->
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../img/logo_cavalo.png"
+>
+
+
+<title>{titulo} - CavaloGameNews</title>
 
 
 <meta
@@ -396,7 +439,6 @@ for post in posts:
     font-family: Arial, sans-serif;
 }}
 
-
 body {{
     background: #111;
     color: #fff;
@@ -412,7 +454,6 @@ header {{
     padding: 20px 30px;
     border-bottom: 3px solid #00ff88;
 }}
-
 
 header a {{
     color: #00ff88;
@@ -431,7 +472,6 @@ header a {{
     margin: 40px auto;
 }}
 
-
 .category {{
     color: #00ff88;
     font-size: 14px;
@@ -440,13 +480,11 @@ header a {{
     margin-bottom: 10px;
 }}
 
-
 h1 {{
     font-size: 46px;
     line-height: 1.15;
     margin-bottom: 15px;
 }}
-
 
 .info {{
     color: #999;
@@ -477,7 +515,6 @@ h1 {{
     margin: auto;
 }}
 
-
 .text p {{
     color: #ddd;
     font-size: 18px;
@@ -496,7 +533,6 @@ h1 {{
     aspect-ratio: 16 / 9;
 }}
 
-
 .video-container iframe {{
     width: 100%;
     height: 100%;
@@ -504,7 +540,6 @@ h1 {{
     border-radius: 14px;
     display: block;
 }}
-
 
 .video-container video {{
     width: 100%;
@@ -542,24 +577,17 @@ h1 {{
     border-top: 1px solid #333;
 }}
 
-
 .related h2 {{
     color: #00ff88;
     margin-bottom: 20px;
 }}
 
-
 .related-grid {{
     display: grid;
     grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
-
+        repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }}
-
 
 .related-card {{
     background: #1b1b1b;
@@ -572,12 +600,10 @@ h1 {{
     transition: 0.2s;
 }}
 
-
 .related-card:hover {{
     border-color: #00ff88;
     transform: translateY(-3px);
 }}
-
 
 .related-card img {{
     width: 100%;
@@ -586,18 +612,15 @@ h1 {{
     display: block;
 }}
 
-
 .related-content {{
     padding: 12px;
 }}
-
 
 .related-content h3 {{
     font-size: 17px;
     margin-top: 6px;
     line-height: 1.3;
 }}
-
 
 .related-date {{
     color: #888;
@@ -681,19 +704,11 @@ footer {{
 >
 
 
-<!-- =================================================
-     VÍDEOS
-================================================= -->
-
 {videos_html}
 
 
 <div class="text">
 
-
-<!-- =================================================
-     CONTEÚDO
-================================================= -->
 
 {conteudo_html}
 
@@ -705,10 +720,6 @@ footer {{
 ← Voltar para as notícias
 </a>
 
-
-<!-- =================================================
-     MAIS NOTÍCIAS
-================================================= -->
 
 <div class="related">
 
@@ -746,19 +757,21 @@ Todos os direitos reservados.
 
 
     # =====================================================
-    # SALVAR
+    # SALVAR NOTÍCIA
     # =====================================================
 
-    caminho = f"noticias/{post_id}.html"
+    caminho = (
+        f"noticias/{post_id}.html"
+    )
 
 
     with open(
         caminho,
         "w",
         encoding="utf-8"
-    ) as f:
+    ) as arquivo:
 
-        f.write(pagina)
+        arquivo.write(pagina)
 
 
 print(
