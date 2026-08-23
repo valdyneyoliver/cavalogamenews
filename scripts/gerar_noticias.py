@@ -3,23 +3,39 @@ import os
 import html
 import re
 from urllib.parse import urlparse, parse_qs
+from datetime import date
+from xml.sax.saxutils import escape as xml_escape
+
+
+# =========================================================
+# CONFIGURAÇÕES
+# =========================================================
 
 BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
+
+POSTS_FILE = "posts.json"
+NEWS_DIR = "noticias"
+SITEMAP_FILE = "sitemap.xml"
 
 
 # =========================================================
 # CARREGAR POSTS
 # =========================================================
 
-with open("posts.json", "r", encoding="utf-8") as f:
+with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
+
+
+# Garantir que posts seja uma lista
+if not isinstance(posts, list):
+    raise ValueError("O arquivo posts.json precisa conter uma lista de notícias.")
 
 
 # =========================================================
 # CRIAR PASTA NOTICIAS
 # =========================================================
 
-os.makedirs("noticias", exist_ok=True)
+os.makedirs(NEWS_DIR, exist_ok=True)
 
 
 # =========================================================
@@ -33,7 +49,7 @@ def youtube_id(url):
 
     url = str(url).strip()
 
-    # Se for apenas o ID do vídeo
+    # Se já for somente o ID do vídeo
     if re.fullmatch(r"[A-Za-z0-9_-]{11}", url):
         return url
 
@@ -51,10 +67,12 @@ def youtube_id(url):
 
         # youtu.be/ID
         if "youtu.be" in parsed.netloc:
+
             return parsed.path.strip("/").split("/")[0]
 
         # youtube.com/embed/ID
         if "/embed/" in parsed.path:
+
             return parsed.path.split("/embed/")[1].split("/")[0]
 
     except Exception:
@@ -71,12 +89,23 @@ def gerar_videos(post):
 
     videos_html = ""
 
-    # -----------------------------------------------------
-    # NOVO FORMATO
-    # "videos": []
-    # -----------------------------------------------------
-
     videos = post.get("videos", [])
+
+
+    # =====================================================
+    # FORMATO NOVO:
+    #
+    # "videos": [
+    #   {
+    #     "tipo": "youtube",
+    #     "url": "..."
+    #   },
+    #   {
+    #     "tipo": "pc",
+    #     "url": "videos/video.mp4"
+    #   }
+    # ]
+    # =====================================================
 
     if isinstance(videos, list) and len(videos) > 0:
 
@@ -96,8 +125,9 @@ def gerar_videos(post):
             if not url:
                 continue
 
+
             # =================================================
-            # VÍDEO DO YOUTUBE
+            # YOUTUBE
             # =================================================
 
             if tipo == "youtube":
@@ -122,7 +152,7 @@ def gerar_videos(post):
 
 
             # =================================================
-            # VÍDEO DO PC / ARQUIVO LOCAL
+            # VÍDEO DO PC
             # =================================================
 
             elif tipo in ["pc", "local", "arquivo"]:
@@ -150,10 +180,11 @@ Seu navegador não suporta vídeo HTML5.
 """
 
 
-    # -----------------------------------------------------
-    # FORMATO ANTIGO
-    # "video": "ID ou link"
-    # -----------------------------------------------------
+    # =====================================================
+    # COMPATIBILIDADE COM FORMATO ANTIGO
+    #
+    # "video": "ID_DO_YOUTUBE"
+    # =====================================================
 
     elif post.get("video"):
 
@@ -181,6 +212,13 @@ Seu navegador não suporta vídeo HTML5.
 
 
 # =========================================================
+# LISTA DAS PÁGINAS GERADAS
+# =========================================================
+
+generated_news_urls = []
+
+
+# =========================================================
 # GERAR TODAS AS NOTÍCIAS
 # =========================================================
 
@@ -188,54 +226,94 @@ for post in posts:
 
     post_id = str(
         post.get("id", "")
-    )
+    ).strip()
 
     if not post_id:
         continue
 
 
     titulo = html.escape(
-        str(post.get("titulo", "CavaloGameNews"))
+        str(
+            post.get(
+                "titulo",
+                "CavaloGameNews"
+            )
+        )
     )
+
 
     resumo = html.escape(
-        str(post.get("resumo", ""))
+        str(
+            post.get(
+                "resumo",
+                ""
+            )
+        )
     )
+
 
     imagem = html.escape(
-        str(post.get("imagem", ""))
+        str(
+            post.get(
+                "imagem",
+                ""
+            )
+        )
     )
+
 
     categoria = html.escape(
-        str(post.get("categoria", "Notícias"))
+        str(
+            post.get(
+                "categoria",
+                "Notícias"
+            )
+        )
     )
+
 
     data = html.escape(
-        str(post.get("data", ""))
+        str(
+            post.get(
+                "data",
+                ""
+            )
+        )
     )
 
 
+    # =====================================================
     # URL DA NOTÍCIA
+    # =====================================================
 
-    url = (
+    news_url = (
         f"{BASE_URL}/noticias/"
         f"{post_id}.html"
     )
 
 
+    generated_news_urls.append(news_url)
+
+
     # =====================================================
-    # GERAR CONTEÚDO
+    # CONTEÚDO
     # =====================================================
 
     paragrafos = post.get("conteudo")
 
+
     if not isinstance(paragrafos, list):
+
         paragrafos = [
-            post.get("resumo", "")
+            post.get(
+                "resumo",
+                ""
+            )
         ]
 
 
     conteudo_html = ""
+
 
     for paragrafo in paragrafos:
 
@@ -247,19 +325,19 @@ for post in posts:
 
 
     # =====================================================
-    # GERAR VÍDEOS
+    # VÍDEOS
     # =====================================================
 
     videos_html = gerar_videos(post)
 
 
     # =====================================================
-    # PEGAR 3 OUTRAS NOTÍCIAS
+    # 3 OUTRAS NOTÍCIAS
     # =====================================================
 
     relacionadas = [
         p for p in posts
-        if p.get("id") != post_id
+        if str(p.get("id", "")).strip() != post_id
     ][:3]
 
 
@@ -269,8 +347,14 @@ for post in posts:
     for related in relacionadas:
 
         related_id = html.escape(
-            str(related.get("id", ""))
+            str(
+                related.get(
+                    "id",
+                    ""
+                )
+            )
         )
+
 
         related_titulo = html.escape(
             str(
@@ -281,11 +365,16 @@ for post in posts:
             )
         )
 
+
         related_imagem = html.escape(
             str(
-                related.get("imagem", "")
+                related.get(
+                    "imagem",
+                    ""
+                )
             )
         )
+
 
         related_categoria = html.escape(
             str(
@@ -296,9 +385,13 @@ for post in posts:
             )
         )
 
+
         related_data = html.escape(
             str(
-                related.get("data", "")
+                related.get(
+                    "data",
+                    ""
+                )
             )
         )
 
@@ -335,7 +428,7 @@ for post in posts:
 
 
     # =====================================================
-    # PÁGINA HTML
+    # HTML DA NOTÍCIA
     # =====================================================
 
     pagina = f"""<!DOCTYPE html>
@@ -352,7 +445,9 @@ for post in posts:
 >
 
 
-<!-- FAVICON DO CAVALO -->
+<!-- =================================================
+     FAVICON
+================================================= -->
 
 <link
     rel="icon"
@@ -364,6 +459,10 @@ for post in posts:
 <title>{titulo} - CavaloGameNews</title>
 
 
+<!-- =================================================
+     DESCRIÇÃO
+================================================= -->
+
 <meta
     name="description"
     content="{resumo}"
@@ -371,7 +470,7 @@ for post in posts:
 
 
 <!-- =================================================
-     DISCORD / REDES SOCIAIS
+     DISCORD / FACEBOOK / WHATSAPP
 ================================================= -->
 
 <meta
@@ -396,7 +495,7 @@ for post in posts:
 
 <meta
     property="og:url"
-    content="{url}"
+    content="{news_url}"
 >
 
 <meta
@@ -404,6 +503,10 @@ for post in posts:
     content="CavaloGameNews"
 >
 
+
+<!-- =================================================
+     TWITTER
+================================================= -->
 
 <meta
     name="twitter:card"
@@ -439,6 +542,7 @@ for post in posts:
     font-family: Arial, sans-serif;
 }}
 
+
 body {{
     background: #111;
     color: #fff;
@@ -454,6 +558,7 @@ header {{
     padding: 20px 30px;
     border-bottom: 3px solid #00ff88;
 }}
+
 
 header a {{
     color: #00ff88;
@@ -472,6 +577,7 @@ header a {{
     margin: 40px auto;
 }}
 
+
 .category {{
     color: #00ff88;
     font-size: 14px;
@@ -480,11 +586,13 @@ header a {{
     margin-bottom: 10px;
 }}
 
+
 h1 {{
     font-size: 46px;
     line-height: 1.15;
     margin-bottom: 15px;
 }}
+
 
 .info {{
     color: #999;
@@ -493,7 +601,7 @@ h1 {{
 
 
 /* =================================================
-   IMAGEM
+   IMAGEM PRINCIPAL
 ================================================= */
 
 .cover {{
@@ -515,6 +623,7 @@ h1 {{
     margin: auto;
 }}
 
+
 .text p {{
     color: #ddd;
     font-size: 18px;
@@ -533,6 +642,7 @@ h1 {{
     aspect-ratio: 16 / 9;
 }}
 
+
 .video-container iframe {{
     width: 100%;
     height: 100%;
@@ -540,6 +650,7 @@ h1 {{
     border-radius: 14px;
     display: block;
 }}
+
 
 .video-container video {{
     width: 100%;
@@ -577,10 +688,12 @@ h1 {{
     border-top: 1px solid #333;
 }}
 
+
 .related h2 {{
     color: #00ff88;
     margin-bottom: 20px;
 }}
+
 
 .related-grid {{
     display: grid;
@@ -588,6 +701,7 @@ h1 {{
         repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }}
+
 
 .related-card {{
     background: #1b1b1b;
@@ -600,10 +714,12 @@ h1 {{
     transition: 0.2s;
 }}
 
+
 .related-card:hover {{
     border-color: #00ff88;
     transform: translateY(-3px);
 }}
+
 
 .related-card img {{
     width: 100%;
@@ -612,15 +728,18 @@ h1 {{
     display: block;
 }}
 
+
 .related-content {{
     padding: 12px;
 }}
+
 
 .related-content h3 {{
     font-size: 17px;
     margin-top: 6px;
     line-height: 1.3;
 }}
+
 
 .related-date {{
     color: #888;
@@ -721,6 +840,10 @@ footer {{
 </a>
 
 
+<!-- =================================================
+     MAIS NOTÍCIAS
+================================================= -->
+
 <div class="related">
 
 <h2>
@@ -757,11 +880,11 @@ Todos os direitos reservados.
 
 
     # =====================================================
-    # SALVAR NOTÍCIA
+    # SALVAR HTML
     # =====================================================
 
     caminho = (
-        f"noticias/{post_id}.html"
+        f"{NEWS_DIR}/{post_id}.html"
     )
 
 
@@ -774,6 +897,102 @@ Todos os direitos reservados.
         arquivo.write(pagina)
 
 
+# =========================================================
+# GERAR SITEMAP.XML AUTOMATICAMENTE
+# =========================================================
+
+today = date.today().isoformat()
+
+
+# Páginas principais
+sitemap_urls = [
+
+    f"{BASE_URL}/",
+
+    f"{BASE_URL}/index.html",
+
+]
+
+
+# Adicionar todas as notícias
+sitemap_urls.extend(generated_news_urls)
+
+
+# Remover duplicados mantendo a ordem
+sitemap_urls = list(
+    dict.fromkeys(sitemap_urls)
+)
+
+
+# =========================================================
+# MONTAR XML
+# =========================================================
+
+sitemap_lines = [
+
+    '<?xml version="1.0" encoding="UTF-8"?>',
+
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+
+]
+
+
+for url in sitemap_urls:
+
+    sitemap_lines.append(
+        "  <url>"
+    )
+
+    sitemap_lines.append(
+        f"    <loc>{xml_escape(url)}</loc>"
+    )
+
+    sitemap_lines.append(
+        f"    <lastmod>{today}</lastmod>"
+    )
+
+    sitemap_lines.append(
+        "  </url>"
+    )
+
+
+sitemap_lines.append(
+    "</urlset>"
+)
+
+
+sitemap_content = "\n".join(
+    sitemap_lines
+)
+
+
+# =========================================================
+# SALVAR SITEMAP
+# =========================================================
+
+with open(
+    SITEMAP_FILE,
+    "w",
+    encoding="utf-8"
+) as f:
+
+    f.write(
+        sitemap_content
+    )
+
+
+# =========================================================
+# FINAL
+# =========================================================
+
 print(
     f"{len(posts)} notícias geradas com sucesso!"
+)
+
+print(
+    f"{len(generated_news_urls)} páginas adicionadas ao sitemap.xml!"
+)
+
+print(
+    f"Sitemap atualizado: {SITEMAP_FILE}"
 )
