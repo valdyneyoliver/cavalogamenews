@@ -83,7 +83,6 @@ def gerar_videos(post):
 
     videos = post.get("videos", [])
 
-
     # =====================================================
     # VÁRIOS VÍDEOS
     # =====================================================
@@ -103,9 +102,8 @@ def gerar_videos(post):
                 video.get("url", "")
             ).strip()
 
-            if not url:
+            if not url or url == "xxx":
                 continue
-
 
             # =================================================
             # YOUTUBE
@@ -130,7 +128,6 @@ def gerar_videos(post):
 
 </div>
 """
-
 
             # =================================================
             # VÍDEO DO PC
@@ -159,7 +156,6 @@ Seu navegador não suporta vídeo HTML5.
 
 </div>
 """
-
 
     # =====================================================
     # FORMATO ANTIGO
@@ -201,6 +197,9 @@ def gerar_post_x(post):
     ).strip()
 
     if not x_url:
+        return ""
+
+    if x_url == "xxx":
         return ""
 
     # Aceita somente links do X/Twitter
@@ -246,7 +245,6 @@ for post in posts:
     if not post_id:
         continue
 
-
     titulo = html.escape(
         str(
             post.get(
@@ -255,7 +253,6 @@ for post in posts:
             )
         )
     )
-
 
     resumo = html.escape(
         str(
@@ -266,7 +263,6 @@ for post in posts:
         )
     )
 
-
     imagem = html.escape(
         str(
             post.get(
@@ -276,16 +272,14 @@ for post in posts:
         )
     )
 
-
     categoria = html.escape(
         str(
             post.get(
                 "categoria",
-                "Notícias"
+                "Notícia"
             )
         )
     )
-
 
     data = html.escape(
         str(
@@ -295,7 +289,6 @@ for post in posts:
             )
         )
     )
-
 
     # =====================================================
     # URL DA NOTÍCIA
@@ -309,7 +302,6 @@ for post in posts:
     generated_news_urls.append(
         news_url
     )
-
 
     # =====================================================
     # CONTEÚDO
@@ -326,10 +318,12 @@ for post in posts:
             )
         ]
 
-
     conteudo_html = ""
 
     for paragrafo in paragrafos:
+
+        if not str(paragrafo).strip():
+            continue
 
         conteudo_html += f"""
 <p>
@@ -337,20 +331,17 @@ for post in posts:
 </p>
 """
 
-
     # =====================================================
     # VÍDEOS
     # =====================================================
 
     videos_html = gerar_videos(post)
 
-
     # =====================================================
     # POST DO X
     # =====================================================
 
     x_html = gerar_post_x(post)
-
 
     # =====================================================
     # 3 ÚLTIMAS NOTÍCIAS
@@ -360,7 +351,6 @@ for post in posts:
         p for p in posts
         if str(p.get("id", "")).strip() != post_id
     ][:3]
-
 
     related_html = ""
 
@@ -375,7 +365,6 @@ for post in posts:
             )
         )
 
-
         related_titulo = html.escape(
             str(
                 related.get(
@@ -384,7 +373,6 @@ for post in posts:
                 )
             )
         )
-
 
         related_imagem = html.escape(
             str(
@@ -395,16 +383,14 @@ for post in posts:
             )
         )
 
-
         related_categoria = html.escape(
             str(
                 related.get(
                     "categoria",
-                    "Notícias"
+                    "Notícia"
                 )
             )
         )
-
 
         related_data = html.escape(
             str(
@@ -414,7 +400,6 @@ for post in posts:
                 )
             )
         )
-
 
         related_html += f"""
 <a
@@ -446,7 +431,6 @@ for post in posts:
 </a>
 """
 
-
     # =====================================================
     # HTML DA NOTÍCIA
     # =====================================================
@@ -456,15 +440,18 @@ for post in posts:
 <html lang="pt-BR">
 
 <head>
-          <!-- Google tag (gtag.js) -->
+
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
+
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
 
   gtag('config', 'G-8CNXSR7BXS');
 </script>
+
 
 <meta charset="UTF-8">
 
@@ -941,7 +928,6 @@ Todos os direitos reservados.
         f"{NEWS_DIR}/{post_id}.html"
     )
 
-
     with open(
         caminho,
         "w",
@@ -957,7 +943,6 @@ Todos os direitos reservados.
 
 today = date.today().isoformat()
 
-
 sitemap_urls = [
 
     f"{BASE_URL}/",
@@ -965,13 +950,13 @@ sitemap_urls = [
 
 ]
 
-
 sitemap_urls.extend(
     generated_news_urls
 )
 
 
 # Remover duplicados
+
 sitemap_urls = list(
     dict.fromkeys(sitemap_urls)
 )
