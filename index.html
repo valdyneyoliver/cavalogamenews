@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-8CNXSR7BXS');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/png" href="img/logo_cavalo.png">
 
   <title>CavaloGameNews - Notícias de Games</title>
 
@@ -13,24 +22,7 @@
     content="CavaloGameNews: notícias de Xbox, PlayStation, PC, Nintendo e tudo sobre o mundo dos games."
   >
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
-
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag(){
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-8CNXSR7BXS');
-  </script>
-
-
   <style>
-
     * {
       margin: 0;
       padding: 0;
@@ -38,12 +30,10 @@
       font-family: Arial, sans-serif;
     }
 
-
     body {
       background: #111;
       color: #fff;
     }
-
 
     header {
       background: #1a1a1a;
@@ -51,12 +41,10 @@
       border-bottom: 3px solid #00ff88;
     }
 
-
     header img {
       height: 64px;
       display: block;
     }
-
 
     nav {
       margin-top: 15px;
@@ -66,26 +54,17 @@
       align-items: center;
     }
 
-
     nav a {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
     }
 
-
     nav a:hover {
       color: #00ff88;
     }
 
-
     /* BUSCA */
-
-    .search-box {
-      width: 100%;
-      max-width: 350px;
-    }
-
 
     .search-box input {
       width: 100%;
@@ -100,17 +79,14 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
 
-
     .search-box input:focus {
       border-color: #00ff88;
       box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
     }
 
-
     .search-box input::placeholder {
       color: #888;
     }
-
 
     /* HERO */
 
@@ -121,11 +97,9 @@
       color: #111;
     }
 
-
     .hero h2 {
       margin-bottom: 10px;
     }
-
 
     /* CONTAINER */
 
@@ -135,7 +109,6 @@
       margin: 30px auto;
     }
 
-
     /* NOTÍCIA PRINCIPAL */
 
     .featured-link {
@@ -143,7 +116,6 @@
       color: inherit;
       display: block;
     }
-
 
     .featured {
       position: relative;
@@ -154,7 +126,6 @@
       background: #1b1b1b;
     }
 
-
     .featured img {
       width: 100%;
       height: 100%;
@@ -162,7 +133,6 @@
       display: block;
       transition: 0.3s;
     }
-
 
     .featured-overlay {
       position: absolute;
@@ -176,20 +146,17 @@
       );
     }
 
-
     .featured-overlay h2 {
       font-size: 34px;
       margin: 10px 0;
       max-width: 800px;
     }
 
-
     .featured-overlay p {
       color: #ddd;
       max-width: 700px;
       margin-bottom: 15px;
     }
-
 
     .read-button {
       display: inline-block;
@@ -200,11 +167,9 @@
       font-weight: bold;
     }
 
-
     .featured:hover img {
       transform: scale(1.03);
     }
-
 
     /* NOTÍCIAS */
 
@@ -217,13 +182,11 @@
       gap: 20px;
     }
 
-
     .news-link {
       text-decoration: none;
       color: inherit;
       display: block;
     }
-
 
     .card {
       background: #1b1b1b;
@@ -233,12 +196,10 @@
       transition: 0.2s;
     }
 
-
     .card:hover {
       border-color: #00ff88;
       transform: translateY(-3px);
     }
-
 
     .card img {
       width: 100%;
@@ -247,11 +208,9 @@
       display: block;
     }
 
-
     .card-content {
       padding: 15px;
     }
-
 
     .category {
       color: #00ff88;
@@ -260,57 +219,20 @@
       text-transform: uppercase;
     }
 
-
     .date {
       color: #aaa;
       font-size: 12px;
       margin: 6px 0 12px;
     }
 
-
     .card h3 {
       margin-bottom: 10px;
     }
-
 
     .card p {
       color: #ccc;
       line-height: 1.5;
     }
-
-
-    /* CARREGAR MAIS */
-
-    .load-more-container {
-      text-align: center;
-      margin: 35px 0 10px;
-    }
-
-
-    #loadMoreButton {
-      display: none;
-      border: none;
-      background: #00ff88;
-      color: #111;
-      padding: 13px 25px;
-      border-radius: 7px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-
-    #loadMoreButton:hover {
-      background: #00cc6d;
-      transform: translateY(-2px);
-    }
-
-
-    #loadMoreButton:active {
-      transform: scale(0.98);
-    }
-
 
     /* RODAPÉ */
 
@@ -322,7 +244,6 @@
       color: #aaa;
     }
 
-
     /* CELULAR */
 
     @media (max-width: 600px) {
@@ -331,35 +252,23 @@
         height: 380px;
       }
 
-
       .featured-overlay {
         padding: 20px;
       }
-
 
       .featured-overlay h2 {
         font-size: 24px;
       }
 
-
       nav {
         gap: 12px;
       }
-
-
-      .search-box {
-        max-width: 100%;
-      }
-
     }
 
   </style>
-
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -368,7 +277,6 @@
     alt="CavaloGameNews"
     style="height:40px; width:auto; display:block;"
   >
-
 
   <nav>
 
@@ -385,7 +293,6 @@
 
     </div>
 
-
     <!-- CATEGORIAS -->
 
     <a
@@ -395,14 +302,12 @@
       Início
     </a>
 
-
     <a
       href="#"
       onclick="filtrarNoticias('Notícias'); return false;"
     >
       Notícias
     </a>
-
 
     <a
       href="#"
@@ -411,7 +316,6 @@
       Xbox
     </a>
 
-
     <a
       href="#"
       onclick="filtrarNoticias('PlayStation'); return false;"
@@ -419,14 +323,12 @@
       PlayStation
     </a>
 
-
     <a
       href="#"
       onclick="filtrarNoticias('PC'); return false;"
     >
       PC
     </a>
-
 
     <a
       href="#"
@@ -459,7 +361,6 @@
 
 <div class="container">
 
-
   <!-- NOTÍCIA PRINCIPAL -->
 
   <div id="featured"></div>
@@ -482,21 +383,6 @@
     class="news-grid"
   ></div>
 
-
-  <!-- CARREGAR MAIS -->
-
-  <div class="load-more-container">
-
-    <button
-      id="loadMoreButton"
-      onclick="carregarMais()"
-    >
-      CARREGAR MAIS
-    </button>
-
-  </div>
-
-
 </div>
 
 
@@ -512,185 +398,20 @@
 
 <script>
 
+/* =========================
+   FUNÇÃO PARA LINK DA NOTÍCIA
+========================= */
 
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
+function linkDaNoticia(post) {
 
-const NOTICIAS_POR_VEZ = 24;
-
-let todasNoticias = [];
-
-let noticiasAtuais = [];
-
-let quantidadeExibida = 0;
-
-
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
-
-function escaparHTML(texto) {
-
-  const div = document.createElement("div");
-
-  div.textContent = texto ?? "";
-
-  return div.innerHTML;
+  return "noticias/" + post.id + ".html";
 
 }
 
 
-/* =====================================================
-   CRIAR CARD
-===================================================== */
-
-function criarCard(post) {
-
-  return `
-
-    <a
-      href="post.html?id=${encodeURIComponent(post.id)}"
-      class="news-link"
-    >
-
-      <div class="card">
-
-        <img
-          src="${escaparHTML(post.imagem)}"
-          alt="${escaparHTML(post.titulo)}"
-          loading="lazy"
-        >
-
-        <div class="card-content">
-
-          <div class="category">
-            ${escaparHTML(post.categoria)}
-          </div>
-
-
-          <div class="date">
-            ${escaparHTML(post.data)}
-          </div>
-
-
-          <h3>
-            ${escaparHTML(post.titulo)}
-          </h3>
-
-
-          <p>
-            ${escaparHTML(post.resumo)}
-          </p>
-
-        </div>
-
-      </div>
-
-    </a>
-
-  `;
-
-}
-
-
-/* =====================================================
-   MOSTRAR / ESCONDER BOTÃO
-===================================================== */
-
-function atualizarBotao() {
-
-  const botao =
-    document.getElementById("loadMoreButton");
-
-
-  if (
-    quantidadeExibida <
-    noticiasAtuais.length
-  ) {
-
-    botao.style.display = "inline-block";
-
-  } else {
-
-    botao.style.display = "none";
-
-  }
-
-}
-
-
-/* =====================================================
-   RENDERIZAR NOTÍCIAS
-===================================================== */
-
-function renderizarNoticias(reset = true) {
-
-  const container =
-    document.getElementById("news");
-
-
-  if (reset) {
-
-    container.innerHTML = "";
-
-    quantidadeExibida = 0;
-
-  }
-
-
-  const proximaQuantidade =
-    Math.min(
-      quantidadeExibida + NOTICIAS_POR_VEZ,
-      noticiasAtuais.length
-    );
-
-
-  let html = "";
-
-
-  for (
-    let i = quantidadeExibida;
-    i < proximaQuantidade;
-    i++
-  ) {
-
-    html += criarCard(
-      noticiasAtuais[i]
-    );
-
-  }
-
-
-  container.insertAdjacentHTML(
-    "beforeend",
-    html
-  );
-
-
-  quantidadeExibida =
-    proximaQuantidade;
-
-
-  atualizarBotao();
-
-}
-
-
-/* =====================================================
-   CARREGAR MAIS
-===================================================== */
-
-function carregarMais() {
-
-  renderizarNoticias(false);
-
-}
-
-
-/* =====================================================
+/* =========================
    CARREGAR NOTÍCIAS
-===================================================== */
+========================= */
 
 function carregarNoticias() {
 
@@ -710,24 +431,13 @@ function carregarNoticias() {
 
     })
 
-
     .then(posts => {
 
-      todasNoticias = posts;
-
-      noticiasAtuais = posts;
-
-
       const featured =
-        document.getElementById(
-          "featured"
-        );
-
+        document.getElementById("featured");
 
       const container =
-        document.getElementById(
-          "news"
-        );
+        document.getElementById("news");
 
 
       featured.innerHTML = "";
@@ -741,46 +451,39 @@ function carregarNoticias() {
 
       if (posts.length > 0) {
 
-        const principal =
-          posts[0];
-
+        const principal = posts[0];
 
         featured.innerHTML = `
 
           <a
-            href="post.html?id=${encodeURIComponent(principal.id)}"
+            href="${linkDaNoticia(principal)}"
             class="featured-link"
           >
 
             <article class="featured">
 
               <img
-                src="${escaparHTML(principal.imagem)}"
-                alt="${escaparHTML(principal.titulo)}"
+                src="${principal.imagem}"
+                alt="${principal.titulo}"
               >
-
 
               <div class="featured-overlay">
 
                 <span class="category">
-                  ${escaparHTML(principal.categoria)}
+                  ${principal.categoria}
                 </span>
 
-
                 <h2>
-                  ${escaparHTML(principal.titulo)}
+                  ${principal.titulo}
                 </h2>
 
-
                 <div class="date">
-                  ${escaparHTML(principal.data)}
+                  ${principal.data}
                 </div>
 
-
                 <p>
-                  ${escaparHTML(principal.resumo)}
+                  ${principal.resumo}
                 </p>
-
 
                 <span class="read-button">
                   LER NOTÍCIA →
@@ -798,26 +501,60 @@ function carregarNoticias() {
 
 
       /* =========================
-         NOTÍCIAS
+         RESTANTE DAS NOTÍCIAS
       ========================= */
 
-      noticiasAtuais =
-        posts.slice(1);
+      posts.slice(1).forEach(post => {
 
+        container.innerHTML += `
 
-      renderizarNoticias(true);
+          <a
+            href="${linkDaNoticia(post)}"
+            class="news-link"
+          >
+
+            <div class="card">
+
+              <img
+                src="${post.imagem}"
+                alt="${post.titulo}"
+              >
+
+              <div class="card-content">
+
+                <div class="category">
+                  ${post.categoria}
+                </div>
+
+                <div class="date">
+                  ${post.data}
+                </div>
+
+                <h3>
+                  ${post.titulo}
+                </h3>
+
+                <p>
+                  ${post.resumo}
+                </p>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        `;
+
+      });
 
     })
-
 
     .catch(error => {
 
       console.error(error);
 
-
-      document.getElementById(
-        "news"
-      ).innerHTML = `
+      document.getElementById("news").innerHTML = `
 
         <p>
           Nenhuma notícia encontrada.
@@ -830,9 +567,9 @@ function carregarNoticias() {
 }
 
 
-/* =====================================================
+/* =========================
    FILTRAR CATEGORIA
-===================================================== */
+========================= */
 
 function filtrarNoticias(categoria) {
 
@@ -842,37 +579,35 @@ function filtrarNoticias(categoria) {
     );
 
 
-  const featured =
-    document.getElementById(
-      "featured"
-    );
-
-
-  const container =
-    document.getElementById(
-      "news"
-    );
-
-
-  /* =========================
-     VOLTAR PARA TODAS
-  ========================= */
-
   if (categoria === "todos") {
 
     titulo.textContent =
       "Últimas Notícias";
 
+  } else {
+
+    titulo.textContent =
+      "Notícias de " + categoria;
+
+  }
+
+
+  const container =
+    document.getElementById("news");
+
+  const featured =
+    document.getElementById("featured");
+
+
+  /* VOLTAR PARA TODAS */
+
+  if (categoria === "todos") {
 
     carregarNoticias();
 
     return;
 
   }
-
-
-  titulo.textContent =
-    "Notícias de " + categoria;
 
 
   featured.innerHTML = "";
@@ -886,30 +621,19 @@ function filtrarNoticias(categoria) {
       response.json()
     )
 
-
     .then(posts => {
 
       const filtradas =
         posts.filter(post =>
 
-          String(
-            post.categoria || ""
-          ).toLowerCase() ===
+          post.categoria
+            .toLowerCase() ===
           categoria.toLowerCase()
 
         );
 
 
-      if (
-        filtradas.length === 0
-      ) {
-
-        noticiasAtuais = [];
-
-        quantidadeExibida = 0;
-
-        atualizarBotao();
-
+      if (filtradas.length === 0) {
 
         container.innerHTML = `
 
@@ -924,14 +648,51 @@ function filtrarNoticias(categoria) {
       }
 
 
-      noticiasAtuais =
-        filtradas;
+      filtradas.forEach(post => {
 
+        container.innerHTML += `
 
-      renderizarNoticias(true);
+          <a
+            href="${linkDaNoticia(post)}"
+            class="news-link"
+          >
+
+            <div class="card">
+
+              <img
+                src="${post.imagem}"
+                alt="${post.titulo}"
+              >
+
+              <div class="card-content">
+
+                <div class="category">
+                  ${post.categoria}
+                </div>
+
+                <div class="date">
+                  ${post.data}
+                </div>
+
+                <h3>
+                  ${post.titulo}
+                </h3>
+
+                <p>
+                  ${post.resumo}
+                </p>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        `;
+
+      });
 
     })
-
 
     .catch(() => {
 
@@ -948,37 +709,28 @@ function filtrarNoticias(categoria) {
 }
 
 
-/* =====================================================
+/* =========================
    BUSCAR NOTÍCIAS
-===================================================== */
+========================= */
 
 function buscarNoticias() {
 
   const termo =
     document
-      .getElementById(
-        "searchInput"
-      )
+      .getElementById("searchInput")
       .value
       .toLowerCase()
       .trim();
 
 
   const container =
-    document.getElementById(
-      "news"
-    );
-
+    document.getElementById("news");
 
   const featured =
-    document.getElementById(
-      "featured"
-    );
+    document.getElementById("featured");
 
 
-  /* =========================
-     BUSCA VAZIA
-  ========================= */
+  /* SE ESTIVER VAZIO */
 
   if (termo === "") {
 
@@ -1000,49 +752,31 @@ function buscarNoticias() {
       response.json()
     )
 
-
     .then(posts => {
 
       const resultados =
-        posts.filter(post => {
+        posts.filter(post =>
 
-          const titulo =
-            String(
-              post.titulo || ""
-            ).toLowerCase();
+          post.titulo
+            .toLowerCase()
+            .includes(termo)
 
+          ||
 
-          const resumo =
-            String(
-              post.resumo || ""
-            ).toLowerCase();
+          post.resumo
+            .toLowerCase()
+            .includes(termo)
 
+          ||
 
-          const categoria =
-            String(
-              post.categoria || ""
-            ).toLowerCase();
+          post.categoria
+            .toLowerCase()
+            .includes(termo)
 
-
-          return (
-            titulo.includes(termo) ||
-            resumo.includes(termo) ||
-            categoria.includes(termo)
-          );
-
-        });
+        );
 
 
-      if (
-        resultados.length === 0
-      ) {
-
-        noticiasAtuais = [];
-
-        quantidadeExibida = 0;
-
-        atualizarBotao();
-
+      if (resultados.length === 0) {
 
         container.innerHTML = `
 
@@ -1057,14 +791,51 @@ function buscarNoticias() {
       }
 
 
-      noticiasAtuais =
-        resultados;
+      resultados.forEach(post => {
 
+        container.innerHTML += `
 
-      renderizarNoticias(true);
+          <a
+            href="${linkDaNoticia(post)}"
+            class="news-link"
+          >
+
+            <div class="card">
+
+              <img
+                src="${post.imagem}"
+                alt="${post.titulo}"
+              >
+
+              <div class="card-content">
+
+                <div class="category">
+                  ${post.categoria}
+                </div>
+
+                <div class="date">
+                  ${post.data}
+                </div>
+
+                <h3>
+                  ${post.titulo}
+                </h3>
+
+                <p>
+                  ${post.resumo}
+                </p>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        `;
+
+      });
 
     })
-
 
     .catch(() => {
 
@@ -1081,16 +852,13 @@ function buscarNoticias() {
 }
 
 
-/* =====================================================
+/* =========================
    INICIAR SITE
-===================================================== */
+========================= */
 
 carregarNoticias();
 
-
 </script>
 
-
 </body>
-
 </html>
