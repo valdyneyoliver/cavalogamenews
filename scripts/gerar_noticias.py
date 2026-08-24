@@ -322,12 +322,21 @@ for post in posts:
 
     for paragrafo in paragrafos:
 
-        if not str(paragrafo).strip():
-            continue
+    if not str(paragrafo).strip():
+        continue
 
-        conteudo_html += f"""
+    texto = html.escape(str(paragrafo))
+
+    # Transformar URLs em links clicáveis
+    texto = re.sub(
+        r'(https?://[^\s<]+)',
+        r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
+        texto
+    )
+
+    conteudo_html += f"""
 <p>
-{html.escape(str(paragrafo))}
+{texto}
 </p>
 """
 
