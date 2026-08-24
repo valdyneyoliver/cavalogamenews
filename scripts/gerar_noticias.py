@@ -25,10 +25,10 @@ SITEMAP_FILE = "sitemap.xml"
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
 
-
-# Garantir que posts seja uma lista
 if not isinstance(posts, list):
-    raise ValueError("O arquivo posts.json precisa conter uma lista de notícias.")
+    raise ValueError(
+        "O arquivo posts.json precisa conter uma lista de notícias."
+    )
 
 
 # =========================================================
@@ -49,30 +49,22 @@ def youtube_id(url):
 
     url = str(url).strip()
 
-    # Se já for somente o ID do vídeo
     if re.fullmatch(r"[A-Za-z0-9_-]{11}", url):
         return url
 
     try:
-
         parsed = urlparse(url)
 
-        # youtube.com/watch?v=ID
         if "youtube.com" in parsed.netloc:
-
             query = parse_qs(parsed.query)
 
             if "v" in query:
                 return query["v"][0]
 
-        # youtu.be/ID
         if "youtu.be" in parsed.netloc:
-
             return parsed.path.strip("/").split("/")[0]
 
-        # youtube.com/embed/ID
         if "/embed/" in parsed.path:
-
             return parsed.path.split("/embed/")[1].split("/")[0]
 
     except Exception:
@@ -93,18 +85,7 @@ def gerar_videos(post):
 
 
     # =====================================================
-    # FORMATO NOVO:
-    #
-    # "videos": [
-    #   {
-    #     "tipo": "youtube",
-    #     "url": "..."
-    #   },
-    #   {
-    #     "tipo": "pc",
-    #     "url": "videos/video.mp4"
-    #   }
-    # ]
+    # VÁRIOS VÍDEOS
     # =====================================================
 
     if isinstance(videos, list) and len(videos) > 0:
@@ -181,9 +162,7 @@ Seu navegador não suporta vídeo HTML5.
 
 
     # =====================================================
-    # COMPATIBILIDADE COM FORMATO ANTIGO
-    #
-    # "video": "ID_DO_YOUTUBE"
+    # FORMATO ANTIGO
     # =====================================================
 
     elif post.get("video"):
@@ -209,6 +188,42 @@ Seu navegador não suporta vídeo HTML5.
 """
 
     return videos_html
+
+
+# =========================================================
+# GERAR POST DO X
+# =========================================================
+
+def gerar_post_x(post):
+
+    x_url = str(
+        post.get("x", "")
+    ).strip()
+
+    if not x_url:
+        return ""
+
+    # Aceita somente links do X/Twitter
+    if not (
+        "x.com/" in x_url
+        or "twitter.com/" in x_url
+    ):
+        return ""
+
+    x_url = html.escape(
+        x_url,
+        quote=True
+    )
+
+    return f"""
+<div class="x-container">
+
+<blockquote class="twitter-tweet">
+    <a href="{x_url}"></a>
+</blockquote>
+
+</div>
+"""
 
 
 # =========================================================
@@ -291,8 +306,9 @@ for post in posts:
         f"{post_id}.html"
     )
 
-
-    generated_news_urls.append(news_url)
+    generated_news_urls.append(
+        news_url
+    )
 
 
     # =====================================================
@@ -300,7 +316,6 @@ for post in posts:
     # =====================================================
 
     paragrafos = post.get("conteudo")
-
 
     if not isinstance(paragrafos, list):
 
@@ -313,7 +328,6 @@ for post in posts:
 
 
     conteudo_html = ""
-
 
     for paragrafo in paragrafos:
 
@@ -332,7 +346,14 @@ for post in posts:
 
 
     # =====================================================
-    # 3 OUTRAS NOTÍCIAS
+    # POST DO X
+    # =====================================================
+
+    x_html = gerar_post_x(post)
+
+
+    # =====================================================
+    # 3 ÚLTIMAS NOTÍCIAS
     # =====================================================
 
     relacionadas = [
@@ -342,7 +363,6 @@ for post in posts:
 
 
     related_html = ""
-
 
     for related in relacionadas:
 
@@ -444,24 +464,13 @@ for post in posts:
     content="width=device-width, initial-scale=1.0"
 >
 
-
-<!-- =================================================
-     FAVICON
-================================================= -->
-
 <link
     rel="icon"
     type="image/png"
     href="../img/logo_cavalo.png"
 >
 
-
 <title>{titulo} - CavaloGameNews</title>
-
-
-<!-- =================================================
-     DESCRIÇÃO
-================================================= -->
 
 <meta
     name="description"
@@ -505,7 +514,7 @@ for post in posts:
 
 
 <!-- =================================================
-     TWITTER
+     TWITTER CARD
 ================================================= -->
 
 <meta
@@ -601,7 +610,7 @@ h1 {{
 
 
 /* =================================================
-   IMAGEM PRINCIPAL
+   IMAGEM
 ================================================= */
 
 .cover {{
@@ -659,6 +668,17 @@ h1 {{
     background: #000;
     border-radius: 14px;
     display: block;
+}}
+
+
+/* =================================================
+   POST DO X
+================================================= */
+
+.x-container {{
+    width: 100%;
+    max-width: 650px;
+    margin: 35px auto;
 }}
 
 
@@ -823,14 +843,28 @@ footer {{
 >
 
 
+<div class="text">
+
+{conteudo_html}
+
+</div>
+
+
+<!-- =================================================
+     POST DO X
+================================================= -->
+
+{x_html}
+
+
+<!-- =================================================
+     VÍDEOS
+================================================= -->
+
 {videos_html}
 
 
 <div class="text">
-
-
-{conteudo_html}
-
 
 <a
     class="back-button"
@@ -873,6 +907,17 @@ Todos os direitos reservados.
 </footer>
 
 
+<!-- =================================================
+     SCRIPT OFICIAL DO X
+================================================= -->
+
+<script
+    async
+    src="https://platform.twitter.com/widgets.js"
+    charset="utf-8">
+</script>
+
+
 </body>
 
 </html>
@@ -898,27 +943,26 @@ Todos os direitos reservados.
 
 
 # =========================================================
-# GERAR SITEMAP.XML AUTOMATICAMENTE
+# GERAR SITEMAP.XML
 # =========================================================
 
 today = date.today().isoformat()
 
 
-# Páginas principais
 sitemap_urls = [
 
     f"{BASE_URL}/",
-
     f"{BASE_URL}/index.html",
 
 ]
 
 
-# Adicionar todas as notícias
-sitemap_urls.extend(generated_news_urls)
+sitemap_urls.extend(
+    generated_news_urls
+)
 
 
-# Remover duplicados mantendo a ordem
+# Remover duplicados
 sitemap_urls = list(
     dict.fromkeys(sitemap_urls)
 )
