@@ -135,7 +135,10 @@ def gerar_videos(post):
 
             elif tipo in ["pc", "local", "arquivo"]:
 
-                video_url = html.escape(url)
+                video_url = html.escape(
+                    url,
+                    quote=True
+                )
 
                 videos_html += f"""
 <div class="video-container">
@@ -269,7 +272,8 @@ for post in posts:
                 "imagem",
                 ""
             )
-        )
+        ),
+        quote=True
     )
 
     categoria = html.escape(
@@ -322,19 +326,24 @@ for post in posts:
 
     for paragrafo in paragrafos:
 
-    if not str(paragrafo).strip():
-        continue
+        if not str(paragrafo).strip():
+            continue
 
-    texto = html.escape(str(paragrafo))
+        texto = html.escape(
+            str(paragrafo)
+        )
 
-    # Transformar URLs em links clicáveis
-    texto = re.sub(
-        r'(https?://[^\s<]+)',
-        r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
-        texto
-    )
+        # =================================================
+        # TRANSFORMAR URLs EM LINKS CLICÁVEIS
+        # =================================================
 
-    conteudo_html += f"""
+        texto = re.sub(
+            r'(https?://[^\s<]+)',
+            r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
+            texto
+        )
+
+        conteudo_html += f"""
 <p>
 {texto}
 </p>
@@ -389,7 +398,8 @@ for post in posts:
                     "imagem",
                     ""
                 )
-            )
+            ),
+            quote=True
         )
 
         related_categoria = html.escape(
@@ -643,6 +653,22 @@ h1 {{
     font-size: 18px;
     line-height: 1.8;
     margin-bottom: 25px;
+}}
+
+
+/* =================================================
+   LINKS DO CONTEÚDO
+================================================= */
+
+.text p a {{
+    color: #00ff88;
+    font-weight: bold;
+    text-decoration: underline;
+}}
+
+
+.text p a:hover {{
+    color: #00cc6d;
 }}
 
 
