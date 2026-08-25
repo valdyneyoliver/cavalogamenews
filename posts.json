@@ -1,5 +1,29 @@
 [
   {
+  "id": "the-witcher-3-songs-of-the-past",
+  "titulo": "The Witcher 3 anuncia nova expansão Songs of the Past para 2027",
+  "categoria": "Notícia",
+  "data": "25/08/2026",
+  "imagem": "https://img.youtube.com/vi/SB3siHVCHpY/maxresdefault.jpg",
+  "resumo": "The Witcher 3: Wild Hunt receberá a expansão Songs of the Past em 2027, trazendo Geralt de Rívia de volta para uma nova aventura.",
+  "link": "",
+  "x": "https://x.com/thewitcher/status/2059560461872373812?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=SB3siHVCHpY"
+    }
+  ],
+  "conteudo": [
+    "A CD Projekt RED anunciou The Witcher 3: Wild Hunt — Songs of the Past, uma nova expansão que levará Geralt de Rívia novamente para o Caminho.",
+    "Nova aventura — a expansão terá Geralt como protagonista e apresentará uma nova história dentro do universo de The Witcher 3: Wild Hunt.",
+    "Desenvolvimento — Songs of the Past está sendo co-desenvolvida pela CD Projekt RED em parceria com a Fool's Theory.",
+    "Lançamento — a expansão está prevista para 2027 e será lançada para PC, Xbox Series X|S e PlayStation 5.",
+    "Mais informações — a equipe promete revelar novos detalhes sobre a expansão no final do verão.",
+    "Com Songs of the Past, os fãs poderão acompanhar Geralt novamente em uma nova aventura enquanto aguardam mais novidades sobre o futuro da franquia."
+  ]
+},
+  {
   "id": "the-witcher-3-remastered-lancamento",
   "titulo": "The Witcher 3: Wild Hunt Remastered chega em setembro com atualização gratuita",
   "categoria": "Notícia",
