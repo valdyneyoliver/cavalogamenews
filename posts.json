@@ -1,5 +1,29 @@
 [
   {
+  "id": "xbox-conversao-disco-digital",
+  "titulo": "Xbox anuncia nova função para transformar jogos físicos em licenças digitais",
+  "categoria": "Xbox",
+  "data": "26/08/2026",
+  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/PRESERVATION_GEARS-16x9-1-f50ea7c7183d739eee78-1536x864.png",
+  "resumo": "A Microsoft anunciou uma nova função que permitirá aos proprietários de Xbox converter jogos físicos compatíveis em versões digitais.",
+  "link": "",
+  "x": "https://x.com/asha_shar/status/2092621209955635606?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "A Xbox anunciou oficialmente uma nova função de conversão de jogos físicos para licenças digitais.",
+    "A novidade permitirá que jogadores que possuem determinados jogos em disco possam associá-los à sua biblioteca digital, facilitando o acesso aos títulos sem depender do disco para algumas formas de uso.",
+    "Milhares de jogos — segundo a Microsoft, a funcionalidade terá suporte para milhares de títulos desde o lançamento.",
+    "Xbox Insiders — os participantes do programa Xbox Insider terão acesso antecipado à novidade a partir da próxima semana.",
+    "A nova função faz parte dos esforços da Xbox para facilitar o acesso aos jogos que os jogadores já possuem e tornar suas bibliotecas mais flexíveis.",
+    "Mais detalhes sobre os jogos compatíveis e o funcionamento completo da conversão deverão ser divulgados pela Microsoft conforme o recurso for disponibilizado para os Insiders."
+  ]
+},
+  {
   "id": "state-of-decay-3-beta-fechada",
   "titulo": "State of Decay 3 terá testes beta fechados antes do lançamento",
   "categoria": "Xbox",
