@@ -1,5 +1,29 @@
 [
   {
+  "id": "forza-horizon-6-drift-attack",
+  "titulo": "Forza Horizon 6 anuncia novo modo Drift Attack",
+  "categoria": "Notícia",
+  "data": "26/08/2026",
+  "imagem": "https://cdn.forza.net/strapi-uploads/assets/xlarge_FH_6_Gamescom_7_Eleven_teaser_01_16x9_WM_3835cb3985.webp",
+  "resumo": "Forza Horizon 6 receberá o Drift Attack, uma nova experiência no mundo compartilhado focada em disputas de drift.",
+  "link": "https://forza.net/news/forza-horizon-6-drift-attack",
+  "x": "https://x.com/ForzaHorizon/status/2092644148771779031?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "Forza Horizon 6 receberá uma nova experiência chamada Drift Attack na atualização de setembro. A novidade foi revelada durante a Gamescom 2026.",
+    "No Drift Attack, os jogadores poderão entrar no circuito Shimanoyama diretamente pelo mundo aberto, sem telas de carregamento, e disputar as maiores pontuações.",
+    "Para desbloquear o novo modo, será necessário obter a Yellow Wristband no Horizon Festival.",
+    "O circuito Drift Attack será permanente e a equipe também planeja adicionar novos eventos de drift ao mundo do jogo em futuras atualizações.",
+    "A próxima atualização também terá uma celebração da indústria automotiva britânica, começando em 10 de setembro, com novos eventos e carros.",
+    "O Drift Attack chegará gratuitamente com a atualização de setembro de Forza Horizon 6."
+  ]
+},
+  {
   "id": "aion-2-launch-scale-test",
   "titulo": "AION 2 terá teste público de larga escala em setembro",
   "categoria": "Pc",
