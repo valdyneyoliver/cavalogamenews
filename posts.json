@@ -1,5 +1,32 @@
 [
   {
+  "id": "fable-combate-primeira-demo",
+  "titulo": "Fable revela detalhes do sistema de combate após primeira demonstração",
+  "categoria": "Xbox",
+  "data": "26/08/2026",
+  "imagem": "xxx",
+  "resumo": "A Playground Games apresentou a primeira demonstração de combate de Fable, mostrando diferentes armas, magias e estilos de luta.",
+  "link": "",
+  "x": "https://x.com/fable/status/2092583849393799311?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "A Playground Games apresentou na Gamescom 2026 a primeira demonstração de combate de Fable, revelando como os jogadores poderão combinar diferentes estilos durante as batalhas.",
+    "Combate corpo a corpo — o herói poderá utilizar armas como o martelo de duas mãos, capaz de causar bastante dano e atingir vários inimigos com um único golpe.",
+    "Esquiva e defesa — além dos ataques, será possível desviar e aparar golpes. Os bloqueios também podem abrir oportunidades para contra-ataques e finalizações.",
+    "Magias — Fable terá diferentes feitiços que podem ser equipados e utilizados durante os combates. Entre eles estão ataques de fogo, raios, lâminas mágicas, teletransporte e habilidades capazes de levantar inimigos.",
+    "Combinação de habilidades — os jogadores poderão misturar magia, ataques à distância e combate corpo a corpo para criar diferentes estilos de jogo.",
+    "Combate à distância — arcos e bestas poderão ser utilizados para atacar inimigos de longe e acertar pontos fracos específicos.",
+    "Inimigos — a demonstração apresentou diferentes tipos de Hollow Folk, além dos Wraiths e do Lantern Keeper, um inimigo mais poderoso que funciona como uma espécie de mini-chefe.",
+    "Fable chega em 23 de fevereiro de 2027 para Xbox Series X|S, PC e Cloud. O jogo também estará disponível no Game Pass e contará com Xbox Play Anywhere.",
+    "A Premium Edition terá acesso antecipado a partir de 18 de fevereiro, permitindo jogar até cinco dias antes do lançamento oficial."
+  ]
+},
+  {
   "id": "rockstar-responde-vazamentos-gta-6",
   "titulo": "Rockstar se pronuncia sobre os recentes vazamentos de GTA 6",
   "categoria": "Notícia",
