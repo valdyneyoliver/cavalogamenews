@@ -1,22 +1,26 @@
 [
   {
-  "id": "xbox-discos-agora-digitais",
-  "titulo": "Xbox anuncia recurso que transforma jogos físicos em licenças digitais",
-  "categoria": "Notícia",
+  "id": "xbox-conversao-disco-digital",
+  "titulo": "Xbox anuncia nova função para transformar jogos físicos em licenças digitais",
+  "categoria": "Xbox",
   "data": "26/08/2026",
   "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/08/PRESERVATION_GEARS-16x9-1-f50ea7c7183d739eee78-1536x864.png",
-  "resumo": "A Xbox anunciou uma nova função que permite transformar jogos físicos compatíveis em licenças digitais dentro do ecossistema Xbox.",
+  "resumo": "A Microsoft anunciou uma nova função que permitirá aos proprietários de Xbox converter jogos físicos compatíveis em versões digitais.",
   "link": "",
-  "x": "",
-  "videos": [],
+  "x": "https://x.com/asha_shar/status/2092621209955635606?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
   "conteudo": [
-    "A Xbox anunciou um novo recurso que leva os benefícios das versões digitais para jogos físicos compatíveis. A novidade faz parte dos esforços da empresa para preservar as bibliotecas dos jogadores.",
-    "Como funciona — ao inserir um disco compatível em um Xbox One ou Xbox Series X e iniciar o jogo, o jogador poderá reivindicar uma licença digital para aquele título.",
-    "Compatibilidade — a Microsoft informa que a maioria dos jogos em disco de Xbox One e Xbox Series X será compatível com o novo recurso, embora nem todos estejam disponíveis no lançamento.",
-    "Benefícios digitais — depois de reivindicar a licença, alguns jogos poderão aproveitar recursos como Xbox Play Anywhere e Xbox Cloud Gaming, quando houver suporte.",
-    "Milhares de jogos — o recurso será lançado com milhares de títulos compatíveis, e a Xbox pretende adicionar mais jogos ao longo do tempo.",
-    "Xbox Insiders — os participantes do programa Xbox Insider poderão começar a testar a novidade a partir de 31 de agosto de 2026.",
-    "A Microsoft afirma que a novidade representa mais um passo para facilitar a preservação e o acesso aos jogos que os jogadores já possuem."
+    "A Xbox anunciou oficialmente uma nova função de conversão de jogos físicos para licenças digitais.",
+    "A novidade permitirá que jogadores que possuem determinados jogos em disco possam associá-los à sua biblioteca digital, facilitando o acesso aos títulos sem depender do disco para algumas formas de uso.",
+    "Milhares de jogos — segundo a Microsoft, a funcionalidade terá suporte para milhares de títulos desde o lançamento.",
+    "Xbox Insiders — os participantes do programa Xbox Insider terão acesso antecipado à novidade a partir da próxima semana.",
+    "A nova função faz parte dos esforços da Xbox para facilitar o acesso aos jogos que os jogadores já possuem e tornar suas bibliotecas mais flexíveis.",
+    "Mais detalhes sobre os jogos compatíveis e o funcionamento completo da conversão deverão ser divulgados pela Microsoft conforme o recurso for disponibilizado para os Insiders."
   ]
 },
   {
