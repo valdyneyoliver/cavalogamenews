@@ -366,43 +366,6 @@
   </nav>
 
 </header>
-  <section id="doacao" style="
-  max-width: 500px;
-  margin: 25px auto;
-  padding: 25px;
-  text-align: center;
-  background: #1b1b1b;
-  border: 1px solid #333;
-  border-radius: 15px;
-">
-
-  <h2 style="color:#00ff88;">
-    💚 Apoie o CavaloGameNews
-  </h2>
-
-  <p style="color:#ccc;">
-    Gostou do conteúdo? Ajude o CavaloGameNews com uma doação via Pix.
-  </p>
-
-  <img
-    src="img/qrcode_pix_cavalogamenews.png"
-    alt="QR Code Pix"
-    style="
-      width:260px;
-      max-width:100%;
-      margin-top:15px;
-      background:#fff;
-      padding:8px;
-      border-radius:8px;
-    "
-  >
-
-  <p style="color:#aaa;font-size:14px;">
-    📱 Aponte a câmera do celular para o QR Code.
-  </p>
-
-</section>
-
 
 <!-- HERO -->
 
@@ -995,6 +958,100 @@ function buscarNoticias() {
 carregarNoticias();
 
 </script>
+<!-- JANELA DE DOAÇÃO -->
+<div id="doacaoModal" style="
+  display:none;
+  position:fixed;
+  z-index:9999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.85);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+">
 
+  <div style="
+    background:#1b1b1b;
+    border:1px solid #333;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    max-width:400px;
+    width:100%;
+    position:relative;
+  ">
+
+    <button onclick="fecharDoacao()" style="
+      position:absolute;
+      right:12px;
+      top:10px;
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:25px;
+      cursor:pointer;
+    ">
+      ×
+    </button>
+
+    <h2 style="color:#00ff88;margin-bottom:10px;">
+      💚 Apoie o CavaloGameNews
+    </h2>
+
+    <p style="
+      color:#ccc;
+      line-height:1.5;
+      margin-bottom:15px;
+    ">
+      Gostou do conteúdo? Ajude a manter o CavaloGameNews com uma doação via Pix.
+    </p>
+
+    <img
+      src="img/qrcode_pix_cavalogamenews.png"
+      alt="QR Code Pix para doação"
+      style="
+        width:260px;
+        max-width:100%;
+        background:#fff;
+        padding:8px;
+        border-radius:8px;
+      "
+    >
+
+    <p style="
+      color:#aaa;
+      font-size:14px;
+      margin-top:15px;
+    ">
+      📱 Aponte a câmera do celular para o QR Code.
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+function abrirDoacao() {
+  document.getElementById("doacaoModal").style.display = "flex";
+}
+
+function fecharDoacao() {
+  document.getElementById("doacaoModal").style.display = "none";
+}
+
+document.addEventListener("click", function(event) {
+
+  const link = event.target.closest('a[href="#doacao"]');
+
+  if (link) {
+    event.preventDefault();
+    abrirDoacao();
+  }
+
+});
+</script>
 </body>
 </html>
