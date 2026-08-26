@@ -1,5 +1,28 @@
 [
   {
+  "id": "aion-2-launch-scale-test",
+  "titulo": "AION 2 terá teste público de larga escala em setembro",
+  "categoria": "Pc",
+  "data": "26/08/2026",
+  "imagem": "https://pbs.twimg.com/media/HQq7MkzWMAAT7HW?format=jpg&name=large",
+  "resumo": "AION 2 realizará um teste público de larga escala nos dias 17 e 18 de setembro antes do lançamento global.",
+  "link": "",
+  "x": "https://x.com/AION2Official/status/2092690822227505443?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "AION 2 terá um Launch Scale Test nos dias 17 e 18 de setembro, permitindo que jogadores experimentem o MMORPG antes do lançamento global.",
+    "O teste foi criado para verificar a estabilidade dos servidores e da infraestrutura em condições próximas às do serviço oficial.",
+    "A participação será aberta aos jogadores interessados, com acesso pelo Steam e pela plataforma PURPLE.",
+    "O progresso realizado durante o teste não será transferido para o acesso antecipado ou para o lançamento oficial.",
+    "AION 2 será lançado mundialmente para PC em 5 de outubro de 2026. Jogadores que adquirirem o Founder's Pack terão cinco dias de acesso antecipado, a partir de 30 de setembro."
+  ]
+},
+  {
   "id": "the-division-2-echoes-central-park",
   "titulo": "The Division 2 anuncia Echoes of Central Park, sua próxima expansão",
   "categoria": "Notícia",
