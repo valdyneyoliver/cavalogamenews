@@ -1,5 +1,28 @@
 [
   {
+  "id": "terrible-lizards-game-pass",
+  "titulo": "Terrible Lizards chega ao Xbox Game Pass no lançamento",
+  "categoria": "Notícia",
+  "data": "27/08/2026",
+  "imagem": "https://img.youtube.com/vi/W9JU7LpGI1A/maxresdefault.jpg",
+  "resumo": "Terrible Lizards é um novo jogo de terror em primeira pessoa que chegará ao Xbox Game Pass no dia do lançamento.",
+  "link": "",
+  "x": "",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=ExrAn2PP8xo"
+    }
+  ],
+  "conteudo": [
+    "Terrible Lizards é um jogo de terror e plataforma em primeira pessoa com gráficos 3D, misturando exploração, sobrevivência e momentos assustadores.",
+    "A aventura acontece em uma atração sombria inspirada na Route 66, onde os jogadores precisarão explorar o ambiente enquanto enfrentam diferentes perigos.",
+    "O jogo será lançado em 29 de outubro de 2026 para Xbox Series X|S, Xbox no PC, Xbox Cloud Gaming, PlayStation 5 e Steam.",
+    "No Xbox, Terrible Lizards estará disponível no Xbox Game Pass desde o primeiro dia, permitindo que os assinantes joguem no lançamento.",
+    "A proposta combina terror e sobrevivência em uma experiência focada na exploração de um ambiente misterioso e perigoso."
+  ]
+},
+  {
   "id": "path-of-exile-2-lancamento-dezembro",
   "titulo": "Path of Exile 2 confirma lançamento da versão 1.0 para dezembro",
   "categoria": "Notícia",
