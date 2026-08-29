@@ -1,5 +1,29 @@
 [
   {
+  "id": "nvidia-dlss-5-vazamento",
+  "titulo": "NVIDIA DLSS 5 vaza e primeiras versões já são testadas em jogos",
+  "categoria": "Notícia",
+  "data": "29/08/2026",
+  "imagem": "https://pbs.twimg.com/media/HQ1EdmLWEAEsUP4?format=jpg&name=4096x4096",
+  "resumo": "Arquivos relacionados ao NVIDIA DLSS 5 vazaram antes do lançamento oficial, permitindo que modders testassem a tecnologia em diferentes jogos.",
+  "link": "",
+  "x": "https://x.com/Grummz/status/2093145252186210528?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=9FPPy7vWA4M"
+    }
+  ],
+  "conteudo": [
+    "O NVIDIA DLSS 5 foi alvo de um vazamento antes de seu lançamento oficial. Arquivos relacionados à tecnologia foram encontrados em uma versão de acesso antecipado de NBA 2K27.",
+    "A descoberta permitiu que modders testassem o Neural Rendering do DLSS 5 em outros jogos, incluindo Control e Cyberpunk 2077.",
+    "Os primeiros testes mostram melhorias em iluminação, sombras, materiais e detalhes visuais. Porém, os resultados ainda não representam a versão final da tecnologia.",
+    "O vazamento também revelou um impacto significativo no desempenho em alguns testes, com quedas de FPS dependendo do jogo e das configurações utilizadas.",
+    "A NVIDIA apresentou oficialmente o DLSS 5 em março. A tecnologia utiliza um modelo de renderização neural em tempo real para aplicar iluminação e materiais com aparência mais realista.",
+    "O DLSS 5 está previsto para chegar oficialmente no outono de 2026. A NVIDIA afirma que diversos jogos receberão suporte à tecnologia."
+  ]
+},
+  {
   "id": "crazy-taxi-world-tour-teste-rede",
   "titulo": "Crazy Taxi: World Tour terá teste de rede fechada em setembro",
   "categoria": "Notícia",
