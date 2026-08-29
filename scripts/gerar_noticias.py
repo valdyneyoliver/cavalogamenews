@@ -602,10 +602,26 @@ header {{
 }}
 
 
-header a {{
+.top-back-button {{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    background: #181b20;
+    border: 1px solid #00ff88;
+    border-radius: 10px;
     color: #00ff88;
     text-decoration: none;
     font-weight: bold;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}}
+
+.top-back-button:hover {{
+    background: #00ff88;
+    color: #111;
+    transform: translateX(-3px);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.25);
 }}
 
 
@@ -860,8 +876,9 @@ footer {{
 
 <header>
 
-<a href="../index.html">
-← Voltar para o CavaloGameNews
+<a href="../index.html" class="top-back-button">
+    <span>←</span>
+    <span>Voltar para o CavaloGameNews</span>
 </a>
 
 </header>
