@@ -324,14 +324,29 @@ for post in posts:
 
     conteudo_html = ""
 
-    for paragrafo in paragrafos:
+    # =====================================================
+    # POST DO X
+    # O X será inserido no meio do conteúdo.
+    # =====================================================
 
-        if not str(paragrafo).strip():
-            continue
+    x_html = gerar_post_x(post)
 
-        texto = html.escape(
-            str(paragrafo)
-        )
+    paragrafos_validos = [
+        str(p).strip()
+        for p in paragrafos
+        if str(p).strip()
+    ]
+
+    # Divide o conteúdo aproximadamente ao meio.
+    # Se houver poucos parágrafos, o X entra depois do primeiro.
+    meio = len(paragrafos_validos) // 2
+
+    if len(paragrafos_validos) > 1:
+        meio = max(1, meio)
+
+    for indice, paragrafo in enumerate(paragrafos_validos):
+
+        texto = html.escape(paragrafo)
 
         # =================================================
         # TRANSFORMAR URLs EM LINKS CLICÁVEIS
@@ -349,17 +364,20 @@ for post in posts:
 </p>
 """
 
+        # Coloca o post do X no meio da notícia
+        if x_html and indice + 1 == meio:
+            conteudo_html += x_html
+
+    # Se houver apenas 1 parágrafo, coloca o X depois dele.
+    if x_html and len(paragrafos_validos) == 1:
+        conteudo_html += x_html
+
     # =====================================================
     # VÍDEOS
+    # O YouTube continua no final da notícia.
     # =====================================================
 
     videos_html = gerar_videos(post)
-
-    # =====================================================
-    # POST DO X
-    # =====================================================
-
-    x_html = gerar_post_x(post)
 
     # =====================================================
     # 3 ÚLTIMAS NOTÍCIAS
@@ -878,21 +896,14 @@ footer {{
 
 {conteudo_html}
 
-</div>
-
-
 <!-- =================================================
-     POST DO X
-================================================= -->
-
-{x_html}
-
-
-<!-- =================================================
-     VÍDEOS
+     VÍDEOS DO YOUTUBE / PC
+     Ficam sempre no final da notícia.
 ================================================= -->
 
 {videos_html}
+
+</div>
 
 
 <div class="text">
