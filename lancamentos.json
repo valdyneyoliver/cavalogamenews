@@ -1,0 +1,457 @@
+{
+  "atualizado_em": "2026-08-30",
+  "fonte": "RAWG",
+  "jogos": [
+    {
+      "id": 996046,
+      "nome": "The Blood Of Dawnwalker",
+      "slug": "the-blood-of-dawnwalker",
+      "data": "2026-09-02",
+      "data_formatada": "02/09/2026",
+      "imagem": "https://media.rawg.io/media/games/319/319d18680fd0233e0ff724f234c97d17.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/the-blood-of-dawnwalker"
+    },
+    {
+      "id": 994600,
+      "nome": "Onimusha: Way Of The Sword",
+      "slug": "onimusha-way-of-the-sword",
+      "data": "2026-09-04",
+      "data_formatada": "04/09/2026",
+      "imagem": "https://media.rawg.io/media/games/48e/48ea2f7adb60615d658887899ffe4d1f.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/onimusha-way-of-the-sword"
+    },
+    {
+      "id": 1019655,
+      "nome": "Magical Blush",
+      "slug": "magical-blush",
+      "data": "2026-09-09",
+      "data_formatada": "09/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/197/197f04ecff2b07ef4653476732f098e7.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/magical-blush"
+    },
+    {
+      "id": 1019380,
+      "nome": "The Alighieri Circle: Dante's Bloodline",
+      "slug": "the-alighieri-circle-dantes-bloodline",
+      "data": "2026-09-09",
+      "data_formatada": "09/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/ac8/ac8e6aad345844473ff6f9600e0cbae3.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/the-alighieri-circle-dantes-bloodline"
+    },
+    {
+      "id": 1019342,
+      "nome": "Sigilfarer: A Dice-Rolling Roguelite",
+      "slug": "sigilfarer-a-dice-rolling-roguelite",
+      "data": "2026-09-13",
+      "data_formatada": "13/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/b71/b7128108b1990edb570912250db6c1d6.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/sigilfarer-a-dice-rolling-roguelite"
+    },
+    {
+      "id": 662318,
+      "nome": "Marvel's Wolverine",
+      "slug": "wolverine-2022",
+      "data": "2026-09-15",
+      "data_formatada": "15/09/2026",
+      "imagem": "https://media.rawg.io/media/games/28d/28d61be51ec0411e24c28f71122dcaaf.jpeg",
+      "plataformas": [
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/wolverine-2022"
+    },
+    {
+      "id": 1019729,
+      "nome": "I Have Known You",
+      "slug": "i-have-known-you",
+      "data": "2026-09-17",
+      "data_formatada": "17/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/601/60161283016aef64fc1bb9f3593ecb08.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/i-have-known-you"
+    },
+    {
+      "id": 1017960,
+      "nome": "Trails in the Sky 2nd Chapter",
+      "slug": "trails-in-the-sky-2nd-chapter",
+      "data": "2026-09-17",
+      "data_formatada": "17/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/2be/2be279f15824d0dfdb1c1499569e4e6f.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/trails-in-the-sky-2nd-chapter"
+    },
+    {
+      "id": 1018106,
+      "nome": "Trine 6: Together in Time",
+      "slug": "trine-6-together-in-time",
+      "data": "2026-09-17",
+      "data_formatada": "17/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/a1f/a1f4f1730429302fa1a4c674737b1644.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/trine-6-together-in-time"
+    },
+    {
+      "id": 1019698,
+      "nome": "Well Dweller",
+      "slug": "well-dweller",
+      "data": "2026-09-21",
+      "data_formatada": "21/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/773/77371e56a9482d41b41565d04046a912.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/well-dweller"
+    },
+    {
+      "id": 1019728,
+      "nome": "Alien Breed 35th Anniversary",
+      "slug": "alien-breed-35th-anniversary",
+      "data": "2026-09-23",
+      "data_formatada": "23/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/5de/5de4981a33bfb2927f34f0832db0f1e2.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/alien-breed-35th-anniversary"
+    },
+    {
+      "id": 1015409,
+      "nome": "Control Resonant",
+      "slug": "control-resonant",
+      "data": "2026-09-24",
+      "data_formatada": "24/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/5b8/5b812f73e4c5df28630747c52f57170b.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/control-resonant"
+    },
+    {
+      "id": 868088,
+      "nome": "Silent Hill Townfall",
+      "slug": "silent-hill-townfall",
+      "data": "2026-09-24",
+      "data_formatada": "24/09/2026",
+      "imagem": "https://media.rawg.io/media/games/d1c/d1c4e52d3084231530fcab5d90033d42.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/silent-hill-townfall"
+    },
+    {
+      "id": 1019727,
+      "nome": "Transport Fever 3",
+      "slug": "transport-fever-3",
+      "data": "2026-09-28",
+      "data_formatada": "28/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/003/003cfd6bb966df4e3e9cd97641c83bfb.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/transport-fever-3"
+    },
+    {
+      "id": 1004513,
+      "nome": "End of Abyss",
+      "slug": "end-of-abyss",
+      "data": "2026-10-01",
+      "data_formatada": "01/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/7ba/7baacc4780d3199810acffba636c0f9f.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/end-of-abyss"
+    },
+    {
+      "id": 1019418,
+      "nome": "Ghost of Yōtei: Echoes of Sekigahara",
+      "slug": "ghost-of-yotei-echoes-of-sekigahara",
+      "data": "2026-10-01",
+      "data_formatada": "01/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/c36/c369c40764cab0de8491d414289cbf6c.jpg",
+      "plataformas": [
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/ghost-of-yotei-echoes-of-sekigahara"
+    },
+    {
+      "id": 1018059,
+      "nome": "Rayman Legends Retold",
+      "slug": "rayman-legends-retold",
+      "data": "2026-10-01",
+      "data_formatada": "01/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/3c6/3c6655e5fa82e245a9f0be20d8d7ac89.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/rayman-legends-retold"
+    },
+    {
+      "id": 1015425,
+      "nome": "Ace Combat 8: Wings of Theve",
+      "slug": "ace-combat-8-wings-of-theve",
+      "data": "2026-10-02",
+      "data_formatada": "02/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/f9e/f9ef6161a0fc80e9f588077e3c3206b0.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/ace-combat-8-wings-of-theve"
+    },
+    {
+      "id": 983213,
+      "nome": "Gears of War: E-Day",
+      "slug": "gears-of-war-e-day",
+      "data": "2026-10-06",
+      "data_formatada": "06/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/cb8/cb88356feb27fba1102659e7a09c222a.jpg",
+      "plataformas": [
+        "PC",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/gears-of-war-e-day"
+    },
+    {
+      "id": 1008986,
+      "nome": "Valor Mortis",
+      "slug": "valor-mortis",
+      "data": "2026-10-13",
+      "data_formatada": "13/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/20e/20e62ea7ec2a498bf56e31058f0bd4b1.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/valor-mortis"
+    },
+    {
+      "id": 1018102,
+      "nome": "Castlevania: Belmont's Curse",
+      "slug": "castlevania-belmonts-curse",
+      "data": "2026-10-15",
+      "data_formatada": "15/10/2026",
+      "imagem": "https://media.rawg.io/media/games/429/42928697eb80feb13e6087170a10565a.jpeg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/castlevania-belmonts-curse"
+    },
+    {
+      "id": 975605,
+      "nome": "Enshrouded",
+      "slug": "enshrouded-2",
+      "data": "2026-10-15",
+      "data_formatada": "15/10/2026",
+      "imagem": "https://media.rawg.io/media/games/23a/23a1c71366aea4341aec483c9dd08a59.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/enshrouded-2"
+    },
+    {
+      "id": 1016322,
+      "nome": "Tenebris Somnia",
+      "slug": "tenebris-somnia-demo",
+      "data": "2026-10-16",
+      "data_formatada": "16/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/98a/98a8d30907f06eb00c53f4e2b6c630f7.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/tenebris-somnia-demo"
+    },
+    {
+      "id": 1019334,
+      "nome": "Stupid Never Dies",
+      "slug": "stupid-never-dies",
+      "data": "2026-10-21",
+      "data_formatada": "21/10/2026",
+      "imagem": "https://media.rawg.io/media/games/41c/41c5448f15d06825947791da15489f92.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/stupid-never-dies"
+    },
+    {
+      "id": 1018134,
+      "nome": "Final Fantasy Resonance",
+      "slug": "final-fantasy-resonance",
+      "data": "2026-10-22",
+      "data_formatada": "22/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/e79/e79f71ca3e876b54f4ca02c0a5d03aa2.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/final-fantasy-resonance"
+    },
+    {
+      "id": 1019726,
+      "nome": "Ecstatica",
+      "slug": "ecstatica",
+      "data": "2026-10-25",
+      "data_formatada": "25/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/f3b/f3b34c8df90a7b4dd489860454e350ec.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/ecstatica"
+    },
+    {
+      "id": 1019656,
+      "nome": "Remothered: Red Nun's Legacy",
+      "slug": "remothered-red-nuns-legacy",
+      "data": "2026-10-26",
+      "data_formatada": "26/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/7ea/7ea439920ce17884b49e2e3988f8786a.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/remothered-red-nuns-legacy"
+    },
+    {
+      "id": 961205,
+      "nome": "Phantom Blade Zero",
+      "slug": "phantom-blade-zero",
+      "data": "2026-10-29",
+      "data_formatada": "29/10/2026",
+      "imagem": "https://media.rawg.io/media/games/25f/25f536a977488f12ef8a6d013e50fda1.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/phantom-blade-zero"
+    },
+    {
+      "id": 973539,
+      "nome": "No Rest for the Wicked",
+      "slug": "no-rest-for-the-wicked-2024",
+      "data": "2026-10-30",
+      "data_formatada": "30/10/2026",
+      "imagem": "https://media.rawg.io/media/games/209/209e902168fcde856bd22a1bda90013e.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/no-rest-for-the-wicked-2024"
+    },
+    {
+      "id": 1019738,
+      "nome": "Space Station Designer",
+      "slug": "space-station-designer",
+      "data": "2026-11-17",
+      "data_formatada": "17/11/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/53c/53ca443f2fb80f24ecec21d4b21a9f2b.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/space-station-designer"
+    },
+    {
+      "id": 972995,
+      "nome": "Grand Theft Auto VI",
+      "slug": "grand-theft-aito-vi",
+      "data": "2026-11-19",
+      "data_formatada": "19/11/2026",
+      "imagem": "https://media.rawg.io/media/games/734/7342a1cd82c8997ec620084ae4c2e7e4.jpg",
+      "plataformas": [
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/grand-theft-aito-vi"
+    },
+    {
+      "id": 998661,
+      "nome": "Beautiful Light",
+      "slug": "beautiful-light",
+      "data": "2026-12-01",
+      "data_formatada": "01/12/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/3c5/3c511506ba31902bbdcbf963219ef77c.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/beautiful-light"
+    },
+    {
+      "id": 1019381,
+      "nome": "SOMBRAS: negative frames",
+      "slug": "sombras-negative-frames",
+      "data": "2026-12-02",
+      "data_formatada": "02/12/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/c27/c27aaf1ec5a4156cf93b906f29bb34a3.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/sombras-negative-frames"
+    },
+    {
+      "id": 391403,
+      "nome": "Path of Exile 2",
+      "slug": "path-of-exile-2",
+      "data": "2026-12-11",
+      "data_formatada": "11/12/2026",
+      "imagem": "https://media.rawg.io/media/games/401/4010e56adceb7db58ba42d1189796d5e.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/path-of-exile-2"
+    },
+    {
+      "id": 1012187,
+      "nome": "They Come in Fives",
+      "slug": "they-come-in-fives",
+      "data": "2026-12-16",
+      "data_formatada": "16/12/2026",
+      "imagem": "https://media.rawg.io/media/games/69f/69f16f2f13fdb39e5efba2fc5528d026.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/they-come-in-fives"
+    }
+  ]
+}
