@@ -1,461 +1,210 @@
 import json
 import os
-import sys
 from datetime import date, timedelta
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-from urllib.error import HTTPError, URLError
 
 
-# =========================================================
+# ==========================================
 # CONFIGURAÇÕES
-# =========================================================
+# ==========================================
 
-BASE_URL = "https://api.rawg.io/api/games"
+API_URL = "https://api.rawg.io/api/games"
 
-OUTPUT_FILE = "lancamentos.json"
+ARQUIVO_SAIDA = "lancamentos.json"
 
 DIAS_FUTUROS = 120
 
-LIMITE_JOGOS = 100
+LIMITE = 100
 
 
-# =========================================================
-# API KEY
-# =========================================================
+# ==========================================
+# CHAVE DA RAWG
+# ==========================================
 
-API_KEY = os.environ.get("RAWG_API_KEY", "").strip()
+API_KEY = os.environ.get("RAWG_API_KEY")
 
 if not API_KEY:
-    print("ERRO: a variável RAWG_API_KEY não foi encontrada.")
-    print()
-    print("Verifique no GitHub:")
-    print("Settings > Secrets and variables > Actions")
-    print()
-    print("O nome do Secret deve ser exatamente:")
-    print("RAWG_API_KEY")
-    print()
-
-    sys.exit(1)
+    print("ERRO: RAWG_API_KEY não encontrada.")
+    exit(1)
 
 
-# =========================================================
+# ==========================================
+# DATAS
+# ==========================================
+
+hoje = date.today()
+
+fim = hoje + timedelta(days=DIAS_FUTUROS)
+
+data_inicio = hoje.strftime("%Y-%m-%d")
+
+data_fim = fim.strftime("%Y-%m-%d")
+
+
+print("===================================")
+print("CavaloGameNews")
+print("Gerador de Lançamentos")
+print("===================================")
+
+print("Período:")
+print(data_inicio, "até", data_fim)
+
+
+# ==========================================
 # CONSULTAR RAWG
-# =========================================================
+# ==========================================
 
-def consultar_rawg(params):
+parametros = {
+    "key": API_KEY,
+    "dates": f"{data_inicio},{data_fim}",
+    "ordering": "released",
+    "parent_platforms": "1,2,3,7",
+    "page_size": 100
+}
 
-    params = dict(params)
+url = API_URL + "?" + urlencode(parametros)
 
-    params["key"] = API_KEY
+print("Consultando RAWG...")
 
-    url = BASE_URL + "?" + urlencode(params)
+request = Request(
+    url,
+    headers={
+        "User-Agent": "CavaloGameNews"
+    }
+)
 
-    print()
-    print("Consultando RAWG...")
-    print(url.replace(API_KEY, "***"))
+try:
 
-    request = Request(
-        url,
-        headers={
-            "User-Agent": "CavaloGameNews/1.0"
-        }
-    )
+    with urlopen(request, timeout=30) as resposta:
 
-    try:
-
-        with urlopen(
-            request,
-            timeout=30
-        ) as response:
-
-            conteudo = response.read().decode(
-                "utf-8"
-            )
-
-            return json.loads(
-                conteudo
-            )
-
-    except HTTPError as erro:
-
-        print(
-            f"ERRO HTTP da RAWG: {erro.code}"
+        dados = json.loads(
+            resposta.read().decode("utf-8")
         )
 
-        try:
+except Exception as erro:
 
-            detalhe = erro.read().decode(
-                "utf-8",
-                errors="ignore"
-            )
-
-            print(detalhe)
-
-        except Exception:
-            pass
-
-        sys.exit(1)
-
-    except URLError as erro:
-
-        print(
-            "ERRO DE CONEXÃO COM A RAWG:"
-        )
-
-        print(erro)
-
-        sys.exit(1)
-
-    except Exception as erro:
-
-        print(
-            "ERRO AO CONSULTAR A RAWG:"
-        )
-
-        print(erro)
-
-        sys.exit(1)
+    print("ERRO ao consultar RAWG:")
+    print(erro)
+    exit(1)
 
 
-# =========================================================
-# CONSULTAR DETALHES DO JOGO
-#
-# A busca inicial da RAWG pode trazer somente
-# background_image.
-#
-# Aqui fazemos uma segunda consulta para tentar
-# encontrar a imagem vertical/original da capa.
-# =========================================================
+# ==========================================
+# PEGAR RESULTADOS
+# ==========================================
 
-def consultar_detalhes_jogo(game_id):
+resultados = dados.get("results", [])
 
-    if not game_id:
-        return {}
-
-    url = (
-        f"{BASE_URL}/{game_id}"
-        f"?key={API_KEY}"
-    )
-
-    print(
-        f"  Buscando capa original do jogo ID {game_id}..."
-    )
-
-    request = Request(
-        url,
-        headers={
-            "User-Agent": "CavaloGameNews/1.0"
-        }
-    )
-
-    try:
-
-        with urlopen(
-            request,
-            timeout=30
-        ) as response:
-
-            conteudo = response.read().decode(
-                "utf-8"
-            )
-
-            return json.loads(
-                conteudo
-            )
-
-    except Exception as erro:
-
-        print(
-            f"  Não foi possível buscar detalhes: {erro}"
-        )
-
-        return {}
+print("Jogos recebidos:", len(resultados))
 
 
-# =========================================================
-# ESCOLHER IMAGEM
-#
-# PRIORIDADE:
-#
-# 1. imagem vertical/original encontrada
-# 2. background_image da RAWG
-#
-# A RAWG nem sempre fornece uma capa vertical
-# para todos os jogos.
-# =========================================================
+jogos = []
 
-def escolher_imagem(game, detalhes):
 
-    # -----------------------------------------------------
-    # 1. Tentar imagem principal dos detalhes
-    # -----------------------------------------------------
+# ==========================================
+# PROCESSAR JOGOS
+# ==========================================
 
-    imagem = str(
-        detalhes.get(
-            "background_image",
+for jogo in resultados:
+
+    nome = jogo.get("name")
+
+    data_lancamento = jogo.get("released")
+
+    imagem = jogo.get("background_image")
+
+    slug = jogo.get("slug")
+
+    plataformas = []
+
+
+    # --------------------------------------
+    # PLATAFORMAS
+    # --------------------------------------
+
+    for item in jogo.get("platforms", []):
+
+        plataforma = item.get("platform", {})
+
+        nome_plataforma = plataforma.get(
+            "name",
             ""
         )
-    ).strip()
 
-    if imagem:
-        return imagem
+        nome_lower = nome_plataforma.lower()
 
 
-    # -----------------------------------------------------
-    # 2. Tentar imagem recebida na busca inicial
-    # -----------------------------------------------------
+        if nome_lower == "pc":
 
-    imagem = str(
-        game.get(
-            "background_image",
-            ""
-        )
-    ).strip()
-
-    if imagem:
-        return imagem
+            if "PC" not in plataformas:
+                plataformas.append("PC")
 
 
-    # -----------------------------------------------------
-    # 3. Nenhuma imagem
-    # -----------------------------------------------------
+        elif "playstation" in nome_lower:
 
-    return ""
-
-
-# =========================================================
-# IDENTIFICAR PLATAFORMAS
-# =========================================================
-
-def identificar_plataformas(game):
-
-    plataformas_encontradas = []
-
-    plataformas = game.get(
-        "platforms",
-        []
-    )
-
-    if not isinstance(
-        plataformas,
-        list
-    ):
-        return plataformas_encontradas
-
-    for item in plataformas:
-
-        if not isinstance(
-            item,
-            dict
-        ):
-            continue
-
-        plataforma = item.get(
-            "platform",
-            {}
-        )
-
-        if not isinstance(
-            plataforma,
-            dict
-        ):
-            continue
-
-        nome = str(
-            plataforma.get(
-                "name",
-                ""
-            )
-        ).strip()
-
-        slug = str(
-            plataforma.get(
-                "slug",
-                ""
-            )
-        ).strip().lower()
-
-        nome_lower = nome.lower()
-
-
-        # -------------------------------------------------
-        # PC
-        # -------------------------------------------------
-
-        if (
-            slug == "pc"
-            or "windows" in slug
-            or nome_lower == "pc"
-        ):
-
-            if "PC" not in plataformas_encontradas:
-
-                plataformas_encontradas.append(
-                    "PC"
-                )
-
-
-        # -------------------------------------------------
-        # PlayStation
-        # -------------------------------------------------
-
-        if (
-            "playstation" in slug
-            or "playstation" in nome_lower
-        ):
-
-            if "PlayStation" not in plataformas_encontradas:
-
-                plataformas_encontradas.append(
+            if "PlayStation" not in plataformas:
+                plataformas.append(
                     "PlayStation"
                 )
 
 
-        # -------------------------------------------------
-        # Xbox
-        # -------------------------------------------------
+        elif "xbox" in nome_lower:
 
-        if (
-            "xbox" in slug
-            or "xbox" in nome_lower
-        ):
-
-            if "Xbox" not in plataformas_encontradas:
-
-                plataformas_encontradas.append(
-                    "Xbox"
-                )
+            if "Xbox" not in plataformas:
+                plataformas.append("Xbox")
 
 
-        # -------------------------------------------------
-        # Nintendo Switch
-        # -------------------------------------------------
+        elif "switch" in nome_lower:
 
-        if (
-            "nintendo-switch" in slug
-            or slug == "switch"
-            or "switch" in nome_lower
-        ):
-
-            if "Switch" not in plataformas_encontradas:
-
-                plataformas_encontradas.append(
-                    "Switch"
-                )
+            if "Switch" not in plataformas:
+                plataformas.append("Switch")
 
 
-    return plataformas_encontradas
-
-
-# =========================================================
-# FORMATAR DATA
-# =========================================================
-
-def formatar_data(data_iso):
-
-    if not data_iso:
-        return ""
-
-    try:
-
-        partes = data_iso.split("-")
-
-        if len(partes) != 3:
-            return data_iso
-
-        ano = partes[0]
-        mes = partes[1]
-        dia = partes[2]
-
-        return f"{dia}/{mes}/{ano}"
-
-    except Exception:
-
-        return data_iso
-
-
-# =========================================================
-# LIMPAR NOME
-# =========================================================
-
-def limpar_nome(nome):
+    # --------------------------------------
+    # IGNORAR JOGO INCOMPLETO
+    # --------------------------------------
 
     if not nome:
-        return ""
+        continue
 
-    return (
-        str(nome)
-        .replace("\n", " ")
-        .strip()
+    if not data_lancamento:
+        continue
+
+    if not imagem:
+        continue
+
+    if not plataformas:
+        continue
+
+
+    # --------------------------------------
+    # DATA FORMATADA
+    # --------------------------------------
+
+    partes = data_lancamento.split("-")
+
+    data_formatada = (
+        f"{partes[2]}/{partes[1]}/{partes[0]}"
+        if len(partes) == 3
+        else data_lancamento
     )
 
 
-# =========================================================
-# CRIAR ITEM
-# =========================================================
+    # --------------------------------------
+    # ADICIONAR JOGO
+    # --------------------------------------
 
-def criar_item(game):
+    jogos.append({
 
-    nome = limpar_nome(
-        game.get(
-            "name",
-            ""
-        )
-    )
-
-    released = str(
-        game.get(
-            "released",
-            ""
-        )
-    ).strip()
-
-    slug = str(
-        game.get(
-            "slug",
-            ""
-        )
-    ).strip()
-
-    game_id = game.get(
-        "id"
-    )
-
-    plataformas = identificar_plataformas(
-        game
-    )
-
-
-    # -----------------------------------------------------
-    # Buscar detalhes para tentar conseguir
-    # a imagem original/capa
-    # -----------------------------------------------------
-
-    detalhes = consultar_detalhes_jogo(
-        game_id
-    )
-
-
-    imagem = escolher_imagem(
-        game,
-        detalhes
-    )
-
-
-    return {
-
-        "id": game_id,
+        "id": jogo.get("id"),
 
         "nome": nome,
 
         "slug": slug,
 
-        "data": released,
+        "data": data_lancamento,
 
-        "data_formatada": formatar_data(
-            released
-        ),
+        "data_formatada": data_formatada,
 
         "imagem": imagem,
 
@@ -466,367 +215,80 @@ def criar_item(game):
             if slug
             else ""
         )
-    }
 
+    })
 
-# =========================================================
-# BUSCAR LANÇAMENTOS
-# =========================================================
 
-def buscar_lancamentos():
-
-    hoje = date.today()
-
-    fim = (
-        hoje
-        + timedelta(
-            days=DIAS_FUTUROS
-        )
-    )
-
-    data_inicio = hoje.isoformat()
-
-    data_fim = fim.isoformat()
-
-
-    print()
-    print(
-        "=========================================="
-    )
-
-    print(
-        "Período pesquisado:"
-    )
-
-    print(
-        f"{data_inicio} até {data_fim}"
-    )
-
-    print(
-        "=========================================="
-    )
-
-
-    params = {
-
-        "dates":
-            f"{data_inicio},{data_fim}",
-
-        "ordering":
-            "released",
-
-        "page_size":
-            100
-    }
-
-
-    data = consultar_rawg(
-        params
-    )
-
-
-    resultados = data.get(
-        "results",
-        []
-    )
-
-
-    if not isinstance(
-        resultados,
-        list
-    ):
-
-        resultados = []
-
-
-    jogos = []
-
-
-    for numero, game in enumerate(
-        resultados,
-        start=1
-    ):
-
-        if not isinstance(
-            game,
-            dict
-        ):
-            continue
-
-
-        print()
-        print(
-            f"[{numero}/{len(resultados)}] "
-            f"{game.get('name', 'Sem nome')}"
-        )
-
-
-        item = criar_item(
-            game
-        )
-
-
-        # -------------------------------------------------
-        # Ignorar jogo sem nome
-        # -------------------------------------------------
-
-        if not item["nome"]:
-
-            print(
-                "  Ignorado: sem nome."
-            )
-
-            continue
-
-
-        # -------------------------------------------------
-        # Ignorar jogo sem data
-        # -------------------------------------------------
-
-        if not item["data"]:
-
-            print(
-                "  Ignorado: sem data."
-            )
-
-            continue
-
-
-        # -------------------------------------------------
-        # Ignorar jogo sem imagem
-        # -------------------------------------------------
-
-        if not item["imagem"]:
-
-            print(
-                "  Ignorado: sem imagem."
-            )
-
-            continue
-
-
-        # -------------------------------------------------
-        # Ignorar jogo sem plataforma compatível
-        # -------------------------------------------------
-
-        if not item["plataformas"]:
-
-            print(
-                "  Ignorado: sem plataforma compatível."
-            )
-
-            continue
-
-
-        print(
-            "  ✓ Adicionado"
-        )
-
-        print(
-            f"  Data: {item['data_formatada']}"
-        )
-
-        print(
-            f"  Plataformas: "
-            f"{', '.join(item['plataformas'])}"
-        )
-
-        print(
-            f"  Imagem: encontrada"
-        )
-
-
-        jogos.append(
-            item
-        )
-
-
-    return jogos
-
-
-# =========================================================
+# ==========================================
 # REMOVER DUPLICADOS
-# =========================================================
+# ==========================================
 
-def remover_duplicados(jogos):
+unicos = {}
 
-    resultado = []
+for jogo in jogos:
 
-    ids = set()
-
-
-    for jogo in jogos:
-
-        game_id = jogo.get(
-            "id"
-        )
+    unicos[jogo["id"]] = jogo
 
 
-        if game_id in ids:
-
-            continue
+jogos = list(unicos.values())
 
 
-        ids.add(
-            game_id
-        )
-
-
-        resultado.append(
-            jogo
-        )
-
-
-    return resultado
-
-
-# =========================================================
+# ==========================================
 # ORDENAR
-# =========================================================
+# ==========================================
 
-def ordenar_jogos(jogos):
+jogos.sort(
+    key=lambda jogo: (
+        jogo["data"],
+        jogo["nome"].lower()
+    )
+)
 
-    return sorted(
 
-        jogos,
+# ==========================================
+# LIMITE
+# ==========================================
 
-        key=lambda jogo: (
+jogos = jogos[:LIMITE]
 
-            jogo.get(
-                "data",
-                "9999-99-99"
-            ),
 
-            jogo.get(
-                "nome",
-                ""
-            ).lower()
+print("Jogos válidos:", len(jogos))
 
-        )
 
+# ==========================================
+# CRIAR JSON
+# ==========================================
+
+dados_saida = {
+
+    "atualizado_em": date.today().isoformat(),
+
+    "fonte": "RAWG",
+
+    "jogos": jogos
+
+}
+
+
+# ==========================================
+# SALVAR
+# ==========================================
+
+with open(
+    ARQUIVO_SAIDA,
+    "w",
+    encoding="utf-8"
+) as arquivo:
+
+    json.dump(
+        dados_saida,
+        arquivo,
+        ensure_ascii=False,
+        indent=2
     )
 
 
-# =========================================================
-# SALVAR JSON
-# =========================================================
-
-def salvar_json(jogos):
-
-    dados = {
-
-        "atualizado_em":
-            date.today().isoformat(),
-
-        "fonte":
-            "RAWG Video Games Database",
-
-        "creditos":
-            "https://rawg.io/",
-
-        "jogos":
-            jogos
-
-    }
-
-
-    with open(
-
-        OUTPUT_FILE,
-
-        "w",
-
-        encoding="utf-8"
-
-    ) as arquivo:
-
-        json.dump(
-
-            dados,
-
-            arquivo,
-
-            ensure_ascii=False,
-
-            indent=2
-
-        )
-
-
-    print()
-    print(
-        "=========================================="
-    )
-
-    print(
-        f"Arquivo criado: {OUTPUT_FILE}"
-    )
-
-    print(
-        f"Jogos encontrados: {len(jogos)}"
-    )
-
-    print(
-        "=========================================="
-    )
-
-
-# =========================================================
-# EXECUÇÃO
-# =========================================================
-
-def main():
-
-    print(
-        "=========================================="
-    )
-
-    print(
-        " CavaloGameNews"
-    )
-
-    print(
-        " Calendário de Lançamentos"
-    )
-
-    print(
-        "=========================================="
-    )
-
-
-    jogos = buscar_lancamentos()
-
-
-    jogos = remover_duplicados(
-        jogos
-    )
-
-
-    jogos = ordenar_jogos(
-        jogos
-    )
-
-
-    jogos = jogos[
-        :LIMITE_JOGOS
-    ]
-
-
-    salvar_json(
-        jogos
-    )
-
-
-    print()
-    print(
-        "Calendário atualizado com sucesso!"
-    )
-
-
-# =========================================================
-# INICIAR
-# =========================================================
-
-if __name__ == "__main__":
-
-    main()
+print("===================================")
+print("lancamentos.json criado!")
+print("Jogos:", len(jogos))
+print("===================================")
