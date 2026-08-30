@@ -1,0 +1,51 @@
+name: Atualizar calendário de lançamentos
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Gerar calendário
+        env:
+          RAWG_API_KEY: ${{ secrets.RAWG_API_KEY }}
+        run: |
+          python scripts/gerar_lancamentos.py
+
+      - name: Verificar arquivo
+        run: |
+          echo "Arquivos na raiz:"
+          ls -la
+          echo ""
+          echo "Verificando lancamentos.json:"
+          test -f lancamentos.json
+          echo "lancamentos.json encontrado!"
+
+      - name: Salvar alterações
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add lancamentos.json
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração."
+          else
+            git commit -m "Atualizar calendário de lançamentos"
+            git push
+          fi
