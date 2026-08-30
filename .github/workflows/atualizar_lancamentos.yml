@@ -31,6 +31,27 @@ jobs:
         run: |
           python scripts/gerar_lancamentos.py
 
+      - name: Verificar lancamentos.json
+        run: |
+          echo "Arquivos na raiz:"
+          ls -la
+
+          echo ""
+          echo "Verificando lancamentos.json..."
+
+          if [ -f "lancamentos.json" ]; then
+            echo "✅ lancamentos.json foi criado!"
+            echo "Tamanho:"
+            wc -c lancamentos.json
+
+            echo ""
+            echo "Primeiras linhas:"
+            head -30 lancamentos.json
+          else
+            echo "❌ ERRO: lancamentos.json NÃO foi criado!"
+            exit 1
+          fi
+
       - name: Salvar alterações
         run: |
           git config user.name "github-actions[bot]"
