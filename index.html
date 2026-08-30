@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-8CNXSR7BXS');
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
 
-  <link rel="icon" type="image/png" href="img/logo_cavalo.png">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="img/logo_cavalo.png"
+  >
 
   <title>CavaloGameNews - Notícias de Games</title>
 
@@ -22,7 +23,30 @@
     content="CavaloGameNews: notícias de Xbox, PlayStation, PC, Nintendo e tudo sobre o mundo dos games."
   >
 
+  <!-- Google Analytics -->
+
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"
+  ></script>
+
+  <script>
+
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag(){
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+
+    gtag("config", "G-8CNXSR7BXS");
+
+  </script>
+
+
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -30,10 +54,16 @@
       font-family: Arial, sans-serif;
     }
 
+
     body {
       background: #111;
       color: #fff;
     }
+
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       background: #1a1a1a;
@@ -41,10 +71,13 @@
       border-bottom: 3px solid #00ff88;
     }
 
+
     header img {
-      height: 64px;
+      height: 40px;
+      width: auto;
       display: block;
     }
+
 
     nav {
       margin-top: 15px;
@@ -54,17 +87,28 @@
       align-items: center;
     }
 
+
     nav a {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
     }
 
+
     nav a:hover {
       color: #00ff88;
     }
 
-    /* BUSCA */
+
+    /* =========================
+       BUSCA
+    ========================= */
+
+    .search-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
 
     .search-box input {
       width: 100%;
@@ -75,33 +119,211 @@
       border-radius: 25px;
       font-size: 16px;
       outline: none;
-      transition: 0.25s;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     }
+
 
     .search-box input:focus {
       border-color: #00ff88;
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
+      box-shadow: 0 0 10px rgba(0,255,136,.25);
     }
+
 
     .search-box input::placeholder {
       color: #888;
     }
 
-    /* HERO */
+
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-      background: linear-gradient(90deg, #00ff88, #007744);
+      background: linear-gradient(
+        90deg,
+        #00ff88,
+        #007744
+      );
+
       padding: 40px 20px;
       text-align: center;
       color: #111;
     }
 
+
     .hero h2 {
       margin-bottom: 10px;
     }
 
-    /* CONTAINER */
+
+    /* =========================
+       CALENDÁRIO
+    ========================= */
+
+    .release-calendar {
+      width: 90%;
+      max-width: 1100px;
+      margin: 40px auto;
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 16px;
+      padding: 25px;
+      overflow: hidden;
+    }
+
+
+    .release-title {
+      color: #00ff88;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+
+    .release-subtitle {
+      color: #999;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+
+    .release-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+
+    .release-filter {
+      background: #202020;
+      color: #ccc;
+      border: 1px solid #333;
+      padding: 9px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+
+    .release-filter:hover {
+      border-color: #00ff88;
+      color: #00ff88;
+    }
+
+
+    .release-filter.active {
+      background: #00ff88;
+      color: #111;
+      border-color: #00ff88;
+    }
+
+
+    .release-games {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding: 5px 3px 15px;
+    }
+
+
+    .release-games::-webkit-scrollbar {
+      height: 7px;
+    }
+
+
+    .release-games::-webkit-scrollbar-track {
+      background: #202020;
+    }
+
+
+    .release-games::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 10px;
+    }
+
+
+    .release-card {
+      min-width: 220px;
+      width: 220px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      transition: .25s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+
+    .release-card:hover {
+      transform: translateY(-5px);
+      border-color: #00ff88;
+    }
+
+
+    .release-image {
+      width: 100%;
+      height: 125px;
+      object-fit: cover;
+      display: block;
+      background: #222;
+    }
+
+
+    .release-info {
+      padding: 13px;
+    }
+
+
+    .release-date {
+      color: #00ff88;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+
+    .release-name {
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1.3;
+      min-height: 42px;
+      margin-bottom: 10px;
+    }
+
+
+    .release-platforms {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+
+    .release-platform {
+      background: #292929;
+      color: #aaa;
+      border-radius: 5px;
+      padding: 4px 7px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+
+    .release-loading,
+    .release-empty,
+    .release-error {
+      width: 100%;
+      padding: 30px;
+      text-align: center;
+      color: #999;
+    }
+
+
+    /* =========================
+       CONTAINER
+    ========================= */
 
     .container {
       width: 90%;
@@ -109,13 +331,17 @@
       margin: 30px auto;
     }
 
-    /* NOTÍCIA PRINCIPAL */
+
+    /* =========================
+       NOTÍCIA PRINCIPAL
+    ========================= */
 
     .featured-link {
       text-decoration: none;
       color: inherit;
       display: block;
     }
+
 
     .featured {
       position: relative;
@@ -126,13 +352,14 @@
       background: #1b1b1b;
     }
 
+
     .featured img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: 0.3s;
     }
+
 
     .featured-overlay {
       position: absolute;
@@ -142,9 +369,10 @@
       padding: 35px;
       background: linear-gradient(
         transparent,
-        rgba(0, 0, 0, 0.95)
+        rgba(0,0,0,.95)
       );
     }
+
 
     .featured-overlay h2 {
       font-size: 34px;
@@ -152,11 +380,13 @@
       max-width: 800px;
     }
 
+
     .featured-overlay p {
       color: #ddd;
       max-width: 700px;
       margin-bottom: 15px;
     }
+
 
     .read-button {
       display: inline-block;
@@ -167,20 +397,21 @@
       font-weight: bold;
     }
 
-    .featured:hover img {
-      transform: scale(1.03);
-    }
 
-    /* NOTÍCIAS */
+    /* =========================
+       NOTÍCIAS
+    ========================= */
 
     .news-grid {
       display: grid;
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(260px, 1fr)
-      );
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(260px, 1fr)
+        );
       gap: 20px;
     }
+
 
     .news-link {
       text-decoration: none;
@@ -188,18 +419,21 @@
       display: block;
     }
 
+
     .card {
       background: #1b1b1b;
       border: 1px solid #333;
       border-radius: 12px;
       overflow: hidden;
-      transition: 0.2s;
+      transition: .2s;
     }
+
 
     .card:hover {
       border-color: #00ff88;
       transform: translateY(-3px);
     }
+
 
     .card img {
       width: 100%;
@@ -208,9 +442,11 @@
       display: block;
     }
 
+
     .card-content {
       padding: 15px;
     }
+
 
     .category {
       color: #00ff88;
@@ -219,27 +455,34 @@
       text-transform: uppercase;
     }
 
+
     .date {
       color: #aaa;
       font-size: 12px;
       margin: 6px 0 12px;
     }
 
+
     .card h3 {
       margin-bottom: 10px;
     }
+
 
     .card p {
       color: #ccc;
       line-height: 1.5;
     }
 
-    /* CARREGAR MAIS */
+
+    /* =========================
+       CARREGAR MAIS
+    ========================= */
 
     .load-more-container {
       text-align: center;
       margin: 30px 0;
     }
+
 
     #loadMoreButton {
       display: none;
@@ -253,11 +496,10 @@
       cursor: pointer;
     }
 
-    #loadMoreButton:hover {
-      background: #00cc6d;
-    }
 
-    /* RODAPÉ */
+    /* =========================
+       RODAPÉ
+    ========================= */
 
     footer {
       background: #1a1a1a;
@@ -267,43 +509,77 @@
       color: #aaa;
     }
 
-    /* CELULAR */
 
-    @media (max-width: 600px) {
+    /* =========================
+       CELULAR
+    ========================= */
+
+    @media (max-width:600px) {
 
       .featured {
         height: 380px;
       }
 
+
       .featured-overlay {
         padding: 20px;
       }
+
 
       .featured-overlay h2 {
         font-size: 24px;
       }
 
-      nav {
-        gap: 12px;
+
+      .release-calendar {
+        width: 94%;
+        padding: 18px;
       }
+
+
+      .release-title {
+        font-size: 23px;
+      }
+
+
+      .release-card {
+        min-width: 190px;
+        width: 190px;
+      }
+
+
+      .release-image {
+        height: 110px;
+      }
+
+
+      .search-box {
+        max-width: 100%;
+      }
+
     }
 
   </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
   <img
     src="img/logo.png"
     alt="CavaloGameNews"
-    style="height:40px; width:auto; display:block;"
   >
 
-  <nav>
 
-    <!-- BUSCA -->
+  <nav>
 
     <div class="search-box">
 
@@ -316,7 +592,6 @@
 
     </div>
 
-    <!-- CATEGORIAS -->
 
     <a
       href="#"
@@ -325,12 +600,14 @@
       Início
     </a>
 
+
     <a
       href="#"
       onclick="filtrarNoticias('Notícias'); return false;"
     >
       Notícias
     </a>
+
 
     <a
       href="#"
@@ -339,12 +616,14 @@
       Xbox
     </a>
 
+
     <a
       href="#"
       onclick="filtrarNoticias('PlayStation'); return false;"
     >
       PlayStation
     </a>
+
 
     <a
       href="#"
@@ -353,21 +632,30 @@
       PC
     </a>
 
+
     <a
       href="#"
       onclick="filtrarNoticias('Mobile'); return false;"
     >
       Mobile
     </a>
-<a href="#doacao" style="color:#00ff88;">
-  💚 Apoie o CavaloGameNews
-</a>
-    
+
+
+    <a
+      href="#doacao"
+      style="color:#00ff88;"
+    >
+      💚 Apoie o CavaloGameNews
+    </a>
+
   </nav>
 
 </header>
 
-<!-- HERO -->
+
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -382,120 +670,638 @@
 </section>
 
 
-<!-- CONTEÚDO -->
+<!-- =========================
+     CALENDÁRIO
+========================= -->
+
+<section class="release-calendar">
+
+  <h2 class="release-title">
+    🎮 Calendário de Lançamentos
+  </h2>
+
+
+  <p class="release-subtitle">
+    Confira os próximos jogos que chegam ao PC e consoles.
+  </p>
+
+
+  <div class="release-filters">
+
+    <button
+      class="release-filter active"
+      data-platform="todos"
+    >
+      Todos
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PC"
+    >
+      PC
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Xbox"
+    >
+      Xbox
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PlayStation"
+    >
+      PlayStation
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Switch"
+    >
+      Switch
+    </button>
+
+  </div>
+
+
+  <div
+    id="releaseGames"
+    class="release-games"
+  >
+
+    <div class="release-loading">
+      🎮 Carregando lançamentos...
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     NOTÍCIAS
+========================= -->
 
 <div class="container">
 
-  <!-- NOTÍCIA PRINCIPAL -->
 
   <div id="featured"></div>
 
 
-  <!-- TÍTULO -->
-
   <h2
     id="tituloNoticias"
-    style="margin:30px 0 20px;color:#00ff88;"
+    style="
+      margin:30px 0 20px;
+      color:#00ff88;
+    "
   >
     Últimas Notícias
   </h2>
 
-
-  <!-- NOTÍCIAS -->
 
   <div
     id="news"
     class="news-grid"
   ></div>
 
+
   <div class="load-more-container">
-    <button id="loadMoreButton" onclick="carregarMais()">
+
+    <button
+      id="loadMoreButton"
+      onclick="carregarMais()"
+    >
       CARREGAR MAIS
     </button>
+
   </div>
 
 </div>
 
 
-<!-- RODAPÉ -->
+<!-- =========================
+     RODAPÉ
+========================= -->
 
 <footer>
 
   © 2026 CavaloGameNews -
   Todos os direitos reservados.
-  <!-- APOIE O CAVALOGAMENEWS -->
-<section style="
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 25px;
-  text-align: center;
-  background: #1b1b1b;
-  border: 1px solid #333;
-  border-radius: 15px;
-">
 
-  <h2 style="
-    color: #00ff88;
-    margin-bottom: 10px;
-  ">
-    💚 Apoie o CavaloGameNews
-  </h2>
 
-  <p style="
-    color: #ccc;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  ">
-    Gostou das notícias? Você pode ajudar a manter
-    o CavaloGameNews com uma doação via Pix.
-  </p>
-
-  <img
-    src="img/qrcode_pix_cavalogamenews.png"
-    alt="QR Code para doação via Pix"
+  <section
+    id="apoie"
     style="
-      width: 160px;
-      max-width: 100%;
-      border-radius: 8px;
-      background: white;
-      padding: 8px;
+      max-width:500px;
+      margin:40px auto;
+      padding:25px;
+      text-align:center;
+      background:#1b1b1b;
+      border:1px solid #333;
+      border-radius:15px;
     "
   >
 
-  <p style="
-    color: #aaa;
-    margin-top: 15px;
-    font-size: 14px;
-  ">
-    📱 Aponte a câmera do celular para o QR Code.
-  </p>
+    <h2
+      style="
+        color:#00ff88;
+        margin-bottom:10px;
+      "
+    >
+      💚 Apoie o CavaloGameNews
+    </h2>
 
-</section>
+
+    <p
+      style="
+        color:#ccc;
+        margin-bottom:20px;
+        line-height:1.5;
+      "
+    >
+      Gostou das notícias?
+      Você pode ajudar a manter
+      o CavaloGameNews com uma doação via Pix.
+    </p>
+
+
+    <img
+      src="img/qrcode_pix_cavalogamenews.png"
+      alt="QR Code Pix"
+      style="
+        width:160px;
+        max-width:100%;
+        background:#fff;
+        padding:8px;
+        border-radius:8px;
+      "
+    >
+
+
+    <p
+      style="
+        color:#aaa;
+        margin-top:15px;
+        font-size:14px;
+      "
+    >
+      📱 Aponte a câmera do celular para o QR Code.
+    </p>
+
+  </section>
 
 </footer>
 
 
+<!-- =========================
+     MODAL DOAÇÃO
+========================= -->
+
+<div
+  id="doacaoModal"
+  style="
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.85);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  "
+>
+
+  <div
+    style="
+      background:#1b1b1b;
+      border:1px solid #333;
+      border-radius:15px;
+      padding:25px;
+      text-align:center;
+      max-width:400px;
+      width:100%;
+      position:relative;
+    "
+  >
+
+    <button
+      onclick="fecharDoacao()"
+      style="
+        position:absolute;
+        right:12px;
+        top:10px;
+        background:none;
+        border:none;
+        color:#fff;
+        font-size:25px;
+        cursor:pointer;
+      "
+    >
+      ×
+    </button>
+
+
+    <h2
+      style="
+        color:#00ff88;
+        margin-bottom:10px;
+      "
+    >
+      💚 Apoie o CavaloGameNews
+    </h2>
+
+
+    <p
+      style="
+        color:#ccc;
+        line-height:1.5;
+        margin-bottom:15px;
+      "
+    >
+      Ajude a manter o CavaloGameNews
+      com uma doação via Pix.
+    </p>
+
+
+    <img
+      src="img/qrcode_pix_cavalogamenews.png"
+      alt="QR Code Pix"
+      style="
+        width:180px;
+        background:#fff;
+        padding:8px;
+        border-radius:8px;
+      "
+    >
+
+  </div>
+
+</div>
+
+
 <script>
 
+
+/* =====================================================
+   CALENDÁRIO DE LANÇAMENTOS
+===================================================== */
+
+let releaseGames = [];
+
+
+const releaseContainer =
+  document.getElementById(
+    "releaseGames"
+  );
+
+
+const releaseFilters =
+  document.querySelectorAll(
+    ".release-filter"
+  );
+
+
 /* =========================
-   FUNÇÃO PARA LINK DA NOTÍCIA
+   CARREGAR JSON
 ========================= */
 
-function linkDaNoticia(post) {
+async function carregarLancamentos() {
 
-  return "noticias/" + post.id + ".html";
+  try {
+
+    const resposta =
+      await fetch(
+        "lancamentos.json?nocache=" +
+        Date.now()
+      );
+
+
+    if (!resposta.ok) {
+
+      throw new Error(
+        "HTTP " + resposta.status
+      );
+
+    }
+
+
+    const dados =
+      await resposta.json();
+
+
+    /*
+      Nosso JSON possui:
+
+      {
+        "jogos": []
+      }
+    */
+
+    if (
+      dados &&
+      Array.isArray(
+        dados.jogos
+      )
+    ) {
+
+      releaseGames =
+        dados.jogos;
+
+    } else {
+
+      releaseGames = [];
+
+    }
+
+
+    mostrarLancamentos(
+      "todos"
+    );
+
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao carregar lancamentos.json:",
+      erro
+    );
+
+
+    releaseContainer.innerHTML = `
+
+      <div class="release-error">
+
+        ⚠️ Não foi possível carregar
+        os lançamentos no momento.
+
+      </div>
+
+    `;
+
+  }
 
 }
 
+
 /* =========================
-   PAGINAÇÃO DA PÁGINA INICIAL
+   MOSTRAR JOGOS
 ========================= */
 
+function mostrarLancamentos(
+  plataforma
+) {
+
+  let jogos =
+    [...releaseGames];
+
+
+  if (
+    plataforma !== "todos"
+  ) {
+
+    jogos =
+      jogos.filter(
+        jogo => {
+
+          const plataformas =
+            Array.isArray(
+              jogo.plataformas
+            )
+              ? jogo.plataformas
+              : [];
+
+
+          return plataformas.some(
+            item =>
+              String(item)
+                .toLowerCase() ===
+              plataforma.toLowerCase()
+          );
+
+        }
+      );
+
+  }
+
+
+  /*
+    Mostrar somente os primeiros
+    20 jogos na tela.
+  */
+
+  jogos =
+    jogos.slice(
+      0,
+      20
+    );
+
+
+  if (
+    jogos.length === 0
+  ) {
+
+    releaseContainer.innerHTML = `
+
+      <div class="release-empty">
+
+        🎮 Nenhum lançamento
+        encontrado.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  releaseContainer.innerHTML =
+
+
+    jogos.map(
+      jogo => {
+
+
+        const plataformas =
+          Array.isArray(
+            jogo.plataformas
+          )
+            ? jogo.plataformas
+            : [];
+
+
+        const plataformasHTML =
+
+          plataformas
+            .map(
+              plataforma => `
+
+                <span class="release-platform">
+
+                  ${plataforma}
+
+                </span>
+
+              `
+            )
+            .join("");
+
+
+        const imagem =
+          jogo.imagem ||
+          "";
+
+
+        const nome =
+          jogo.nome ||
+          "Jogo sem nome";
+
+
+        const data =
+          jogo.data_formatada ||
+          jogo.data ||
+          "Data não informada";
+
+
+        const link =
+          jogo.link_rawg ||
+          "#";
+
+
+        return `
+
+          <a
+            class="release-card"
+            href="${link}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            <img
+              class="release-image"
+              src="${imagem}"
+              alt="${nome}"
+              loading="lazy"
+            >
+
+
+            <div class="release-info">
+
+              <div class="release-date">
+
+                📅 ${data}
+
+              </div>
+
+
+              <div class="release-name">
+
+                ${nome}
+
+              </div>
+
+
+              <div class="release-platforms">
+
+                ${plataformasHTML}
+
+              </div>
+
+            </div>
+
+          </a>
+
+        `;
+
+      }
+    )
+
+    .join("");
+
+}
+
+
+/* =========================
+   FILTROS
+========================= */
+
+releaseFilters.forEach(
+  botao => {
+
+    botao.addEventListener(
+      "click",
+      () => {
+
+        releaseFilters.forEach(
+          outro => {
+
+            outro.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+
+        botao.classList.add(
+          "active"
+        );
+
+
+        mostrarLancamentos(
+          botao.dataset.platform
+        );
+
+      }
+    );
+
+  }
+);
+
+
+/* =====================================================
+   NOTÍCIAS
+===================================================== */
+
+function linkDaNoticia(
+  post
+) {
+
+  return (
+    "noticias/" +
+    post.id +
+    ".html"
+  );
+
+}
+
+
 const NOTICIAS_POR_VEZ = 24;
+
+
 let noticiasDaPaginaInicial = [];
+
+
 let quantidadeExibida = 0;
 
-function criarCardNoticia(post) {
+
+/* =========================
+   CARD
+========================= */
+
+function criarCardNoticia(
+  post
+) {
 
   return `
 
@@ -507,26 +1313,39 @@ function criarCardNoticia(post) {
       <div class="card">
 
         <img
-          src="${post.imagem}"
-          alt="${post.titulo}"
+          src="${post.imagem || ""}"
+          alt="${post.titulo || ""}"
+          loading="lazy"
         >
+
 
         <div class="card-content">
 
           <div class="category">
-            ${post.categoria}
+
+            ${post.categoria || ""}
+
           </div>
+
 
           <div class="date">
-            ${post.data}
+
+            ${post.data || ""}
+
           </div>
 
+
           <h3>
-            ${post.titulo}
+
+            ${post.titulo || ""}
+
           </h3>
 
+
           <p>
-            ${post.resumo}
+
+            ${post.resumo || ""}
+
           </p>
 
         </div>
@@ -539,40 +1358,82 @@ function criarCardNoticia(post) {
 
 }
 
+
+/* =========================
+   BOTÃO
+========================= */
+
 function atualizarBotaoCarregarMais() {
 
-  const botao = document.getElementById("loadMoreButton");
+  const botao =
+    document.getElementById(
+      "loadMoreButton"
+    );
 
-  if (!botao) return;
 
   botao.style.display =
-    quantidadeExibida < noticiasDaPaginaInicial.length
+
+    quantidadeExibida <
+    noticiasDaPaginaInicial.length
+
       ? "inline-block"
+
       : "none";
 
 }
 
+
+/* =========================
+   MOSTRAR MAIS
+========================= */
+
 function mostrarMaisNoticias() {
 
-  const container = document.getElementById("news");
+  const container =
+    document.getElementById(
+      "news"
+    );
 
-  const proximaQuantidade = Math.min(
-    quantidadeExibida + NOTICIAS_POR_VEZ,
-    noticiasDaPaginaInicial.length
-  );
 
-  for (let i = quantidadeExibida; i < proximaQuantidade; i++) {
-    container.innerHTML += criarCardNoticia(noticiasDaPaginaInicial[i]);
+  const proximaQuantidade =
+    Math.min(
+
+      quantidadeExibida +
+      NOTICIAS_POR_VEZ,
+
+      noticiasDaPaginaInicial.length
+
+    );
+
+
+  for (
+    let i = quantidadeExibida;
+    i < proximaQuantidade;
+    i++
+  ) {
+
+    container.innerHTML +=
+
+      criarCardNoticia(
+        noticiasDaPaginaInicial[i]
+      );
+
   }
 
-  quantidadeExibida = proximaQuantidade;
+
+  quantidadeExibida =
+    proximaQuantidade;
+
 
   atualizarBotaoCarregarMais();
 
 }
 
+
 function carregarMais() {
+
   mostrarMaisNoticias();
+
 }
 
 
@@ -582,9 +1443,13 @@ function carregarMais() {
 
 function carregarNoticias() {
 
-  fetch("posts.json")
+  fetch(
+    "posts.json?nocache=" +
+    Date.now()
+  )
 
-    .then(response => {
+  .then(
+    response => {
 
       if (!response.ok) {
 
@@ -594,17 +1459,25 @@ function carregarNoticias() {
 
       }
 
+
       return response.json();
 
-    })
+    }
+  )
 
-    .then(posts => {
+  .then(
+    posts => {
 
       const featured =
-        document.getElementById("featured");
+        document.getElementById(
+          "featured"
+        );
+
 
       const container =
-        document.getElementById("news");
+        document.getElementById(
+          "news"
+        );
 
 
       featured.innerHTML = "";
@@ -612,13 +1485,13 @@ function carregarNoticias() {
       container.innerHTML = "";
 
 
-      /* =========================
-         NOTÍCIA PRINCIPAL
-      ========================= */
+      if (
+        posts.length > 0
+      ) {
 
-      if (posts.length > 0) {
+        const principal =
+          posts[0];
 
-        const principal = posts[0];
 
         featured.innerHTML = `
 
@@ -634,26 +1507,41 @@ function carregarNoticias() {
                 alt="${principal.titulo}"
               >
 
+
               <div class="featured-overlay">
 
                 <span class="category">
+
                   ${principal.categoria}
+
                 </span>
 
+
                 <h2>
+
                   ${principal.titulo}
+
                 </h2>
 
+
                 <div class="date">
+
                   ${principal.data}
+
                 </div>
 
+
                 <p>
+
                   ${principal.resumo}
+
                 </p>
 
+
                 <span class="read-button">
+
                   LER NOTÍCIA →
+
                 </span>
 
               </div>
@@ -667,44 +1555,45 @@ function carregarNoticias() {
       }
 
 
-      /* =========================
-         RESTANTE DAS NOTÍCIAS
-      ========================= */
+      noticiasDaPaginaInicial =
+        posts.slice(1);
 
-      /* =========================
-         RESTANTE DAS NOTÍCIAS
-         24 POR VEZ
-      ========================= */
 
-      noticiasDaPaginaInicial = posts.slice(1);
       quantidadeExibida = 0;
+
 
       mostrarMaisNoticias();
 
-    })
+    }
+  )
 
-    .catch(error => {
+  .catch(
+    error => {
 
-      console.error(error);
+      console.error(
+        error
+      );
 
-      document.getElementById("news").innerHTML = `
 
-        <p>
-          Nenhuma notícia encontrada.
-        </p>
+      document.getElementById(
+        "news"
+      ).innerHTML =
 
-      `;
+        "<p>Nenhuma notícia encontrada.</p>";
 
-    });
+    }
+  );
 
 }
 
 
-/* =========================
-   FILTRAR CATEGORIA
-========================= */
+/* =====================================================
+   FILTRO DE CATEGORIA
+===================================================== */
 
-function filtrarNoticias(categoria) {
+function filtrarNoticias(
+  categoria
+) {
 
   const titulo =
     document.getElementById(
@@ -712,36 +1601,31 @@ function filtrarNoticias(categoria) {
     );
 
 
-  if (categoria === "todos") {
+  const container =
+    document.getElementById(
+      "news"
+    );
+
+
+  const featured =
+    document.getElementById(
+      "featured"
+    );
+
+
+  const botao =
+    document.getElementById(
+      "loadMoreButton"
+    );
+
+
+  if (
+    categoria === "todos"
+  ) {
 
     titulo.textContent =
       "Últimas Notícias";
 
-  } else {
-
-    titulo.textContent =
-      "Notícias de " + categoria;
-
-  }
-
-
-  const container =
-    document.getElementById("news");
-
-  const featured =
-    document.getElementById("featured");
-
-  const loadMoreButton =
-    document.getElementById("loadMoreButton");
-
-  if (loadMoreButton) {
-    loadMoreButton.style.display = "none";
-  }
-
-
-  /* VOLTAR PARA TODAS */
-
-  if (categoria === "todos") {
 
     carregarNoticias();
 
@@ -750,136 +1634,127 @@ function filtrarNoticias(categoria) {
   }
 
 
+  titulo.textContent =
+    "Notícias de " +
+    categoria;
+
+
   featured.innerHTML = "";
 
   container.innerHTML = "";
 
+  botao.style.display =
+    "none";
 
-  fetch("posts.json")
 
-    .then(response =>
+  fetch(
+    "posts.json?nocache=" +
+    Date.now()
+  )
+
+  .then(
+    response =>
       response.json()
-    )
+  )
 
-    .then(posts => {
+  .then(
+    posts => {
 
       const filtradas =
-        posts.filter(post =>
+        posts.filter(
+          post =>
 
-          post.categoria
+            String(
+              post.categoria || ""
+            )
             .toLowerCase() ===
-          categoria.toLowerCase()
-
+            categoria.toLowerCase()
         );
 
 
-      if (filtradas.length === 0) {
+      if (
+        filtradas.length === 0
+      ) {
 
-        container.innerHTML = `
+        container.innerHTML =
 
-          <p>
-            Nenhuma notícia encontrada nessa categoria.
-          </p>
-
-        `;
+          "<p>Nenhuma notícia encontrada nessa categoria.</p>";
 
         return;
 
       }
 
 
-      filtradas.forEach(post => {
+      filtradas.forEach(
+        post => {
 
-        container.innerHTML += `
+          container.innerHTML +=
 
-          <a
-            href="${linkDaNoticia(post)}"
-            class="news-link"
-          >
+            criarCardNoticia(
+              post
+            );
 
-            <div class="card">
+        }
+      );
 
-              <img
-                src="${post.imagem}"
-                alt="${post.titulo}"
-              >
+    }
+  )
 
-              <div class="card-content">
+  .catch(
+    () => {
 
-                <div class="category">
-                  ${post.categoria}
-                </div>
+      container.innerHTML =
 
-                <div class="date">
-                  ${post.data}
-                </div>
+        "<p>Erro ao carregar notícias.</p>";
 
-                <h3>
-                  ${post.titulo}
-                </h3>
-
-                <p>
-                  ${post.resumo}
-                </p>
-
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      });
-
-    })
-
-    .catch(() => {
-
-      container.innerHTML = `
-
-        <p>
-          Erro ao carregar notícias.
-        </p>
-
-      `;
-
-    });
+    }
+  );
 
 }
 
 
-/* =========================
-   BUSCAR NOTÍCIAS
-========================= */
+/* =====================================================
+   BUSCA
+===================================================== */
 
 function buscarNoticias() {
 
   const termo =
+
     document
-      .getElementById("searchInput")
+      .getElementById(
+        "searchInput"
+      )
       .value
       .toLowerCase()
       .trim();
 
 
   const container =
-    document.getElementById("news");
+    document.getElementById(
+      "news"
+    );
+
 
   const featured =
-    document.getElementById("featured");
-
-  const loadMoreButton =
-    document.getElementById("loadMoreButton");
-
-  if (loadMoreButton) {
-    loadMoreButton.style.display = "none";
-  }
+    document.getElementById(
+      "featured"
+    );
 
 
-  /* SE ESTIVER VAZIO */
+  const botao =
+    document.getElementById(
+      "loadMoreButton"
+    );
 
-  if (termo === "") {
+
+  botao.style.display =
+    "none";
+
+
+  if (
+    termo === ""
+  ) {
 
     carregarNoticias();
 
@@ -893,213 +1768,148 @@ function buscarNoticias() {
   container.innerHTML = "";
 
 
-  fetch("posts.json")
+  fetch(
+    "posts.json?nocache=" +
+    Date.now()
+  )
 
-    .then(response =>
+  .then(
+    response =>
       response.json()
-    )
+  )
 
-    .then(posts => {
+  .then(
+    posts => {
 
       const resultados =
-        posts.filter(post =>
+        posts.filter(
+          post =>
 
-          post.titulo
+            String(
+              post.titulo || ""
+            )
             .toLowerCase()
             .includes(termo)
 
-          ||
+            ||
 
-          post.resumo
+            String(
+              post.resumo || ""
+            )
             .toLowerCase()
             .includes(termo)
 
-          ||
+            ||
 
-          post.categoria
+            String(
+              post.categoria || ""
+            )
             .toLowerCase()
             .includes(termo)
-
         );
 
 
-      if (resultados.length === 0) {
+      if (
+        resultados.length === 0
+      ) {
 
-        container.innerHTML = `
+        container.innerHTML =
 
-          <p>
-            Nenhuma notícia encontrada.
-          </p>
-
-        `;
+          "<p>Nenhuma notícia encontrada.</p>";
 
         return;
 
       }
 
 
-      resultados.forEach(post => {
+      resultados.forEach(
+        post => {
 
-        container.innerHTML += `
+          container.innerHTML +=
 
-          <a
-            href="${linkDaNoticia(post)}"
-            class="news-link"
-          >
+            criarCardNoticia(
+              post
+            );
 
-            <div class="card">
+        }
+      );
 
-              <img
-                src="${post.imagem}"
-                alt="${post.titulo}"
-              >
+    }
+  )
 
-              <div class="card-content">
+  .catch(
+    () => {
 
-                <div class="category">
-                  ${post.categoria}
-                </div>
+      container.innerHTML =
 
-                <div class="date">
-                  ${post.data}
-                </div>
+        "<p>Erro ao pesquisar notícias.</p>";
 
-                <h3>
-                  ${post.titulo}
-                </h3>
-
-                <p>
-                  ${post.resumo}
-                </p>
-
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      });
-
-    })
-
-    .catch(() => {
-
-      container.innerHTML = `
-
-        <p>
-          Erro ao pesquisar notícias.
-        </p>
-
-      `;
-
-    });
+    }
+  );
 
 }
 
 
-/* =========================
-   INICIAR SITE
-========================= */
+/* =====================================================
+   DOAÇÃO
+===================================================== */
+
+function abrirDoacao() {
+
+  document.getElementById(
+    "doacaoModal"
+  ).style.display =
+    "flex";
+
+}
+
+
+function fecharDoacao() {
+
+  document.getElementById(
+    "doacaoModal"
+  ).style.display =
+    "none";
+
+}
+
+
+document.addEventListener(
+  "click",
+  function(event) {
+
+    const link =
+      event.target.closest(
+        'a[href="#doacao"]'
+      );
+
+
+    if (
+      link
+    ) {
+
+      event.preventDefault();
+
+      abrirDoacao();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+carregarLancamentos();
 
 carregarNoticias();
 
+
 </script>
-<!-- JANELA DE DOAÇÃO -->
-<div id="doacaoModal" style="
-  display:none;
-  position:fixed;
-  z-index:9999;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.85);
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-">
 
-  <div style="
-    background:#1b1b1b;
-    border:1px solid #333;
-    border-radius:15px;
-    padding:25px;
-    text-align:center;
-    max-width:400px;
-    width:100%;
-    position:relative;
-  ">
 
-    <button onclick="fecharDoacao()" style="
-      position:absolute;
-      right:12px;
-      top:10px;
-      background:none;
-      border:none;
-      color:#fff;
-      font-size:25px;
-      cursor:pointer;
-    ">
-      ×
-    </button>
-
-    <h2 style="color:#00ff88;margin-bottom:10px;">
-      💚 Apoie o CavaloGameNews
-    </h2>
-
-    <p style="
-      color:#ccc;
-      line-height:1.5;
-      margin-bottom:15px;
-    ">
-      Gostou do conteúdo? Ajude a manter o CavaloGameNews com uma doação via Pix.
-    </p>
-
-    <img
-      src="img/qrcode_pix_cavalogamenews.png"
-      alt="QR Code Pix para doação"
-      style="
-        width:180px;
-        max-width:100%;
-        background:#fff;
-        padding:8px;
-        border-radius:8px;
-      "
-    >
-
-    <p style="
-      color:#aaa;
-      font-size:14px;
-      margin-top:15px;
-    ">
-      📱 Aponte a câmera do celular para o QR Code.
-    </p>
-
-  </div>
-
-</div>
-
-<script>
-function abrirDoacao() {
-  document.getElementById("doacaoModal").style.display = "flex";
-}
-
-function fecharDoacao() {
-  document.getElementById("doacaoModal").style.display = "none";
-}
-
-document.addEventListener("click", function(event) {
-
-  const link = event.target.closest('a[href="#doacao"]');
-
-  if (link) {
-    event.preventDefault();
-    abrirDoacao();
-  }
-
-});
-</script>
 </body>
+
 </html>
