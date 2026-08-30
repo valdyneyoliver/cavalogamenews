@@ -2044,47 +2044,38 @@ function mostrarLancamentos(plataforma) {
 
       return `
 
-        <article
-          class="release-card"
-        >
+       <a
+  class="release-card"
+  href="${escapeReleaseHTML(jogo.link_rawg || '#')}"
+  target="_blank"
+  rel="noopener noreferrer"
+>
 
+  <img
+    class="release-image"
+    src="${imagem}"
+    alt="${nome}"
+    loading="lazy"
+    onerror="this.style.display='none';"
+  >
 
-          <img
-            class="release-image"
-            src="${imagem}"
-            alt="${nome}"
-            loading="lazy"
-          >
+  <div class="release-info">
 
+    <div class="release-date">
+      📅 ${data}
+    </div>
 
-          <div class="release-date">
+    <div class="release-name">
+      ${nome}
+    </div>
 
-            📅 ${data}
+    <div class="release-platforms">
+      ${plataformasHTML}
+    </div>
 
-          </div>
+  </div>
 
-
-          <div class="release-info">
-
-
-            <div class="release-name">
-
-              ${nome}
-
-            </div>
-
-
-            <div class="release-platforms">
-
-              ${plataformasHTML}
-
-            </div>
-
-
-          </div>
-
-
-        </article>
+</a>
 
       `;
 
