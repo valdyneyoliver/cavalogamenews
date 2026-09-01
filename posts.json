@@ -1,5 +1,28 @@
 [
   {
+  "id": "crimson-desert-demo-jogavel-ao-vivo",
+  "titulo": "Crimson Desert tem uma demo jogável exclusiva ao vivo agora",
+  "categoria": "Notícias",
+  "data": "01/09/2026",
+  "imagem": "https://x.com/CrimsonDesert_/status/2094560946547003454/photo/1",
+  "resumo": "Crimson Desert tem uma demo jogável exclusiva ao vivo agora. Não é necessário fazer download: no desktop, a experiência pode começar em apenas 2 segundos, com um teste de 20 minutos para conferir o jogo.",
+  "x": "https://x.com/CrimsonDesert_/status/2094560946547003454?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "Crimson Desert ganhou uma demo jogável exclusiva que já está disponível ao vivo link pra jogar: https://www.twitch.tv/gl/crimsondesert.",
+    "A experiência permite conferir o jogo sem precisar realizar um download tradicional.",
+    "No desktop, o acesso à demonstração pode começar em apenas 2 segundos, facilitando o teste para os jogadores.",
+    "A demo oferece uma sessão de 20 minutos para conhecer um pouco da experiência de Crimson Desert.",
+    "A demonstração é uma oportunidade para quem está interessado no jogo experimentar parte da aventura antes do lançamento.",
+    "E você, pretende testar a demo de Crimson Desert? Conte para a gente o que achou!"
+  ]
+},
+  {
   "id": "nvidia-dlss-5-vazamento",
   "titulo": "NVIDIA DLSS 5 vaza e primeiras versões já são testadas em jogos",
   "categoria": "Notícias",
