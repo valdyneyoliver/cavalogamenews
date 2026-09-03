@@ -1,5 +1,40 @@
 [
  {
+  "id": "nexus-mods-adquire-steamdb",
+  "titulo": "Nexus Mods adquire SteamDB e criador deixa o comando do projeto",
+  "categoria": "Notícias",
+  "data": "03/09/2026",
+  "imagem": "https://pbs.twimg.com/media/HRNxM-mbMAAhujd?format=jpg&name=large",
+  "resumo": "O Nexus Mods passou a ser responsável pelo SteamDB após a saída de seu criador, xPaw. O site continuará funcionando de forma independente por enquanto, mas uma integração gradual entre os serviços está nos planos.",
+  "x": "xxx",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "O SteamDB entrou em uma nova fase após ser adquirido pela empresa responsável pelo Nexus Mods. A mudança foi anunciada nesta semana e marca o fim de mais de uma década do SteamDB funcionando como um projeto independente.",
+    "O SteamDB foi criado em 2013 por xPaw e Marlamin e, ao longo dos anos, se tornou uma das principais ferramentas para acompanhar informações da plataforma Steam, incluindo preços, histórico de atualizações, versões de jogos e número de jogadores.",
+    "Com o crescimento do projeto, a quantidade de trabalho necessária para manter o serviço aumentou consideravelmente. Após Marlamin deixar de participar ativamente, grande parte da responsabilidade ficou concentrada em xPaw.",
+    "O criador explicou que o projeto acabou se tornando muito maior do que o hobby original e que o desgaste acumulado ao longo dos anos o levou a procurar uma equipe capaz de assumir a continuidade do SteamDB.",
+    "Segundo o anúncio, xPaw procurou por uma equipe em quem pudesse confiar para entregar o projeto, mas não encontrou uma opção que considerasse adequada. Agora, o SteamDB passa para a estrutura do Nexus Mods, que pretende oferecer mais recursos, equipe e infraestrutura para o serviço.",
+    "🔄 SteamDB continuará independente",
+    "Apesar da aquisição, o SteamDB não será transformado imediatamente em uma página do Nexus Mods. O site continuará usando seu próprio nome, identidade visual, comunidade e estrutura.",
+    "Os usuários também não precisarão de uma conta do Nexus Mods para acessar o SteamDB. O serviço continuará funcionando separadamente e suas principais ferramentas permanecerão disponíveis.",
+    "💰 Recursos gratuitos continuarão gratuitos",
+    "O Nexus Mods afirmou que tudo que atualmente está disponível gratuitamente no SteamDB continuará gratuito. A extensão do navegador também continuará sendo mantida.",
+    "Além disso, não existem planos para colocar anúncios tradicionais no SteamDB. A nova administração pretende avaliar maneiras de manter o projeto sustentável sem prejudicar a experiência dos usuários.",
+    "🛠️ Integração com o Nexus Mods",
+    "Embora os dois serviços continuem separados, existe a possibilidade de uma integração maior no futuro. Os dados do SteamDB podem ser utilizados para melhorar ferramentas relacionadas a mods e acompanhar versões específicas dos jogos.",
+    "Uma das possibilidades é utilizar informações sobre atualizações e versões dos jogos para ajudar a identificar quando uma atualização pode causar problemas de compatibilidade com mods instalados.",
+    "A equipe também pretende estudar novas ferramentas e possibilidades de integração entre os dados do SteamDB e o ecossistema do Nexus Mods. Essas ideias ainda estão em desenvolvimento e não possuem uma data definida para chegar aos usuários.",
+    "Durante os próximos meses, xPaw continuará ajudando na transição para que a mudança de administração aconteça de maneira tranquila.",
+    "Por enquanto, a experiência para quem utiliza o SteamDB deve permanecer praticamente igual. O site continuará funcionando como uma ferramenta independente para consultar informações, preços, atualizações e estatísticas relacionadas aos jogos da Steam.",
+    "A aquisição dá ao SteamDB uma nova estrutura para continuar seu desenvolvimento, enquanto abre a possibilidade de novos recursos surgirem a partir da união dos dados do SteamDB com as ferramentas do Nexus Mods."
+  ]
+},
+ {
   "id": "xbox-cloud-gaming-mudancas-novembro-2026",
   "titulo": "Xbox vai limitar horas de Cloud Gaming nos planos do Game Pass a partir de novembro",
   "categoria": "Notícias",
