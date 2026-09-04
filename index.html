@@ -1554,6 +1554,8 @@
     <img
       src="img/qrcode_pix_cavalogamenews.png"
       alt="QR Code para doação via Pix"
+      onclick="copiarPix()"
+      style="cursor:pointer;"
     >
 
 
@@ -1649,12 +1651,14 @@
     <img
       src="img/qrcode_pix_cavalogamenews.png"
       alt="QR Code Pix para doação"
+      onclick="copiarPix()"
       style="
         width:180px;
         max-width:100%;
         background:#fff;
         padding:8px;
         border-radius:8px;
+        cursor:pointer;
       "
     >
 
@@ -2727,6 +2731,18 @@ function fecharDoacao() {
   document.getElementById(
     "doacaoModal"
   ).style.display = "none";
+
+}
+
+function copiarPix() {
+
+  navigator.clipboard.writeText("valdyneyoliver@gmail.com")
+    .then(() => {
+      alert("Chave Pix copiada!");
+    })
+    .catch(() => {
+      alert("Não foi possível copiar a chave Pix.");
+    });
 
 }
 
