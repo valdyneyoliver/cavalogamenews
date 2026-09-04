@@ -1,5 +1,41 @@
 [
  {
+  "id": "crimson-desert-patch-20100-ruido-visual",
+  "titulo": "Crimson Desert recebe atualização que melhora um dos problemas visuais mais criticados",
+  "categoria": "Notícias",
+  "data": "04/09/2026",
+  "imagem": "https://pbs.twimg.com/media/HRWeKPXXgAcLIa6?format=jpg&name=large",
+  "resumo": "A Pearl Abyss lançou o Patch 2.01.00 de Crimson Desert, trazendo melhorias visuais, correções de desempenho e diversos ajustes para o jogo.",
+  "x": "https://x.com/CrimsonDesert_/status/2095755120608690579?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "A Pearl Abyss lançou nesta sexta-feira (4) o Patch 2.01.00 de Crimson Desert. A atualização chega com diversas correções de bugs, melhorias de estabilidade e ajustes na experiência dos jogadores.",
+    "Um dos principais destaques da atualização está na parte gráfica. A desenvolvedora trabalhou para reduzir um problema de ruído visual que podia ficar bastante evidente em determinadas situações.",
+    "🌧️ Melhoria no ruído visual",
+    "De acordo com as notas oficiais, o efeito de ruído visual foi melhorado principalmente durante períodos de chuva e em áreas com poças d'água. O objetivo é deixar a imagem mais limpa e agradável nessas condições.",
+    "Além da melhoria gráfica, a atualização também corrige uma situação que poderia provocar quedas de FPS quando determinados móveis eram posicionados em áreas externas próximas de cercas no Modo de Habitação.",
+    "🍎 Melhorias na versão para Mac",
+    "A versão para Mac recebeu uma correção específica para dispositivos equipados com chip M5. Um problema de renderização fazia com que ambientes internos apresentassem iluminação muito escura.",
+    "🛠️ Outras correções",
+    "O Patch 2.01.00 também corrige um problema que fazia com que apenas alguns móveis fossem gerados no Acampamento dos Jubas Cinzentas.",
+    "Outro erro corrigido envolvia a invocação da montaria Blackstar, que em determinadas situações podia fazer com que uma montaria diferente fosse chamada.",
+    "A atualização também resolve problemas relacionados à interação com NPCs, interface, localização e textos do jogo.",
+    "Além das correções, uma nova missão de expedição chamada Gold Bar Investment Mission foi adicionada ao jogo.",
+    "📸 Novidade no Modo Foto",
+    "O Modo Foto também recebeu uma nova opção que permite inclinar a câmera, oferecendo mais liberdade para os jogadores criarem diferentes tipos de capturas dentro do mundo de Crimson Desert.",
+    "💰 Mais Fundos do Acampamento",
+    "As doações de Prata agora concedem dez vezes mais Fundos do Acampamento, tornando esse sistema mais vantajoso para os jogadores.",
+    "O Patch 2.01.00 já está disponível para PC, PlayStation, Xbox e Steam para Mac. A versão da Mac App Store receberá a atualização posteriormente.",
+    "A Pearl Abyss continua trabalhando em melhorias para Crimson Desert. A próxima grande novidade anunciada é a expansão Charting the Unknown, que chega em 15 de outubro de 2026 com novas áreas, exploração marítima, viagens de navio, regiões subaquáticas, inimigos, histórias adicionais e novos sistemas de moradia e gerenciamento.",
+    "Com o novo patch, Crimson Desert recebe mais uma rodada de melhorias técnicas enquanto a desenvolvedora se prepara para ampliar o conteúdo do jogo com a próxima grande expansão."
+  ]
+},
+ {
   "id": "state-of-play-setembro-2026-resumo",
   "titulo": "State of Play e State of Play Japan: confira os principais anúncios",
   "categoria": "PlayStation",
