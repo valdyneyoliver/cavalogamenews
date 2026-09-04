@@ -1,21 +1,7 @@
 {
-  "atualizado_em": "2026-08-30",
+  "atualizado_em": "2026-09-04",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 996046,
-      "nome": "The Blood Of Dawnwalker",
-      "slug": "the-blood-of-dawnwalker",
-      "data": "2026-09-02",
-      "data_formatada": "02/09/2026",
-      "imagem": "https://media.rawg.io/media/games/319/319d18680fd0233e0ff724f234c97d17.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/the-blood-of-dawnwalker"
-    },
     {
       "id": 994600,
       "nome": "Onimusha: Way Of The Sword",
@@ -144,12 +130,24 @@
       "link_rawg": "https://rawg.io/games/alien-breed-35th-anniversary"
     },
     {
+      "id": 1019804,
+      "nome": "Apocalypter",
+      "slug": "apocalypter",
+      "data": "2026-09-23",
+      "data_formatada": "23/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/c19/c19f6c89d2cdc01fd7591211c2fa6b00.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/apocalypter"
+    },
+    {
       "id": 1015409,
       "nome": "Control Resonant",
       "slug": "control-resonant",
       "data": "2026-09-24",
       "data_formatada": "24/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/5b8/5b812f73e4c5df28630747c52f57170b.jpg",
+      "imagem": "https://media.rawg.io/media/games/bfc/bfc7b45c6e9d3e21bb1c613c16c088f2.jpeg",
       "plataformas": [
         "PC",
         "PlayStation",
@@ -188,7 +186,7 @@
       "slug": "end-of-abyss",
       "data": "2026-10-01",
       "data_formatada": "01/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/7ba/7baacc4780d3199810acffba636c0f9f.jpg",
+      "imagem": "https://media.rawg.io/media/games/9b7/9b755942f5c8006891c20e50095dae09.jpg",
       "plataformas": [
         "PC",
         "PlayStation",
@@ -214,7 +212,7 @@
       "slug": "rayman-legends-retold",
       "data": "2026-10-01",
       "data_formatada": "01/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/3c6/3c6655e5fa82e245a9f0be20d8d7ac89.jpg",
+      "imagem": "https://media.rawg.io/media/games/ed9/ed92bdc98d563301e94ae3e9663e8107.jpg",
       "plataformas": [
         "PC",
         "PlayStation",
@@ -228,7 +226,7 @@
       "slug": "ace-combat-8-wings-of-theve",
       "data": "2026-10-02",
       "data_formatada": "02/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/f9e/f9ef6161a0fc80e9f588077e3c3206b0.jpg",
+      "imagem": "https://media.rawg.io/media/games/541/541d6c97a674635d68ea3d19737f090b.jpg",
       "plataformas": [
         "PC",
         "PlayStation",
@@ -242,7 +240,7 @@
       "slug": "gears-of-war-e-day",
       "data": "2026-10-06",
       "data_formatada": "06/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/cb8/cb88356feb27fba1102659e7a09c222a.jpg",
+      "imagem": "https://media.rawg.io/media/games/c85/c85991ad8164824715377e603a2d7693.jpg",
       "plataformas": [
         "PC",
         "Xbox"
@@ -291,12 +289,26 @@
       "link_rawg": "https://rawg.io/games/enshrouded-2"
     },
     {
+      "id": 1019805,
+      "nome": "Crimson Desert: Charting the Unknown",
+      "slug": "crimson-desert-charting-the-unknown",
+      "data": "2026-10-16",
+      "data_formatada": "16/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/83c/83ca2a4e4e94eecad38064f34304af49.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/crimson-desert-charting-the-unknown"
+    },
+    {
       "id": 1016322,
       "nome": "Tenebris Somnia",
       "slug": "tenebris-somnia-demo",
       "data": "2026-10-16",
       "data_formatada": "16/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/98a/98a8d30907f06eb00c53f4e2b6c630f7.jpg",
+      "imagem": "https://media.rawg.io/media/games/97b/97b849dfc43f7634e65c0fccbf6c737d.jpg",
       "plataformas": [
         "PC"
       ],
@@ -320,7 +332,7 @@
       "slug": "final-fantasy-resonance",
       "data": "2026-10-22",
       "data_formatada": "22/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/e79/e79f71ca3e876b54f4ca02c0a5d03aa2.jpg",
+      "imagem": "https://media.rawg.io/media/games/e51/e51aab3845c598b52a2881c3f7155f76.jpg",
       "plataformas": [
         "PC",
         "PlayStation",
@@ -365,20 +377,6 @@
         "PlayStation"
       ],
       "link_rawg": "https://rawg.io/games/phantom-blade-zero"
-    },
-    {
-      "id": 973539,
-      "nome": "No Rest for the Wicked",
-      "slug": "no-rest-for-the-wicked-2024",
-      "data": "2026-10-30",
-      "data_formatada": "30/10/2026",
-      "imagem": "https://media.rawg.io/media/games/209/209e902168fcde856bd22a1bda90013e.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/no-rest-for-the-wicked-2024"
     },
     {
       "id": 1019738,
@@ -452,6 +450,33 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/they-come-in-fives"
+    },
+    {
+      "id": 1015972,
+      "nome": "Kena: Scars of Kosmora",
+      "slug": "kena-scars-of-kosmora",
+      "data": "2026-12-31",
+      "data_formatada": "31/12/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/3a3/3a3855e1b5218c02ab038dcb873eacde.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/kena-scars-of-kosmora"
+    },
+    {
+      "id": 490430,
+      "nome": "Prince of Persia: The Sands of Time Remake",
+      "slug": "prince-of-persia-the-sands-of-time-remake",
+      "data": "2026-12-31",
+      "data_formatada": "31/12/2026",
+      "imagem": "https://media.rawg.io/media/games/b92/b92b55aeab9ed1777104f71f4b22a613.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/prince-of-persia-the-sands-of-time-remake"
     }
   ]
 }
