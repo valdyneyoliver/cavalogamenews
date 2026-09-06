@@ -468,3 +468,1171 @@ def data_item(item):
                 return dt
 
     return None
+```python
+# =========================================================
+# IMAGENS
+# =========================================================
+
+def imagem_valida(url):
+
+    if not url:
+        return False
+
+    url = normalizar_url(url)
+
+    if not url_valida(url):
+        return False
+
+    url_lower = url.lower()
+
+    palavras_ruins = (
+        "logo",
+        "avatar",
+        "favicon",
+        "sprite",
+        "tracking",
+        "pixel",
+        "emoji",
+        "placeholder",
+        "gravatar",
+        "icon",
+    )
+
+    if any(
+        palavra in url_lower
+        for palavra in palavras_ruins
+    ):
+        return False
+
+    if url_lower.startswith("data:"):
+        return False
+
+    return True
+
+
+def escolher_srcset(srcset):
+
+    if not srcset:
+        return ""
+
+    candidatos = []
+
+    for parte in srcset.split(","):
+
+        partes = parte.strip().split()
+
+        if not partes:
+            continue
+
+        url = partes[0]
+        tamanho = 0
+
+        if len(partes) > 1:
+
+            match = re.match(
+                r"(\d+)w",
+                partes[1]
+            )
+
+            if match:
+                tamanho = int(
+                    match.group(1)
+                )
+
+        candidatos.append(
+            (tamanho, url)
+        )
+
+    candidatos.sort(
+        reverse=True
+    )
+
+    for _, url in candidatos:
+
+        if imagem_valida(url):
+            return url
+
+    return ""
+
+
+def imagem_de_objeto(
+    valor,
+    pagina_url
+):
+
+    if isinstance(
+        valor,
+        str
+    ):
+
+        url = urljoin(
+            pagina_url,
+            valor.strip()
+        )
+
+        if imagem_valida(url):
+            return url
+
+    elif isinstance(
+        valor,
+        list
+    ):
+
+        for item in valor:
+
+            resultado = imagem_de_objeto(
+                item,
+                pagina_url
+            )
+
+            if resultado:
+                return resultado
+
+    elif isinstance(
+        valor,
+        dict
+    ):
+
+        for chave in (
+            "url",
+            "contentUrl",
+            "@id",
+        ):
+
+            item = valor.get(
+                chave
+            )
+
+            if isinstance(
+                item,
+                str
+            ):
+
+                url = urljoin(
+                    pagina_url,
+                    item.strip()
+                )
+
+                if imagem_valida(url):
+                    return url
+
+    return ""
+
+
+def extrair_jsonld_imagem(
+    pagina_url,
+    texto
+):
+
+    padrao = re.compile(
+        r'<script[^>]+type=["\']'
+        r'application/ld\+json["\'][^>]*>'
+        r"(.*?)"
+        r"</script>",
+        flags=re.I | re.S
+    )
+
+    def procurar(obj):
+
+        if isinstance(
+            obj,
+            dict
+        ):
+
+            for chave, valor in obj.items():
+
+                if str(
+                    chave
+                ).lower() == "image":
+
+                    resultado = imagem_de_objeto(
+                        valor,
+                        pagina_url
+                    )
+
+                    if resultado:
+                        return resultado
+
+                resultado = procurar(
+                    valor
+                )
+
+                if resultado:
+                    return resultado
+
+        elif isinstance(
+            obj,
+            list
+        ):
+
+            for item in obj:
+
+                resultado = procurar(
+                    item
+                )
+
+                if resultado:
+                    return resultado
+
+        return ""
+
+    for bloco in padrao.findall(
+        texto
+    ):
+
+        try:
+
+            dados = json.loads(
+                html.unescape(
+                    bloco
+                ).strip()
+            )
+
+        except Exception:
+            continue
+
+        resultado = procurar(
+            dados
+        )
+
+        if resultado:
+            return resultado
+
+    return ""
+
+
+def extrair_imagem_meta(
+    pagina_url,
+    texto
+):
+
+    padroes = [
+
+        r'<meta[^>]+(?:property|name)=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\']og:image["\']',
+
+        r'<meta[^>]+(?:property|name)=["\']og:image:url["\'][^>]+content=["\']([^"\']+)',
+
+        r'<meta[^>]+(?:property|name)=["\']twitter:image["\'][^>]+content=["\']([^"\']+)',
+
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+(?:property|name)=["\']twitter:image["\']',
+
+        r'<meta[^>]+(?:property|name)=["\']twitter:image:src["\'][^>]+content=["\']([^"\']+)',
+
+        r'<link[^>]+rel=["\']image_src["\'][^>]+href=["\']([^"\']+)',
+    ]
+
+    for padrao in padroes:
+
+        encontrados = re.findall(
+            padrao,
+            texto,
+            flags=re.I
+        )
+
+        for url in encontrados:
+
+            url = urljoin(
+                pagina_url,
+                html.unescape(
+                    url
+                ).strip()
+            )
+
+            if imagem_valida(url):
+                return url
+
+    return ""
+
+
+def imagem_da_tag_img(
+    pagina_url,
+    texto
+):
+
+    padrao = re.compile(
+        r"<img\b([^>]+)>",
+        flags=re.I | re.S
+    )
+
+    for bloco in padrao.findall(
+        texto
+    ):
+
+        atributos = {}
+
+        encontrados = re.findall(
+            r'([a-zA-Z0-9_:-]+)\s*=\s*["\']([^"\']*)["\']',
+            bloco,
+            flags=re.I
+        )
+
+        for nome, valor in encontrados:
+
+            atributos[
+                nome.lower()
+            ] = html.unescape(
+                valor
+            ).strip()
+
+        for nome in (
+            "srcset",
+            "data-srcset",
+        ):
+
+            if atributos.get(nome):
+
+                url = escolher_srcset(
+                    atributos[nome]
+                )
+
+                if url:
+
+                    return urljoin(
+                        pagina_url,
+                        url
+                    )
+
+        for nome in (
+            "src",
+            "data-src",
+            "data-lazy-src",
+            "data-original",
+            "data-image",
+            "data-lazy",
+        ):
+
+            valor = atributos.get(
+                nome,
+                ""
+            )
+
+            if not valor:
+                continue
+
+            url = urljoin(
+                pagina_url,
+                valor
+            )
+
+            if imagem_valida(url):
+                return url
+
+    return ""
+
+
+def extrair_imagem_pagina(url):
+
+    texto, url_final = baixar(
+        url
+    )
+
+    if not texto:
+        return ""
+
+    imagem = extrair_jsonld_imagem(
+        url_final,
+        texto
+    )
+
+    if imagem:
+        return imagem
+
+    imagem = extrair_imagem_meta(
+        url_final,
+        texto
+    )
+
+    if imagem:
+        return imagem
+
+    return imagem_da_tag_img(
+        url_final,
+        texto
+    )
+
+
+def extrair_imagem_rss(
+    item,
+    base_url
+):
+
+    for elemento in item.iter():
+
+        tag = elemento.tag
+
+        if not isinstance(
+            tag,
+            str
+        ):
+            continue
+
+        tag = tag.split(
+            "}"
+        )[-1].lower()
+
+        if tag in (
+            "content",
+            "thumbnail"
+        ):
+
+            url = elemento.attrib.get(
+                "url",
+                ""
+            ).strip()
+
+            if url:
+
+                url = urljoin(
+                    base_url,
+                    html.unescape(
+                        url
+                    )
+                )
+
+                if imagem_valida(url):
+                    return url
+
+    for elemento in item.iter():
+
+        tag = elemento.tag
+
+        if not isinstance(
+            tag,
+            str
+        ):
+            continue
+
+        tag = tag.split(
+            "}"
+        )[-1].lower()
+
+        if tag == "enclosure":
+
+            url = elemento.attrib.get(
+                "url",
+                ""
+            ).strip()
+
+            tipo = elemento.attrib.get(
+                "type",
+                ""
+            ).lower()
+
+            if url and (
+                "image" in tipo
+                or not tipo
+            ):
+
+                url = urljoin(
+                    base_url,
+                    html.unescape(
+                        url
+                    )
+                )
+
+                if imagem_valida(url):
+                    return url
+
+    return ""
+
+
+# =========================================================
+# FILTRO DE PORTUGUÊS
+# =========================================================
+
+def parece_portugues(
+    titulo,
+    resumo
+):
+
+    texto = (
+        f"{titulo} {resumo}"
+    ).lower()
+
+    # Caracteres muito comuns no português
+    if re.search(
+        r"[ãõáéíóúâêôç]",
+        texto
+    ):
+        return True
+
+    palavras = (
+        " o ",
+        " a ",
+        " os ",
+        " as ",
+        " de ",
+        " do ",
+        " da ",
+        " dos ",
+        " das ",
+        " em ",
+        " para ",
+        " com ",
+        " por ",
+        " que ",
+        " uma ",
+        " um ",
+        " não ",
+        " novo ",
+        " nova ",
+        " novos ",
+        " novas ",
+        " jogo ",
+        " jogos ",
+        " lançamento ",
+        " lançamento",
+        " anuncia ",
+        " anunciado ",
+        " revelou ",
+        " revela ",
+        " chega ",
+        " poderá ",
+        " pode ",
+        " será ",
+        " grátis ",
+        " gratuito ",
+        " gratuita ",
+        " jogadores ",
+        " desenvolvedora ",
+        " desenvolvedor ",
+        " atualização ",
+    )
+
+    encontrados = sum(
+        1
+        for palavra in palavras
+        if palavra in f" {texto} "
+    )
+
+    return encontrados >= 2
+
+
+# =========================================================
+# CATEGORIA
+# =========================================================
+
+def descobrir_categoria(
+    titulo,
+    resumo,
+    padrao
+):
+
+    texto = (
+        f"{titulo} {resumo}"
+    ).lower()
+
+    if any(
+        x in texto
+        for x in (
+            "playstation",
+            "ps5",
+            "ps4",
+            "ps vr",
+        )
+    ):
+        return "PlayStation"
+
+    if any(
+        x in texto
+        for x in (
+            "xbox",
+            "game pass",
+            "microsoft",
+        )
+    ):
+        return "Xbox"
+
+    if any(
+        x in texto
+        for x in (
+            "nintendo",
+            "switch",
+            "switch 2",
+            "zelda",
+            "mario",
+            "pokemon",
+        )
+    ):
+        return "Nintendo"
+
+    if any(
+        x in texto
+        for x in (
+            "pc",
+            "steam",
+            "epic games",
+            "windows",
+            "nvidia",
+            "amd",
+        )
+    ):
+        return "Pc"
+
+    return padrao or "Notícias"
+
+
+# =========================================================
+# BUSCAR RSS
+# =========================================================
+
+def buscar_rss(fonte):
+
+    print(
+        f"\n[RSS] {fonte['nome']}: "
+        f"{fonte['url']}"
+    )
+
+    texto, url_final = baixar(
+        fonte["url"]
+    )
+
+    if not texto:
+        return []
+
+    try:
+
+        raiz = ET.fromstring(
+            texto
+        )
+
+    except Exception as erro:
+
+        print(
+            f"[ERRO] RSS inválido: "
+            f"{erro}"
+        )
+
+        return []
+
+    resultado = []
+
+    for item in raiz.iter():
+
+        tag = item.tag
+
+        if not isinstance(
+            tag,
+            str
+        ):
+            continue
+
+        tag = tag.split(
+            "}"
+        )[-1].lower()
+
+        if tag not in (
+            "item",
+            "entry"
+        ):
+            continue
+
+        titulo = titulo_item(
+            item
+        )
+
+        link = link_item(
+            item
+        )
+
+        resumo = descricao_item(
+            item
+        )
+
+        data = data_item(
+            item
+        )
+
+        if not titulo or not link:
+            continue
+
+        if not url_valida(link):
+            continue
+
+        # Bloqueia notícias em inglês.
+        if not parece_portugues(
+            titulo,
+            resumo
+        ):
+            print(
+                "[IGNORADA] "
+                "Possível notícia em inglês:",
+                titulo
+            )
+            continue
+
+        if data is None:
+            data = agora_utc()
+
+        idade = (
+            agora_utc() - data
+        )
+
+        if idade > timedelta(
+            hours=HORAS_MAXIMO
+        ):
+            continue
+
+        if idade < timedelta(
+            minutes=-10
+        ):
+            continue
+
+        imagem = extrair_imagem_rss(
+            item,
+            url_final
+        )
+
+        resultado.append({
+            "titulo": titulo,
+            "link": link,
+            "resumo": resumo,
+            "data": data,
+            "imagem": imagem,
+            "fonte": fonte["nome"],
+            "categoria": fonte["categoria"],
+        })
+
+    print(
+        f"[RSS] Encontradas "
+        f"{len(resultado)} notícia(s) "
+        f"em português."
+    )
+
+    return resultado
+
+
+# =========================================================
+# RESUMO E CONTEÚDO
+# =========================================================
+
+def criar_resumo(
+    titulo,
+    resumo,
+    fonte
+):
+
+    resumo = limpar_html(
+        resumo
+    )
+
+    if not resumo:
+
+        resumo = (
+            f"{titulo} — confira "
+            "os principais detalhes "
+            "desta novidade."
+        )
+
+    resumo = re.sub(
+        r"\s+",
+        " ",
+        resumo
+    ).strip()
+
+    if len(resumo) > 300:
+
+        resumo = (
+            resumo[:297]
+            .rsplit(" ", 1)[0]
+            + "..."
+        )
+
+    return resumo
+
+
+def criar_conteudo(
+    titulo,
+    resumo,
+    fonte,
+    link
+):
+
+    return [
+
+        (
+            f"{titulo} ganhou destaque "
+            "entre as novidades recentes "
+            "do mundo dos videogames."
+        ),
+
+        resumo,
+
+        (
+            f"A informação foi publicada "
+            f"originalmente por {fonte}. "
+            "O CavaloGameNews reúne os "
+            "principais detalhes disponíveis "
+            "sobre o assunto."
+        ),
+
+        f"🔗 Fonte: {link}",
+    ]
+
+
+# =========================================================
+# POSTS EXISTENTES
+# =========================================================
+
+def carregar_posts():
+
+    try:
+
+        with open(
+            POSTS_FILE,
+            "r",
+            encoding="utf-8"
+        ) as arquivo:
+
+            posts = json.load(
+                arquivo
+            )
+
+        if not isinstance(
+            posts,
+            list
+        ):
+
+            raise ValueError(
+                "posts.json precisa ser "
+                "uma lista."
+            )
+
+        return posts
+
+    except FileNotFoundError:
+
+        return []
+
+    except json.JSONDecodeError as erro:
+
+        raise ValueError(
+            f"JSON inválido: {erro}"
+        )
+
+
+def salvar_posts(posts):
+
+    with open(
+        POSTS_FILE,
+        "w",
+        encoding="utf-8"
+    ) as arquivo:
+
+        json.dump(
+            posts,
+            arquivo,
+            ensure_ascii=False,
+            indent=2
+        )
+
+        arquivo.write(
+            "\n"
+        )
+
+
+def chaves_posts(posts):
+
+    ids = set()
+    links = set()
+    titulos = set()
+
+    for post in posts:
+
+        if not isinstance(
+            post,
+            dict
+        ):
+            continue
+
+        post_id = str(
+            post.get(
+                "id",
+                ""
+            )
+        ).strip()
+
+        link = normalizar_url(
+            post.get(
+                "link",
+                ""
+            )
+        )
+
+        titulo = slug(
+            post.get(
+                "titulo",
+                ""
+            )
+        )
+
+        if post_id:
+            ids.add(
+                post_id
+            )
+
+        if link:
+            links.add(
+                link.rstrip("/")
+            )
+
+        if titulo:
+            titulos.add(
+                titulo
+            )
+
+    return (
+        ids,
+        links,
+        titulos
+    )
+
+
+# =========================================================
+# CRIAR POST
+# =========================================================
+
+def criar_post(noticia):
+
+    titulo = noticia[
+        "titulo"
+    ]
+
+    link = noticia[
+        "link"
+    ]
+
+    fonte = noticia[
+        "fonte"
+    ]
+
+    data = noticia.get(
+        "data"
+    ) or agora_utc()
+
+    data_str = data_brasil(
+        data
+    )
+
+    resumo = criar_resumo(
+        titulo,
+        noticia.get(
+            "resumo",
+            ""
+        ),
+        fonte
+    )
+
+    categoria = descobrir_categoria(
+        titulo,
+        resumo,
+        noticia.get(
+            "categoria",
+            "Notícias"
+        )
+    )
+
+    imagem = noticia.get(
+        "imagem",
+        ""
+    )
+
+    if not imagem:
+
+        print(
+            "[IMAGEM] Procurando "
+            "imagem na página original..."
+        )
+
+        imagem = extrair_imagem_pagina(
+            link
+        )
+
+    if imagem:
+
+        print(
+            "[IMAGEM] OK:",
+            imagem
+        )
+
+    else:
+
+        print(
+            "[IMAGEM] Não encontrada."
+        )
+
+    post_id = (
+        f"{data.strftime('%Y%m%d')}-"
+        f"{slug(titulo)}"
+    )
+
+    return {
+
+        "id": post_id,
+
+        "titulo": titulo,
+
+        "categoria": categoria,
+
+        "data": data_str,
+
+        "imagem": imagem,
+
+        "resumo": resumo,
+
+        "link": link,
+
+        "x": "",
+
+        "videos": [
+            {
+                "tipo": "youtube",
+                "url": "xxx"
+            }
+        ],
+
+        "conteudo": criar_conteudo(
+            titulo,
+            resumo,
+            fonte,
+            link
+        )
+    }
+
+
+# =========================================================
+# PRINCIPAL
+# =========================================================
+
+def main():
+
+    print("=" * 60)
+
+    print(
+        "CavaloGameNews - "
+        "Bot de notícias em português"
+    )
+
+    print("=" * 60)
+
+    posts = carregar_posts()
+
+    (
+        ids,
+        links,
+        titulos
+    ) = chaves_posts(
+        posts
+    )
+
+    noticias = []
+
+    for fonte in FONTES:
+
+        try:
+
+            noticias.extend(
+                buscar_rss(
+                    fonte
+                )
+            )
+
+        except Exception as erro:
+
+            print(
+                f"[ERRO] {fonte['nome']}: "
+                f"{erro}"
+            )
+
+    noticias.sort(
+        key=lambda n: n["data"],
+        reverse=True
+    )
+
+    novas = []
+
+    for noticia in noticias:
+
+        if len(novas) >= MAX_NOTICIAS:
+            break
+
+        link = normalizar_url(
+            noticia["link"]
+        )
+
+        titulo = noticia[
+            "titulo"
+        ].strip()
+
+        if (
+            link.rstrip("/")
+            in links
+        ):
+            continue
+
+        if slug(titulo) in titulos:
+            continue
+
+        post = criar_post(
+            noticia
+        )
+
+        if post["id"] in ids:
+            continue
+
+        novas.append(
+            post
+        )
+
+        ids.add(
+            post["id"]
+        )
+
+        links.add(
+            link.rstrip("/")
+        )
+
+        titulos.add(
+            slug(titulo)
+        )
+
+        print(
+            "[NOVA]",
+            titulo
+        )
+
+    if not novas:
+
+        print(
+            "\nNenhuma notícia nova "
+            "em português encontrada."
+        )
+
+        return
+
+    posts = novas + posts
+
+    posts = posts[:MAX_POSTS]
+
+    salvar_posts(
+        posts
+    )
+
+    print("=" * 60)
+
+    print(
+        f"{len(novas)} notícia(s) "
+        "adicionada(s)."
+    )
+
+    print(
+        f"{len(posts)} posts no total."
+    )
+
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
