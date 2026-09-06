@@ -30,21 +30,7 @@ MAX_POSTS = 200
 # =========================================================
 
 FONTES = [
-    {
-        "nome": "Xbox Power",
-        "url": "https://www.xboxpower.com.br/feed/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "MeuPlayStation",
-        "url": "https://meups.com.br/feed/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "Nintendo Blast",
-        "url": "https://www.nintendoblast.com.br/feeds/posts/default",
-        "categoria": "Notícias",
-    },
+    
 ]
 
 # =========================================================
