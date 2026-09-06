@@ -32,19 +32,28 @@ MAX_POSTS = 200
 FONTES = [
     {
         "nome": "GameVicio",
-        "url": "https://www.gamevicio.com/ultimas-noticias/",
+        "url": "https://www.gamevicio.com/rss",
         "categoria": "Notícias",
-        "tipo": "pagina",
-        "dominio": "www.gamevicio.com",
-        "padrao_link": r"/noticias/",
     },
     {
         "nome": "Adrenaline",
-        "url": "https://www.adrenaline.com.br/noticias/",
+        "url": "https://www.adrenaline.com.br/feed",
         "categoria": "Notícias",
-        "tipo": "pagina",
-        "dominio": "www.adrenaline.com.br",
-        "padrao_link": r"/noticias/",
+    },
+    {
+        "nome": "Canaltech",
+        "url": "https://canaltech.com.br/rss/",
+        "categoria": "Notícias",
+    },
+    {
+        "nome": "Drops de Jogos",
+        "url": "https://dropsdejogos.uai.com.br/feed/",
+        "categoria": "Notícias",
+    },
+    {
+        "nome": "Tecnoblog",
+        "url": "https://tecnoblog.net/feed/",
+        "categoria": "Notícias",
     },
 ]
 
@@ -1181,116 +1190,6 @@ def descobrir_categoria(
 
 
 # =========================================================
-# BUSCAR NOTÍCIAS DIRETAMENTE NAS PÁGINAS
-# =========================================================
-
-def extrair_meta_valor(texto, nome=None, propriedade=None):
-    padroes = []
-    if nome:
-        padroes += [
-            rf'<meta[^>]+name=["\']{re.escape(nome)}["\'][^>]+content=["\']([^"\']*)',
-            rf'<meta[^>]+content=["\']([^"\']*)["\'][^>]+name=["\']{re.escape(nome)}["\']',
-        ]
-    if propriedade:
-        padroes += [
-            rf'<meta[^>]+property=["\']{re.escape(propriedade)}["\'][^>]+content=["\']([^"\']*)',
-            rf'<meta[^>]+content=["\']([^"\']*)["\'][^>]+property=["\']{re.escape(propriedade)}["\']',
-        ]
-    for padrao in padroes:
-        m=re.search(padrao,texto,flags=re.I|re.S)
-        if m:
-            v=html.unescape(m.group(1)).strip()
-            if v:return v
-    return ""
-
-def extrair_data_pagina(texto):
-    for nome in ("article:published_time","datePublished","date","publish_date","pubdate"):
-        v=extrair_meta_valor(texto,nome=nome,propriedade=nome)
-        dt=interpretar_data(v)
-        if dt:return dt
-    padrao=re.compile(r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',re.I|re.S)
-    for bloco in padrao.findall(texto):
-        try:dados=json.loads(html.unescape(bloco).strip())
-        except Exception:continue
-        def procurar(obj):
-            if isinstance(obj,dict):
-                for k,v in obj.items():
-                    if str(k).lower() in ("datepublished","datecreated","uploaddate"):
-                        dt=interpretar_data(str(v))
-                        if dt:return dt
-                    r=procurar(v)
-                    if r:return r
-            elif isinstance(obj,list):
-                for x in obj:
-                    r=procurar(x)
-                    if r:return r
-            return None
-        dt=procurar(dados)
-        if dt:return dt
-    for padrao_data in (r'\b20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})\b',r'\b20\d{2}-\d{2}-\d{2}\b'):
-        m=re.search(padrao_data,texto)
-        if m:
-            dt=interpretar_data(m.group(0))
-            if dt:return dt
-    return None
-
-def extrair_descricao_pagina(texto):
-    for prop in ("og:description","twitter:description"):
-        v=extrair_meta_valor(texto,propriedade=prop)
-        if v:return limpar_html(v)
-    for nome in ("description","twitter:description"):
-        v=extrair_meta_valor(texto,nome=nome)
-        if v:return limpar_html(v)
-    return ""
-
-def extrair_links_da_pagina(fonte,texto,url_base):
-    dominio=fonte.get("dominio","")
-    padrao_link=fonte.get("padrao_link",r"/noticias/")
-    encontrados=[]; vistos=set()
-    for bloco in re.findall(r'<a\b[^>]*>.*?</a>',texto,flags=re.I|re.S):
-        m=re.search(r'\bhref\s*=\s*["\']([^"\']+)["\']',bloco,flags=re.I)
-        if not m:continue
-        link=urljoin(url_base,html.unescape(m.group(1)).strip())
-        if not url_valida(link):continue
-        p=urlparse(link)
-        if p.netloc.lower()!=dominio.lower():continue
-        if not re.search(padrao_link,p.path,flags=re.I):continue
-        caminho=p.path.lower()
-        if any(x in caminho for x in ("/tag/","/tags/","/categoria/","/categorias/","/page/","/autor/","/author/")):continue
-        titulo=limpar_html(bloco)
-        titulo=re.sub(r'\s+',' ',titulo).strip()
-        if len(titulo)<8:continue
-        chave=link.rstrip("/")
-        if chave in vistos:continue
-        vistos.add(chave)
-        encontrados.append({"titulo":titulo[:300],"link":link})
-    return encontrados
-
-def buscar_pagina(fonte):
-    nome=fonte["nome"]; url=fonte["url"]; categoria=fonte.get("categoria","Notícias")
-    print(f"\n[PÁGINA] Lendo {nome}: {url}")
-    texto,url_final=baixar(url)
-    if not texto:return []
-    candidatos=extrair_links_da_pagina(fonte,texto,url_final)
-    print(f"[PÁGINA] {nome}: {len(candidatos)} link(s) encontrado(s).")
-    noticias=[]
-    for candidato in candidatos[:25]:
-        titulo=candidato["titulo"]; link=candidato["link"]
-        artigo,artigo_url=baixar(link)
-        if not artigo:continue
-        data_publicacao=extrair_data_pagina(artigo)
-        if data_publicacao is None:
-            print(f"[DATA] Não identificada: {titulo}")
-            continue
-        idade=agora_utc()-data_publicacao
-        if idade>timedelta(hours=HORAS_MAXIMO) or idade<timedelta(minutes=-10):continue
-        resumo=extrair_descricao_pagina(artigo)
-        imagem=extrair_imagem_pagina(artigo_url)
-        noticias.append({"titulo":titulo,"link":normalizar_url(artigo_url or link),"resumo_rss":resumo,"data_publicacao":data_publicacao,"imagem":imagem,"fonte":nome,"categoria":categoria})
-    print(f"[PÁGINA] {nome}: {len(noticias)} notícia(s) recente(s) encontrada(s).")
-    return noticias
-
-# =========================================================
 # BUSCAR RSS
 # =========================================================
 
@@ -1778,7 +1677,12 @@ def criar_post(noticia):
 
         "x": "",
 
-        "videos": [],
+        "videos": [
+            {
+                "tipo": "youtube",
+                "url": "xxx"
+            }
+        ],
 
         "conteudo": criar_conteudo(
             titulo,
@@ -1824,10 +1728,9 @@ def main():
 
         try:
 
-            if fonte.get("tipo") == "pagina":
-                resultados = buscar_pagina(fonte)
-            else:
-                resultados = buscar_rss(fonte)
+            resultados = buscar_rss(
+                fonte
+            )
 
             noticias.extend(
                 resultados
