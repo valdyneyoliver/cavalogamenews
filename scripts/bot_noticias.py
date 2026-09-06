@@ -8,28 +8,30 @@ Fluxo:
 1. Lê feeds RSS de notícias gamer.
 2. Procura notícias publicadas recentemente.
 3. Evita duplicadas usando link e título.
-4. Cria uma notícia no mesmo formato do posts.json.
-5. Salva a notícia no início do posts.json.
-6. O GitHub Actions executa gerar_noticias.py depois deste script.
+4. Busca automaticamente a imagem da página original.
+5. Cria uma notícia no mesmo formato do posts.json.
+6. Salva a notícia no início do posts.json.
+7. O GitHub Actions executa gerar_noticias.py depois deste script.
 
 IMPORTANTE:
-- O bot usa apenas título/descrição/imagem disponíveis no RSS.
+- O bot usa título/descrição e imagem disponível na página original.
 - Não copia artigos completos de outros sites.
-- Para matérias mais completas com IA, podemos adicionar uma API depois.
+- A imagem é procurada primeiro no RSS e depois na página original.
 """
 
 import html
 import json
-import os
 import re
 import sys
 import urllib.parse
 import urllib.request
+import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from unicodedata import normalize
+import unicodedata
 
 
 # =========================================================
@@ -44,15 +46,18 @@ MAX_NEW_POSTS = 5
 # Só considera notícias publicadas nas últimas horas.
 MAX_AGE_HOURS = 48
 
-# User-Agent para evitar bloqueios simples dos servidores RSS.
+# User-Agent usado nas requisições.
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-    "AppleWebKit/537.36 Chrome/150.0 Safari/537.36 "
-    "CavaloGameNewsBot/1.0"
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/150.0 Safari/537.36 "
+    "CavaloGameNewsBot/1.1"
 )
 
+# Limite para não baixar páginas gigantes.
+MAX_PAGE_BYTES = 3_000_000
+
 # Feeds usando Google News RSS.
-# As buscas são voltadas para notícias de videogames.
 RSS_FEEDS = [
     {
         "nome": "Google News - Games",
@@ -101,22 +106,17 @@ def limpar_html(texto):
 def normalizar_texto(texto):
     texto = texto or ""
     texto = normalize("NFKD", texto)
-    texto = "".join(c for c in texto if not unicodedata_combining(c))
+    texto = "".join(
+        c for c in texto
+        if not unicodedata.combining(c)
+    )
     texto = texto.lower()
     texto = re.sub(r"[^a-z0-9\s]", " ", texto)
     texto = re.sub(r"\s+", " ", texto)
     return texto.strip()
 
 
-def unicodedata_combining(c):
-    # Evita importar toda a biblioteca só para uma chamada.
-    import unicodedata
-    return unicodedata.combining(c)
-
-
 def slugify(texto):
-    import unicodedata
-
     texto = normalize("NFKD", texto)
     texto = "".join(
         c for c in texto
@@ -196,108 +196,259 @@ def extrair_link(item):
 
 
 def extrair_imagem(item, descricao=""):
-    # media:content / media:thumbnail
+    """
+    Tenta encontrar a imagem diretamente no RSS.
+    """
     namespaces = {
         "media": "http://search.yahoo.com/mrss/",
-        "content": "http://purl.org/rss/1.0/modules/content/",
     }
 
-    for tag in [
-        "media:content",
-        "media:thumbnail",
-    ]:
-        elemento = item.find(tag, namespaces)
-        if elemento is not None:
-            url = elemento.attrib.get("url", "")
-            if url:
-                return url
+    # media:content
+    elementos = item.findall("media:content", namespaces)
+    elementos += item.findall("media:thumbnail", namespaces)
+
+    for elemento in elementos:
+        url = elemento.attrib.get("url", "").strip()
+
+        if url and parece_imagem(url):
+            return url
 
     # enclosure
     enclosure = item.find("enclosure")
     if enclosure is not None:
         tipo = enclosure.attrib.get("type", "")
-        url = enclosure.attrib.get("url", "")
-        if url and (tipo.startswith("image/") or not tipo):
+        url = enclosure.attrib.get("url", "").strip()
+
+        if url and (tipo.startswith("image/") or parece_imagem(url)):
             return url
 
-    # Procura uma imagem dentro do HTML da descrição.
+    # Imagem dentro da descrição.
     match = re.search(
-        r'<img[^>]+src=["\']([^"\']+)["\']',
+        r'<img[^>]+(?:src|data-src)=["\']([^"\']+)["\']',
         descricao or "",
         flags=re.IGNORECASE,
     )
 
     if match:
-        return html.unescape(match.group(1))
+        return html.unescape(match.group(1)).strip()
 
     return ""
 
 
-def encontrar_fonte(link, source_title=""):
+def parece_imagem(url):
+    if not url:
+        return False
+
+    url_sem_query = url.split("?", 1)[0].lower()
+
+    extensoes = (
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".webp",
+        ".gif",
+        ".avif",
+    )
+
+    return url_sem_query.endswith(extensoes)
+
+
+def tornar_url_absoluta(url, base_url):
+    if not url:
+        return ""
+
+    return urllib.parse.urljoin(base_url, url.strip())
+
+
+# =========================================================
+# BUSCA DA IMAGEM NA PÁGINA ORIGINAL
+# =========================================================
+
+def baixar_pagina(url):
+    """
+    Baixa o HTML da página original.
+    urllib.request segue redirecionamentos normalmente.
+    """
     try:
-        dominio = urllib.parse.urlparse(link).netloc.lower()
-        dominio = dominio.replace("www.", "")
-        if dominio:
-            return dominio
-    except Exception:
-        pass
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": USER_AGENT,
+                "Accept": (
+                    "text/html,application/xhtml+xml,"
+                    "application/xml;q=0.9,*/*;q=0.8"
+                ),
+                "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+            },
+        )
 
-    return source_title or "Fonte"
+        with urllib.request.urlopen(req, timeout=20) as resposta:
+            dados = resposta.read(MAX_PAGE_BYTES)
+            url_final = resposta.geturl()
+            content_type = resposta.headers.get("Content-Type", "")
+
+        if "text/html" not in content_type.lower():
+            return "", url_final
+
+        return dados.decode("utf-8", errors="replace"), url_final
+
+    except Exception as erro:
+        print(f"[AVISO] Não foi possível abrir a página para imagem: {url}")
+        print(f"        {erro}")
+        return "", url
 
 
-def categoria_da_noticia(titulo, resumo):
-    texto = f"{titulo} {resumo}".lower()
+def extrair_meta(html_pagina, nomes):
+    """
+    Procura:
+    <meta property="og:image" content="...">
+    <meta name="twitter:image" content="...">
+    etc.
+    """
+    if not html_pagina:
+        return ""
 
-    regras = [
-        ("Xbox", [
-            "xbox",
-            "game pass",
-            "cloud gaming",
-            "series x",
-            "series s",
-            "microsoft",
-        ]),
-        ("PlayStation", [
-            "playstation",
-            "ps5",
-            "ps4",
-            "sony",
-            "state of play",
-        ]),
-        ("Nintendo", [
-            "nintendo",
-            "switch",
-            "zelda",
-            "mario",
-            "pokemon",
-        ]),
-        ("Pc", [
-            "pc",
-            "steam",
-            "epic games",
-            "nvidia",
-            "amd",
-            "windows",
-            "dlss",
-        ]),
+    for padrao in nomes:
+        # content antes do atributo solicitado
+        match = re.search(
+            rf'<meta[^>]+(?:property|name)\s*=\s*["\']{re.escape(padrao)}["\'][^>]+content\s*=\s*["\']([^"\']+)["\']',
+            html_pagina,
+            flags=re.IGNORECASE,
+        )
+
+        if match:
+            return html.unescape(match.group(1)).strip()
+
+        # content antes de property/name
+        match = re.search(
+            rf'<meta[^>]+content\s*=\s*["\']([^"\']+)["\'][^>]+(?:property|name)\s*=\s*["\']{re.escape(padrao)}["\']',
+            html_pagina,
+            flags=re.IGNORECASE,
+        )
+
+        if match:
+            return html.unescape(match.group(1)).strip()
+
+    return ""
+
+
+def extrair_imagem_pagina(html_pagina, url_pagina):
+    """
+    Ordem de tentativa:
+    1. og:image
+    2. og:image:url
+    3. twitter:image
+    4. twitter:image:src
+    5. image_src
+    6. primeira imagem razoável do HTML
+    """
+    if not html_pagina:
+        return ""
+
+    nomes_meta = [
+        "og:image",
+        "og:image:url",
+        "twitter:image",
+        "twitter:image:src",
+        "image_src",
     ]
 
-    for categoria, palavras in regras:
-        if any(palavra in texto for palavra in palavras):
-            return categoria
+    for nome in nomes_meta:
+        imagem = extrair_meta(html_pagina, [nome])
 
-    return "Notícias"
+        if imagem:
+            return tornar_url_absoluta(
+                imagem,
+                url_pagina,
+            )
 
+    # Tenta encontrar uma imagem em link rel="image_src".
+    match = re.search(
+        r'<link[^>]+rel=["\']image_src["\'][^>]+href=["\']([^"\']+)["\']',
+        html_pagina,
+        flags=re.IGNORECASE,
+    )
 
-def extrair_nome_fonte_google_news(titulo):
-    # Google News frequentemente usa:
-    # "Título da notícia - Nome do site"
-    partes = re.split(r"\s+-\s+", titulo)
+    if match:
+        return tornar_url_absoluta(
+            html.unescape(match.group(1)),
+            url_pagina,
+        )
 
-    if len(partes) >= 2:
-        return partes[-1].strip()
+    # Último recurso: primeira imagem com src/data-src.
+    imagens = re.findall(
+        r'<img[^>]+(?:src|data-src)=["\']([^"\']+)["\']',
+        html_pagina,
+        flags=re.IGNORECASE,
+    )
+
+    for imagem in imagens:
+        imagem = html.unescape(imagem).strip()
+
+        if not imagem:
+            continue
+
+        # Evita ícones, pixels e SVGs pequenos/óbvios.
+        if imagem.startswith("data:"):
+            continue
+
+        if ".svg" in imagem.lower():
+            continue
+
+        if any(
+            palavra in imagem.lower()
+            for palavra in [
+                "logo",
+                "icon",
+                "avatar",
+                "favicon",
+                "pixel",
+                "sprite",
+            ]
+        ):
+            continue
+
+        return tornar_url_absoluta(
+            imagem,
+            url_pagina,
+        )
 
     return ""
+
+
+def buscar_imagem_automatica(item):
+    """
+    Primeiro usa a imagem do RSS.
+    Se não existir, abre a página original e procura og:image.
+    """
+    imagem_rss = item.get("imagem", "").strip()
+
+    if imagem_rss:
+        print("       [IMAGEM] Encontrada no RSS.")
+        return imagem_rss
+
+    link = item.get("link", "").strip()
+
+    if not link:
+        print("       [IMAGEM] Sem link para procurar imagem.")
+        return ""
+
+    html_pagina, url_final = baixar_pagina(link)
+
+    if not html_pagina:
+        return ""
+
+    imagem = extrair_imagem_pagina(
+        html_pagina,
+        url_final,
+    )
+
+    if imagem:
+        print(f"       [IMAGEM] Encontrada: {imagem}")
+    else:
+        print("       [IMAGEM] Nenhuma imagem encontrada.")
+
+    return imagem
 
 
 # =========================================================
@@ -309,7 +460,10 @@ def baixar_feed(url):
         url,
         headers={
             "User-Agent": USER_AGENT,
-            "Accept": "application/rss+xml, application/xml, text/xml",
+            "Accept": (
+                "application/rss+xml, application/xml, text/xml"
+            ),
+            "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
         },
     )
 
@@ -331,6 +485,7 @@ def ler_feed(feed):
     for item in raiz.findall(".//item"):
         titulo = encontrar_texto(item, ["title"])
         link = extrair_link(item)
+
         descricao = encontrar_texto(
             item,
             [
@@ -354,7 +509,7 @@ def ler_feed(feed):
             "feed": feed["nome"],
         })
 
-    # Atom, caso algum feed futuro use esse formato.
+    # Atom
     for item in raiz.findall(".//{http://www.w3.org/2005/Atom}entry"):
         titulo = encontrar_texto(
             item,
@@ -414,7 +569,6 @@ def carregar_posts():
 
 
 def salvar_posts(posts):
-    # Mantém UTF-8 e caracteres como emojis normalmente.
     with POSTS_FILE.open("w", encoding="utf-8") as arquivo:
         json.dump(
             posts,
@@ -430,7 +584,9 @@ def noticia_ja_existe(item, posts):
     titulo = normalizar_texto(item.get("titulo", ""))
 
     for post in posts:
-        link_existente = str(post.get("link", "") or "").strip()
+        link_existente = str(
+            post.get("link", "") or ""
+        ).strip()
 
         if link and link_existente and link == link_existente:
             return True
@@ -439,9 +595,8 @@ def noticia_ja_existe(item, posts):
             str(post.get("titulo", "") or "")
         )
 
-        if titulo and titulo_existente:
-            if titulo == titulo_existente:
-                return True
+        if titulo and titulo_existente and titulo == titulo_existente:
+            return True
 
     return False
 
@@ -468,19 +623,27 @@ def criar_id(titulo, data, posts):
 
 
 def criar_resumo(titulo, descricao):
-    descricao = re.sub(r"\s+", " ", descricao or "").strip()
+    descricao = re.sub(
+        r"\s+",
+        " ",
+        descricao or "",
+    ).strip()
 
     if descricao:
         return limitar_texto(descricao, 280)
 
-    return f"{titulo} é uma das novidades recentes do mundo dos games."
+    return (
+        f"{titulo} é uma das novidades recentes "
+        "do mundo dos games."
+    )
 
 
 def criar_conteudo(titulo, resumo, link, fonte):
     conteudo = []
 
     conteudo.append(
-        f"{titulo} foi destaque entre as novidades recentes do mundo dos videogames."
+        f"{titulo} foi destaque entre as novidades recentes "
+        "do mundo dos videogames."
     )
 
     if resumo:
@@ -488,8 +651,8 @@ def criar_conteudo(titulo, resumo, link, fonte):
 
     conteudo.append(
         f"A informação foi publicada originalmente por {fonte}. "
-        "O CavaloGameNews acompanha as novidades e reúne os principais detalhes "
-        "disponíveis sobre o assunto."
+        "O CavaloGameNews acompanha as novidades e reúne os "
+        "principais detalhes disponíveis sobre o assunto."
     )
 
     conteudo.append(
@@ -500,15 +663,26 @@ def criar_conteudo(titulo, resumo, link, fonte):
 
 
 def criar_post(item, posts):
-    titulo = limpar_html(item.get("titulo", "")).strip()
+    titulo = limpar_html(
+        item.get("titulo", "")
+    ).strip()
+
     link = item.get("link", "").strip()
-    descricao = limpar_html(item.get("descricao", "")).strip()
-    imagem = item.get("imagem", "").strip()
+
+    descricao = limpar_html(
+        item.get("descricao", "")
+    ).strip()
+
     data = item.get("data") or datetime.now(timezone.utc)
 
-    # Remove o sufixo de fonte que o Google News pode adicionar.
+    # Busca a imagem automaticamente.
+    imagem = buscar_imagem_automatica(item)
+
     fonte_google = extrair_nome_fonte_google_news(titulo)
 
+    # Remove o nome da fonte do final do título quando
+    # o Google News usar o formato:
+    # "Título da notícia - Site"
     titulo_limpo = re.sub(
         r"\s+-\s+[^-]+$",
         "",
@@ -518,12 +692,30 @@ def criar_post(item, posts):
     if not titulo_limpo:
         titulo_limpo = titulo
 
-    resumo = criar_resumo(titulo_limpo, descricao)
-    categoria = categoria_da_noticia(titulo_limpo, resumo)
-    fonte = fonte_google or encontrar_fonte(link, item.get("feed", ""))
+    resumo = criar_resumo(
+        titulo_limpo,
+        descricao,
+    )
+
+    categoria = categoria_da_noticia(
+        titulo_limpo,
+        resumo,
+    )
+
+    fonte = (
+        fonte_google
+        or encontrar_fonte(
+            link,
+            item.get("feed", ""),
+        )
+    )
 
     post = {
-        "id": criar_id(titulo_limpo, data, posts),
+        "id": criar_id(
+            titulo_limpo,
+            data,
+            posts,
+        ),
         "titulo": titulo_limpo,
         "categoria": categoria,
         "data": data.astimezone().strftime("%d/%m/%Y"),
@@ -548,6 +740,97 @@ def criar_post(item, posts):
     return post
 
 
+def encontrar_fonte(link, source_title=""):
+    try:
+        dominio = urllib.parse.urlparse(
+            link
+        ).netloc.lower()
+
+        dominio = dominio.replace(
+            "www.",
+            "",
+        )
+
+        if dominio:
+            return dominio
+
+    except Exception:
+        pass
+
+    return source_title or "Fonte"
+
+
+def categoria_da_noticia(titulo, resumo):
+    texto = f"{titulo} {resumo}".lower()
+
+    regras = [
+        (
+            "Xbox",
+            [
+                "xbox",
+                "game pass",
+                "cloud gaming",
+                "series x",
+                "series s",
+                "microsoft",
+            ],
+        ),
+        (
+            "PlayStation",
+            [
+                "playstation",
+                "ps5",
+                "ps4",
+                "sony",
+                "state of play",
+            ],
+        ),
+        (
+            "Nintendo",
+            [
+                "nintendo",
+                "switch",
+                "zelda",
+                "mario",
+                "pokemon",
+            ],
+        ),
+        (
+            "Pc",
+            [
+                "pc",
+                "steam",
+                "epic games",
+                "nvidia",
+                "amd",
+                "windows",
+                "dlss",
+            ],
+        ),
+    ]
+
+    for categoria, palavras in regras:
+        if any(
+            palavra in texto
+            for palavra in palavras
+        ):
+            return categoria
+
+    return "Notícias"
+
+
+def extrair_nome_fonte_google_news(titulo):
+    partes = re.split(
+        r"\s+-\s+",
+        titulo,
+    )
+
+    if len(partes) >= 2:
+        return partes[-1].strip()
+
+    return ""
+
+
 # =========================================================
 # PRINCIPAL
 # =========================================================
@@ -558,15 +841,23 @@ def main():
     print("=" * 60)
 
     posts = carregar_posts()
-    print(f"[INFO] Notícias existentes: {len(posts)}")
+
+    print(
+        f"[INFO] Notícias existentes: {len(posts)}"
+    )
 
     agora = datetime.now(timezone.utc)
-    limite = agora - timedelta(hours=MAX_AGE_HOURS)
+
+    limite = agora - timedelta(
+        hours=MAX_AGE_HOURS
+    )
 
     noticias = []
 
     for feed in RSS_FEEDS:
-        print(f"[INFO] Lendo: {feed['nome']}")
+        print(
+            f"[INFO] Lendo: {feed['nome']}"
+        )
 
         for item in ler_feed(feed):
             data = item.get("data") or agora
@@ -574,25 +865,38 @@ def main():
             if data < limite:
                 continue
 
-            if noticia_ja_existe(item, posts):
+            if noticia_ja_existe(
+                item,
+                posts,
+            ):
                 continue
 
             noticias.append(item)
 
-    # Ordena das mais recentes para as mais antigas.
     noticias.sort(
-        key=lambda item: item.get("data") or agora,
+        key=lambda item: (
+            item.get("data") or agora
+        ),
         reverse=True,
     )
 
-    # Remove duplicadas entre os próprios feeds.
     selecionadas = []
+
     links_vistos = set()
     titulos_vistos = set()
 
     for item in noticias:
-        link = item.get("link", "").strip()
-        titulo = normalizar_texto(item.get("titulo", ""))
+        link = item.get(
+            "link",
+            "",
+        ).strip()
+
+        titulo = normalizar_texto(
+            item.get(
+                "titulo",
+                "",
+            )
+        )
 
         if link and link in links_vistos:
             continue
@@ -609,29 +913,58 @@ def main():
             break
 
     if not selecionadas:
-        print("[INFO] Nenhuma notícia nova encontrada.")
+        print(
+            "[INFO] Nenhuma notícia nova encontrada."
+        )
+
         print("=" * 60)
         return
 
     novos_posts = []
 
     for item in selecionadas:
-        post = criar_post(item, posts)
+        post = criar_post(
+            item,
+            posts,
+        )
+
         novos_posts.append(post)
 
-        print(f"[NOVO] {post['titulo']}")
-        print(f"       Categoria: {post['categoria']}")
-        print(f"       Data: {post['data']}")
-        print(f"       Link: {post['link']}")
+        print(
+            f"[NOVO] {post['titulo']}"
+        )
 
-    # Notícias novas ficam no topo do arquivo.
+        print(
+            f"       Categoria: {post['categoria']}"
+        )
+
+        print(
+            f"       Data: {post['data']}"
+        )
+
+        print(
+            f"       Imagem: "
+            f"{post['imagem'] or 'NÃO ENCONTRADA'}"
+        )
+
+        print(
+            f"       Link: {post['link']}"
+        )
+
     posts = novos_posts + posts
 
     salvar_posts(posts)
 
     print("-" * 60)
-    print(f"[OK] {len(novos_posts)} notícia(s) adicionada(s).")
-    print(f"[OK] Total no posts.json: {len(posts)}")
+
+    print(
+        f"[OK] {len(novos_posts)} notícia(s) adicionada(s)."
+    )
+
+    print(
+        f"[OK] Total no posts.json: {len(posts)}"
+    )
+
     print("=" * 60)
 
 
