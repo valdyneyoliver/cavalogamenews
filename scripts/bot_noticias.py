@@ -31,32 +31,21 @@ MAX_POSTS = 200
 
 FONTES = [
     {
-        "nome": "GameVicio",
-        "url": "https://www.gamevicio.com/rss",
+        "nome": "Xbox Power",
+        "url": "https://www.xboxpower.com.br/feed/",
         "categoria": "Notícias",
     },
     {
-        "nome": "Adrenaline",
-        "url": "https://www.adrenaline.com.br/feed",
+        "nome": "MeuPlayStation",
+        "url": "https://meups.com.br/feed/",
         "categoria": "Notícias",
     },
     {
-        "nome": "Canaltech",
-        "url": "https://canaltech.com.br/rss/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "Drops de Jogos",
-        "url": "https://dropsdejogos.uai.com.br/feed/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "Tecnoblog",
-        "url": "https://tecnoblog.net/feed/",
+        "nome": "Nintendo Blast",
+        "url": "https://www.nintendoblast.com.br/feeds/posts/default",
         "categoria": "Notícias",
     },
 ]
-
 
 # =========================================================
 # HTTP
