@@ -1,21 +1,7 @@
 {
-  "atualizado_em": "2026-09-04",
+  "atualizado_em": "2026-09-06",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 994600,
-      "nome": "Onimusha: Way Of The Sword",
-      "slug": "onimusha-way-of-the-sword",
-      "data": "2026-09-04",
-      "data_formatada": "04/09/2026",
-      "imagem": "https://media.rawg.io/media/games/48e/48ea2f7adb60615d658887899ffe4d1f.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/onimusha-way-of-the-sword"
-    },
     {
       "id": 1019655,
       "nome": "Magical Blush",
