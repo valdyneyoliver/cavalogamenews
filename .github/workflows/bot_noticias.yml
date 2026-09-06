@@ -1,0 +1,60 @@
+name: Bot automático de notícias
+
+on:
+  schedule:
+    # Executa a cada 3 horas.
+    - cron: "0 */3 * * *"
+
+  # Permite executar manualmente pelo GitHub.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publicar-noticias:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Executar bot de notícias
+        run: |
+          python scripts/bot_noticias.py
+
+      - name: Gerar páginas das notícias
+        run: |
+          python scripts/gerar_noticias.py
+
+      - name: Verificar alterações
+        id: verificar
+        run: |
+          if git status --porcelain | grep -q .; then
+            echo "alterou=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "alterou=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Salvar e publicar alterações
+        if: steps.verificar.outputs.alterou == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add posts.json
+          git add noticias
+          git add sitemap.xml
+
+          git commit -m "Bot: publicar notícias automaticamente"
+          git push
+
+      - name: Nenhuma notícia nova
+        if: steps.verificar.outputs.alterou == 'false'
+        run: |
+          echo "Nenhuma notícia nova para publicar."
