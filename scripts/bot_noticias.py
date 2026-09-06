@@ -40,21 +40,6 @@ FONTES = [
         "url": "https://www.adrenaline.com.br/feed",
         "categoria": "Notícias",
     },
-    {
-        "nome": "Canaltech",
-        "url": "https://canaltech.com.br/rss/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "Drops de Jogos",
-        "url": "https://dropsdejogos.uai.com.br/feed/",
-        "categoria": "Notícias",
-    },
-    {
-        "nome": "Tecnoblog",
-        "url": "https://tecnoblog.net/feed/",
-        "categoria": "Notícias",
-    },
 ]
 
 
