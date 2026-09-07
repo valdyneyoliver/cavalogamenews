@@ -1,0 +1,42 @@
+name: Bot Jogos Grátis
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  jogos-gratis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Executar bot de jogos grátis
+        run: |
+          python scripts/bot_jogos_gratis.py
+
+      - name: Gerar páginas das notícias
+        run: |
+          python scripts/gerar_noticias.py
+
+      - name: Salvar alterações
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add posts.json noticias sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração encontrada."
+          else
+            git commit -m "Adicionar jogos grátis"
+            git push
+          fi
