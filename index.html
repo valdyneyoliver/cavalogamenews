@@ -69,7 +69,7 @@
     header {
       background: rgba(5, 7, 6, 0.96);
       border-bottom: 1px solid #1c2b22;
-      padding: 18px 30px;
+      padding: 12px 25px;
       position: relative;
       z-index: 10;
     }
@@ -79,11 +79,11 @@
       margin: auto;
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 25px;
     }
 
     .logo {
-      height: 58px;
+      height: 42px;
       width: auto;
       display: block;
       flex-shrink: 0;
@@ -92,7 +92,7 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
       flex-wrap: wrap;
       flex: 1;
     }
@@ -101,8 +101,10 @@
       color: #eee;
       text-decoration: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
+      text-transform: uppercase;
       transition: 0.2s;
+      white-space: nowrap;
     }
 
     nav a:hover {
@@ -111,16 +113,42 @@
 
 
     /* =====================================================
-       BUSCA
+       BUSCA DO CABEÇALHO
     ===================================================== */
 
     .search-box {
-      width: 230px;
+      width: 38px;
+      height: 38px;
       flex-shrink: 0;
+      position: relative;
+    }
+
+    .search-button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid #303630;
+      border-radius: 50%;
+      background: #0d100e;
+      color: #fff;
+      cursor: pointer;
+      font-size: 17px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.25s;
+    }
+
+    .search-button:hover {
+      color: #00ff88;
+      border-color: #00ff88;
+      box-shadow: 0 0 10px rgba(0,255,136,0.20);
     }
 
     .search-box input {
-      width: 100%;
+      position: absolute;
+      top: 48px;
+      left: 0;
+      width: 230px;
       padding: 12px 17px;
       background: #0d100e;
       color: #fff;
@@ -128,7 +156,17 @@
       border-radius: 25px;
       font-size: 14px;
       outline: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-5px);
       transition: 0.25s;
+      z-index: 50;
+    }
+
+    .search-box.open input {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     .search-box input:focus {
@@ -1059,7 +1097,7 @@
     @media (max-width: 900px) {
 
       header {
-        padding: 15px 18px;
+        padding: 12px 18px;
       }
 
 
@@ -1082,10 +1120,14 @@
 
 
       .search-box {
+        width: 38px;
+        height: 38px;
+      }
 
-        width: 100%;
 
-        max-width: 100%;
+      .search-box input {
+        left: 0;
+        width: 230px;
       }
 
 
@@ -1155,7 +1197,24 @@
 
       nav a {
 
-        font-size: 13px;
+        font-size: 12px;
+      }
+
+
+      .search-button {
+        width: 36px;
+        height: 36px;
+      }
+
+
+      .search-box {
+        width: 36px;
+        height: 36px;
+      }
+
+
+      .search-box input {
+        width: 210px;
       }
 
 
@@ -1293,21 +1352,25 @@
     <img
       src="img/logo.png"
       alt="CavaloGameNews"
-      style="
-        height:40px;
-        width:auto;
-        display:block;
-      "
+      class="logo"
     >
 
     <nav>
 
       <div class="search-box">
 
+        <button
+          class="search-button"
+          onclick="alternarBusca()"
+          aria-label="Pesquisar"
+        >
+          🔍
+        </button>
+
         <input
           type="text"
           id="searchInput"
-          placeholder="🔎 Buscar notícia..."
+          placeholder="Buscar notícia..."
           onkeyup="buscarNoticias()"
         >
 
@@ -1318,7 +1381,7 @@
         href="#"
         onclick="filtrarNoticias('todos'); return false;"
       >
-        🏠 Início
+        INÍCIO
       </a>
 
 
@@ -1326,7 +1389,7 @@
         href="#"
         onclick="filtrarNoticias('Notícias'); return false;"
       >
-        📰 Notícias
+        NOTÍCIAS
       </a>
 
 
@@ -1334,7 +1397,7 @@
         href="#"
         onclick="filtrarNoticias('Xbox'); return false;"
       >
-        🎮 Xbox
+        XBOX
       </a>
 
 
@@ -1342,7 +1405,7 @@
         href="#"
         onclick="filtrarNoticias('PlayStation'); return false;"
       >
-        🎮 PlayStation
+        PLAYSTATION
       </a>
 
 
@@ -1350,7 +1413,7 @@
         href="#"
         onclick="filtrarNoticias('PC'); return false;"
       >
-        🖥️ PC
+        PC
       </a>
 
 
@@ -1358,20 +1421,23 @@
         href="#"
         onclick="filtrarNoticias('Nintendo'); return false;"
       >
-        🎮 Nintendo
+        NINTENDO
       </a>
 
+
       <a
-         href="#"
+        href="#"
         onclick="filtrarNoticias('Jogos Grátis'); return false;"
-     >
-        🎁 Jogos Grátis
+      >
+        🎁 JOGOS GRÁTIS
       </a>
+
+
       <a
         href="#doacao"
         style="color:#00ff88;"
       >
-        💚 Apoie
+        💚 APOIE
       </a>
 
     </nav>
@@ -2551,6 +2617,27 @@ function filtrarNoticias(categoria) {
       `;
 
     });
+
+}
+
+
+/* =====================================================
+   ABRIR / FECHAR BUSCA
+===================================================== */
+
+function alternarBusca() {
+
+  const caixa =
+    document.querySelector(".search-box");
+
+  const input =
+    document.getElementById("searchInput");
+
+  caixa.classList.toggle("open");
+
+  if (caixa.classList.contains("open")) {
+    input.focus();
+  }
 
 }
 
