@@ -11,7 +11,7 @@ from urllib.request import Request, urlopen
 
 POSTS_FILE = "posts.json"
 
-MAX_OFERTAS = 10
+MAX_OFERTAS_POR_LOJA = 10
 MAX_POSTS = 200
 
 HEADERS = {
@@ -38,6 +38,23 @@ EPIC_API = (
 
 
 # =========================================================
+# API DA GOG
+# =========================================================
+
+GOG_API = (
+    "https://catalog.gog.com/v1/catalog"
+    "?limit=48"
+    "&price=between%3A0%2C0"
+    "&order=desc%3Atrending"
+    "&productType=in%3Agame"
+    "&page=1"
+    "&countryCode=BR"
+    "&locale=pt-BR"
+    "&currencyCode=BRL"
+)
+
+
+# =========================================================
 # BAIXAR JSON
 # =========================================================
 
@@ -60,13 +77,15 @@ def baixar_json(url):
 
     except Exception as erro:
 
-        print(f"Erro ao acessar API: {erro}")
+        print(
+            f"Erro ao acessar API: {erro}"
+        )
 
         return None
 
 
 # =========================================================
-# LIMPAR TEXTO
+# LIMPAR HTML
 # =========================================================
 
 def limpar_html(texto):
@@ -74,7 +93,9 @@ def limpar_html(texto):
     if not texto:
         return ""
 
-    texto = html.unescape(texto)
+    texto = html.unescape(
+        str(texto)
+    )
 
     texto = re.sub(
         r"<[^>]+>",
@@ -115,20 +136,30 @@ def criar_id(titulo):
 
 
 # =========================================================
-# ENCONTRAR IMAGEM
+# =========================================================
+# EPIC GAMES
+# =========================================================
 # =========================================================
 
-def encontrar_imagem(item):
+
+# =========================================================
+# ENCONTRAR IMAGEM DA EPIC
+# =========================================================
+
+def encontrar_imagem_epic(item):
 
     imagens = item.get(
         "keyImages",
         []
     )
 
-    if not isinstance(imagens, list):
+    if not isinstance(
+        imagens,
+        list
+    ):
         return ""
 
-    # Tenta primeiro imagens maiores
+    # Primeiro tenta imagens maiores
     for imagem in imagens:
 
         url = imagem.get(
@@ -148,9 +179,10 @@ def encontrar_imagem(item):
             "thumbnail" not in tipo
             and "logo" not in tipo
         ):
+
             return url
 
-    # Se não encontrar, usa qualquer imagem
+    # Segunda tentativa
     for imagem in imagens:
 
         url = imagem.get(
@@ -165,16 +197,16 @@ def encontrar_imagem(item):
 
 
 # =========================================================
-# ENCONTRAR URL DIRETA DO JOGO
+# ENCONTRAR LINK DIRETO DA EPIC
 # =========================================================
 
-def encontrar_link(item):
+def encontrar_link_epic(item):
 
     # -----------------------------------------------------
-    # 1. Tenta campos que podem conter a URL diretamente
+    # 1. Campos que podem possuir URL direta
     # -----------------------------------------------------
 
-    possiveis_campos = [
+    campos = [
         "url",
         "storeUrl",
         "productUrl",
@@ -182,7 +214,7 @@ def encontrar_link(item):
         "link",
     ]
 
-    for campo in possiveis_campos:
+    for campo in campos:
 
         valor = item.get(
             campo,
@@ -198,7 +230,7 @@ def encontrar_link(item):
             return valor
 
     # -----------------------------------------------------
-    # 2. Verifica mappings
+    # 2. catalogNs / mappings
     # -----------------------------------------------------
 
     catalog_ns = item.get(
@@ -211,91 +243,17 @@ def encontrar_link(item):
         []
     )
 
-    if isinstance(mappings, list):
+    if isinstance(
+        mappings,
+        list
+    ):
 
         for mapping in mappings:
 
-            if not isinstance(mapping, dict):
-                continue
-
-            # Alguns produtos possuem pageSlug
-            page_slug = mapping.get(
-                "pageSlug"
-            )
-
-            if page_slug:
-
-                return (
-                    "https://store.epicgames.com/"
-                    f"p/{page_slug}"
-                )
-
-            # Outros podem possuir pageType
-            page_type = mapping.get(
-                "pageType"
-            )
-
-            if page_type:
-
-                page_slug = mapping.get(
-                    "pageSlug",
-                    ""
-                )
-
-                if page_slug:
-
-                    return (
-                        "https://store.epicgames.com/"
-                        f"p/{page_slug}"
-                    )
-
-    # -----------------------------------------------------
-    # 3. Tenta productSlug
-    # -----------------------------------------------------
-
-    slug = item.get(
-        "productSlug",
-        ""
-    )
-
-    if slug:
-
-        return (
-            "https://store.epicgames.com/"
-            f"p/{slug}"
-        )
-
-    # -----------------------------------------------------
-    # 4. Tenta urlSlug
-    # -----------------------------------------------------
-
-    slug = item.get(
-        "urlSlug",
-        ""
-    )
-
-    if slug:
-
-        return (
-            "https://store.epicgames.com/"
-            f"p/{slug}"
-        )
-
-    # -----------------------------------------------------
-    # 5. Última tentativa: catalogNs
-    # -----------------------------------------------------
-
-    mappings = (
-        item
-        .get("catalogNs", {})
-        .get("mappings", [])
-    )
-
-    if isinstance(mappings, list):
-
-        for mapping in mappings:
-
-            if not isinstance(mapping, dict):
+            if not isinstance(
+                mapping,
+                dict
+            ):
                 continue
 
             slug = (
@@ -311,18 +269,46 @@ def encontrar_link(item):
                     f"p/{slug}"
                 )
 
+    # -----------------------------------------------------
+    # 3. productSlug
+    # -----------------------------------------------------
+
+    slug = item.get(
+        "productSlug",
+        ""
+    )
+
+    if slug:
+
+        return (
+            "https://store.epicgames.com/"
+            f"p/{slug}"
+        )
+
+    # -----------------------------------------------------
+    # 4. urlSlug
+    # -----------------------------------------------------
+
+    slug = item.get(
+        "urlSlug",
+        ""
+    )
+
+    if slug:
+
+        return (
+            "https://store.epicgames.com/"
+            f"p/{slug}"
+        )
+
     return ""
 
 
 # =========================================================
-# VERIFICAR SE ESTÁ GRÁTIS
+# VERIFICAR SE EPIC ESTÁ GRÁTIS
 # =========================================================
 
-def jogo_esta_gratis(item):
-
-    # -----------------------------------------------------
-    # Promoções
-    # -----------------------------------------------------
+def epic_esta_gratis(item):
 
     promotions = item.get(
         "promotions"
@@ -333,11 +319,17 @@ def jogo_esta_gratis(item):
         []
     )
 
-    if isinstance(grupos, list):
+    if isinstance(
+        grupos,
+        list
+    ):
 
         for grupo in grupos:
 
-            if not isinstance(grupo, dict):
+            if not isinstance(
+                grupo,
+                dict
+            ):
                 continue
 
             ofertas = grupo.get(
@@ -345,18 +337,29 @@ def jogo_esta_gratis(item):
                 []
             )
 
-            if not isinstance(ofertas, list):
+            if not isinstance(
+                ofertas,
+                list
+            ):
                 continue
 
             for oferta in ofertas:
 
-                if not isinstance(oferta, dict):
+                if not isinstance(
+                    oferta,
+                    dict
+                ):
                     continue
 
                 desconto = (
                     oferta
-                    .get("discountSetting", {})
-                    .get("discountPercentage")
+                    .get(
+                        "discountSetting",
+                        {}
+                    )
+                    .get(
+                        "discountPercentage"
+                    )
                 )
 
                 if desconto == 0:
@@ -364,16 +367,25 @@ def jogo_esta_gratis(item):
                     return True
 
     # -----------------------------------------------------
-    # Preço
+    # Verificação pelo preço
     # -----------------------------------------------------
 
     preco = (
         item
-        .get("price", {})
-        .get("totalPrice", {})
+        .get(
+            "price",
+            {}
+        )
+        .get(
+            "totalPrice",
+            {}
+        )
     )
 
-    if isinstance(preco, dict):
+    if isinstance(
+        preco,
+        dict
+    ):
 
         preco_final = preco.get(
             "discountPrice"
@@ -387,14 +399,15 @@ def jogo_esta_gratis(item):
 
 
 # =========================================================
-# BUSCAR EPIC GAMES
+# BUSCAR JOGOS GRÁTIS DA EPIC
 # =========================================================
 
 def buscar_epic():
 
-    print(
-        "Consultando Epic Games..."
-    )
+    print()
+    print("=" * 60)
+    print("CONSULTANDO EPIC GAMES")
+    print("=" * 60)
 
     dados = baixar_json(
         EPIC_API
@@ -423,7 +436,8 @@ def buscar_epic():
         elementos = []
 
     print(
-        f"Epic encontrou {len(elementos)} produto(s) para analisar."
+        f"Epic encontrou "
+        f"{len(elementos)} produto(s) para analisar."
     )
 
     encontrados = []
@@ -432,21 +446,20 @@ def buscar_epic():
 
         try:
 
-            if not isinstance(item, dict):
+            if not isinstance(
+                item,
+                dict
+            ):
                 continue
 
             # -------------------------------------------------
             # TÍTULO
             # -------------------------------------------------
 
-            titulo = (
+            titulo = limpar_html(
                 item.get("title")
                 or item.get("productName")
                 or ""
-            )
-
-            titulo = limpar_html(
-                titulo
             )
 
             if not titulo:
@@ -456,21 +469,23 @@ def buscar_epic():
             # VERIFICAR GRATUITO
             # -------------------------------------------------
 
-            if not jogo_esta_gratis(item):
+            if not epic_esta_gratis(
+                item
+            ):
                 continue
 
             # -------------------------------------------------
             # LINK
             # -------------------------------------------------
 
-            link = encontrar_link(
+            link = encontrar_link_epic(
                 item
             )
 
             if not link:
 
                 print(
-                    f"Não foi possível encontrar o link de: {titulo}"
+                    f"Link não encontrado: {titulo}"
                 )
 
                 continue
@@ -479,21 +494,22 @@ def buscar_epic():
             # IMAGEM
             # -------------------------------------------------
 
-            imagem = encontrar_imagem(
+            imagem = encontrar_imagem_epic(
                 item
             )
 
             # -------------------------------------------------
-            # RESUMO EM PORTUGUÊS
+            # RESUMO
             # -------------------------------------------------
 
             resumo = (
-                f"{titulo} está disponível gratuitamente "
-                "por tempo limitado na Epic Games."
+                f"{titulo} está disponível "
+                "gratuitamente por tempo limitado "
+                "na Epic Games."
             )
 
             # -------------------------------------------------
-            # CONTEÚDO EM PORTUGUÊS
+            # CONTEÚDO
             # -------------------------------------------------
 
             conteudo = [
@@ -534,34 +550,340 @@ def buscar_epic():
 
                 "resumo": resumo,
 
-                "link_jogo": link,
+                "link": link,
+
+                "loja": "Epic Games",
 
                 "conteudo": conteudo,
 
             })
 
             print(
-                f"Jogo grátis encontrado: {titulo}"
+                f"Epic Games: {titulo}"
             )
 
             print(
                 f"Link: {link}"
             )
 
-            if len(encontrados) >= MAX_OFERTAS:
+            if (
+                len(encontrados)
+                >= MAX_OFERTAS_POR_LOJA
+            ):
                 break
 
         except Exception as erro:
 
             print(
-                f"Erro ao processar jogo: {erro}"
+                f"Erro ao processar Epic: {erro}"
             )
 
     print(
-        f"Epic Games: {len(encontrados)} jogo(s) grátis encontrado(s)."
+        f"Epic Games encontrou "
+        f"{len(encontrados)} jogo(s) grátis."
     )
 
     return encontrados
+
+
+# =========================================================
+# =========================================================
+# GOG
+# =========================================================
+# =========================================================
+
+
+# =========================================================
+# ENCONTRAR IMAGEM DA GOG
+# =========================================================
+
+def encontrar_imagem_gog(item):
+
+    # -----------------------------------------------------
+    # Campos diretos
+    # -----------------------------------------------------
+
+    campos = [
+        "image",
+        "coverHorizontal",
+        "coverVertical",
+        "backgroundImage",
+    ]
+
+    for campo in campos:
+
+        valor = item.get(
+            campo,
+            ""
+        )
+
+        if (
+            isinstance(valor, str)
+            and valor.startswith("http")
+        ):
+
+            return valor
+
+    # -----------------------------------------------------
+    # Campo images
+    # -----------------------------------------------------
+
+    imagens = item.get(
+        "images",
+        {}
+    )
+
+    if isinstance(
+        imagens,
+        dict
+    ):
+
+        for valor in imagens.values():
+
+            if (
+                isinstance(valor, str)
+                and valor.startswith("http")
+            ):
+
+                return valor
+
+    return ""
+
+
+# =========================================================
+# ENCONTRAR LINK DA GOG
+# =========================================================
+
+def encontrar_link_gog(item):
+
+    # -----------------------------------------------------
+    # Campos que podem ter URL
+    # -----------------------------------------------------
+
+    campos = [
+        "url",
+        "productUrl",
+        "link",
+    ]
+
+    for campo in campos:
+
+        valor = item.get(
+            campo,
+            ""
+        )
+
+        if (
+            isinstance(valor, str)
+            and "gog.com" in valor
+        ):
+
+            return valor
+
+    # -----------------------------------------------------
+    # Slug
+    # -----------------------------------------------------
+
+    slug = (
+        item.get("slug")
+        or item.get("productSlug")
+        or ""
+    )
+
+    if slug:
+
+        return (
+            "https://www.gog.com/en/game/"
+            f"{slug}"
+        )
+
+    return ""
+
+
+# =========================================================
+# BUSCAR JOGOS GRÁTIS DA GOG
+# =========================================================
+
+def buscar_gog():
+
+    print()
+    print("=" * 60)
+    print("CONSULTANDO GOG")
+    print("=" * 60)
+
+    dados = baixar_json(
+        GOG_API
+    )
+
+    if not dados:
+
+        print(
+            "Não foi possível acessar a GOG."
+        )
+
+        return []
+
+    produtos = (
+        dados.get("products")
+        or dados.get("items")
+        or dados.get("results")
+        or []
+    )
+
+    if not isinstance(
+        produtos,
+        list
+    ):
+
+        print(
+            "Formato da resposta da GOG "
+            "não reconhecido."
+        )
+
+        return []
+
+    print(
+        f"GOG encontrou "
+        f"{len(produtos)} produto(s) para analisar."
+    )
+
+    encontrados = []
+
+    for item in produtos:
+
+        try:
+
+            if not isinstance(
+                item,
+                dict
+            ):
+                continue
+
+            # -------------------------------------------------
+            # TÍTULO
+            # -------------------------------------------------
+
+            titulo = limpar_html(
+                item.get("title")
+                or item.get("name")
+                or ""
+            )
+
+            if not titulo:
+                continue
+
+            # -------------------------------------------------
+            # LINK
+            # -------------------------------------------------
+
+            link = encontrar_link_gog(
+                item
+            )
+
+            if not link:
+                continue
+
+            # -------------------------------------------------
+            # IMAGEM
+            # -------------------------------------------------
+
+            imagem = encontrar_imagem_gog(
+                item
+            )
+
+            # -------------------------------------------------
+            # RESUMO
+            # -------------------------------------------------
+
+            resumo = (
+                f"{titulo} está disponível "
+                "gratuitamente na GOG."
+            )
+
+            # -------------------------------------------------
+            # CONTEÚDO
+            # -------------------------------------------------
+
+            conteudo = [
+
+                (
+                    f"O jogo {titulo} está disponível "
+                    "gratuitamente na GOG."
+                ),
+
+                (
+                    "A GOG disponibiliza o jogo "
+                    "gratuitamente durante a promoção."
+                ),
+
+                (
+                    "Depois de resgatar o jogo, "
+                    "ele ficará vinculado à sua conta "
+                    "da GOG."
+                ),
+
+                (
+                    "A oferta pode mudar com o tempo, "
+                    "por isso é recomendado conferir "
+                    "a página oficial."
+                ),
+
+                (
+                    f"Para conferir {titulo}, "
+                    f"acesse: {link}"
+                ),
+
+            ]
+
+            encontrados.append({
+
+                "titulo": titulo,
+
+                "imagem": imagem,
+
+                "resumo": resumo,
+
+                "link": link,
+
+                "loja": "GOG",
+
+                "conteudo": conteudo,
+
+            })
+
+            print(
+                f"GOG: {titulo}"
+            )
+
+            print(
+                f"Link: {link}"
+            )
+
+            if (
+                len(encontrados)
+                >= MAX_OFERTAS_POR_LOJA
+            ):
+                break
+
+        except Exception as erro:
+
+            print(
+                f"Erro ao processar GOG: {erro}"
+            )
+
+    print(
+        f"GOG encontrou "
+        f"{len(encontrados)} jogo(s) grátis."
+    )
+
+    return encontrados
+
+
+# =========================================================
+# =========================================================
+# POSTS
+# =========================================================
+# =========================================================
 
 
 # =========================================================
@@ -582,7 +904,10 @@ def carregar_posts():
                 arquivo
             )
 
-        if isinstance(dados, list):
+        if isinstance(
+            dados,
+            list
+        ):
 
             return dados
 
@@ -618,66 +943,32 @@ def salvar_posts(posts):
 
 
 # =========================================================
-# ADICIONAR NOTÍCIAS
+# VERIFICAR DUPLICADO
 # =========================================================
 
-def adicionar_noticias():
+def ja_existe(posts, titulo):
 
-    posts = carregar_posts()
-
-    ids_existentes = {
-        str(post.get("id", ""))
-        for post in posts
-    }
-
-    ofertas = buscar_epic()
-
-    if not ofertas:
-
-        print(
-            "Nenhum jogo grátis encontrado."
-        )
-
-        return
-
-    novas = []
-
-    data_atual = datetime.now().strftime(
-        "%d/%m/%Y"
+    titulo_normalizado = (
+        titulo
+        .lower()
+        .strip()
     )
 
-    for oferta in ofertas:
+    finais = [
 
-        titulo = oferta["titulo"]
+        " está grátis por tempo limitado",
 
-        post_id = criar_id(
-            titulo
-        )
+        " está disponível gratuitamente",
 
-        # -------------------------------------------------
-        # VERIFICAR DUPLICADO PELO ID
-        # -------------------------------------------------
+        " está grátis na gog",
 
-        if post_id in ids_existentes:
+        " está grátis na steam",
 
-            print(
-                f"Já existe no site: {titulo}"
-            )
+    ]
 
-            continue
+    for post in posts:
 
-        # -------------------------------------------------
-        # VERIFICAR DUPLICADO PELO TÍTULO
-        # -------------------------------------------------
-
-        titulo_normalizado = (
-            titulo
-            .lower()
-            .strip()
-        )
-
-        existe_titulo = any(
-
+        titulo_post = (
             str(
                 post.get(
                     "titulo",
@@ -686,23 +977,158 @@ def adicionar_noticias():
             )
             .lower()
             .strip()
-            .replace(
-                " está grátis por tempo limitado",
-                ""
-            )
-            == titulo_normalizado
-
-            for post in posts
-
         )
 
-        if existe_titulo:
+        for final in finais:
+
+            titulo_post = titulo_post.replace(
+                final,
+                ""
+            )
+
+        if (
+            titulo_post
+            == titulo_normalizado
+        ):
+
+            return True
+
+    return False
+
+
+# =========================================================
+# ADICIONAR NOTÍCIAS
+# =========================================================
+
+def adicionar_noticias():
+
+    posts = carregar_posts()
+
+    ids_existentes = {
+
+        str(
+            post.get(
+                "id",
+                ""
+            )
+        )
+
+        for post in posts
+
+    }
+
+    # -----------------------------------------------------
+    # BUSCAR EPIC
+    # -----------------------------------------------------
+
+    epic = buscar_epic()
+
+    # -----------------------------------------------------
+    # BUSCAR GOG
+    # -----------------------------------------------------
+
+    gog = buscar_gog()
+
+    # -----------------------------------------------------
+    # JUNTAR RESULTADOS
+    # -----------------------------------------------------
+
+    ofertas = []
+
+    ofertas.extend(
+        epic
+    )
+
+    ofertas.extend(
+        gog
+    )
+
+    # -----------------------------------------------------
+    # NENHUMA OFERTA
+    # -----------------------------------------------------
+
+    if not ofertas:
+
+        print()
+        print(
+            "Nenhum jogo grátis encontrado."
+        )
+
+        return
+
+    print()
+    print(
+        f"Total encontrado: {len(ofertas)}"
+    )
+
+    novas = []
+
+    data_atual = datetime.now().strftime(
+        "%d/%m/%Y"
+    )
+
+    # -----------------------------------------------------
+    # PROCESSAR OFERTAS
+    # -----------------------------------------------------
+
+    for oferta in ofertas:
+
+        titulo = oferta["titulo"]
+
+        loja = oferta["loja"]
+
+        # -------------------------------------------------
+        # CRIAR ID
+        # -------------------------------------------------
+
+        post_id = criar_id(
+            f"{titulo}-{loja}"
+        )
+
+        # -------------------------------------------------
+        # DUPLICADO POR ID
+        # -------------------------------------------------
+
+        if post_id in ids_existentes:
 
             print(
-                f"Já existe no site: {titulo}"
+                f"Já existe: "
+                f"{titulo} ({loja})"
             )
 
             continue
+
+        # -------------------------------------------------
+        # DUPLICADO POR TÍTULO
+        # -------------------------------------------------
+
+        if ja_existe(
+            posts,
+            titulo
+        ):
+
+            print(
+                f"Já existe: "
+                f"{titulo} ({loja})"
+            )
+
+            continue
+
+        # -------------------------------------------------
+        # TÍTULO DA NOTÍCIA
+        # -------------------------------------------------
+
+        if loja == "Epic Games":
+
+            titulo_final = (
+                f"{titulo} está grátis por tempo limitado"
+            )
+
+        else:
+
+            titulo_final = (
+                f"{titulo} está grátis na GOG"
+            )
 
         # -------------------------------------------------
         # CRIAR POST
@@ -712,9 +1138,7 @@ def adicionar_noticias():
 
             "id": post_id,
 
-            "titulo": (
-                f"{titulo} está grátis por tempo limitado"
-            ),
+            "titulo": titulo_final,
 
             "categoria": "Jogos Grátis",
 
@@ -736,32 +1160,49 @@ def adicionar_noticias():
             post
         )
 
+        print()
         print(
-            f"Nova notícia adicionada: {titulo}"
+            f"Nova notícia adicionada: "
+            f"{titulo_final}"
         )
 
     # -----------------------------------------------------
-    # SALVAR
+    # NENHUMA NOTÍCIA NOVA
     # -----------------------------------------------------
 
     if not novas:
 
+        print()
         print(
             "Nenhuma notícia nova para adicionar."
         )
 
         return
 
+    # -----------------------------------------------------
+    # COLOCAR NOVAS PRIMEIRO
+    # -----------------------------------------------------
+
     posts = novas + posts
 
+    # -----------------------------------------------------
+    # LIMITAR POSTS
+    # -----------------------------------------------------
+
     posts = posts[:MAX_POSTS]
+
+    # -----------------------------------------------------
+    # SALVAR
+    # -----------------------------------------------------
 
     salvar_posts(
         posts
     )
 
+    print()
     print(
-        f"{len(novas)} nova(s) notícia(s) adicionada(s)."
+        f"{len(novas)} nova(s) "
+        "notícia(s) adicionada(s)."
     )
 
 
@@ -774,7 +1215,15 @@ if __name__ == "__main__":
     print("=" * 60)
 
     print(
-        "BOT DE JOGOS GRÁTIS - CAVALOGAMENEWS"
+        "BOT DE JOGOS GRÁTIS"
+    )
+
+    print(
+        "CAVALOGAMENEWS"
+    )
+
+    print(
+        "EPIC GAMES + GOG"
     )
 
     print("=" * 60)
