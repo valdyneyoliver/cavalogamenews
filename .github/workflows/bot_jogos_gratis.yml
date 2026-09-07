@@ -1,8 +1,9 @@
 name: Bot Jogos Grátis
 
 on:
+  schedule:
+    - cron: "0 16 * * *"
   workflow_dispatch:
-
 permissions:
   contents: write
 
