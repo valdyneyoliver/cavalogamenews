@@ -75,11 +75,11 @@
     }
 
     .header-inner {
-      max-width: 1450px;
+      max-width: 1500px;
       margin: auto;
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 20px;
     }
 
     .logo {
@@ -92,20 +92,42 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 7px;
+      flex-wrap: nowrap;
       flex: 1;
+      min-width: 0;
     }
 
     nav a {
-      color: #eee;
+      color: #e9eee9;
       text-decoration: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
+      white-space: nowrap;
+      padding: 9px 8px;
+      border-radius: 8px;
       transition: 0.2s;
     }
 
     nav a:hover {
+      color: #00ff88;
+      background: rgba(0,255,136,0.07);
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid #303a33;
+      background: #0d120f;
+      color: #fff;
+      border-radius: 9px;
+      padding: 9px 12px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .menu-toggle:hover {
+      border-color: #00ff88;
       color: #00ff88;
     }
 
@@ -115,13 +137,13 @@
     ===================================================== */
 
     .search-box {
-      width: 230px;
+      width: 205px;
       flex-shrink: 0;
     }
 
     .search-box input {
       width: 100%;
-      padding: 12px 17px;
+      padding: 10px 15px;
       background: #0d100e;
       color: #fff;
       border: 1px solid #303630;
@@ -146,13 +168,13 @@
     ===================================================== */
 
     .hero {
-      min-height: 150px;
+      min-height: 135px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 45px 20px;
+      padding: 34px 20px;
 
       background:
         linear-gradient(
@@ -166,9 +188,10 @@
     }
 
     .hero h2 {
-      font-size: 34px;
-      margin-bottom: 12px;
-      max-width: 900px;
+      font-size: 32px;
+      margin-bottom: 10px;
+      max-width: 950px;
+      line-height: 1.15;
     }
 
     .hero p {
@@ -384,7 +407,7 @@
 
       width: 285px;
 
-      height: 185px;
+      height: 175px;
 
       flex-shrink: 0;
 
@@ -480,7 +503,7 @@
 
       right: 9px;
 
-      bottom: 145px;
+      bottom: 135px;
 
       z-index: 2;
 
@@ -730,7 +753,7 @@
 
       position: relative;
 
-      height: 440px;
+      height: 380px;
 
       border-radius: 16px;
 
@@ -764,7 +787,7 @@
 
       inset: auto 0 0 0;
 
-      padding: 38px;
+      padding: 30px;
 
       background:
         linear-gradient(
@@ -1053,6 +1076,30 @@
 
 
     /* =====================================================
+       TABLET / TELAS MENORES
+    ===================================================== */
+
+    @media (max-width: 1180px) {
+      .header-inner {
+        gap: 12px;
+      }
+
+      nav {
+        gap: 3px;
+      }
+
+      nav a {
+        font-size: 12px;
+        padding: 8px 6px;
+      }
+
+      .search-box {
+        width: 180px;
+      }
+    }
+
+
+    /* =====================================================
        CELULAR
     ===================================================== */
 
@@ -1291,16 +1338,21 @@
   <div class="header-inner">
 
     <img
+      class="logo"
       src="img/logo.png"
       alt="CavaloGameNews"
-      style="
-        height:40px;
-        width:auto;
-        display:block;
-      "
     >
 
-    <nav>
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Abrir menu"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav id="mainNav">
 
       <div class="search-box">
 
