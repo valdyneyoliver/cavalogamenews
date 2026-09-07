@@ -1,9 +1,9 @@
 import json
 import re
 import html
-from datetime import datetime, timezone
+from datetime import datetime
 from urllib.request import Request, urlopen
-import xml.etree.ElementTree as ET
+from urllib.parse import quote
 
 
 # =========================================================
@@ -20,33 +20,12 @@ HEADERS = {
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 Chrome/150 Safari/537.36"
     ),
-    "Accept": (
-        "application/rss+xml, application/xml, "
-        "text/xml, text/html;q=0.9,*/*;q=0.8"
-    ),
+    "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
 }
 
 
 # =========================================================
-# FONTES
-# =========================================================
-
-FONTES = [
-    {
-        "nome": "Epic Games",
-        "url": "https://store.epicgames.com/en-US/feeds/free-games",
-        "categoria": "Jogos Grátis",
-    },
-    {
-        "nome": "GOG",
-        "url": "https://www.gog.com/games?priceRange=0,0&order=desc:date",
-        "categoria": "Jogos Grátis",
-    },
-]
-
-
-# =========================================================
-# BAIXAR CONTEÚDO
+# BAIXAR
 # =========================================================
 
 def baixar(url):
@@ -60,7 +39,7 @@ def baixar(url):
 
         with urlopen(
             req,
-            timeout=20
+            timeout=30
         ) as resposta:
 
             return resposta.read()
@@ -68,32 +47,44 @@ def baixar(url):
     except Exception as e:
 
         print(
-            f"Erro ao acessar {url}: {e}"
+            f"Erro ao acessar:\n{url}\n{e}"
         )
 
         return b""
+
+
+def baixar_json(url):
+
+    dados = baixar(url)
+
+    if not dados:
+        return None
+
+    try:
+
+        return json.loads(
+            dados.decode(
+                "utf-8"
+            )
+        )
+
+    except Exception as e:
+
+        print(
+            f"Erro ao interpretar JSON: {e}"
+        )
+
+        return None
 
 
 # =========================================================
 # TEXTO
 # =========================================================
 
-def texto_elemento(elemento):
-
-    partes = []
-
-    for texto in elemento.itertext():
-
-        if texto:
-            partes.append(texto)
-
-    return " ".join(partes).strip()
-
-
-def normalizar_texto(texto):
+def limpar_texto(texto):
 
     texto = html.unescape(
-        texto or ""
+        str(texto or "")
     )
 
     texto = re.sub(
@@ -117,7 +108,7 @@ def normalizar_texto(texto):
 
 def slug(texto):
 
-    texto = normalizar_texto(
+    texto = limpar_texto(
         texto
     ).lower()
 
@@ -149,12 +140,10 @@ def slug(texto):
         texto
     )
 
-    texto = texto.strip("-")
-
-    return texto[:100]
+    return texto.strip("-")[:100]
 
 
-def id_unico(titulo):
+def criar_id(titulo):
 
     data = datetime.now().strftime(
         "%Y%m%d"
@@ -189,7 +178,7 @@ def carregar_posts():
         ):
 
             raise ValueError(
-                "posts.json precisa conter uma lista."
+                "posts.json precisa ser uma lista."
             )
 
         return posts
@@ -205,7 +194,7 @@ def carregar_posts():
     except Exception as e:
 
         print(
-            f"Erro ao ler posts.json: {e}"
+            f"Erro ao abrir posts.json: {e}"
         )
 
         return []
@@ -227,7 +216,7 @@ def salvar_posts(posts):
         )
 
     print(
-        f"posts.json atualizado com {len(posts)} notícias."
+        f"posts.json salvo com {len(posts)} posts."
     )
 
 
@@ -237,7 +226,7 @@ def salvar_posts(posts):
 
 def normalizar_titulo(titulo):
 
-    titulo = normalizar_texto(
+    titulo = limpar_texto(
         titulo
     ).lower()
 
@@ -262,8 +251,8 @@ def ja_existe(
     posts
 ):
 
-    titulo_normalizado = (
-        normalizar_titulo(titulo)
+    titulo = normalizar_titulo(
+        titulo
     )
 
     link = (
@@ -296,9 +285,8 @@ def ja_existe(
             return True
 
         if (
-            titulo_normalizado
-            and titulo_normalizado
-            == titulo_antigo
+            titulo
+            and titulo == titulo_antigo
         ):
 
             return True
@@ -307,452 +295,381 @@ def ja_existe(
 
 
 # =========================================================
-# RSS
+# EPIC GAMES
 # =========================================================
 
-def encontrar_elemento(
-    item,
-    nomes
-):
-
-    for filho in list(item):
-
-        tag = filho.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag in nomes:
-
-            return texto_elemento(
-                filho
-            )
-
-    return ""
+EPIC_API = (
+    "https://store-site-backend-static.ak.epicgames.com/"
+    "freeGamesPromotions"
+    "?locale=pt-BR"
+    "&country=BR"
+    "&allowCountries=BR"
+)
 
 
-def encontrar_link(item):
+def buscar_epic():
 
-    links = []
-
-    for filho in list(item):
-
-        tag = filho.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag != "link":
-
-            continue
-
-        href = (
-            filho.attrib
-            .get(
-                "href",
-                ""
-            )
-            .strip()
-        )
-
-        if href:
-
-            links.append(
-                href
-            )
-
-        else:
-
-            texto = texto_elemento(
-                filho
-            )
-
-            if texto:
-
-                links.append(
-                    texto
-                )
-
-    # Evita links de comentários
-    for link in links:
-
-        if "/comments/" not in link.lower():
-
-            return link.strip()
-
-    return ""
-
-
-# =========================================================
-# IMAGEM
-# =========================================================
-
-def melhorar_imagem_blogger(url):
-
-    if not url:
-
-        return ""
-
-    url = url.strip()
-
-    if (
-        "blogger.googleusercontent.com"
-        not in url.lower()
-    ):
-
-        return url
-
-    url = re.sub(
-        r"/s\d+(?:-[^/]+)?/",
-        "/s1600/",
-        url,
-        flags=re.I
+    print(
+        "\nConsultando Epic Games..."
     )
 
-    return url
-
-
-def encontrar_imagem(item):
-
-    # media:content
-    # media:thumbnail
-    # enclosure
-
-    for filho in item.iter():
-
-        tag = filho.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag in (
-            "content",
-            "thumbnail",
-            "enclosure"
-        ):
-
-            url = (
-                filho.attrib.get(
-                    "url"
-                )
-                or filho.attrib.get(
-                    "href"
-                )
-                or ""
-            ).strip()
-
-            tipo = (
-                filho.attrib
-                .get(
-                    "type",
-                    ""
-                )
-                .lower()
-            )
-
-            if url and (
-                "image" in tipo
-                or tag in (
-                    "content",
-                    "thumbnail"
-                )
-            ):
-
-                return melhorar_imagem_blogger(
-                    url
-                )
-
-    # Procura imagem dentro da descrição
-
-    descricao = encontrar_elemento(
-        item,
-        {
-            "description",
-            "summary",
-            "content"
-        }
-    )
-
-    if descricao:
-
-        match = re.search(
-            r'<img[^>]+src=["\']([^"\']+)["\']',
-            descricao,
-            flags=re.I
-        )
-
-        if match:
-
-            return melhorar_imagem_blogger(
-                html.unescape(
-                    match.group(1)
-                )
-            )
-
-    return ""
-
-
-# =========================================================
-# DATA
-# =========================================================
-
-def parsear_data(data_texto):
-
-    if not data_texto:
-
-        return datetime.now(
-            timezone.utc
-        )
-
-    formatos = [
-        "%a, %d %b %Y %H:%M:%S %z",
-        "%a, %d %b %Y %H:%M:%S %Z",
-        "%Y-%m-%dT%H:%M:%S%z",
-        "%Y-%m-%dT%H:%M:%S",
-        "%Y-%m-%d",
-    ]
-
-    for formato in formatos:
-
-        try:
-
-            data = datetime.strptime(
-                data_texto.strip(),
-                formato
-            )
-
-            if data.tzinfo is None:
-
-                data = data.replace(
-                    tzinfo=timezone.utc
-                )
-
-            return data
-
-        except ValueError:
-
-            pass
-
-    return datetime.now(
-        timezone.utc
-    )
-
-
-# =========================================================
-# BUSCAR RSS
-# =========================================================
-
-def buscar_rss(fonte):
-
-    dados = baixar(
-        fonte["url"]
+    dados = baixar_json(
+        EPIC_API
     )
 
     if not dados:
 
+        print(
+            "Epic Games: nenhum dado recebido."
+        )
+
         return []
+
+    resultado = []
 
     try:
 
-        raiz = ET.fromstring(
+        elementos = (
             dados
+            .get("data", {})
+            .get("Catalog", {})
+            .get("searchStore", {})
+            .get("elements", [])
+        )
+
+        for jogo in elementos:
+
+            titulo = limpar_texto(
+                jogo.get(
+                    "title",
+                    ""
+                )
+            )
+
+            if not titulo:
+                continue
+
+            promocoes = jogo.get(
+                "promotions"
+            )
+
+            if not promocoes:
+                continue
+
+            ofertas = (
+                promocoes.get(
+                    "promotionalOffers",
+                    []
+                )
+            )
+
+            futuras = (
+                promocoes.get(
+                    "upcomingPromotionalOffers",
+                    []
+                )
+            )
+
+            ofertas_validas = []
+
+            for grupo in ofertas:
+
+                for oferta in grupo.get(
+                    "promotionalOffers",
+                    []
+                ):
+
+                    desconto = oferta.get(
+                        "discountSetting",
+                        {}
+                    )
+
+                    desconto_percentual = (
+                        desconto.get(
+                            "discountPercentage"
+                        )
+                    )
+
+                    if desconto_percentual == 0:
+
+                        ofertas_validas.append(
+                            oferta
+                        )
+
+            if not ofertas_validas:
+
+                continue
+
+            descricao = limpar_texto(
+                jogo.get(
+                    "description",
+                    ""
+                )
+            )
+
+            slug_epic = jogo.get(
+                "productSlug"
+            )
+
+            url = ""
+
+            if slug_epic:
+
+                url = (
+                    "https://store.epicgames.com/"
+                    "pt-BR/p/"
+                    + str(slug_epic)
+                )
+
+            if not url:
+
+                url = (
+                    "https://store.epicgames.com/"
+                    "pt-BR/"
+                )
+
+            imagem = ""
+
+            imagens = jogo.get(
+                "keyImages",
+                []
+            )
+
+            for imagem_item in imagens:
+
+                imagem_url = imagem_item.get(
+                    "url",
+                    ""
+                )
+
+                if imagem_url:
+
+                    imagem = imagem_url
+                    break
+
+            resultado.append({
+
+                "titulo": titulo,
+
+                "resumo": (
+                    descricao
+                    or
+                    f"{titulo} está "
+                    "gratuito por tempo limitado "
+                    "na Epic Games Store."
+                ),
+
+                "link": url,
+
+                "imagem": imagem,
+
+                "loja": "Epic Games",
+
+            })
+
+        print(
+            f"Epic Games: "
+            f"{len(resultado)} jogo(s) grátis encontrado(s)."
         )
 
     except Exception as e:
 
         print(
-            f"Erro no RSS de "
-            f"{fonte['nome']}: {e}"
+            f"Erro processando Epic Games: {e}"
+        )
+
+    return resultado
+
+
+# =========================================================
+# GOG
+# =========================================================
+
+GOG_API = (
+    "https://catalog.gog.com/v1/catalog"
+    "?limit=48"
+    "&price=between%3A0%2C0"
+    "&order=desc%3Atrending"
+    "&productType=in%3Agame"
+    "&page=1"
+    "&countryCode=BR"
+    "&locale=pt-BR"
+    "&currencyCode=BRL"
+)
+
+
+def buscar_gog():
+
+    print(
+        "\nConsultando GOG..."
+    )
+
+    dados = baixar_json(
+        GOG_API
+    )
+
+    if not dados:
+
+        print(
+            "GOG: nenhum dado recebido."
         )
 
         return []
 
-    itens = []
+    resultado = []
 
-    for item in raiz.iter():
+    try:
 
-        tag = item.tag
+        produtos = []
 
-        if not isinstance(
-            tag,
-            str
+        if isinstance(
+            dados,
+            dict
         ):
 
-            continue
+            produtos = (
+                dados.get(
+                    "products",
+                    []
+                )
+            )
 
-        tag = tag.split(
-            "}"
-        )[-1].lower()
+            if not produtos:
 
-        if tag not in (
-            "item",
-            "entry"
-        ):
+                produtos = (
+                    dados.get(
+                        "product",
+                        []
+                    )
+                )
 
-            continue
+        for jogo in produtos:
 
-        titulo = encontrar_elemento(
-            item,
-            {"title"}
+            titulo = limpar_texto(
+                jogo.get(
+                    "title",
+                    ""
+                )
+            )
+
+            if not titulo:
+                continue
+
+            # Evita demos e DLCs
+
+            texto_titulo = titulo.lower()
+
+            if any(
+                palavra in texto_titulo
+                for palavra in [
+                    "demo",
+                    "dlc",
+                    "soundtrack",
+                    "prologue"
+                ]
+            ):
+
+                continue
+
+            slug_gog = (
+                jogo.get(
+                    "slug"
+                )
+                or
+                jogo.get(
+                    "url"
+                )
+            )
+
+            if not slug_gog:
+                continue
+
+            if str(
+                slug_gog
+            ).startswith(
+                "http"
+            ):
+
+                url = str(
+                    slug_gog
+                )
+
+            else:
+
+                url = (
+                    "https://www.gog.com/"
+                    "game/"
+                    + str(slug_gog)
+                )
+
+            imagem = ""
+
+            for chave in [
+                "image",
+                "coverHorizontal",
+                "cover"
+            ]:
+
+                valor = jogo.get(
+                    chave
+                )
+
+                if isinstance(
+                    valor,
+                    str
+                ) and valor:
+
+                    imagem = valor
+                    break
+
+            resultado.append({
+
+                "titulo": titulo,
+
+                "resumo": (
+                    f"{titulo} está "
+                    "disponível gratuitamente "
+                    "na GOG."
+                ),
+
+                "link": url,
+
+                "imagem": imagem,
+
+                "loja": "GOG",
+
+            })
+
+        print(
+            f"GOG: "
+            f"{len(resultado)} jogo(s) grátis encontrado(s)."
         )
 
-        link = encontrar_link(
-            item
+    except Exception as e:
+
+        print(
+            f"Erro processando GOG: {e}"
         )
 
-        if not titulo or not link:
-
-            continue
-
-        resumo = encontrar_elemento(
-            item,
-            {
-                "description",
-                "summary",
-                "content"
-            }
-        )
-
-        data_texto = encontrar_elemento(
-            item,
-            {
-                "pubdate",
-                "published",
-                "updated",
-                "date",
-                "dc:date"
-            }
-        )
-
-        imagem = encontrar_imagem(
-            item
-        )
-
-        data = parsear_data(
-            data_texto
-        )
-
-        itens.append({
-            "titulo": normalizar_texto(
-                titulo
-            ),
-            "link": link,
-            "resumo": normalizar_texto(
-                resumo
-            ),
-            "imagem": imagem,
-            "data_obj": data,
-            "fonte": fonte["nome"],
-            "categoria": fonte["categoria"],
-        })
-
-    return itens
+    return resultado
 
 
 # =========================================================
-# IDENTIFICAR JOGOS GRÁTIS
+# CRIAR CONTEÚDO
 # =========================================================
 
-PALAVRAS_GRATIS = [
-    "free",
-    "grátis",
-    "gratis",
-    "gratuito",
-    "gratuita",
-    "free game",
-    "free games",
-    "free to keep",
-    "giveaway",
-    "give away",
-]
+def criar_conteudo(oferta):
 
+    titulo = oferta["titulo"]
+    loja = oferta["loja"]
+    link = oferta["link"]
 
-def parece_gratis(oferta):
-
-    texto = (
+    resumo = limpar_texto(
         oferta.get(
-            "titulo",
-            ""
-        )
-        + " "
-        + oferta.get(
             "resumo",
             ""
         )
-    ).lower()
-
-    return any(
-        palavra in texto
-        for palavra in PALAVRAS_GRATIS
     )
-
-
-def parece_jogo(titulo):
-
-    palavras_excluir = [
-        "dlc",
-        "soundtrack",
-        "pack",
-        "bundle",
-        "skin",
-        "cosmetic",
-        "demo",
-        "trial",
-        "expansion",
-    ]
-
-    titulo_lower = titulo.lower()
-
-    return not any(
-        palavra in titulo_lower
-        for palavra in palavras_excluir
-    )
-
-
-# =========================================================
-# RESUMO
-# =========================================================
-
-def criar_resumo(oferta):
-
-    resumo = normalizar_texto(
-        oferta.get(
-            "resumo",
-            ""
-        )
-    )
-
-    if not resumo:
-
-        return (
-            f"{oferta['titulo']} "
-            "está disponível gratuitamente "
-            "por tempo limitado."
-        )
 
     if len(resumo) > 300:
 
@@ -765,37 +682,20 @@ def criar_resumo(oferta):
             + "..."
         )
 
-    return resumo
-
-
-# =========================================================
-# CONTEÚDO
-# =========================================================
-
-def criar_conteudo(oferta):
-
-    titulo = oferta["titulo"]
-    fonte = oferta["fonte"]
-    link = oferta["link"]
-    resumo = criar_resumo(
-        oferta
-    )
-
     return [
 
         f"O jogo {titulo} "
-        "está disponível gratuitamente "
-        "por tempo limitado.",
+        f"está disponível gratuitamente "
+        f"na {loja}.",
 
         resumo,
 
-        f"A oferta foi identificada "
-        f"na {fonte}. O período de "
-        "disponibilidade pode variar "
-        "conforme a loja.",
+        "A oferta pode ficar disponível "
+        "por tempo limitado, então vale "
+        "a pena conferir o período de "
+        "resgate diretamente na loja.",
 
-        "Para conferir a oferta e "
-        f"realizar o resgate, acesse "
+        f"Para resgatar o jogo, acesse "
         f"a página oficial: {link}"
 
     ]
@@ -811,11 +711,14 @@ def criar_post(oferta):
 
     return {
 
-        "id": id_unico(
+        "id": criar_id(
             titulo
         ),
 
-        "titulo": titulo,
+        "titulo": (
+            f"{titulo} está grátis "
+            f"por tempo limitado"
+        ),
 
         "categoria": "Jogos Grátis",
 
@@ -828,8 +731,11 @@ def criar_post(oferta):
             ""
         ),
 
-        "resumo": criar_resumo(
-            oferta
+        "resumo": limpar_texto(
+            oferta.get(
+                "resumo",
+                ""
+            )
         ),
 
         "link": oferta["link"],
@@ -854,7 +760,11 @@ def main():
     print("=" * 60)
 
     print(
-        "CavaloGameNews - Bot de Jogos Grátis"
+        "CavaloGameNews"
+    )
+
+    print(
+        "Bot de Jogos Grátis"
     )
 
     print("=" * 60)
@@ -863,71 +773,59 @@ def main():
 
     ofertas = []
 
-    for fonte in FONTES:
+    # Epic
 
-        print(
-            f"\nConsultando: "
-            f"{fonte['nome']}"
-        )
-
-        resultados = buscar_rss(
-            fonte
-        )
-
-        print(
-            f"Encontradas: "
-            f"{len(resultados)}"
-        )
-
-        for oferta in resultados:
-
-            if not parece_gratis(
-                oferta
-            ):
-
-                continue
-
-            if not parece_jogo(
-                oferta["titulo"]
-            ):
-
-                continue
-
-            if ja_existe(
-                oferta["titulo"],
-                oferta["link"],
-                posts
-            ):
-
-                continue
-
-            ofertas.append(
-                oferta
-            )
-
-    # Mais recentes primeiro
-
-    ofertas.sort(
-        key=lambda x: x["data_obj"],
-        reverse=True
+    ofertas.extend(
+        buscar_epic()
     )
 
-    ofertas = ofertas[
-        :MAX_OFERTAS
-    ]
+    # GOG
 
-    if not ofertas:
+    ofertas.extend(
+        buscar_gog()
+    )
+
+    print(
+        f"\nTotal encontrado: "
+        f"{len(ofertas)}"
+    )
+
+    novos = []
+
+    for oferta in ofertas:
+
+        if ja_existe(
+            oferta["titulo"],
+            oferta["link"],
+            posts
+        ):
+
+            print(
+                f"Já existe: "
+                f"{oferta['titulo']}"
+            )
+
+            continue
+
+        novos.append(
+            oferta
+        )
+
+        if len(novos) >= MAX_OFERTAS:
+
+            break
+
+    if not novos:
 
         print(
-            "\nNenhum jogo grátis "
-            "novo encontrado."
+            "\nNenhum jogo grátis novo."
         )
 
         return
 
     novos_posts = []
 
-    for oferta in ofertas:
+    for oferta in novos:
 
         post = criar_post(
             oferta
@@ -938,23 +836,21 @@ def main():
         )
 
         print(
-            f"\nNOVO: "
-            f"{post['titulo']}"
+            "\nNOVO JOGO:"
         )
 
         print(
-            f"Link: "
-            f"{post['link']}"
+            post["titulo"]
         )
 
-    # Notícias novas no começo
+        print(
+            post["link"]
+        )
 
     posts = (
         novos_posts
         + posts
     )
-
-    # Limite
 
     posts = posts[
         :MAX_POSTS
@@ -966,14 +862,14 @@ def main():
 
     print(
         f"\n{len(novos_posts)} "
-        "jogo(s) grátis "
-        "adicionado(s)."
+        "jogo(s) adicionado(s) "
+        "ao posts.json."
     )
 
-    print(
-        "Pronto."
-    )
 
+# =========================================================
+# EXECUTAR
+# =========================================================
 
 if __name__ == "__main__":
 
