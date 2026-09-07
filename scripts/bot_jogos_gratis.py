@@ -38,38 +38,64 @@ EPIC_API = (
 
 
 # =========================================================
-# FUNÇÕES
+# BAIXAR JSON
 # =========================================================
 
 def baixar_json(url):
-    """Baixa JSON de uma URL."""
+
     try:
-        req = Request(url, headers=HEADERS)
+
+        req = Request(
+            url,
+            headers=HEADERS
+        )
 
         with urlopen(req, timeout=30) as resposta:
-            dados = resposta.read().decode("utf-8")
 
-        return json.loads(dados)
+            conteudo = resposta.read().decode(
+                "utf-8"
+            )
+
+        return json.loads(conteudo)
 
     except Exception as erro:
+
         print(f"Erro ao acessar API: {erro}")
+
         return None
 
 
+# =========================================================
+# LIMPAR TEXTO
+# =========================================================
+
 def limpar_html(texto):
-    """Remove HTML e limpa espaços."""
+
     if not texto:
         return ""
 
     texto = html.unescape(texto)
-    texto = re.sub(r"<[^>]+>", "", texto)
-    texto = re.sub(r"\s+", " ", texto)
+
+    texto = re.sub(
+        r"<[^>]+>",
+        "",
+        texto
+    )
+
+    texto = re.sub(
+        r"\s+",
+        " ",
+        texto
+    )
 
     return texto.strip()
 
 
+# =========================================================
+# CRIAR ID
+# =========================================================
+
 def criar_id(titulo):
-    """Cria um ID simples para a notícia."""
 
     texto = titulo.lower()
 
@@ -81,71 +107,309 @@ def criar_id(titulo):
 
     texto = texto.strip("-")
 
-    data = datetime.now().strftime("%Y%m%d")
+    data = datetime.now().strftime(
+        "%Y%m%d"
+    )
 
     return f"{data}-{texto}"
 
 
+# =========================================================
+# ENCONTRAR IMAGEM
+# =========================================================
+
 def encontrar_imagem(item):
-    """Procura a melhor imagem disponível."""
 
-    imagens = item.get("keyImages", [])
+    imagens = item.get(
+        "keyImages",
+        []
+    )
 
-    if isinstance(imagens, list):
+    if not isinstance(imagens, list):
+        return ""
 
-        # Primeiro tenta encontrar uma imagem grande
-        for imagem in imagens:
+    # Tenta primeiro imagens maiores
+    for imagem in imagens:
 
-            url = imagem.get("url", "")
+        url = imagem.get(
+            "url",
+            ""
+        )
 
-            if url:
-                tipo = imagem.get("type", "").lower()
+        if not url:
+            continue
 
-                if "thumbnail" not in tipo:
-                    return url
+        tipo = imagem.get(
+            "type",
+            ""
+        ).lower()
 
-        # Se não encontrar, usa a primeira
-        for imagem in imagens:
+        if (
+            "thumbnail" not in tipo
+            and "logo" not in tipo
+        ):
+            return url
 
-            url = imagem.get("url", "")
+    # Se não encontrar, usa qualquer imagem
+    for imagem in imagens:
 
-            if url:
-                return url
+        url = imagem.get(
+            "url",
+            ""
+        )
+
+        if url:
+            return url
 
     return ""
 
 
-def encontrar_slug(item):
-    """Procura o slug usado no endereço da Epic."""
+# =========================================================
+# ENCONTRAR URL DIRETA DO JOGO
+# =========================================================
 
-    slug = (
-        item.get("productSlug")
-        or item.get("urlSlug")
-        or item.get("catalogNs", {})
-        .get("mappings", [{}])[0]
-        .get("pageSlug", "")
+def encontrar_link(item):
+
+    # -----------------------------------------------------
+    # 1. Tenta campos que podem conter a URL diretamente
+    # -----------------------------------------------------
+
+    possiveis_campos = [
+        "url",
+        "storeUrl",
+        "productUrl",
+        "pageUrl",
+        "link",
+    ]
+
+    for campo in possiveis_campos:
+
+        valor = item.get(
+            campo,
+            ""
+        )
+
+        if (
+            isinstance(valor, str)
+            and valor.startswith("http")
+            and "epicgames.com" in valor
+        ):
+
+            return valor
+
+    # -----------------------------------------------------
+    # 2. Verifica mappings
+    # -----------------------------------------------------
+
+    catalog_ns = item.get(
+        "catalogNs",
+        {}
     )
 
-    return slug
+    mappings = catalog_ns.get(
+        "mappings",
+        []
+    )
+
+    if isinstance(mappings, list):
+
+        for mapping in mappings:
+
+            if not isinstance(mapping, dict):
+                continue
+
+            # Alguns produtos possuem pageSlug
+            page_slug = mapping.get(
+                "pageSlug"
+            )
+
+            if page_slug:
+
+                return (
+                    "https://store.epicgames.com/"
+                    f"p/{page_slug}"
+                )
+
+            # Outros podem possuir pageType
+            page_type = mapping.get(
+                "pageType"
+            )
+
+            if page_type:
+
+                page_slug = mapping.get(
+                    "pageSlug",
+                    ""
+                )
+
+                if page_slug:
+
+                    return (
+                        "https://store.epicgames.com/"
+                        f"p/{page_slug}"
+                    )
+
+    # -----------------------------------------------------
+    # 3. Tenta productSlug
+    # -----------------------------------------------------
+
+    slug = item.get(
+        "productSlug",
+        ""
+    )
+
+    if slug:
+
+        return (
+            "https://store.epicgames.com/"
+            f"p/{slug}"
+        )
+
+    # -----------------------------------------------------
+    # 4. Tenta urlSlug
+    # -----------------------------------------------------
+
+    slug = item.get(
+        "urlSlug",
+        ""
+    )
+
+    if slug:
+
+        return (
+            "https://store.epicgames.com/"
+            f"p/{slug}"
+        )
+
+    # -----------------------------------------------------
+    # 5. Última tentativa: catalogNs
+    # -----------------------------------------------------
+
+    mappings = (
+        item
+        .get("catalogNs", {})
+        .get("mappings", [])
+    )
+
+    if isinstance(mappings, list):
+
+        for mapping in mappings:
+
+            if not isinstance(mapping, dict):
+                continue
+
+            slug = (
+                mapping.get("pageSlug")
+                or mapping.get("slug")
+                or ""
+            )
+
+            if slug:
+
+                return (
+                    "https://store.epicgames.com/"
+                    f"p/{slug}"
+                )
+
+    return ""
 
 
 # =========================================================
-# BUSCAR JOGOS GRÁTIS NA EPIC
+# VERIFICAR SE ESTÁ GRÁTIS
+# =========================================================
+
+def jogo_esta_gratis(item):
+
+    # -----------------------------------------------------
+    # Promoções
+    # -----------------------------------------------------
+
+    promotions = item.get(
+        "promotions"
+    ) or {}
+
+    grupos = promotions.get(
+        "promotionalOffers",
+        []
+    )
+
+    if isinstance(grupos, list):
+
+        for grupo in grupos:
+
+            if not isinstance(grupo, dict):
+                continue
+
+            ofertas = grupo.get(
+                "promotionalOffers",
+                []
+            )
+
+            if not isinstance(ofertas, list):
+                continue
+
+            for oferta in ofertas:
+
+                if not isinstance(oferta, dict):
+                    continue
+
+                desconto = (
+                    oferta
+                    .get("discountSetting", {})
+                    .get("discountPercentage")
+                )
+
+                if desconto == 0:
+
+                    return True
+
+    # -----------------------------------------------------
+    # Preço
+    # -----------------------------------------------------
+
+    preco = (
+        item
+        .get("price", {})
+        .get("totalPrice", {})
+    )
+
+    if isinstance(preco, dict):
+
+        preco_final = preco.get(
+            "discountPrice"
+        )
+
+        if preco_final == 0:
+
+            return True
+
+    return False
+
+
+# =========================================================
+# BUSCAR EPIC GAMES
 # =========================================================
 
 def buscar_epic():
 
-    print("Consultando Epic Games...")
+    print(
+        "Consultando Epic Games..."
+    )
 
-    dados = baixar_json(EPIC_API)
+    dados = baixar_json(
+        EPIC_API
+    )
 
     if not dados:
-        print("Não foi possível acessar a Epic Games.")
+
+        print(
+            "Não foi possível acessar a Epic Games."
+        )
+
         return []
 
-    encontrados = []
-
     try:
+
         elementos = (
             dados
             .get("data", {})
@@ -155,111 +419,73 @@ def buscar_epic():
         )
 
     except Exception:
+
         elementos = []
 
-    print(f"Epic encontrou {len(elementos)} produto(s) para analisar.")
+    print(
+        f"Epic encontrou {len(elementos)} produto(s) para analisar."
+    )
+
+    encontrados = []
 
     for item in elementos:
 
         try:
 
+            if not isinstance(item, dict):
+                continue
+
+            # -------------------------------------------------
+            # TÍTULO
+            # -------------------------------------------------
+
             titulo = (
                 item.get("title")
                 or item.get("productName")
                 or ""
-            ).strip()
+            )
+
+            titulo = limpar_html(
+                titulo
+            )
 
             if not titulo:
                 continue
 
             # -------------------------------------------------
-            # VERIFICAR PROMOÇÃO
+            # VERIFICAR GRATUITO
             # -------------------------------------------------
 
-            promotions = item.get("promotions") or {}
-
-            ofertas = promotions.get(
-                "promotionalOffers",
-                []
-            )
-
-            esta_gratis = False
-
-            for grupo in ofertas:
-
-                ofertas_grupo = grupo.get(
-                    "promotionalOffers",
-                    []
-                )
-
-                for oferta in ofertas_grupo:
-
-                    desconto = oferta.get(
-                        "discountSetting",
-                        {}
-                    ).get(
-                        "discountPercentage"
-                    )
-
-                    if desconto == 0:
-                        esta_gratis = True
-                        break
-
-                if esta_gratis:
-                    break
-
-            # -------------------------------------------------
-            # VERIFICAR PREÇO
-            # -------------------------------------------------
-
-            if not esta_gratis:
-
-                preco = (
-                    item.get("price", {})
-                    .get("totalPrice", {})
-                )
-
-                preco_final = preco.get(
-                    "discountPrice"
-                )
-
-                if preco_final == 0:
-                    esta_gratis = True
-
-            if not esta_gratis:
+            if not jogo_esta_gratis(item):
                 continue
 
             # -------------------------------------------------
-            # SLUG
+            # LINK
             # -------------------------------------------------
 
-            slug = encontrar_slug(item)
-
-            if not slug:
-                print(f"Slug não encontrado: {titulo}")
-                continue
-
-            # -------------------------------------------------
-            # LINK DIRETO
-            # -------------------------------------------------
-
-            link = (
-                "https://store.epicgames.com/"
-                f"pt-BR/p/{slug}"
+            link = encontrar_link(
+                item
             )
+
+            if not link:
+
+                print(
+                    f"Não foi possível encontrar o link de: {titulo}"
+                )
+
+                continue
 
             # -------------------------------------------------
             # IMAGEM
             # -------------------------------------------------
 
-            imagem = encontrar_imagem(item)
+            imagem = encontrar_imagem(
+                item
+            )
 
             # -------------------------------------------------
-            # DESCRIÇÃO
+            # RESUMO EM PORTUGUÊS
             # -------------------------------------------------
-
-            # NÃO usamos a descrição original da Epic.
-            # Ela pode estar em inglês.
 
             resumo = (
                 f"{titulo} está disponível gratuitamente "
@@ -271,38 +497,56 @@ def buscar_epic():
             # -------------------------------------------------
 
             conteudo = [
+
                 (
                     f"O jogo {titulo} está disponível "
                     "gratuitamente na Epic Games."
                 ),
 
                 (
-                    f"{titulo} pode ser resgatado gratuitamente "
-                    "durante o período da promoção."
+                    f"{titulo} pode ser resgatado "
+                    "gratuitamente durante o período "
+                    "da promoção."
                 ),
 
                 (
-                    "Depois de resgatar o jogo, ele fica "
+                    "Depois de resgatar o jogo, ele ficará "
                     "vinculado à sua conta da Epic Games."
                 ),
 
                 (
-                    "A promoção é por tempo limitado e pode "
-                    "terminar a qualquer momento."
+                    "A promoção é por tempo limitado, "
+                    "então é recomendado resgatar o jogo "
+                    "enquanto ele estiver disponível."
                 ),
 
                 (
                     f"Para resgatar {titulo}, acesse: {link}"
                 ),
+
             ]
 
             encontrados.append({
+
                 "titulo": titulo,
+
                 "imagem": imagem,
+
                 "resumo": resumo,
+
                 "link_jogo": link,
+
                 "conteudo": conteudo,
+
             })
+
+            print(
+                f"Jogo grátis encontrado: {titulo}"
+            )
+
+            print(
+                f"Link: {link}"
+            )
 
             if len(encontrados) >= MAX_OFERTAS:
                 break
@@ -310,8 +554,7 @@ def buscar_epic():
         except Exception as erro:
 
             print(
-                f"Erro ao processar {item.get('title', 'jogo')}: "
-                f"{erro}"
+                f"Erro ao processar jogo: {erro}"
             )
 
     print(
@@ -335,14 +578,19 @@ def carregar_posts():
             encoding="utf-8"
         ) as arquivo:
 
-            dados = json.load(arquivo)
+            dados = json.load(
+                arquivo
+            )
 
-            if isinstance(dados, list):
-                return dados
+        if isinstance(dados, list):
+
+            return dados
 
     except Exception as erro:
 
-        print(f"Erro ao ler posts.json: {erro}")
+        print(
+            f"Erro ao ler posts.json: {erro}"
+        )
 
     return []
 
@@ -386,32 +634,69 @@ def adicionar_noticias():
 
     if not ofertas:
 
-        print("Nenhum jogo grátis novo encontrado.")
+        print(
+            "Nenhum jogo grátis encontrado."
+        )
+
         return
 
     novas = []
 
-    data_atual = datetime.now().strftime("%d/%m/%Y")
+    data_atual = datetime.now().strftime(
+        "%d/%m/%Y"
+    )
 
     for oferta in ofertas:
 
         titulo = oferta["titulo"]
 
-        post_id = criar_id(titulo)
-
-        # -------------------------------------------------
-        # EVITAR DUPLICADOS
-        # -------------------------------------------------
-
-        titulo_normalizado = titulo.lower().strip()
-
-        titulo_existente = any(
-            str(post.get("titulo", "")).lower().strip()
-            == titulo_normalizado
-            for post in posts
+        post_id = criar_id(
+            titulo
         )
 
-        if post_id in ids_existentes or titulo_existente:
+        # -------------------------------------------------
+        # VERIFICAR DUPLICADO PELO ID
+        # -------------------------------------------------
+
+        if post_id in ids_existentes:
+
+            print(
+                f"Já existe no site: {titulo}"
+            )
+
+            continue
+
+        # -------------------------------------------------
+        # VERIFICAR DUPLICADO PELO TÍTULO
+        # -------------------------------------------------
+
+        titulo_normalizado = (
+            titulo
+            .lower()
+            .strip()
+        )
+
+        existe_titulo = any(
+
+            str(
+                post.get(
+                    "titulo",
+                    ""
+                )
+            )
+            .lower()
+            .strip()
+            .replace(
+                " está grátis por tempo limitado",
+                ""
+            )
+            == titulo_normalizado
+
+            for post in posts
+
+        )
+
+        if existe_titulo:
 
             print(
                 f"Já existe no site: {titulo}"
@@ -424,23 +709,35 @@ def adicionar_noticias():
         # -------------------------------------------------
 
         post = {
+
             "id": post_id,
+
             "titulo": (
                 f"{titulo} está grátis por tempo limitado"
             ),
+
             "categoria": "Jogos Grátis",
+
             "data": data_atual,
+
             "imagem": oferta["imagem"],
+
             "resumo": oferta["resumo"],
+
             "x": "",
+
             "videos": [],
+
             "conteudo": oferta["conteudo"],
+
         }
 
-        novas.append(post)
+        novas.append(
+            post
+        )
 
         print(
-            f"Novo jogo grátis adicionado: {titulo}"
+            f"Nova notícia adicionada: {titulo}"
         )
 
     # -----------------------------------------------------
@@ -449,14 +746,19 @@ def adicionar_noticias():
 
     if not novas:
 
-        print("Nenhuma notícia nova para adicionar.")
+        print(
+            "Nenhuma notícia nova para adicionar."
+        )
+
         return
 
     posts = novas + posts
 
     posts = posts[:MAX_POSTS]
 
-    salvar_posts(posts)
+    salvar_posts(
+        posts
+    )
 
     print(
         f"{len(novas)} nova(s) notícia(s) adicionada(s)."
@@ -464,17 +766,25 @@ def adicionar_noticias():
 
 
 # =========================================================
-# EXECUÇÃO
+# EXECUTAR
 # =========================================================
 
 if __name__ == "__main__":
 
     print("=" * 60)
-    print("BOT DE JOGOS GRÁTIS - CAVALOGAMENEWS")
+
+    print(
+        "BOT DE JOGOS GRÁTIS - CAVALOGAMENEWS"
+    )
+
     print("=" * 60)
 
     adicionar_noticias()
 
     print("=" * 60)
-    print("Bot finalizado.")
+
+    print(
+        "Bot finalizado."
+    )
+
     print("=" * 60)
