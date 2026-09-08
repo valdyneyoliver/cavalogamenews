@@ -224,19 +224,26 @@
       max-width: 1450px;
       margin: 25px auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 20px;
       align-items: stretch;
+    }
+
+    .home-top > * {
+      min-width: 0;
     }
 
     .home-top .release-calendar {
       width: 100%;
       max-width: none;
+      min-width: 0;
       margin: 0;
     }
 
     .free-games-box {
       width: 100%;
+      min-width: 0;
+      height: 100%;
       padding: 20px;
       background: linear-gradient(145deg,#0c110e,#080b09);
       border: 1px solid #27352c;
@@ -340,7 +347,7 @@
 
     @media (max-width: 600px) {
       .home-top { width: calc(100% - 24px); }
-      .free-games-box { padding: 14px; border-radius: 12px; }
+      .free-games-box { height: auto; padding: 14px; border-radius: 12px; }
       .free-games-title { font-size: 19px; }
       .free-games-subtitle { font-size: 12px; }
       .free-games-list { grid-template-columns: 1fr; }
@@ -497,6 +504,12 @@
     .release-games {
 
       display: flex;
+
+      width: 100%;
+
+      min-width: 0;
+
+      max-width: 100%;
 
       gap: 13px;
 
@@ -1317,7 +1330,7 @@
 
       .logo {
 
-        height: 40px;
+        height: 48px;
       }
 
 
