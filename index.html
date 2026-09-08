@@ -69,7 +69,7 @@
     header {
       background: rgba(5, 7, 6, 0.96);
       border-bottom: 1px solid #1c2b22;
-      padding: 12px 25px;
+      padding: 18px 30px;
       position: relative;
       z-index: 10;
     }
@@ -79,11 +79,11 @@
       margin: auto;
       display: flex;
       align-items: center;
-      gap: 25px;
+      gap: 28px;
     }
 
     .logo {
-      height: 42px;
+      height: 58px;
       width: auto;
       display: block;
       flex-shrink: 0;
@@ -92,7 +92,7 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
       flex-wrap: wrap;
       flex: 1;
     }
@@ -101,10 +101,8 @@
       color: #eee;
       text-decoration: none;
       font-weight: bold;
-      font-size: 13px;
-      text-transform: uppercase;
+      font-size: 14px;
       transition: 0.2s;
-      white-space: nowrap;
     }
 
     nav a:hover {
@@ -113,42 +111,16 @@
 
 
     /* =====================================================
-       BUSCA DO CABEÇALHO
+       BUSCA
     ===================================================== */
 
     .search-box {
-      width: 38px;
-      height: 38px;
+      width: 230px;
       flex-shrink: 0;
-      position: relative;
-    }
-
-    .search-button {
-      width: 38px;
-      height: 38px;
-      border: 1px solid #303630;
-      border-radius: 50%;
-      background: #0d100e;
-      color: #fff;
-      cursor: pointer;
-      font-size: 17px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.25s;
-    }
-
-    .search-button:hover {
-      color: #00ff88;
-      border-color: #00ff88;
-      box-shadow: 0 0 10px rgba(0,255,136,0.20);
     }
 
     .search-box input {
-      position: absolute;
-      top: 48px;
-      left: 0;
-      width: 230px;
+      width: 100%;
       padding: 12px 17px;
       background: #0d100e;
       color: #fff;
@@ -156,17 +128,7 @@
       border-radius: 25px;
       font-size: 14px;
       outline: none;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-5px);
       transition: 0.25s;
-      z-index: 50;
-    }
-
-    .search-box.open input {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
     }
 
     .search-box input:focus {
@@ -214,6 +176,159 @@
       font-size: 18px;
     }
 
+
+    /* =====================================================
+       LAYOUT PRINCIPAL - ESTILO APP XBOX
+    ===================================================== */
+
+    .home-showcase {
+      width: calc(100% - 50px);
+      max-width: 1450px;
+      margin: 28px auto 35px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 110px 310px;
+      gap: 18px;
+    }
+
+    .showcase-calendar {
+      grid-column: 1;
+      grid-row: 1;
+      min-width: 0;
+    }
+
+    .showcase-featured {
+      grid-column: 1;
+      grid-row: 2;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .showcase-featured #featured,
+    .showcase-featured .featured {
+      width: 100%;
+      height: 100%;
+    }
+
+    .showcase-featured .featured {
+      margin-bottom: 0;
+      border-radius: 10px;
+    }
+
+    .showcase-freegames {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .showcase-freegames-small {
+      display: block;
+      grid-column: 2;
+      grid-row: 2;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .showcase-tile {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #111;
+      border: 1px solid #1e2923;
+    }
+
+    .showcase-tile .release-loading {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .showcase-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      text-decoration: none;
+      color: #fff;
+      background: #111;
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease;
+    }
+
+    .showcase-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02) 20%, rgba(0,0,0,0.88) 100%);
+      pointer-events: none;
+    }
+
+    .showcase-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .showcase-badge {
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      z-index: 2;
+      padding: 6px 10px;
+      border-radius: 5px;
+      background: rgba(0, 20, 10, .88);
+      border: 1px solid #00ff88;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .showcase-content {
+      position: absolute;
+      left: 15px;
+      right: 15px;
+      bottom: 13px;
+      z-index: 2;
+    }
+
+    .showcase-content h3 {
+      margin: 0 0 3px;
+      font-size: 19px;
+      line-height: 1.15;
+      text-shadow: 0 2px 5px rgba(0,0,0,.8);
+    }
+
+    .showcase-content p {
+      margin: 0;
+      color: #ddd;
+      font-size: 12px;
+    }
+
+    .showcase-calendar .showcase-content h3 {
+      font-size: 17px;
+    }
+
+    .showcase-calendar .showcase-content p {
+      font-size: 11px;
+    }
+
+    .showcase-calendar .showcase-badge {
+      background: rgba(0, 0, 0, .78);
+    }
+
+    .showcase-freegames-small .showcase-content h3 {
+      font-size: 17px;
+    }
 
     /* =====================================================
        CALENDÁRIO DE LANÇAMENTOS
@@ -720,6 +835,57 @@
     }
 
 
+    /* O calendário agora é um destaque compacto no layout principal. */
+    .home-showcase .release-wrapper,
+    .home-showcase .release-filters,
+    .home-showcase .release-arrow,
+    .home-showcase .release-header {
+      display: none;
+    }
+
+    .home-showcase #releaseGames {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      overflow: hidden;
+      display: block;
+    }
+
+    .home-showcase #releaseGames .release-card {
+      width: 100%;
+      min-width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .home-showcase #releaseGames .release-card .release-date {
+      left: 14px;
+      right: auto;
+      top: 12px;
+      bottom: auto;
+      padding: 5px 8px;
+      font-size: 11px;
+      border: 1px solid rgba(0,255,136,.55);
+      background: rgba(0,0,0,.70);
+    }
+
+    .home-showcase #releaseGames .release-info {
+      left: 15px;
+      right: 15px;
+      bottom: 12px;
+    }
+
+    .home-showcase #releaseGames .release-name {
+      min-height: 0;
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .home-showcase #releaseGames .release-platforms {
+      display: none;
+    }
+
     /* =====================================================
        ESTADOS
     ===================================================== */
@@ -1097,7 +1263,7 @@
     @media (max-width: 900px) {
 
       header {
-        padding: 12px 18px;
+        padding: 15px 18px;
       }
 
 
@@ -1120,14 +1286,10 @@
 
 
       .search-box {
-        width: 38px;
-        height: 38px;
-      }
 
+        width: 100%;
 
-      .search-box input {
-        left: 0;
-        width: 230px;
+        max-width: 100%;
       }
 
 
@@ -1185,7 +1347,7 @@
 
       .logo {
 
-        height: 40px;
+        height: 48px;
       }
 
 
@@ -1197,24 +1359,7 @@
 
       nav a {
 
-        font-size: 12px;
-      }
-
-
-      .search-button {
-        width: 36px;
-        height: 36px;
-      }
-
-
-      .search-box {
-        width: 36px;
-        height: 36px;
-      }
-
-
-      .search-box input {
-        width: 210px;
+        font-size: 13px;
       }
 
 
@@ -1333,6 +1478,77 @@
 
     }
 
+
+    /* =====================================================
+       NOVO LAYOUT - CELULAR
+    ===================================================== */
+
+    @media (max-width: 900px) {
+      .home-showcase {
+        width: calc(100% - 24px);
+        grid-template-columns: 1fr;
+        grid-template-rows: 145px 250px 250px 120px;
+        gap: 14px;
+        margin: 18px auto 28px;
+      }
+
+      .showcase-calendar {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .showcase-featured {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .showcase-freegames {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .showcase-freegames-small {
+        display: block;
+        grid-column: 1;
+        grid-row: 4;
+      }
+
+      .container {
+        width: calc(100% - 24px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-showcase {
+        grid-template-rows: 120px 230px 230px 110px;
+        gap: 12px;
+      }
+
+      .showcase-content h3,
+      .showcase-calendar .showcase-content h3,
+      .showcase-freegames-small .showcase-content h3 {
+        font-size: 15px;
+      }
+
+      .showcase-content p,
+      .showcase-calendar .showcase-content p {
+        font-size: 10px;
+      }
+
+      .showcase-badge {
+        left: 10px;
+        top: 9px;
+        padding: 5px 8px;
+        font-size: 10px;
+      }
+
+      .showcase-content {
+        left: 11px;
+        right: 11px;
+        bottom: 10px;
+      }
+    }
+
   </style>
 
 </head>
@@ -1352,25 +1568,21 @@
     <img
       src="img/logo.png"
       alt="CavaloGameNews"
-      class="logo"
+      style="
+        height:40px;
+        width:auto;
+        display:block;
+      "
     >
 
     <nav>
 
       <div class="search-box">
 
-        <button
-          class="search-button"
-          onclick="alternarBusca()"
-          aria-label="Pesquisar"
-        >
-          🔍
-        </button>
-
         <input
           type="text"
           id="searchInput"
-          placeholder="Buscar notícia..."
+          placeholder="🔎 Buscar notícia..."
           onkeyup="buscarNoticias()"
         >
 
@@ -1381,7 +1593,7 @@
         href="#"
         onclick="filtrarNoticias('todos'); return false;"
       >
-        INÍCIO
+        🏠 Início
       </a>
 
 
@@ -1389,7 +1601,7 @@
         href="#"
         onclick="filtrarNoticias('Notícias'); return false;"
       >
-        NOTÍCIAS
+        📰 Notícias
       </a>
 
 
@@ -1397,7 +1609,7 @@
         href="#"
         onclick="filtrarNoticias('Xbox'); return false;"
       >
-        XBOX
+        🎮 Xbox
       </a>
 
 
@@ -1405,7 +1617,7 @@
         href="#"
         onclick="filtrarNoticias('PlayStation'); return false;"
       >
-        PLAYSTATION
+        🎮 PlayStation
       </a>
 
 
@@ -1413,7 +1625,7 @@
         href="#"
         onclick="filtrarNoticias('PC'); return false;"
       >
-        PC
+        🖥️ PC
       </a>
 
 
@@ -1421,23 +1633,20 @@
         href="#"
         onclick="filtrarNoticias('Nintendo'); return false;"
       >
-        NINTENDO
+        🎮 Nintendo
       </a>
-
 
       <a
-        href="#"
+         href="#"
         onclick="filtrarNoticias('Jogos Grátis'); return false;"
-      >
-        JOGOS GRÁTIS
+     >
+        🎁 Jogos Grátis
       </a>
-
-
       <a
         href="#doacao"
         style="color:#00ff88;"
       >
-        💚 APOIE
+        💚 Apoie
       </a>
 
     </nav>
@@ -1448,120 +1657,36 @@
 
 
 <!-- =====================================================
-     HERO
+     DESTAQUES
 ===================================================== -->
 
-<section class="hero">
+<section class="home-showcase">
 
-  <h2>
-    As maiores notícias do mundo gamer em um só lugar
-  </h2>
+  <div class="showcase-calendar">
 
-  <p>
-    Xbox, PlayStation, PC, Nintendo e muito mais.
-  </p>
-
-</section>
-
-
-<!-- =====================================================
-     CALENDÁRIO
-===================================================== -->
-
-<section class="release-calendar">
-
-  <div class="release-header">
-
-    <div>
-
-      <h2 class="release-title">
-        🎮 Calendário de Lançamentos
-      </h2>
-
-      <p class="release-subtitle">
-        Confira os próximos jogos que chegam ao PC e consoles.
-      </p>
-
+    <div class="showcase-tile" id="releaseGames">
+      <div class="release-loading">🎮 Carregando calendário...</div>
     </div>
 
   </div>
 
 
-  <div class="release-filters">
-
-    <button
-      class="release-filter active"
-      data-platform="todos"
-    >
-      ▦ Todos
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="PC"
-    >
-      🖥️ PC
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="Xbox"
-    >
-      🎮 Xbox
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="PlayStation"
-    >
-      🎮 PlayStation
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="Switch"
-    >
-      🎮 Switch
-    </button>
-
+  <div class="showcase-featured">
+    <div id="featured"></div>
   </div>
 
 
-  <div class="release-wrapper">
-
-    <button
-      class="release-arrow release-arrow-left"
-      id="releasePrev"
-      aria-label="Jogos anteriores"
-    >
-      ‹
-    </button>
-
-
-    <div
-      id="releaseGames"
-      class="release-games"
-    >
-
-      <div class="release-loading">
-        🎮 Carregando lançamentos...
-      </div>
-
+  <div class="showcase-freegames">
+    <div class="showcase-tile" id="freeGamesLarge">
+      <div class="release-loading">🎁 Carregando jogos grátis...</div>
     </div>
+  </div>
 
 
-    <button
-      class="release-arrow release-arrow-right"
-      id="releaseNext"
-      aria-label="Próximos jogos"
-    >
-      ›
-    </button>
-
+  <div class="showcase-freegames-small">
+    <div class="showcase-tile" id="freeGamesSmall">
+      <div class="release-loading">🎁 Carregando...</div>
+    </div>
   </div>
 
 </section>
@@ -1572,8 +1697,6 @@
 ===================================================== -->
 
 <div class="container">
-
-  <div id="featured"></div>
 
   <h2 id="tituloNoticias">
     Últimas Notícias
@@ -1932,7 +2055,7 @@ function mostrarLancamentos(plataforma) {
 
 
   jogos =
-    jogos.slice(0, 100);
+    jogos.slice(0, 1);
 
 
   if (jogos.length === 0) {
@@ -2060,36 +2183,38 @@ const releaseNext =
   document.getElementById("releaseNext");
 
 
-releasePrev.addEventListener(
-  "click",
-  function() {
+if (releasePrev) {
 
-    releaseContainer.scrollBy({
+  releasePrev.addEventListener(
+    "click",
+    function() {
 
-      left: -500,
+      releaseContainer.scrollBy({
+        left: -500,
+        behavior: "smooth"
+      });
 
-      behavior: "smooth"
+    }
+  );
 
-    });
-
-  }
-);
+}
 
 
-releaseNext.addEventListener(
-  "click",
-  function() {
+if (releaseNext) {
 
-    releaseContainer.scrollBy({
+  releaseNext.addEventListener(
+    "click",
+    function() {
 
-      left: 500,
+      releaseContainer.scrollBy({
+        left: 500,
+        behavior: "smooth"
+      });
 
-      behavior: "smooth"
+    }
+  );
 
-    });
-
-  }
-);
+}
 
 
 /* =====================================================
@@ -2097,6 +2222,8 @@ releaseNext.addEventListener(
 ===================================================== */
 
 function atualizarSetas() {
+
+  if (!releasePrev || !releaseNext) return;
 
   setTimeout(() => {
 
@@ -2106,16 +2233,13 @@ function atualizarSetas() {
     ) {
 
       releasePrev.style.display = "none";
-
       releaseNext.style.display = "none";
 
       return;
 
     }
 
-
     releasePrev.style.display = "flex";
-
     releaseNext.style.display = "flex";
 
   }, 100);
@@ -2622,27 +2746,6 @@ function filtrarNoticias(categoria) {
 
 
 /* =====================================================
-   ABRIR / FECHAR BUSCA
-===================================================== */
-
-function alternarBusca() {
-
-  const caixa =
-    document.querySelector(".search-box");
-
-  const input =
-    document.getElementById("searchInput");
-
-  caixa.classList.toggle("open");
-
-  if (caixa.classList.contains("open")) {
-    input.focus();
-  }
-
-}
-
-
-/* =====================================================
    BUSCAR NOTÍCIAS
 ===================================================== */
 
@@ -2886,12 +2989,86 @@ document
 
 
 /* =====================================================
+   JOGOS GRÁTIS - DESTAQUE
+===================================================== */
+
+function escaparTexto(valor) {
+
+  return String(valor || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function criarCardDestaque(post, pequeno = false) {
+
+  const imagem = escaparTexto(post.imagem || "");
+  const titulo = escaparTexto(post.titulo || "Jogo grátis");
+  const resumo = escaparTexto(pequeno ? "Grátis na Epic Games" : "Grátis na Epic Games");
+  const link = escaparTexto(linkDaNoticia(post));
+
+  return `
+    <a class="showcase-card" href="${link}">
+      <img src="${imagem}" alt="${titulo}" loading="lazy">
+      <span class="showcase-badge">🎁 JOGOS GRÁTIS</span>
+      <div class="showcase-content">
+        <h3>${titulo}</h3>
+        <p>${resumo}</p>
+      </div>
+    </a>
+  `;
+}
+
+async function carregarJogosGratisDestaque() {
+
+  const grande = document.getElementById("freeGamesLarge");
+  const pequeno = document.getElementById("freeGamesSmall");
+
+  if (!grande || !pequeno) return;
+
+  try {
+    const resposta = await fetch("posts.json?freegames=" + Date.now());
+
+    if (!resposta.ok) throw new Error("posts.json não encontrado");
+
+    const posts = await resposta.json();
+
+    const jogos = posts.filter(post =>
+      String(post.categoria || "").toLowerCase() === "jogos grátis"
+    ).slice(0, 2);
+
+    if (jogos.length === 0) {
+      grande.innerHTML = `<div class="release-empty">🎁 Nenhum jogo grátis encontrado.</div>`;
+      pequeno.innerHTML = `<div class="release-empty">🎁 Nenhum jogo grátis encontrado.</div>`;
+      return;
+    }
+
+    grande.innerHTML = criarCardDestaque(jogos[0], false);
+
+    if (jogos[1]) {
+      pequeno.innerHTML = criarCardDestaque(jogos[1], true);
+    } else {
+      pequeno.innerHTML = `<div class="release-empty">🎁 Mais jogos grátis em breve.</div>`;
+    }
+
+  } catch (erro) {
+    console.error("Erro ao carregar jogos grátis:", erro);
+    grande.innerHTML = `<div class="release-error">⚠️ Não foi possível carregar os jogos grátis.</div>`;
+    pequeno.innerHTML = `<div class="release-error">⚠️ Não foi possível carregar.</div>`;
+  }
+}
+
+/* =====================================================
    INICIAR
 ===================================================== */
 
 carregarLancamentos();
 
 carregarNoticias();
+
+carregarJogosGratisDestaque();
 
 
 /* =====================================================
