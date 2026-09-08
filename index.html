@@ -216,6 +216,138 @@
 
 
     /* =====================================================
+       CALENDÁRIO + JOGOS GRÁTIS
+    ===================================================== */
+
+    .home-top {
+      width: calc(100% - 50px);
+      max-width: 1450px;
+      margin: 25px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .home-top .release-calendar {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+    }
+
+    .free-games-box {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(145deg,#0c110e,#080b09);
+      border: 1px solid #27352c;
+      border-radius: 15px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.30);
+    }
+
+    .free-games-header { margin-bottom: 15px; }
+
+    .free-games-title {
+      color: #fff;
+      font-size: 23px;
+      margin-bottom: 4px;
+    }
+
+    .free-games-subtitle {
+      color: #8f9992;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .free-games-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .free-game-card {
+      position: relative;
+      height: 185px;
+      overflow: hidden;
+      border-radius: 11px;
+      border: 1px solid #303832;
+      background: #111512;
+      text-decoration: none;
+      transition: 0.25s;
+    }
+
+    .free-game-card:hover {
+      transform: translateY(-4px);
+      border-color: #00ff88;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .free-game-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .free-game-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,rgba(0,0,0,0.00) 20%,rgba(0,0,0,0.90) 100%);
+    }
+
+    .free-game-info {
+      position: absolute;
+      z-index: 2;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+    }
+
+    .free-game-info h3 {
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .free-game-label {
+      display: inline-block;
+      margin-bottom: 5px;
+      padding: 4px 7px;
+      border-radius: 5px;
+      background: #00ff88;
+      color: #07100a;
+      font-size: 9px;
+      font-weight: bold;
+    }
+
+    .free-games-loading,
+    .free-games-empty,
+    .free-games-error {
+      width: 100%;
+      padding: 35px 20px;
+      text-align: center;
+      color: #8f9992;
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .home-top {
+        width: calc(100% - 24px);
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .home-top { width: calc(100% - 24px); }
+      .free-games-box { padding: 14px; border-radius: 12px; }
+      .free-games-title { font-size: 19px; }
+      .free-games-subtitle { font-size: 12px; }
+      .free-games-list { grid-template-columns: 1fr; }
+      .free-game-card { height: 150px; }
+    }
+
+    /* =====================================================
        CALENDÁRIO DE LANÇAMENTOS
        VERSÃO MENOR + IMAGENS HORIZONTAIS
     ===================================================== */
@@ -1447,8 +1579,10 @@
 </header>
 
 <!-- =====================================================
-     CALENDÁRIO
+     CALENDÁRIO + JOGOS GRÁTIS
 ===================================================== -->
+
+<div class="home-top">
 
 <section class="release-calendar">
 
@@ -1548,6 +1682,24 @@
 
 </section>
 
+<div class="free-games-box">
+
+  <div class="free-games-header">
+    <h2 class="free-games-title">🎁 Jogos Grátis</h2>
+    <p class="free-games-subtitle">
+      Confira os jogos disponíveis gratuitamente.
+    </p>
+  </div>
+
+  <div id="freeGamesList" class="free-games-list">
+    <div class="free-games-loading">
+      🎁 Carregando jogos grátis...
+    </div>
+  </div>
+
+</div>
+
+</div>
 
 <!-- =====================================================
      NOTÍCIAS
@@ -2871,8 +3023,56 @@ document
    INICIAR
 ===================================================== */
 
-carregarLancamentos();
+function carregarJogosGratis() {
 
+  const container = document.getElementById("freeGamesList");
+
+  if (!container) return;
+
+  fetch("posts.json")
+    .then(response => {
+      if (!response.ok) throw new Error("Erro ao carregar jogos grátis");
+      return response.json();
+    })
+    .then(posts => {
+
+      const jogosGratis = posts.filter(post =>
+        String(post.categoria || "").toLowerCase() === "jogos grátis"
+      );
+
+      if (jogosGratis.length === 0) {
+        container.innerHTML = `
+          <div class="free-games-empty">
+            🎁 Nenhum jogo grátis encontrado.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = jogosGratis.slice(0, 2).map(post => `
+        <a href="${linkDaNoticia(post)}" class="free-game-card">
+          <img src="${post.imagem}" alt="${post.titulo}" loading="lazy">
+          <div class="free-game-info">
+            <span class="free-game-label">GRÁTIS</span>
+            <h3>${post.titulo}</h3>
+          </div>
+        </a>
+      `).join("");
+
+    })
+    .catch(error => {
+      console.error("Erro ao carregar jogos grátis:", error);
+      container.innerHTML = `
+        <div class="free-games-error">
+          ⚠️ Não foi possível carregar os jogos grátis.
+        </div>
+      `;
+    });
+}
+
+
+carregarLancamentos();
+carregarJogosGratis();
 carregarNoticias();
 
 
