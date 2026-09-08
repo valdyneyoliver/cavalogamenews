@@ -275,6 +275,7 @@
     .release-title::first-letter {
 
       color: #00ff88;
+
     }
 
 
@@ -477,6 +478,7 @@
     .release-card:hover .release-image {
 
       transform: scale(1.05);
+
     }
 
 
@@ -541,6 +543,7 @@
     .release-date::first-letter {
 
       color: #00ff88;
+
     }
 
 
@@ -893,38 +896,1007 @@
 
       display: block;
     }
-    if (texto.includes("switch")) {
 
-      return "switch";
+
+    .card {
+
+      background: #101310;
+
+      border: 1px solid #303730;
+
+      border-radius: 12px;
+
+      overflow: hidden;
+
+      transition: 0.2s;
     }
 
-    return "";
+
+    .card:hover {
+
+      border-color: #00ff88;
+
+      transform: translateY(-3px);
+    }
+
+
+    .card img {
+
+      width: 100%;
+
+      height: 170px;
+
+      object-fit: cover;
+
+      display: block;
+    }
+
+
+    .card-content {
+
+      padding: 15px;
+    }
+
+
+    .category {
+
+      color: #00ff88;
+
+      font-size: 12px;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+    }
+
+
+    .date {
+
+      color: #888;
+
+      font-size: 12px;
+
+      margin: 6px 0 12px;
+    }
+
+
+    .card h3 {
+
+      margin-bottom: 10px;
+
+      line-height: 1.3;
+    }
+
+
+    .card p {
+
+      color: #bbb;
+
+      line-height: 1.5;
+    }
+
+
+    /* =====================================================
+       CARREGAR MAIS
+    ===================================================== */
+
+    .load-more-container {
+
+      text-align: center;
+
+      margin: 30px 0;
+    }
+
+
+    #loadMoreButton {
+
+      display: none;
+
+      background: #00ff88;
+
+      color: #07100a;
+
+      border: none;
+
+      padding: 12px 24px;
+
+      border-radius: 7px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+
+    #loadMoreButton:hover {
+
+      background: #00d976;
+    }
+
+
+    /* =====================================================
+       RODAPÉ
+    ===================================================== */
+
+    footer {
+
+      background: #080a09;
+
+      text-align: center;
+
+      padding: 25px;
+
+      margin-top: 50px;
+
+      color: #888;
+
+      border-top: 1px solid #202820;
+    }
+
+
+    /* =====================================================
+       DOAÇÃO
+    ===================================================== */
+
+    #apoie {
+
+      max-width: 500px;
+
+      margin: 35px auto 0;
+
+      padding: 25px;
+
+      text-align: center;
+
+      background: #111512;
+
+      border: 1px solid #303730;
+
+      border-radius: 15px;
+    }
+
+
+    #apoie h2 {
+
+      color: #00ff88;
+
+      margin-bottom: 10px;
+    }
+
+
+    #apoie p {
+
+      color: #bbb;
+
+      margin-bottom: 20px;
+
+      line-height: 1.5;
+    }
+
+
+    #apoie img {
+
+      width: 160px;
+
+      max-width: 100%;
+
+      border-radius: 8px;
+
+      background: #fff;
+
+      padding: 8px;
+    }
+
+
+    /* =====================================================
+       CELULAR
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+      header {
+        padding: 12px 18px;
+      }
+
+
+      .header-inner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+      }
+
+
+      nav {
+
+        width: 100%;
+
+        gap: 13px;
+      }
+
+
+      .search-box {
+        width: 38px;
+        height: 38px;
+      }
+
+
+      .search-box input {
+        left: 0;
+        width: 230px;
+      }
+
+
+      .hero h2 {
+
+        font-size: 27px;
+      }
+
+
+      .release-calendar {
+
+        width: calc(100% - 24px);
+
+        padding: 17px;
+      }
+
+
+      .release-title {
+
+        font-size: 21px;
+      }
+
+
+      .release-arrow {
+
+        display: none;
+      }
+
+
+      .release-card {
+
+        min-width: 255px;
+
+        width: 255px;
+
+        height: 165px;
+      }
+
+
+      .release-date {
+
+        bottom: 67px;
+      }
+
+
+      .container {
+
+        width: calc(100% - 24px);
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .logo {
+
+        height: 40px;
+      }
+
+
+      nav {
+
+        gap: 11px;
+      }
+
+
+      nav a {
+
+        font-size: 12px;
+      }
+
+
+      .search-button {
+        width: 36px;
+        height: 36px;
+      }
+
+
+      .search-box {
+        width: 36px;
+        height: 36px;
+      }
+
+
+      .search-box input {
+        width: 210px;
+      }
+
+
+      .hero {
+
+        min-height: 180px;
+
+        padding: 35px 15px;
+      }
+
+
+      .hero h2 {
+
+        font-size: 23px;
+      }
+
+
+      .hero p {
+
+        font-size: 15px;
+      }
+
+
+      .release-calendar {
+
+        margin: 18px auto;
+
+        padding: 14px;
+
+        border-radius: 12px;
+      }
+
+
+      .release-header {
+
+        margin-bottom: 14px;
+      }
+
+
+      .release-title {
+
+        font-size: 19px;
+      }
+
+
+      .release-subtitle {
+
+        font-size: 12px;
+      }
+
+
+      .release-filter {
+
+        padding: 7px 10px;
+
+        font-size: 11px;
+      }
+
+
+      .release-card {
+
+        min-width: 235px;
+
+        width: 235px;
+
+        height: 150px;
+      }
+
+
+      .release-date {
+
+        bottom: 110px;
+
+        font-size: 10px;
+      }
+
+
+      .release-name {
+
+        font-size: 14px;
+
+        min-height: 35px;
+      }
+
+
+      .release-platform {
+
+        font-size: 8px;
+
+        padding: 3px 5px;
+      }
+
+
+      .featured {
+
+        height: 380px;
+      }
+
+
+      .featured-overlay {
+
+        padding: 20px;
+      }
+
+
+      .featured-overlay h2 {
+
+        font-size: 24px;
+      }
+
+
+      #tituloNoticias {
+
+        font-size: 23px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+  <div class="header-inner">
+
+    <img
+      src="img/logo.png"
+      alt="CavaloGameNews"
+      class="logo"
+    >
+
+    <nav>
+
+      <div class="search-box">
+
+        <button
+          class="search-button"
+          onclick="alternarBusca()"
+          aria-label="Pesquisar"
+        >
+          🔍
+        </button>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar notícia..."
+          onkeyup="buscarNoticias()"
+        >
+
+      </div>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('todos'); return false;"
+      >
+        INÍCIO
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('Notícias'); return false;"
+      >
+        NOTÍCIAS
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('Xbox'); return false;"
+      >
+        XBOX
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('PlayStation'); return false;"
+      >
+        PLAYSTATION
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('PC'); return false;"
+      >
+        PC
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('Nintendo'); return false;"
+      >
+        NINTENDO
+      </a>
+
+
+      <a
+        href="#"
+        onclick="filtrarNoticias('Jogos Grátis'); return false;"
+      >
+        JOGOS GRÁTIS
+      </a>
+
+
+      <a
+        href="#doacao"
+        style="color:#00ff88;"
+      >
+        💚 APOIE
+      </a>
+
+    </nav>
+
+  </div>
+
+</header>
+
+<!-- =====================================================
+     CALENDÁRIO
+===================================================== -->
+
+<section class="release-calendar">
+
+  <div class="release-header">
+
+    <div>
+
+      <h2 class="release-title">
+        🎮 Calendário de Lançamentos
+      </h2>
+
+      <p class="release-subtitle">
+        Confira os próximos jogos que chegam ao PC e consoles.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="release-filters">
+
+    <button
+      class="release-filter active"
+      data-platform="todos"
+    >
+      ▦ Todos
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PC"
+    >
+      🖥️ PC
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Xbox"
+    >
+      🎮 Xbox
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PlayStation"
+    >
+      🎮 PlayStation
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Switch"
+    >
+      🎮 Switch
+    </button>
+
+  </div>
+
+
+  <div class="release-wrapper">
+
+    <button
+      class="release-arrow release-arrow-left"
+      id="releasePrev"
+      aria-label="Jogos anteriores"
+    >
+      ‹
+    </button>
+
+
+    <div
+      id="releaseGames"
+      class="release-games"
+    >
+
+      <div class="release-loading">
+        🎮 Carregando lançamentos...
+      </div>
+
+    </div>
+
+
+    <button
+      class="release-arrow release-arrow-right"
+      id="releaseNext"
+      aria-label="Próximos jogos"
+    >
+      ›
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     NOTÍCIAS
+===================================================== -->
+
+<div class="container">
+
+  <div id="featured"></div>
+
+  <h2 id="tituloNoticias">
+    Últimas Notícias
+  </h2>
+
+  <div
+    id="news"
+    class="news-grid"
+  ></div>
+
+
+  <div class="load-more-container">
+
+    <button
+      id="loadMoreButton"
+      onclick="carregarMais()"
+    >
+      CARREGAR MAIS
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     RODAPÉ
+===================================================== -->
+
+<footer>
+
+  © 2026 CavaloGameNews -
+  Todos os direitos reservados.
+
+
+  <section id="apoie">
+
+    <h2>
+      💚 Apoie o CavaloGameNews
+    </h2>
+
+
+    <p>
+      Gostou das notícias? Você pode ajudar a manter
+      o CavaloGameNews com uma doação via Pix.
+    </p>
+
+
+    <img
+      src="img/qrcode_pix_cavalogamenews.png"
+      alt="QR Code para doação via Pix"
+      onclick="copiarPix()"
+      style="cursor:pointer;"
+    >
+
+
+    <p
+      style="
+        color:#888;
+        margin-top:15px;
+        margin-bottom:0;
+        font-size:14px;
+      "
+    >
+      📱 Aponte a câmera do celular para o QR Code.
+      QR Code clicável: toque no QR Code para copiar a chave Pix.
+    </p>
+
+  </section>
+
+</footer>
+
+
+<!-- =====================================================
+     JANELA DE DOAÇÃO
+===================================================== -->
+
+<div
+  id="doacaoModal"
+  style="
+    display:none;
+    position:fixed;
+    z-index:9999;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.88);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  "
+>
+
+  <div
+    style="
+      background:#111512;
+      border:1px solid #303730;
+      border-radius:15px;
+      padding:25px;
+      text-align:center;
+      max-width:400px;
+      width:100%;
+      position:relative;
+    "
+  >
+
+    <button
+      onclick="fecharDoacao()"
+      style="
+        position:absolute;
+        right:12px;
+        top:10px;
+        background:none;
+        border:none;
+        color:#fff;
+        font-size:25px;
+        cursor:pointer;
+      "
+    >
+      ×
+    </button>
+
+
+    <h2
+      style="
+        color:#00ff88;
+        margin-bottom:10px;
+      "
+    >
+      💚 Apoie o CavaloGameNews
+    </h2>
+
+
+    <p
+      style="
+        color:#ccc;
+        line-height:1.5;
+        margin-bottom:15px;
+      "
+    >
+      Gostou do conteúdo? Ajude a manter
+      o CavaloGameNews com uma doação via Pix.
+    </p>
+
+
+    <img
+      src="img/qrcode_pix_cavalogamenews.png"
+      alt="QR Code Pix para doação"
+      onclick="copiarPix()"
+      style="
+        width:180px;
+        max-width:100%;
+        background:#fff;
+        padding:8px;
+        border-radius:8px;
+        cursor:pointer;
+      "
+    >
+
+
+    <p
+      style="
+        color:#aaa;
+        font-size:14px;
+        margin-top:15px;
+      "
+    >
+      📱 Aponte a câmera do celular para o QR Code.
+      QR Code clicável: toque no QR Code para copiar a chave Pix.
+    </p>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   CALENDÁRIO DE LANÇAMENTOS
+===================================================== */
+
+let releaseGames = [];
+
+const releaseContainer =
+  document.getElementById("releaseGames");
+
+const releaseFilters =
+  document.querySelectorAll(".release-filter");
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escapeReleaseHTML(valor) {
+
+  return String(valor || "")
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   CLASSE DA PLATAFORMA
+===================================================== */
+
+function classePlataforma(plataforma) {
+
+  const texto =
+    String(plataforma || "").toLowerCase();
+
+
+  if (texto.includes("pc")) {
+
+    return "pc";
+
   }
 
 
-  /* =====================================================
-     RENDERIZAR CALENDÁRIO
-  ===================================================== */
+  if (texto.includes("xbox")) {
 
-  function renderizarLancamentos(lista) {
+    return "xbox";
 
-    if (!releaseContainer) return;
+  }
 
 
-    if (!lista.length) {
+  if (texto.includes("playstation")) {
 
-      releaseContainer.innerHTML = `
-        <div class="release-empty">
-          🎮 Nenhum lançamento encontrado.
-        </div>
-      `;
+    return "playstation";
 
-      return;
+  }
+
+
+  if (texto.includes("switch")) {
+
+    return "switch";
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =====================================================
+   CARREGAR LANÇAMENTOS
+===================================================== */
+
+async function carregarLancamentos() {
+
+  try {
+
+    const resposta =
+      await fetch(
+        "lancamentos.json?nocache=" +
+        Date.now()
+      );
+
+
+    if (!resposta.ok) {
+
+      throw new Error(
+        "lancamentos.json não encontrado"
+      );
+
     }
 
 
-    releaseContainer.innerHTML =
-      lista.map(jogo => {
+    const dados =
+      await resposta.json();
+
+
+    if (Array.isArray(dados)) {
+
+      releaseGames = dados;
+
+    } else {
+
+      releaseGames =
+        Array.isArray(dados.jogos)
+          ? dados.jogos
+          : [];
+
+    }
+
+
+    mostrarLancamentos("todos");
+
+  }
+
+
+  catch (erro) {
+
+    console.error(
+      "Erro ao carregar lançamentos:",
+      erro
+    );
+
+
+    releaseContainer.innerHTML = `
+
+      <div class="release-error">
+
+        ⚠️ Não foi possível carregar
+        os lançamentos no momento.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   MOSTRAR LANÇAMENTOS
+===================================================== */
+
+function mostrarLancamentos(plataforma) {
+
+  let jogos =
+    [...releaseGames];
+
+
+  if (plataforma !== "todos") {
+
+    jogos =
+      jogos.filter(jogo => {
 
         const plataformas =
           Array.isArray(jogo.plataformas)
@@ -932,54 +1904,677 @@
             : [];
 
 
-        const plataformasHTML =
-          plataformas.map(plataforma => {
+        return plataformas.includes(
+          plataforma
+        );
 
-            const classe =
-              classePlataforma(plataforma);
+      });
 
-            return `
-              <span
-                class="release-platform ${classe}"
-              >
-                ${escapeReleaseHTML(plataforma)}
-              </span>
-            `;
-
-          }).join("");
+  }
 
 
-        return `
+  jogos =
+    jogos.slice(0, 100);
 
-          <a
-            class="release-card"
-            href="${escapeReleaseHTML(jogo.link_rawg || "#")}"
-            target="_blank"
-            rel="noopener noreferrer"
+
+  if (jogos.length === 0) {
+
+    releaseContainer.innerHTML = `
+
+      <div class="release-empty">
+
+        🎮 Nenhum lançamento encontrado.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  releaseContainer.innerHTML =
+
+    jogos.map(jogo => {
+
+      const plataformas =
+        Array.isArray(jogo.plataformas)
+          ? jogo.plataformas
+          : [];
+
+
+      const plataformasHTML =
+
+        plataformas.map(plataforma => {
+
+          const classe =
+            classePlataforma(plataforma);
+
+
+          return `
+
+            <span
+              class="release-platform ${classe}"
+            >
+              ${escapeReleaseHTML(plataforma)}
+            </span>
+
+          `;
+
+        }).join("");
+
+
+      const imagem =
+        escapeReleaseHTML(
+          jogo.imagem || ""
+        );
+
+
+      const nome =
+        escapeReleaseHTML(
+          jogo.nome ||
+          "Jogo sem nome"
+        );
+
+
+      const data =
+        escapeReleaseHTML(
+          jogo.data_formatada ||
+          jogo.data ||
+          "Data não informada"
+        );
+
+
+      return `
+
+        <a
+          class="release-card"
+          href="${escapeReleaseHTML(jogo.link_rawg || '#')}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+
+          <img
+            class="release-image"
+            src="${imagem}"
+            alt="${nome}"
+            loading="lazy"
+            onerror="this.style.display='none';"
           >
 
-            <img
-              class="release-image"
-              src="${escapeReleaseHTML(jogo.imagem || "")}"
-              alt="${escapeReleaseHTML(jogo.nome || "Jogo")}"
-              loading="lazy"
-            >
-
+          <div class="release-info">
 
             <div class="release-date">
-              📅 ${escapeReleaseHTML(jogo.data_formatada || jogo.data || "")}
+              📅 ${data}
             </div>
 
+            <div class="release-name">
+              ${nome}
+            </div>
 
-            <div class="release-info">
+            <div class="release-platforms">
+              ${plataformasHTML}
+            </div>
 
-              <div class="release-name">
-                ${escapeReleaseHTML(jogo.nome || "Jogo")}
+          </div>
+
+        </a>
+
+      `;
+
+    }).join("");
+
+
+  atualizarSetas();
+
+}
+
+
+/* =====================================================
+   SETAS
+===================================================== */
+
+const releasePrev =
+  document.getElementById("releasePrev");
+
+const releaseNext =
+  document.getElementById("releaseNext");
+
+
+releasePrev.addEventListener(
+  "click",
+  function() {
+
+    releaseContainer.scrollBy({
+
+      left: -500,
+
+      behavior: "smooth"
+
+    });
+
+  }
+);
+
+
+releaseNext.addEventListener(
+  "click",
+  function() {
+
+    releaseContainer.scrollBy({
+
+      left: 500,
+
+      behavior: "smooth"
+
+    });
+
+  }
+);
+
+
+/* =====================================================
+   ATUALIZAR SETAS
+===================================================== */
+
+function atualizarSetas() {
+
+  setTimeout(() => {
+
+    if (
+      releaseContainer.scrollWidth <=
+      releaseContainer.clientWidth
+    ) {
+
+      releasePrev.style.display = "none";
+
+      releaseNext.style.display = "none";
+
+      return;
+
+    }
+
+
+    releasePrev.style.display = "flex";
+
+    releaseNext.style.display = "flex";
+
+  }, 100);
+
+}
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+releaseFilters.forEach(botao => {
+
+  botao.addEventListener(
+    "click",
+    () => {
+
+      releaseFilters.forEach(
+        outro => {
+
+          outro.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      botao.classList.add(
+        "active"
+      );
+
+
+      mostrarLancamentos(
+        botao.dataset.platform
+      );
+
+
+      releaseContainer.scrollLeft = 0;
+
+    }
+  );
+
+});
+
+
+/* =====================================================
+   LINK DAS NOTÍCIAS
+===================================================== */
+
+function linkDaNoticia(post) {
+
+  return (
+    "noticias/" +
+    post.id +
+    ".html"
+  );
+
+}
+
+
+/* =====================================================
+   PAGINAÇÃO
+===================================================== */
+
+const NOTICIAS_POR_VEZ = 24;
+
+let noticiasDaPaginaInicial = [];
+
+let quantidadeExibida = 0;
+
+
+/* =====================================================
+   CARD DE NOTÍCIA
+===================================================== */
+
+function criarCardNoticia(post) {
+
+  return `
+
+    <a
+      href="${linkDaNoticia(post)}"
+      class="news-link"
+    >
+
+      <div class="card">
+
+        <img
+          src="${post.imagem}"
+          alt="${post.titulo}"
+          loading="lazy"
+        >
+
+        <div class="card-content">
+
+          <div class="category">
+            ${post.categoria}
+          </div>
+
+          <div class="date">
+            ${post.data}
+          </div>
+
+          <h3>
+            ${post.titulo}
+          </h3>
+
+          <p>
+            ${post.resumo}
+          </p>
+
+        </div>
+
+      </div>
+
+    </a>
+
+  `;
+
+}
+
+
+/* =====================================================
+   BOTÃO CARREGAR MAIS
+===================================================== */
+
+function atualizarBotaoCarregarMais() {
+
+  const botao =
+    document.getElementById(
+      "loadMoreButton"
+    );
+
+
+  if (!botao) return;
+
+
+  botao.style.display =
+
+    quantidadeExibida <
+    noticiasDaPaginaInicial.length
+
+      ? "inline-block"
+
+      : "none";
+
+}
+
+
+/* =====================================================
+   MOSTRAR MAIS
+===================================================== */
+
+function mostrarMaisNoticias() {
+
+  const container =
+    document.getElementById("news");
+
+
+  const proximaQuantidade =
+    Math.min(
+
+      quantidadeExibida +
+      NOTICIAS_POR_VEZ,
+
+      noticiasDaPaginaInicial.length
+
+    );
+
+
+  for (
+    let i = quantidadeExibida;
+    i < proximaQuantidade;
+    i++
+  ) {
+
+    container.innerHTML +=
+      criarCardNoticia(
+        noticiasDaPaginaInicial[i]
+      );
+
+  }
+
+
+  quantidadeExibida =
+    proximaQuantidade;
+
+
+  atualizarBotaoCarregarMais();
+
+}
+
+
+/* =====================================================
+   CARREGAR MAIS
+===================================================== */
+
+function carregarMais() {
+
+  mostrarMaisNoticias();
+
+}
+
+
+/* =====================================================
+   CARREGAR NOTÍCIAS
+===================================================== */
+
+function carregarNoticias() {
+
+  fetch("posts.json")
+
+    .then(response => {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Erro ao carregar posts.json"
+        );
+
+      }
+
+
+      return response.json();
+
+    })
+
+
+    .then(posts => {
+
+      const featured =
+        document.getElementById(
+          "featured"
+        );
+
+
+      const container =
+        document.getElementById(
+          "news"
+        );
+
+
+      featured.innerHTML = "";
+
+      container.innerHTML = "";
+
+
+      if (posts.length > 0) {
+
+        const principal =
+          posts[0];
+
+
+        featured.innerHTML = `
+
+          <a
+            href="${linkDaNoticia(principal)}"
+            class="featured-link"
+          >
+
+            <article
+              class="featured"
+            >
+
+              <img
+                src="${principal.imagem}"
+                alt="${principal.titulo}"
+              >
+
+              <div
+                class="featured-overlay"
+              >
+
+                <span
+                  class="category"
+                >
+                  ${principal.categoria}
+                </span>
+
+                <h2>
+                  ${principal.titulo}
+                </h2>
+
+                <div class="date">
+                  ${principal.data}
+                </div>
+
+                <p>
+                  ${principal.resumo}
+                </p>
+
+                <span
+                  class="read-button"
+                >
+                  LER NOTÍCIA →
+                </span>
+
               </div>
 
+            </article>
 
-              <div class="release-platforms">
-                ${plataformasHTML}
+          </a>
+
+        `;
+
+      }
+
+
+      noticiasDaPaginaInicial =
+        posts.slice(1);
+
+
+      quantidadeExibida = 0;
+
+
+      mostrarMaisNoticias();
+
+    })
+
+
+    .catch(error => {
+
+      console.error(error);
+
+
+      document.getElementById(
+        "news"
+      ).innerHTML = `
+
+        <p>
+          Nenhuma notícia encontrada.
+        </p>
+
+      `;
+
+    });
+
+}
+
+
+/* =====================================================
+   FILTRAR CATEGORIA
+===================================================== */
+
+function filtrarNoticias(categoria) {
+
+  const titulo =
+    document.getElementById(
+      "tituloNoticias"
+    );
+
+
+  if (categoria === "todos") {
+
+    titulo.textContent =
+      "Últimas Notícias";
+
+  }
+
+  else {
+
+    titulo.textContent =
+      "Notícias de " +
+      categoria;
+
+  }
+
+
+  const container =
+    document.getElementById(
+      "news"
+    );
+
+
+  const featured =
+    document.getElementById(
+      "featured"
+    );
+
+
+  const loadMoreButton =
+    document.getElementById(
+      "loadMoreButton"
+    );
+
+
+  if (loadMoreButton) {
+
+    loadMoreButton.style.display =
+      "none";
+
+  }
+
+
+  if (categoria === "todos") {
+
+    carregarNoticias();
+
+    return;
+
+  }
+
+
+  featured.innerHTML = "";
+
+  container.innerHTML = "";
+
+
+  fetch("posts.json")
+
+    .then(response =>
+      response.json()
+    )
+
+    .then(posts => {
+
+      const filtradas =
+        posts.filter(post =>
+
+          post.categoria
+            .toLowerCase() ===
+          categoria.toLowerCase()
+
+        );
+
+
+      if (filtradas.length === 0) {
+
+        container.innerHTML = `
+
+          <p>
+            Nenhuma notícia encontrada
+            nessa categoria.
+          </p>
+
+        `;
+
+        return;
+
+      }
+
+
+      filtradas.forEach(post => {
+
+        container.innerHTML += `
+
+          <a
+            href="${linkDaNoticia(post)}"
+            class="news-link"
+          >
+
+            <div class="card">
+
+              <img
+                src="${post.imagem}"
+                alt="${post.titulo}"
+                loading="lazy"
+              >
+
+              <div class="card-content">
+
+                <div class="category">
+                  ${post.categoria}
+                </div>
+
+                <div class="date">
+                  ${post.data}
+                </div>
+
+                <h3>
+                  ${post.titulo}
+                </h3>
+
+                <p>
+                  ${post.resumo}
+                </p>
+
               </div>
 
             </div>
@@ -988,861 +2583,121 @@
 
         `;
 
-      }).join("");
-  }
-
-
-  /* =====================================================
-     FILTRAR CALENDÁRIO
-  ===================================================== */
-
-  function filtrarLancamentos(plataforma) {
-
-    if (plataforma === "todos") {
-
-      renderizarLancamentos(releaseGames);
-
-      return;
-    }
-
-
-    const filtrados =
-      releaseGames.filter(jogo => {
-
-        const plataformas =
-          Array.isArray(jogo.plataformas)
-            ? jogo.plataformas
-            : [];
-
-
-        return plataformas.some(item =>
-          String(item)
-            .toLowerCase()
-            .includes(plataforma.toLowerCase())
-        );
-
       });
 
+    })
 
-    renderizarLancamentos(filtrados);
-  }
 
+    .catch(() => {
 
-  /* =====================================================
-     CARREGAR LANÇAMENTOS
-  ===================================================== */
+      container.innerHTML = `
 
-  function carregarLancamentos() {
-
-    if (!releaseContainer) return;
-
-
-    fetch("lancamentos.json")
-
-      .then(response => {
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Não foi possível carregar lancamentos.json"
-          );
-
-        }
-
-        return response.json();
-
-      })
-
-      .then(data => {
-
-        releaseGames =
-          Array.isArray(data.jogos)
-            ? data.jogos
-            : [];
-
-
-        releaseGames =
-          releaseGames.filter(jogo =>
-            jogo &&
-            jogo.nome &&
-            jogo.data
-          );
-
-
-        releaseGames.sort((a, b) => {
-
-          return String(a.data)
-            .localeCompare(String(b.data));
-
-        });
-
-
-        releaseGames =
-          releaseGames.slice(0, 100);
-
-
-        renderizarLancamentos(releaseGames);
-
-      })
-
-      .catch(error => {
-
-        console.error(
-          "Erro no calendário:",
-          error
-        );
-
-
-        releaseContainer.innerHTML = `
-
-          <div class="release-error">
-            ⚠️ Não foi possível carregar
-            o calendário de lançamentos.
-          </div>
-
-        `;
-
-      });
-
-  }
-
-
-  /* =====================================================
-     FILTROS DO CALENDÁRIO
-  ===================================================== */
-
-  releaseFilters.forEach(button => {
-
-    button.addEventListener(
-      "click",
-      () => {
-
-        releaseFilters.forEach(item => {
-
-          item.classList.remove("active");
-
-        });
-
-
-        button.classList.add("active");
-
-
-        const plataforma =
-          button.dataset.platform;
-
-
-        filtrarLancamentos(plataforma);
-
-      }
-    );
-
-  });
-
-
-  /* =====================================================
-     SETAS DO CALENDÁRIO
-  ===================================================== */
-
-  const releasePrev =
-    document.getElementById("releasePrev");
-
-
-  const releaseNext =
-    document.getElementById("releaseNext");
-
-
-  if (releasePrev) {
-
-    releasePrev.addEventListener(
-      "click",
-      () => {
-
-        releaseContainer.scrollBy({
-          left: -600,
-          behavior: "smooth"
-        });
-
-      }
-    );
-
-  }
-
-
-  if (releaseNext) {
-
-    releaseNext.addEventListener(
-      "click",
-      () => {
-
-        releaseContainer.scrollBy({
-          left: 600,
-          behavior: "smooth"
-        });
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     BUSCA
-  ===================================================== */
-
-  function alternarBusca() {
-
-    const caixa =
-      document.querySelector(".search-box");
-
-
-    const input =
-      document.getElementById("searchInput");
-
-
-    caixa.classList.toggle("open");
-
-
-    if (caixa.classList.contains("open")) {
-
-      input.focus();
-
-    }
-
-  }
-
-
-  /* =====================================================
-     NOTÍCIAS
-  ===================================================== */
-
-  let todasNoticias = [];
-
-  let noticiasExibidas = 0;
-
-  const noticiasPorPagina = 12;
-
-
-  function linkDaNoticia(post) {
-
-    return "noticias/" + post.id + ".html";
-
-  }
-
-
-  function escaparHTML(texto) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent =
-      texto || "";
-
-    return div.innerHTML;
-
-  }
-
-
-  function carregarNoticias() {
-
-    fetch("posts.json")
-
-      .then(response => {
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Erro ao carregar posts.json"
-          );
-
-        }
-
-        return response.json();
-
-      })
-
-      .then(posts => {
-
-        if (!Array.isArray(posts)) {
-
-          throw new Error(
-            "posts.json inválido"
-          );
-
-        }
-
-
-        todasNoticias = posts;
-
-
-        todasNoticias.sort((a, b) => {
-
-          const dataA =
-            String(a.data || "");
-
-          const dataB =
-            String(b.data || "");
-
-
-          return dataB.localeCompare(dataA);
-
-        });
-
-
-        noticiasExibidas = 0;
-
-
-        filtrarNoticias("todos");
-
-      })
-
-      .catch(error => {
-
-        console.error(
-          "Erro ao carregar notícias:",
-          error
-        );
-
-
-        const news =
-          document.getElementById("news");
-
-
-        if (news) {
-
-          news.innerHTML = `
-
-            <p style="
-              color:#888;
-              text-align:center;
-              padding:30px;
-            ">
-              ⚠️ Nenhuma notícia encontrada.
-            </p>
-
-          `;
-
-        }
-
-      });
-
-  }
-
-
-  /* =====================================================
-     FILTRAR NOTÍCIAS
-  ===================================================== */
-
-  function filtrarNoticias(categoria) {
-
-    const titulo =
-      document.getElementById("tituloNoticias");
-
-
-    let noticiasFiltradas;
-
-
-    if (categoria === "todos") {
-
-      noticiasFiltradas =
-        todasNoticias;
-
-      if (titulo) {
-
-        titulo.textContent =
-          "Últimas Notícias";
-
-      }
-
-    } else {
-
-      noticiasFiltradas =
-        todasNoticias.filter(post => {
-
-          return String(post.categoria || "")
-            .toLowerCase()
-            === String(categoria)
-              .toLowerCase();
-
-        });
-
-
-      if (titulo) {
-
-        titulo.textContent =
-          categoria;
-
-      }
-
-    }
-
-
-    noticiasExibidas = 0;
-
-
-    const news =
-      document.getElementById("news");
-
-
-    if (!news) return;
-
-
-    news.innerHTML = "";
-
-
-    const quantidade =
-      Math.min(
-        noticiasPorPagina,
-        noticiasFiltradas.length
-      );
-
-
-    for (
-      let i = 0;
-      i < quantidade;
-      i++
-    ) {
-
-      const post =
-        noticiasFiltradas[i];
-
-
-      news.innerHTML += `
-
-        <a
-          class="news-link"
-          href="${linkDaNoticia(post)}"
-        >
-
-          <article class="card">
-
-            <img
-              src="${escaparHTML(post.imagem || "")}"
-              alt="${escaparHTML(post.titulo || "")}"
-              loading="lazy"
-            >
-
-
-            <div class="card-content">
-
-              <div class="category">
-                ${escaparHTML(post.categoria || "")}
-              </div>
-
-
-              <div class="date">
-                ${escaparHTML(post.data || "")}
-              </div>
-
-
-              <h3>
-                ${escaparHTML(post.titulo || "")}
-              </h3>
-
-
-              <p>
-                ${escaparHTML(post.resumo || "")}
-              </p>
-
-            </div>
-
-          </article>
-
-        </a>
-
-      `;
-
-    }
-
-
-    noticiasExibidas =
-      quantidade;
-
-
-    atualizarBotaoCarregarMais(
-      noticiasFiltradas.length
-    );
-
-  }
-
-
-  /* =====================================================
-     CARREGAR MAIS
-  ===================================================== */
-
-  function carregarMais() {
-
-    const categoriaAtual =
-      document.getElementById("tituloNoticias")
-        ?.textContent
-        || "Últimas Notícias";
-
-
-    let noticiasFiltradas;
-
-
-    if (
-      categoriaAtual === "Últimas Notícias"
-    ) {
-
-      noticiasFiltradas =
-        todasNoticias;
-
-    } else {
-
-      noticiasFiltradas =
-        todasNoticias.filter(post => {
-
-          return String(post.categoria || "")
-            .toLowerCase()
-            === String(categoriaAtual)
-              .toLowerCase();
-
-        });
-
-    }
-
-
-    const news =
-      document.getElementById("news");
-
-
-    if (!news) return;
-
-
-    const inicio =
-      noticiasExibidas;
-
-
-    const fim =
-      Math.min(
-        inicio + noticiasPorPagina,
-        noticiasFiltradas.length
-      );
-
-
-    for (
-      let i = inicio;
-      i < fim;
-      i++
-    ) {
-
-      const post =
-        noticiasFiltradas[i];
-
-
-      news.innerHTML += `
-
-        <a
-          class="news-link"
-          href="${linkDaNoticia(post)}"
-        >
-
-          <article class="card">
-
-            <img
-              src="${escaparHTML(post.imagem || "")}"
-              alt="${escaparHTML(post.titulo || "")}"
-              loading="lazy"
-            >
-
-
-            <div class="card-content">
-
-              <div class="category">
-                ${escaparHTML(post.categoria || "")}
-              </div>
-
-
-              <div class="date">
-                ${escaparHTML(post.data || "")}
-              </div>
-
-
-              <h3>
-                ${escaparHTML(post.titulo || "")}
-              </h3>
-
-
-              <p>
-                ${escaparHTML(post.resumo || "")}
-              </p>
-
-            </div>
-
-          </article>
-
-        </a>
-
-      `;
-
-    }
-
-
-    noticiasExibidas =
-      fim;
-
-
-    atualizarBotaoCarregarMais(
-      noticiasFiltradas.length
-    );
-
-  }
-
-
-  function atualizarBotaoCarregarMais(total) {
-
-    const button =
-      document.getElementById("loadMoreButton");
-
-
-    if (!button) return;
-
-
-    if (noticiasExibidas < total) {
-
-      button.style.display =
-        "inline-block";
-
-    } else {
-
-      button.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  /* =====================================================
-     PESQUISA DE NOTÍCIAS
-  ===================================================== */
-
-  function buscarNoticias() {
-
-    const input =
-      document.getElementById("searchInput");
-
-
-    const termo =
-      String(input?.value || "")
-        .toLowerCase()
-        .trim();
-
-
-    const news =
-      document.getElementById("news");
-
-
-    const titulo =
-      document.getElementById("tituloNoticias");
-
-
-    if (!news) return;
-
-
-    if (!termo) {
-
-      filtrarNoticias("todos");
-
-      return;
-
-    }
-
-
-    const resultados =
-      todasNoticias.filter(post => {
-
-        const texto = [
-
-          post.titulo,
-          post.resumo,
-          post.categoria
-
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-
-        return texto.includes(termo);
-
-      });
-
-
-    if (titulo) {
-
-      titulo.textContent =
-        "Resultados da busca";
-
-    }
-
-
-    news.innerHTML = "";
-
-
-    resultados.forEach(post => {
-
-      news.innerHTML += `
-
-        <a
-          class="news-link"
-          href="${linkDaNoticia(post)}"
-        >
-
-          <article class="card">
-
-            <img
-              src="${escaparHTML(post.imagem || "")}"
-              alt="${escaparHTML(post.titulo || "")}"
-              loading="lazy"
-            >
-
-
-            <div class="card-content">
-
-              <div class="category">
-                ${escaparHTML(post.categoria || "")}
-              </div>
-
-
-              <div class="date">
-                ${escaparHTML(post.data || "")}
-              </div>
-
-
-              <h3>
-                ${escaparHTML(post.titulo || "")}
-              </h3>
-
-
-              <p>
-                ${escaparHTML(post.resumo || "")}
-              </p>
-
-            </div>
-
-          </article>
-
-        </a>
+        <p>
+          Erro ao carregar notícias.
+        </p>
 
       `;
 
     });
 
-
-    noticiasExibidas =
-      resultados.length;
+}
 
 
-    atualizarBotaoCarregarMais(
-      resultados.length
-    );
+/* =====================================================
+   ABRIR / FECHAR BUSCA
+===================================================== */
 
+function alternarBusca() {
+
+  const caixa =
+    document.querySelector(".search-box");
+
+  const input =
+    document.getElementById("searchInput");
+
+  caixa.classList.toggle("open");
+
+  if (caixa.classList.contains("open")) {
+    input.focus();
   }
 
-
-  /* =====================================================
-     COPIAR PIX
-  ===================================================== */
-
-  function copiarPix() {
-
-    navigator.clipboard.writeText(
-      "valdyneyoliver@gmail.com"
-    )
-
-      .then(() => {
-
-        alert(
-          "Chave Pix copiada!"
-        );
-
-      })
-
-      .catch(() => {
-
-        alert(
-          "Não foi possível copiar a chave Pix."
-        );
-
-      });
-
-  }
+}
 
 
-  /* =====================================================
-     DOAÇÃO
-  ===================================================== */
+/* =====================================================
+   BUSCAR NOTÍCIAS
+===================================================== */
 
-  const linkDoacao =
-    document.querySelector(
-      'a[href="#doacao"]'
-    );
+function buscarNoticias() {
+
+  const termo =
+
+    document
+      .getElementById(
+        "searchInput"
+      )
+      .value
+      .toLowerCase()
+      .trim();
 
 
-  const doacaoModal =
+  const container =
     document.getElementById(
-      "doacaoModal"
+      "news"
     );
 
 
-  function abrirDoacao() {
-
-    if (!doacaoModal) return;
-
-
-    doacaoModal.style.display =
-      "flex";
-
-  }
+  const featured =
+    document.getElementById(
+      "featured"
+    );
 
 
-  function fecharDoacao() {
+  const loadMoreButton =
+    document.getElementById(
+      "loadMoreButton"
+    );
 
-    if (!doacaoModal) return;
 
+  if (loadMoreButton) {
 
-    doacaoModal.style.display =
+    loadMoreButton.style.display =
       "none";
 
   }
 
 
-  if (linkDoacao) {
+  if (termo === "") {
 
-    linkDoacao.addEventListener(
-      "click",
-      function(event) {
+    carregarNoticias();
 
-        event.preventDefault();
-
-        abrirDoacao();
-
-      }
-    );
+    return;
 
   }
 
 
-  if (doacaoModal) {
+  featured.innerHTML = "";
 
-    doacaoModal.addEventListener(
-      "click",
-      function(event) {
+  container.innerHTML = "";
 
-        if (
-          event.target ===
-          doacaoModal
-        ) {
 
-          fecharDoacao();
+  fetch("posts.json")
 
-        }
+    .then(response =>
+      response.json()
+    )
 
-      }
-    );
+    .then(posts => {
 
-  }
+      const resultados =
+        posts.filter(post =>
+
+          post.titulo
+            .toLowerCase()
+            .includes(termo)
+
+          ||
+
           post.resumo
             .toLowerCase()
             .includes(termo)
@@ -1859,12 +2714,15 @@
       if (resultados.length === 0) {
 
         container.innerHTML = `
+
           <p>
             Nenhuma notícia encontrada.
           </p>
+
         `;
 
         return;
+
       }
 
 
@@ -1952,27 +2810,14 @@ function fecharDoacao() {
 
 }
 
-
 function copiarPix() {
 
-  navigator.clipboard.writeText(
-    "valdyneyoliver@gmail.com"
-  )
-
+  navigator.clipboard.writeText("valdyneyoliver@gmail.com")
     .then(() => {
-
-      alert(
-        "Chave Pix copiada!"
-      );
-
+      alert("Chave Pix copiada!");
     })
-
     .catch(() => {
-
-      alert(
-        "Não foi possível copiar a chave Pix."
-      );
-
+      alert("Não foi possível copiar a chave Pix.");
     });
 
 }
