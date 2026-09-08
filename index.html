@@ -857,123 +857,6 @@
 
 
     /* =====================================================
-       PAINEL PRINCIPAL
-    ===================================================== */
-
-    .top-widgets {
-      width: calc(100% - 40px);
-      max-width: 1450px;
-      margin: 25px auto 30px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
-      gap: 20px;
-      align-items: start;
-    }
-
-    .top-widgets .release-calendar {
-      width: 100%;
-      max-width: none;
-      margin: 0;
-      padding: 15px;
-    }
-
-    .top-widgets .release-header {
-      margin-bottom: 10px;
-    }
-
-    .top-widgets .release-title {
-      font-size: 20px;
-    }
-
-    .top-widgets .release-subtitle {
-      font-size: 12px;
-    }
-
-    .top-widgets .release-filters {
-      margin-bottom: 10px;
-      gap: 6px;
-    }
-
-    .top-widgets .release-filter {
-      padding: 6px 10px;
-      font-size: 11px;
-    }
-
-    .top-widgets .release-card {
-      min-width: 210px;
-      width: 210px;
-      height: 130px;
-    }
-
-    .top-widgets .release-date {
-      left: 7px;
-      right: 7px;
-      bottom: 93px;
-      padding: 4px 6px;
-      font-size: 9px;
-    }
-
-    .top-widgets .release-info {
-      left: 8px;
-      right: 8px;
-      bottom: 7px;
-    }
-
-    .top-widgets .release-name {
-      font-size: 12px;
-      min-height: 30px;
-      margin-bottom: 4px;
-    }
-
-    .top-widgets .release-platform {
-      padding: 3px 5px;
-      font-size: 8px;
-    }
-
-    .top-widgets .dashboard-panel {
-      background: #101310;
-      border: 1px solid #303730;
-      border-radius: 15px;
-      overflow: hidden;
-    }
-
-    .top-widgets .dashboard-panel-title {
-      padding: 13px 16px;
-      color: #00ff88;
-      font-size: 19px;
-      border-bottom: 1px solid #263028;
-    }
-
-    .top-widgets .free-games-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding: 10px;
-    }
-
-    .top-widgets .free-game-card {
-      min-height: 105px;
-    }
-
-    .top-widgets .free-game-card img {
-      height: 115px;
-    }
-
-    .top-widgets .free-game-info {
-      left: 10px;
-      right: 10px;
-      bottom: 9px;
-    }
-
-    .top-widgets .free-game-info h3 {
-      font-size: 15px;
-    }
-
-    .top-widgets .free-game-info p {
-      font-size: 11px;
-    }
-
-    /* =====================================================
        TÍTULO NOTÍCIAS
     ===================================================== */
 
@@ -1213,22 +1096,6 @@
 
     @media (max-width: 900px) {
 
-      .top-widgets {
-        grid-template-columns: 1fr;
-      }
-
-      .top-widgets .release-card {
-        min-width: 235px;
-        width: 235px;
-        height: 150px;
-      }
-
-      .top-widgets .release-date {
-        bottom: 110px;
-      }
-
-
-
       header {
         padding: 12px 18px;
       }
@@ -1318,7 +1185,7 @@
 
       .logo {
 
-        height: 48px;
+        height: 40px;
       }
 
 
@@ -1464,19 +1331,6 @@
         font-size: 23px;
       }
 
-      .dashboard-panel-title {
-        font-size: 18px;
-      }
-
-      .dashboard-column .featured {
-        height: 300px;
-      }
-
-      .dashboard-news #news {
-        max-height: none;
-        overflow: visible;
-      }
-
     }
 
   </style>
@@ -1575,7 +1429,7 @@
         href="#"
         onclick="filtrarNoticias('Jogos Grátis'); return false;"
       >
-        🎁 JOGOS GRÁTIS
+        JOGOS GRÁTIS
       </a>
 
 
@@ -1611,99 +1465,110 @@
 
 
 <!-- =====================================================
-     CALENDÁRIO + JOGOS GRÁTIS
+     CALENDÁRIO
 ===================================================== -->
 
-<div class="top-widgets">
+<section class="release-calendar">
 
-  <!-- CALENDÁRIO -->
-  <section class="release-calendar">
+  <div class="release-header">
 
-    <div class="release-header">
-      <div>
-        <h2 class="release-title">
-          🎮 Calendário de Lançamentos
-        </h2>
+    <div>
 
-        <p class="release-subtitle">
-          Confira os próximos jogos que chegam ao PC e consoles.
-        </p>
+      <h2 class="release-title">
+        🎮 Calendário de Lançamentos
+      </h2>
+
+      <p class="release-subtitle">
+        Confira os próximos jogos que chegam ao PC e consoles.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="release-filters">
+
+    <button
+      class="release-filter active"
+      data-platform="todos"
+    >
+      ▦ Todos
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PC"
+    >
+      🖥️ PC
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Xbox"
+    >
+      🎮 Xbox
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="PlayStation"
+    >
+      🎮 PlayStation
+    </button>
+
+
+    <button
+      class="release-filter"
+      data-platform="Switch"
+    >
+      🎮 Switch
+    </button>
+
+  </div>
+
+
+  <div class="release-wrapper">
+
+    <button
+      class="release-arrow release-arrow-left"
+      id="releasePrev"
+      aria-label="Jogos anteriores"
+    >
+      ‹
+    </button>
+
+
+    <div
+      id="releaseGames"
+      class="release-games"
+    >
+
+      <div class="release-loading">
+        🎮 Carregando lançamentos...
       </div>
-    </div>
-
-    <div class="release-filters">
-
-      <button class="release-filter active" data-platform="todos">
-        ▦ Todos
-      </button>
-
-      <button class="release-filter" data-platform="PC">
-        🖥️ PC
-      </button>
-
-      <button class="release-filter" data-platform="Xbox">
-        🎮 Xbox
-      </button>
-
-      <button class="release-filter" data-platform="PlayStation">
-        🎮 PlayStation
-      </button>
-
-      <button class="release-filter" data-platform="Switch">
-        🎮 Switch
-      </button>
 
     </div>
 
-    <div class="release-wrapper">
 
-      <button
-        class="release-arrow release-arrow-left"
-        id="releasePrev"
-        aria-label="Jogos anteriores"
-      >
-        ‹
-      </button>
+    <button
+      class="release-arrow release-arrow-right"
+      id="releaseNext"
+      aria-label="Próximos jogos"
+    >
+      ›
+    </button>
 
-      <div id="releaseGames" class="release-games">
-        <div class="release-loading">
-          🎮 Carregando lançamentos...
-        </div>
-      </div>
+  </div>
 
-      <button
-        class="release-arrow release-arrow-right"
-        id="releaseNext"
-        aria-label="Próximos jogos"
-      >
-        ›
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- JOGOS GRÁTIS -->
-  <section class="dashboard-panel">
-
-    <h2 class="dashboard-panel-title">
-      🎁 Jogos Grátis
-    </h2>
-
-    <div id="freeGames" class="free-games-list">
-      <div class="free-games-empty">
-        🎮 Carregando jogos grátis...
-      </div>
-    </div>
-
-  </section>
-
-</div>
+</section>
 
 
 <!-- =====================================================
-     NOTÍCIAS - MANTIDO COMO NO ORIGINAL
+     NOTÍCIAS
 ===================================================== -->
 
 <div class="container">
@@ -1732,7 +1597,6 @@
   </div>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -2457,50 +2321,6 @@ function carregarMais() {
 
 
 /* =====================================================
-   MOSTRAR JOGOS GRÁTIS
-===================================================== */
-
-function mostrarJogosGratis(posts) {
-
-  const container =
-    document.getElementById("freeGames");
-
-  if (!container) return;
-
-  const gratuitos = posts.filter(post =>
-    String(post.categoria || "").toLowerCase() === "jogos grátis"
-  ).slice(0, 2);
-
-  if (gratuitos.length === 0) {
-    container.innerHTML = `
-      <div class="free-games-empty">
-        🎮 Nenhum jogo grátis no momento.
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = gratuitos.map(post => `
-    <a
-      href="${linkDaNoticia(post)}"
-      class="free-game-card"
-    >
-      <img
-        src="${post.imagem}"
-        alt="${post.titulo}"
-        loading="lazy"
-      >
-      <div class="free-game-info">
-        <h3>${post.titulo}</h3>
-        <p>${post.resumo || "Confira a notícia."}</p>
-      </div>
-    </a>
-  `).join("");
-
-}
-
-
-/* =====================================================
    CARREGAR NOTÍCIAS
 ===================================================== */
 
@@ -2525,8 +2345,6 @@ function carregarNoticias() {
 
 
     .then(posts => {
-
-      mostrarJogosGratis(posts);
 
       const featured =
         document.getElementById(
