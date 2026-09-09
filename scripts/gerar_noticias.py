@@ -349,6 +349,25 @@ for post in posts:
         texto = html.escape(paragrafo)
 
         # =================================================
+        # CORES NO CONTEÚDO
+        # =================================================
+        # [titulo]Texto[/titulo] -> título verde
+        # [jogo]Nome do jogo[/jogo] -> nome do jogo verde
+        texto = re.sub(
+            r"\\[titulo\\](.*?)\\[/titulo\\]",
+            r'<span class="paragrafo-titulo">\\1</span>',
+            texto,
+            flags=re.IGNORECASE
+        )
+
+        texto = re.sub(
+            r"\\[jogo\\](.*?)\\[/jogo\\]",
+            r'<span class="nome-jogo">\\1</span>',
+            texto,
+            flags=re.IGNORECASE
+        )
+
+        # =================================================
         # TRANSFORMAR URLs EM LINKS CLICÁVEIS
         # =================================================
 
@@ -687,6 +706,20 @@ h1 {{
     font-size: 18px;
     line-height: 1.8;
     margin-bottom: 25px;
+}}
+
+.paragrafo-titulo {{
+    display: block;
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}}
+
+.nome-jogo {{
+    color: #00ff88;
+    font-weight: bold;
 }}
 
 
