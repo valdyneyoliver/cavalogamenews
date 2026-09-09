@@ -1,5 +1,47 @@
 [
  {
+"id": "xbox-insiders-novos-recursos",
+"titulo": "Xbox Insiders recebem novos recursos para personalizar, jogar e se conectar",
+"categoria": "Xbox",
+"data": "09/09/2026",
+"imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/09/0.-Hero-26909-2e5fc49130f2ee755d29-1600x900.png",
+"resumo": "A Xbox começou a testar novos recursos para Insiders, incluindo mais opções de personalização, busca local, melhorias no Remote Play, downloads durante jogos na nuvem e melhorias no chat de voz.",
+"x": "https://x.com/XBOX/status/2097761959269544140?s=20",
+"videos": [
+{
+"tipo": "youtube",
+"url": "xxx"
+}
+],
+"conteudo": [
+"A Xbox começou a disponibilizar um novo conjunto de recursos para os participantes do programa Xbox Insiders. As novidades foram desenvolvidas para oferecer mais opções de personalização e facilitar o acesso a jogos, conquistas e recursos de comunicação.",
+"### Inicialização personalizada",
+"Os Xbox Insiders agora podem escolher diferentes animações de inicialização para o console. As opções incluem animações de diferentes gerações do Xbox, permitindo que os jogadores escolham aquela que mais combina com sua experiência.",
+"A configuração está disponível em Configurações > Sistema > Inicialização. Também é possível escolher se a animação será reproduzida com som.",
+"### Mais controle sobre os emblemas",
+"Os jogadores ganharam novas opções para personalizar os emblemas exibidos em seu perfil. Agora é possível destacar até cinco emblemas na área de apresentação do cartão de perfil.",
+"Também existe a opção de ocultar individualmente determinados emblemas do perfil público.",
+"### Busca rápida por jogos e conquistas",
+"Uma nova ferramenta de pesquisa local permite encontrar jogos e conquistas com mais rapidez dentro de listas grandes.",
+"O recurso está disponível em Meus jogos e aplicativos, nas listas oficiais de conquistas dos clubes e no histórico de conquistas do perfil. A busca funciona junto com os filtros e opções de classificação existentes.",
+"### Remote Play com melhor qualidade",
+"O Xbox também começou a testar uma melhoria no Remote Play para consoles Xbox Series X|S. Insiders dos canais Alpha Skip-Ahead e Alpha podem experimentar streaming com resolução de até 1440p e taxas de bits maiores em dispositivos compatíveis.",
+"A melhoria pode proporcionar uma imagem mais nítida e uma experiência de jogo mais suave ao transmitir o console para PCs, celulares, TVs e outros dispositivos.",
+"O Remote Play continua disponível para os jogadores que possuem um console Xbox sem a necessidade de uma assinatura adicional.",
+"Para aproveitar melhor a novidade, a Xbox recomenda configurar a resolução do console para 1440p ou 4K UHD em Configurações > Geral > Opções de TV e vídeo.",
+"### Downloads continuam durante o Cloud Gaming",
+"Outra novidade permite que downloads continuem acontecendo em segundo plano enquanto o jogador está transmitindo um jogo pelo Xbox Cloud Gaming, desde que as condições da rede permitam.",
+"A função pode reduzir o tempo de espera durante instalações e atualizações. Os jogadores podem encontrar a opção em Configurações > Cloud Gaming > Preferências de transmissão e desativá-la quando quiserem.",
+"Os consoles Xbox Series X|S devem ser os que mais se beneficiam dessa melhoria.",
+"### Voice Clarity melhora o chat",
+"Os Xbox Insiders no Xbox Series X|S também podem testar o Voice Clarity, recurso criado para reduzir ruídos comuns do ambiente e melhorar a clareza das conversas durante partidas.",
+"A função será ativada por padrão no chat de grupo e na maioria dos jogos lançados desde 2020. A configuração pode ser alterada em Configurações > Geral > Volume e saída de áudio > Opções adicionais.",
+"### Melhorias nas festas",
+"A Xbox também está testando mudanças internas para melhorar a confiabilidade e a segurança das festas. Essas alterações acontecem principalmente em segundo plano, mas os participantes do programa Insider podem enviar comentários caso encontrem algum comportamento inesperado.",
+"As novidades estão inicialmente disponíveis para Xbox Insiders e fazem parte dos testes realizados pela Microsoft antes de uma possível distribuição mais ampla para os demais jogadores."
+]
+},
+ {
 "id": "no-mans-sky-cosmos",
 "titulo": "No Man's Sky recebe atualização Cosmos e finalmente permite alcançar as estrelas",
 "categoria": "Notícias",
