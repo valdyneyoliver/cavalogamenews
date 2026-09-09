@@ -1,20 +1,5 @@
 [
  {
-  "id": "teste-cores",
-  "titulo": "Teste de cores no CavaloGameNews",
-  "categoria": "Notícia",
-  "data": "09/09/2026",
-  "imagem": "https://aquitemplacas.s3.sa-east-1.amazonaws.com/produtos/3874-controle-de-qualidade-testes.jpg",
-  "resumo": "Notícia criada para testar palavras e frases coloridas.",
-  "link": "não precisa",
-  "videos": [],
-  "conteudo": [
-  "O [verde]GTA 6[/verde] recebeu novidades.",
-  "A [verde]Rockstar Games[/verde] divulgou novas informações.",
-  "[verde]Grande novidade para os jogadores![/verde]"
-]
-},
- {
 "id": "xbox-insiders-novos-recursos",
 "titulo": "Xbox Insiders recebem novos recursos para personalizar, jogar e se conectar",
 "categoria": "Xbox",
