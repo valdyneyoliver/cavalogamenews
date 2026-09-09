@@ -27,6 +27,18 @@
       "link_rawg": "https://rawg.io/games/the-alighieri-circle-dantes-bloodline"
     },
     {
+      "id": 248521,
+      "nome": "Valheim",
+      "slug": "valheim",
+      "data": "2026-09-09",
+      "data_formatada": "09/09/2026",
+      "imagem": "https://media.rawg.io/media/games/adb/adb59be81367b19c2544457424bcf086.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/valheim"
+    },
+    {
       "id": 1019342,
       "nome": "Sigilfarer: A Dice-Rolling Roguelite",
       "slug": "sigilfarer-a-dice-rolling-roguelite",
@@ -377,6 +389,18 @@
       "link_rawg": "https://rawg.io/games/phantom-blade-zero"
     },
     {
+      "id": 1019942,
+      "nome": "The Legend of Zelda: Ocarina of Time",
+      "slug": "the-legend-of-zelda-ocarina-of-time-2",
+      "data": "2026-11-05",
+      "data_formatada": "05/11/2026",
+      "imagem": "https://media.rawg.io/media/games/c3b/c3bc70310175785b0c9d7bfc93624d5f.jpg",
+      "plataformas": [
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/the-legend-of-zelda-ocarina-of-time-2"
+    },
+    {
       "id": 1019919,
       "nome": "After the Wane",
       "slug": "after-the-wane",
@@ -460,33 +484,6 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/they-come-in-fives"
-    },
-    {
-      "id": 1015972,
-      "nome": "Kena: Scars of Kosmora",
-      "slug": "kena-scars-of-kosmora",
-      "data": "2026-12-31",
-      "data_formatada": "31/12/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/3a3/3a3855e1b5218c02ab038dcb873eacde.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation"
-      ],
-      "link_rawg": "https://rawg.io/games/kena-scars-of-kosmora"
-    },
-    {
-      "id": 490430,
-      "nome": "Prince of Persia: The Sands of Time Remake",
-      "slug": "prince-of-persia-the-sands-of-time-remake",
-      "data": "2026-12-31",
-      "data_formatada": "31/12/2026",
-      "imagem": "https://media.rawg.io/media/games/b92/b92b55aeab9ed1777104f71f4b22a613.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/prince-of-persia-the-sands-of-time-remake"
     }
   ]
 }
