@@ -586,8 +586,7 @@ for post in posts:
 
 
 body {{
-    background: radial-gradient(circle at 50% -10%, rgba(0,255,136,.12), transparent 35%), #080b09;
-    min-height: 100vh;
+    background: #111;
     color: #fff;
 }}
 
@@ -597,13 +596,9 @@ body {{
 ================================================= */
 
 header {{
-    background: rgba(8,11,9,.92);
-    padding: 16px 30px;
-    border-bottom: 1px solid rgba(0,255,136,.22);
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    backdrop-filter: blur(14px);
+    background: #0f1115;
+    padding: 20px 30px;
+    border-bottom: 3px solid #00ff88;
 }}
 
 
@@ -614,7 +609,7 @@ header {{
     padding: 11px 18px;
     background: #181b20;
     border: 1px solid #00ff88;
-    border-radius: 999px;
+    border-radius: 10px;
     color: #00ff88;
     text-decoration: none;
     font-weight: bold;
@@ -635,14 +630,9 @@ header {{
 ================================================= */
 
 .article {{
-    width: calc(100% - 40px);
-    max-width: 1120px;
-    margin: 55px auto 80px;
-    background: rgba(12,16,14,.82);
-    border: 1px solid #26322b;
-    border-radius: 24px;
-    padding: 42px;
-    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
 }}
 
 
@@ -656,10 +646,9 @@ header {{
 
 
 h1 {{
-    font-size: clamp(38px, 5vw, 62px);
-    line-height: 1.06;
-    letter-spacing: -1.5px;
-    margin: 18px 0 16px;
+    font-size: 46px;
+    line-height: 1.15;
+    margin-bottom: 15px;
 }}
 
 
@@ -677,10 +666,9 @@ h1 {{
     width: 100%;
     max-height: 560px;
     object-fit: cover;
-    border-radius: 18px;
+    border-radius: 14px;
     display: block;
-    margin-bottom: 42px;
-    box-shadow: 0 20px 45px rgba(0,0,0,.35);
+    margin-bottom: 30px;
 }}
 
 
@@ -695,9 +683,9 @@ h1 {{
 
 
 .text p {{
-    color: #d9dfdc;
+    color: #ddd;
     font-size: 18px;
-    line-height: 1.85;
+    line-height: 1.8;
     margin-bottom: 25px;
 }}
 
@@ -801,9 +789,9 @@ h1 {{
 
 
 .related-card {{
-    background: linear-gradient(145deg,#151b18,#0e1210);
-    border: 1px solid #26322b;
-    border-radius: 16px;
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
     color: #fff;
@@ -814,8 +802,7 @@ h1 {{
 
 .related-card:hover {{
     border-color: #00ff88;
-    transform: translateY(-5px);
-    box-shadow: 0 14px 35px rgba(0,0,0,.3);
+    transform: translateY(-3px);
 }}
 
 
@@ -878,207 +865,6 @@ footer {{
     }}
 
 }}
-
-/* =================================================
-   VISUAL PROFISSIONAL — CAVALOGAMENEWS
-================================================= */
-
-body {{
-    background:
-        radial-gradient(circle at 50% 0%, rgba(0,255,136,0.10), transparent 34%),
-        #080b09;
-    color: #f5f5f5;
-}}
-
-header {{
-    background: rgba(7,10,8,0.92);
-    padding: 18px 30px;
-    border-bottom: 1px solid rgba(0,255,136,0.35);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-    backdrop-filter: blur(12px);
-}}
-
-.top-back-button {{
-    background: rgba(18,24,20,0.9);
-    border: 1px solid #26352c;
-    border-radius: 999px;
-    color: #ddd;
-    padding: 10px 17px;
-    font-size: 14px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.18);
-}}
-
-.top-back-button:hover {{
-    background: #00ff88;
-    border-color: #00ff88;
-    color: #07100b;
-}}
-
-.article {{
-    width: min(92%, 1120px);
-    margin: 52px auto 70px;
-}}
-
-.category {{
-    display: inline-block;
-    color: #00ff88;
-    background: rgba(0,255,136,0.08);
-    border: 1px solid rgba(0,255,136,0.22);
-    border-radius: 999px;
-    padding: 7px 13px;
-    font-size: 12px;
-    letter-spacing: 0.8px;
-    margin-bottom: 18px;
-}}
-
-h1 {{
-    max-width: 1000px;
-    font-size: clamp(34px, 5vw, 58px);
-    line-height: 1.06;
-    letter-spacing: -1.5px;
-    margin-bottom: 18px;
-}}
-
-.info {{
-    color: #8f9993;
-    font-size: 14px;
-    margin-bottom: 30px;
-}}
-
-.cover {{
-    max-height: 620px;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 1px solid #26352c;
-    box-shadow: 0 25px 70px rgba(0,0,0,0.40);
-    margin-bottom: 42px;
-}}
-
-.text {{
-    max-width: 820px;
-}}
-
-.text p {{
-    color: #d8dedb;
-    font-size: 18px;
-    line-height: 1.85;
-    margin-bottom: 24px;
-}}
-
-.text p:first-child {{
-    color: #f1f4f2;
-    font-size: 20px;
-}}
-
-.text p a {{
-    color: #00ff88;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-}}
-
-.video-container {{
-    margin: 38px 0;
-    padding: 7px;
-    background: #0c110e;
-    border: 1px solid #26352c;
-    border-radius: 18px;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.28);
-}}
-
-.video-container iframe,
-.video-container video {{
-    border-radius: 12px;
-}}
-
-.x-container {{
-    max-width: 680px;
-    margin: 40px auto;
-    padding: 4px;
-    background: #0c110e;
-    border: 1px solid #26352c;
-    border-radius: 16px;
-}}
-
-.back-button {{
-    margin-top: 35px;
-    background: #00ff88;
-    color: #06100a;
-    padding: 12px 19px;
-    border-radius: 999px;
-    box-shadow: 0 8px 25px rgba(0,255,136,0.16);
-    transition: 0.2s;
-}}
-
-.back-button:hover {{
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(0,255,136,0.25);
-}}
-
-.related {{
-    margin-top: 70px;
-    padding-top: 35px;
-    border-top: 1px solid #26352c;
-}}
-
-.related h2 {{
-    color: #fff;
-    font-size: 25px;
-    margin-bottom: 22px;
-}}
-
-.related h2::before {{
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 24px;
-    background: #00ff88;
-    border-radius: 4px;
-    margin-right: 10px;
-    vertical-align: -4px;
-}}
-
-.related-grid {{
-    gap: 18px;
-}}
-
-.related-card {{
-    background: linear-gradient(145deg,#111713,#0b0f0c);
-    border: 1px solid #26352c;
-    border-radius: 14px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.22);
-}}
-
-.related-card:hover {{
-    border-color: rgba(0,255,136,0.55);
-    transform: translateY(-5px);
-    box-shadow: 0 18px 38px rgba(0,0,0,0.30);
-}}
-
-.related-card img {{
-    height: 145px;
-}}
-
-.related-content {{
-    padding: 15px;
-}}
-
-footer {{
-    background: #070907;
-    border-top: 1px solid #1c2921;
-    padding: 28px 20px;
-    margin-top: 70px;
-}}
-
-@media (max-width: 600px) {{
-    header {{ padding: 14px 18px; }}
-    .article {{ width: 92%; margin-top: 35px; }}
-    h1 {{ font-size: 34px; letter-spacing: -0.8px; }}
-    .cover {{ border-radius: 14px; margin-bottom: 30px; }}
-    .text p {{ font-size: 16px; line-height: 1.75; }}
-    .text p:first-child {{ font-size: 18px; }}
-    .video-container {{ margin: 28px 0; padding: 4px; border-radius: 13px; }}
-    .related-grid {{ grid-template-columns: 1fr; }}
-}
 
 </style>
 
