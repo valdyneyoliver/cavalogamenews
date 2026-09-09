@@ -1,5 +1,22 @@
 [
  {
+  "id": "teste-cores",
+  "titulo": "Teste de cores no CavaloGameNews",
+  "categoria": "Notícia",
+  "data": "09/09/2026",
+  "imagem": "https://aquitemplacas.s3.sa-east-1.amazonaws.com/produtos/3874-controle-de-qualidade-testes.jpg",
+  "resumo": "Notícia criada para testar palavras e frases coloridas.",
+  "link": "não precisa",
+  "videos": [],
+  "conteudo": [
+    "[titulo]Uma nova aventura está chegando[/titulo]",
+    "O [jogo]GTA 6[/jogo] é um dos jogos mais aguardados pelos jogadores.",
+    "Esta é uma [jogo]frase de teste[/jogo] para mostrar que você pode deixar qualquer palavra ou frase verde.",
+    "[titulo]Outra informação importante[/titulo]",
+    "O site [jogo]CavaloGameNews[/jogo] também pode usar esse destaque em palavras importantes."
+  ]
+},
+ {
 "id": "xbox-insiders-novos-recursos",
 "titulo": "Xbox Insiders recebem novos recursos para personalizar, jogar e se conectar",
 "categoria": "Xbox",
