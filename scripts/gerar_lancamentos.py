@@ -15,7 +15,7 @@ ARQUIVO_SAIDA = "lancamentos.json"
 
 DIAS_FUTUROS = 120
 
-LIMITE = 50
+LIMITE = 100
 
 
 # ==========================================
