@@ -1,43 +1,7 @@
 {
-  "atualizado_em": "2026-09-09",
+  "atualizado_em": "2026-09-10",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1019655,
-      "nome": "Magical Blush",
-      "slug": "magical-blush",
-      "data": "2026-09-09",
-      "data_formatada": "09/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/197/197f04ecff2b07ef4653476732f098e7.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/magical-blush"
-    },
-    {
-      "id": 1019380,
-      "nome": "The Alighieri Circle: Dante's Bloodline",
-      "slug": "the-alighieri-circle-dantes-bloodline",
-      "data": "2026-09-09",
-      "data_formatada": "09/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/ac8/ac8e6aad345844473ff6f9600e0cbae3.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/the-alighieri-circle-dantes-bloodline"
-    },
-    {
-      "id": 248521,
-      "nome": "Valheim",
-      "slug": "valheim",
-      "data": "2026-09-09",
-      "data_formatada": "09/09/2026",
-      "imagem": "https://media.rawg.io/media/games/adb/adb59be81367b19c2544457424bcf086.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/valheim"
-    },
     {
       "id": 1019342,
       "nome": "Sigilfarer: A Dice-Rolling Roguelite",
@@ -484,6 +448,33 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/they-come-in-fives"
+    },
+    {
+      "id": 1015972,
+      "nome": "Kena: Scars of Kosmora",
+      "slug": "kena-scars-of-kosmora",
+      "data": "2026-12-31",
+      "data_formatada": "31/12/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/3a3/3a3855e1b5218c02ab038dcb873eacde.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/kena-scars-of-kosmora"
+    },
+    {
+      "id": 490430,
+      "nome": "Prince of Persia: The Sands of Time Remake",
+      "slug": "prince-of-persia-the-sands-of-time-remake",
+      "data": "2026-12-31",
+      "data_formatada": "31/12/2026",
+      "imagem": "https://media.rawg.io/media/games/b92/b92b55aeab9ed1777104f71f4b22a613.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/prince-of-persia-the-sands-of-time-remake"
     }
   ]
 }
