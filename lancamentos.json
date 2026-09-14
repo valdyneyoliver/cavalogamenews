@@ -1,19 +1,7 @@
 {
-  "atualizado_em": "2026-09-13",
+  "atualizado_em": "2026-09-14",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1019342,
-      "nome": "Sigilfarer: A Dice-Rolling Roguelite",
-      "slug": "sigilfarer-a-dice-rolling-roguelite",
-      "data": "2026-09-13",
-      "data_formatada": "13/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/b71/b7128108b1990edb570912250db6c1d6.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/sigilfarer-a-dice-rolling-roguelite"
-    },
     {
       "id": 662318,
       "nome": "Marvel's Wolverine",
@@ -179,20 +167,6 @@
         "PlayStation"
       ],
       "link_rawg": "https://rawg.io/games/ghost-of-yotei-echoes-of-sekigahara"
-    },
-    {
-      "id": 1018059,
-      "nome": "Rayman Legends Retold",
-      "slug": "rayman-legends-retold",
-      "data": "2026-10-01",
-      "data_formatada": "01/10/2026",
-      "imagem": "https://media.rawg.io/media/games/ed9/ed92bdc98d563301e94ae3e9663e8107.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/rayman-legends-retold"
     },
     {
       "id": 1015425,
@@ -424,6 +398,20 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/sombras-negative-frames"
+    },
+    {
+      "id": 1018059,
+      "nome": "Rayman Legends Retold",
+      "slug": "rayman-legends-retold",
+      "data": "2026-12-03",
+      "data_formatada": "03/12/2026",
+      "imagem": "https://media.rawg.io/media/games/ed9/ed92bdc98d563301e94ae3e9663e8107.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/rayman-legends-retold"
     },
     {
       "id": 391403,
