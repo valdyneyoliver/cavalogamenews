@@ -1,5 +1,63 @@
 [
 {
+  "id": "ats161",
+  "titulo": "[verde]American Truck Simulator[/verde] recebe atualização 1.61 com novas funções e melhorias",
+  "categoria": "PC",
+  "data": "15/09/2026",
+  "imagem": "https://pbs.twimg.com/media/HSPY05eWAAEwNJK?format=jpg&name=large",
+  "resumo": "A atualização 1.61 de American Truck Simulator já está disponível no Steam e adiciona melhorias na exploração do mapa, sistema de materiais, cargas e preparativos para o projeto Road Trip.",
+  "x": "https://x.com/SCSsoftware/status/2099761663599600087?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/yF95XkLlCN8"
+    }
+  ],
+  "conteudo": [
+    "[verde]American Truck Simulator[/verde] recebeu oficialmente a atualização 1.61 no Steam, trazendo uma série de novidades e melhorias para quem gosta de explorar as estradas dos Estados Unidos.",
+    
+    "─────────────",
+    "[verde]Exploração por Proximidade[/verde]",
+    "─────────────",
+    
+    "Uma das principais novidades é o recurso [verde]Proximity Exploration[/verde]. Quando ativado, ele revela automaticamente uma pequena área do mapa ao redor do caminhão durante a viagem.",
+    
+    "A função facilita a descoberta de trechos próximos, principalmente em regiões com várias estradas conectadas, como postos de combustível, pedágios, fronteiras e áreas de descanso.",
+    
+    "As estradas secretas continuam exigindo exploração. Ao se aproximar delas, apenas o primeiro trecho pode ser revelado, enquanto o restante precisa ser descoberto dirigindo pela rota.",
+    
+    "─────────────",
+    "[verde]Sistema de Materiais Melhorado[/verde]",
+    "─────────────",
+    
+    "A atualização também melhora a iluminação e a aparência dos interiores de alguns caminhões. Materiais como couro, tecido, plástico e metal passam a reagir à iluminação de maneira mais detalhada.",
+    
+    "Nesta versão, o novo sistema foi aplicado aos interiores dos caminhões [verde]International LT[/verde] e [verde]International LoneStar[/verde]. A tecnologia deverá chegar gradualmente a outros veículos em futuras atualizações.",
+    
+    "─────────────",
+    "[verde]Preparação para o Road Trip[/verde]",
+    "─────────────",
+    
+    "A equipe da [verde]SCS Software[/verde] também realizou mudanças no mapa pensando no futuro projeto [verde]Road Trip[/verde]. Painéis turísticos foram adicionados de forma inativa em estados como Califórnia, Oregon, Washington, Idaho, Montana, Wyoming e no próximo DLC de South Dakota.",
+    
+    "Novos postos de combustível também foram preparados. Quando o projeto Road Trip for lançado, esses locais deverão atender tanto caminhões quanto carros.",
+    
+    "─────────────",
+    "[verde]Novas Cargas[/verde]",
+    "─────────────",
+    
+    "A versão 1.61 adiciona novas opções de carga para os trabalhos de transporte. Entre as novidades estão [verde]Seed Containers[/verde], [verde]Trailers[/verde] e [verde]Truss[/verde].",
+    
+    "A carga [verde]Rails[/verde] também recebeu um novo modelo e texturas aprimoradas, aumentando o nível de detalhes dos objetos transportados durante as viagens.",
+    
+    "─────────────",
+    "[verde]Outras mudanças[/verde]",
+    "─────────────",
+    
+    "A atualização 1.61 já está disponível no [verde]Steam[/verde]. A equipe também informou que o Multi-Function Display e o novo In-Game Menu, testados durante a versão experimental, ficarão para uma atualização futura enquanto continuam sendo aprimorados."
+  ]
+},
+{
   "id": "game-pass-setembro-2026-wave-2",
   "titulo": "Xbox Game Pass recebe Gears of War: E-Day, Minecraft Dungeons II, Dune: Awakening e mais",
   "categoria": "Xbox",
