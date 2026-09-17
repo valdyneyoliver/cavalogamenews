@@ -1,4 +1,36 @@
 [
+  {
+  "id": "gtavialbum",
+  "titulo": "GTA VI: O Álbum chega em 19 de novembro com 34 faixas originais",
+  "categoria": "Notícia",
+  "data": "17/09/2026",
+  "imagem": "https://img.youtube.com/vi/3Ev1PQEm7ns/maxresdefault.jpg",
+  "resumo": "Grand Theft Auto VI: O Álbum terá 34 faixas originais inspiradas na atmosfera de Vice City e Leonida, com os primeiros seis singles já disponíveis.",
+  "x": "https://x.com/RockstarGames/status/2100556854099140721?s=20",
+  "videos": [
+    {
+      "tipo": "youtube",
+      "url": "xxx"
+    }
+  ],
+  "conteudo": [
+    "─────────────",
+    "[verde]GTA VI: O Álbum[/verde]",
+    "─────────────",
+    "A Rockstar anunciou [verde]Grand Theft Auto VI: O Álbum[/verde], uma coletânea com 34 faixas originais que busca representar a energia e a atmosfera de [verde]Vice City[/verde] e [verde]Leonida[/verde].",
+    "O álbum reúne artistas de diferentes estilos musicais e tem lançamento marcado para [verde]19 de novembro[/verde]. Os primeiros seis singles já estão disponíveis para ouvir.",
+    "─────────────",
+    "[verde]Pré-venda em vinil e CD[/verde]",
+    "─────────────",
+    "Além das versões digitais, os fãs poderão adquirir o álbum em formatos físicos, incluindo [verde]vinil[/verde] e [verde]CD[/verde].",
+    "A pré-venda já está disponível no site oficial: https://gtavi-thealbum.com",
+    "─────────────",
+    "[verde]Trilha sonora de GTA VI[/verde]",
+    "─────────────",
+    "Com 34 músicas originais e um elenco de artistas que mistura diferentes gêneros, [verde]GTA VI: O Álbum[/verde] promete acompanhar o universo do novo Grand Theft Auto com uma identidade musical própria.",
+    "O lançamento está previsto para [verde]19 de novembro[/verde]."
+  ]
+},
 {
   "id": "ets2161",
   "titulo": "Euro Truck Simulator 2 recebe atualização 1.61 com novos recursos, caminhão especial e melhorias",
