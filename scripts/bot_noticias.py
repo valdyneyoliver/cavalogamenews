@@ -2,6 +2,7 @@ import json
 import re
 import html
 import ssl
+import os
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from urllib.request import Request, urlopen
@@ -33,6 +34,7 @@ FONTES = [
     
 ]
 
+
 # =========================================================
 # HTTP
 # =========================================================
@@ -57,7 +59,10 @@ def baixar(url, timeout=20):
     """Baixa uma URL e retorna (texto, URL final)."""
 
     try:
-        req = Request(url, headers=HEADERS)
+        req = Request(
+            url,
+            headers=HEADERS
+        )
 
         with urlopen(
             req,
@@ -73,12 +78,14 @@ def baixar(url, timeout=20):
             )
 
             try:
+
                 texto = dados.decode(
                     charset,
                     errors="replace"
                 )
 
             except LookupError:
+
                 texto = dados.decode(
                     "utf-8",
                     errors="replace"
@@ -274,6 +281,7 @@ def interpretar_data(valor):
         )
 
     except Exception:
+
         pass
 
     # ISO 8601
@@ -433,7 +441,9 @@ def titulo_item(item):
         return ""
 
     return limpar_html(
-        texto_elemento(elemento)
+        texto_elemento(
+            elemento
+        )
     )
 
 
@@ -475,7 +485,9 @@ def imagem_valida(url):
     if not url:
         return False
 
-    url = normalizar_url(url)
+    url = normalizar_url(
+        url
+    )
 
     if not url_valida(url):
         return False
@@ -990,7 +1002,9 @@ def extrair_imagem_rss(
 
                 url = urljoin(
                     base_url,
-                    html.unescape(url)
+                    html.unescape(
+                        url
+                    )
                 )
 
                 if imagem_valida(url):
@@ -1031,7 +1045,9 @@ def extrair_imagem_rss(
 
                 url = urljoin(
                     base_url,
-                    html.unescape(url)
+                    html.unescape(
+                        url
+                    )
                 )
 
                 if imagem_valida(url):
@@ -1254,7 +1270,9 @@ def buscar_rss(fonte):
         # Nunca aceitar Google News
         if (
             "news.google.com"
-            in urlparse(link).netloc.lower()
+            in urlparse(
+                link
+            ).netloc.lower()
         ):
 
             continue
@@ -1669,6 +1687,156 @@ def criar_post(noticia):
 
 
 # =========================================================
+# DISCORD
+# =========================================================
+
+def enviar_discord(post):
+    """
+    Envia uma notícia nova para o Discord
+    usando o webhook salvo no GitHub Secrets.
+    """
+
+    webhook_url = os.getenv(
+        "DISCORD_WEBHOOK_URL",
+        ""
+    ).strip()
+
+    if not webhook_url:
+
+        print(
+            "[DISCORD] Webhook não configurado."
+        )
+
+        return
+
+    titulo = str(
+        post.get(
+            "titulo",
+            "Nova notícia"
+        )
+    ).strip()
+
+    categoria = str(
+        post.get(
+            "categoria",
+            "Notícias"
+        )
+    ).strip()
+
+    resumo = str(
+        post.get(
+            "resumo",
+            ""
+        )
+    ).strip()
+
+    link = normalizar_url(
+        post.get(
+            "link",
+            ""
+        )
+    )
+
+    imagem = normalizar_url(
+        post.get(
+            "imagem",
+            ""
+        )
+    )
+
+    data = str(
+        post.get(
+            "data",
+            ""
+        )
+    ).strip()
+
+    # -----------------------------------------------------
+    # EMBED DO DISCORD
+    # -----------------------------------------------------
+
+    embed = {
+        "title": titulo[:256],
+        "description": resumo[:4096],
+        "color": 65280,
+        "fields": [
+            {
+                "name": "Categoria",
+                "value": categoria[:1024],
+                "inline": True
+            },
+            {
+                "name": "Data",
+                "value": data[:1024],
+                "inline": True
+            }
+        ],
+        "footer": {
+            "text": "CavaloGameNews"
+        }
+    }
+
+    # Link da notícia
+    if url_valida(link):
+
+        embed["url"] = link
+
+    # Imagem da notícia
+    if imagem and url_valida(imagem):
+
+        embed["image"] = {
+            "url": imagem
+        }
+
+    payload = {
+        "username": "CavaloGameNews",
+        "embeds": [
+            embed
+        ]
+    }
+
+    dados = json.dumps(
+        payload,
+        ensure_ascii=False
+    ).encode(
+        "utf-8"
+    )
+
+    try:
+
+        requisicao = Request(
+            webhook_url,
+            data=dados,
+            headers={
+                "Content-Type":
+                    "application/json",
+                "User-Agent":
+                    "CavaloGameNews Bot"
+            },
+            method="POST"
+        )
+
+        with urlopen(
+            requisicao,
+            timeout=20
+        ):
+
+            pass
+
+        print(
+            "[DISCORD] Notícia enviada "
+            f"com sucesso: {titulo}"
+        )
+
+    except Exception as erro:
+
+        print(
+            "[DISCORD] Erro ao enviar "
+            f"notícia: {erro}"
+        )
+
+
+# =========================================================
 # MAIN
 # =========================================================
 
@@ -1837,10 +2005,28 @@ def main():
     # Limite de segurança
     posts = posts[:MAX_POSTS]
 
-    # Salvar
+    # -----------------------------------------------------
+    # SALVAR
+    # -----------------------------------------------------
+
     salvar_posts(
         posts
     )
+
+    # -----------------------------------------------------
+    # ENVIAR NOVAS NOTÍCIAS PARA O DISCORD
+    # -----------------------------------------------------
+
+    print(
+        "\n[DISCORD] Enviando "
+        f"{len(novas)} notícia(s)..."
+    )
+
+    for post in novas:
+
+        enviar_discord(
+            post
+        )
 
     print(
         "\n"
