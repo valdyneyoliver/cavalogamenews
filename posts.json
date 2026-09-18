@@ -1,10 +1,10 @@
 [
-  {
+ {
   "id": "gears-of-war-e-day-gone-gold",
   "titulo": "Gears of War: E-Day entra em fase Gold e revela especificações completas para PC",
   "categoria": "Xbox",
   "data": "17/09/2026",
-  "imagem": "https://pbs.twimg.com/media/HSdg7aJbUAAMXwT?format=jpg&name=4096x4096",
+  "imagem": "https://pbs.twimg.com/media/HSb-yIDW4AERGVG?format=jpg&name=4096x4096",
   "resumo": "Gears of War: E-Day chegou à fase Gold, com pré-instalação começando em 29 de setembro e lançamento marcado para 6 de outubro.",
   "x": "https://x.com/GearsofWar/status/2100754330500681815?s=20",
   "videos": [
@@ -50,7 +50,7 @@
 
     {
     "tipo": "imagem",
-    "ur": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/09/GoW_EDAY_PC-Launch-Specs_4K-28e34879688dfeb2ad31-1024x576.jpg",
+    "ur", "https://xboxwire.thesourcemediaassets.com/sites/2/2026/09/GoW_EDAY_PC-Launch-Specs_4K-28e34879688dfeb2ad31-1024x576.jpg"
     "alt": "Imagem do jogo",
     "legenda": "Nova imagem do jogo"
   },
