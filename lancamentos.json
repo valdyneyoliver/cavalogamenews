@@ -1,33 +1,7 @@
 {
-  "atualizado_em": "2026-09-17",
+  "atualizado_em": "2026-09-18",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1019729,
-      "nome": "I Have Known You",
-      "slug": "i-have-known-you",
-      "data": "2026-09-17",
-      "data_formatada": "17/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/601/60161283016aef64fc1bb9f3593ecb08.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/i-have-known-you"
-    },
-    {
-      "id": 1017960,
-      "nome": "Trails in the Sky 2nd Chapter",
-      "slug": "trails-in-the-sky-2nd-chapter",
-      "data": "2026-09-17",
-      "data_formatada": "17/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/2be/2be279f15824d0dfdb1c1499569e4e6f.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Switch"
-      ],
-      "link_rawg": "https://rawg.io/games/trails-in-the-sky-2nd-chapter"
-    },
     {
       "id": 1019698,
       "nome": "Well Dweller",
