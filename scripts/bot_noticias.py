@@ -371,9 +371,40 @@ for post in posts:
         return texto
 
 
+    def limpar_url_recurso(url):
+        """
+        Limpa URLs vindas do posts.json.
+
+        Aceita tanto URL normal quanto URL que tenha sido
+        colada acidentalmente com Markdown, por exemplo:
+        [**https://site/imagem.jpg**](https://site/imagem.jpg)
+        """
+        url = str(url or "").strip()
+
+        if not url:
+            return ""
+
+        # Se houver uma URL http/https dentro do texto, usa
+        # somente a URL. Isso evita que Markdown vá parar no HTML.
+        match = re.search(
+            r"https?://[^\s\]\)\"'<>]+",
+            url,
+            flags=re.IGNORECASE
+        )
+
+        if match:
+            return match.group(0).rstrip(".,;:")
+
+        # URL protocol-relative.
+        if url.startswith("//"):
+            return url
+
+        return url
+
+
     def caminho_recurso(url):
 
-        url = str(url or "").strip()
+        url = limpar_url_recurso(url)
 
         if not url:
             return ""
@@ -508,9 +539,9 @@ for post in posts:
         # -------------------------------------------------
         if tipo in ("youtube", "youtube_video"):
 
-            url = str(
+            url = limpar_url_recurso(
                 item.get("url", "")
-            ).strip()
+            )
 
             video_id = youtube_id(url)
 
