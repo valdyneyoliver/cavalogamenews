@@ -1,2057 +1,1386 @@
 import json
-import re
-import html
-import ssl
 import os
-from datetime import datetime, timezone, timedelta
-from email.utils import parsedate_to_datetime
-from urllib.request import Request, urlopen
-from urllib.parse import urljoin, urlparse
-import xml.etree.ElementTree as ET
+import html
+import re
+from urllib.parse import urlparse, parse_qs
+from datetime import date
+from xml.sax.saxutils import escape as xml_escape
 
 
 # =========================================================
 # CONFIGURAÇÕES
 # =========================================================
 
+BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
+
 POSTS_FILE = "posts.json"
-
-# Quantidade máxima de notícias novas por execução
-MAX_NOTICIAS = 10
-
-# Só aceita notícias publicadas nas últimas X horas
-HORAS_MAXIMO = 48
-
-# Mantém no máximo esta quantidade de posts no posts.json
-MAX_POSTS = 200
+NEWS_DIR = "noticias"
+SITEMAP_FILE = "sitemap.xml"
 
 
 # =========================================================
-# FONTES RSS DIRETAS
+# CARREGAR POSTS
 # =========================================================
 
-FONTES = [
-    
-]
+with open(POSTS_FILE, "r", encoding="utf-8") as f:
+    posts = json.load(f)
 
-
-# =========================================================
-# HTTP
-# =========================================================
-
-SSL_CONTEXT = ssl.create_default_context()
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/150.0 Safari/537.36"
-    ),
-    "Accept": (
-        "text/html,application/xhtml+xml,application/xml;"
-        "q=0.9,image/avif,image/webp,*/*;q=0.8"
-    ),
-    "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
-}
-
-
-def baixar(url, timeout=20):
-    """Baixa uma URL e retorna (texto, URL final)."""
-
-    try:
-        req = Request(
-            url,
-            headers=HEADERS
-        )
-
-        with urlopen(
-            req,
-            timeout=timeout,
-            context=SSL_CONTEXT
-        ) as resposta:
-
-            dados = resposta.read()
-
-            charset = (
-                resposta.headers.get_content_charset()
-                or "utf-8"
-            )
-
-            try:
-
-                texto = dados.decode(
-                    charset,
-                    errors="replace"
-                )
-
-            except LookupError:
-
-                texto = dados.decode(
-                    "utf-8",
-                    errors="replace"
-                )
-
-            return texto, resposta.geturl()
-
-    except Exception as erro:
-
-        print(
-            f"[ERRO] Não foi possível baixar "
-            f"{url}: {erro}"
-        )
-
-        return "", url
-
-
-# =========================================================
-# UTILIDADES
-# =========================================================
-
-def limpar_html(texto):
-
-    if not texto:
-        return ""
-
-    texto = html.unescape(texto)
-
-    texto = re.sub(
-        r"<script\b[^>]*>.*?</script>",
-        " ",
-        texto,
-        flags=re.I | re.S
+if not isinstance(posts, list):
+    raise ValueError(
+        "O arquivo posts.json precisa conter uma lista de notícias."
     )
 
-    texto = re.sub(
-        r"<style\b[^>]*>.*?</style>",
-        " ",
-        texto,
-        flags=re.I | re.S
-    )
 
-    texto = re.sub(
-        r"<[^>]+>",
-        " ",
-        texto
-    )
+# =========================================================
+# CRIAR PASTA NOTICIAS
+# =========================================================
 
-    texto = re.sub(
-        r"\s+",
-        " ",
-        texto
-    )
-
-    return texto.strip()
+os.makedirs(NEWS_DIR, exist_ok=True)
 
 
-def normalizar_url(url):
+# =========================================================
+# PEGAR ID DO YOUTUBE
+# =========================================================
+
+def youtube_id(url):
 
     if not url:
         return ""
 
-    url = html.unescape(
-        str(url)
-    ).strip()
+    url = str(url).strip()
 
-    url = url.strip("\"' ")
-
-    return url
-
-
-def url_valida(url):
-
-    if not url:
-        return False
+    if re.fullmatch(r"[A-Za-z0-9_-]{11}", url):
+        return url
 
     try:
+        parsed = urlparse(url)
 
-        p = urlparse(url)
+        if "youtube.com" in parsed.netloc:
+            query = parse_qs(parsed.query)
 
-        if p.scheme not in (
-            "http",
-            "https"
-        ):
-            return False
+            if "v" in query:
+                return query["v"][0]
 
-        if not p.netloc:
-            return False
+        if "youtu.be" in parsed.netloc:
+            return parsed.path.strip("/").split("/")[0]
 
-        # Nunca usar Google News
-        if "news.google.com" in p.netloc.lower():
-            return False
-
-        return True
+        if "/embed/" in parsed.path:
+            return parsed.path.split("/embed/")[1].split("/")[0]
 
     except Exception:
-
-        return False
-
-
-def slug(texto):
-
-    texto = html.unescape(
-        texto or ""
-    ).lower()
-
-    tabela = str.maketrans({
-        "á": "a",
-        "à": "a",
-        "ã": "a",
-        "â": "a",
-        "ä": "a",
-        "é": "e",
-        "è": "e",
-        "ê": "e",
-        "ë": "e",
-        "í": "i",
-        "ì": "i",
-        "î": "i",
-        "ï": "i",
-        "ó": "o",
-        "ò": "o",
-        "õ": "o",
-        "ô": "o",
-        "ö": "o",
-        "ú": "u",
-        "ù": "u",
-        "û": "u",
-        "ü": "u",
-        "ç": "c",
-        "ñ": "n",
-    })
-
-    texto = texto.translate(tabela)
-
-    texto = re.sub(
-        r"[^a-z0-9]+",
-        "-",
-        texto
-    )
-
-    texto = re.sub(
-        r"-+",
-        "-",
-        texto
-    )
-
-    texto = texto.strip("-")
-
-    return texto[:100] or "noticia"
-
-
-def data_brasil(dt):
-
-    return dt.strftime(
-        "%d/%m/%Y"
-    )
-
-
-def agora_utc():
-
-    return datetime.now(
-        timezone.utc
-    )
-
-
-# =========================================================
-# DATAS RSS
-# =========================================================
-
-def interpretar_data(valor):
-
-    if not valor:
-        return None
-
-    valor = valor.strip()
-
-    # RSS / RFC 2822
-    try:
-
-        dt = parsedate_to_datetime(
-            valor
-        )
-
-        if dt.tzinfo is None:
-
-            dt = dt.replace(
-                tzinfo=timezone.utc
-            )
-
-        return dt.astimezone(
-            timezone.utc
-        )
-
-    except Exception:
-
         pass
 
-    # ISO 8601
-    try:
-
-        texto = valor.replace(
-            "Z",
-            "+00:00"
-        )
-
-        dt = datetime.fromisoformat(
-            texto
-        )
-
-        if dt.tzinfo is None:
-
-            dt = dt.replace(
-                tzinfo=timezone.utc
-            )
-
-        return dt.astimezone(
-            timezone.utc
-        )
-
-    except Exception:
-
-        return None
+    return ""
 
 
 # =========================================================
-# XML / RSS
+# GERAR VÍDEOS
 # =========================================================
 
-def texto_elemento(elemento):
+def gerar_videos(post):
 
-    if elemento is None:
-        return ""
+    videos_html = ""
 
-    return "".join(
-        elemento.itertext()
+    videos = post.get("videos", [])
+
+    # =====================================================
+    # VÁRIOS VÍDEOS
+    # =====================================================
+
+    if isinstance(videos, list) and len(videos) > 0:
+
+        for video in videos:
+
+            if not isinstance(video, dict):
+                continue
+
+            tipo = str(
+                video.get("tipo", "")
+            ).lower().strip()
+
+            url = str(
+                video.get("url", "")
+            ).strip()
+
+            if not url or url == "xxx":
+                continue
+
+            # =================================================
+            # YOUTUBE
+            # =================================================
+
+            if tipo == "youtube":
+
+                video_id = youtube_id(url)
+
+                if video_id:
+
+                    videos_html += f"""
+<div class="video-container">
+
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+
+</div>
+"""
+
+            # =================================================
+            # VÍDEO DO PC
+            # =================================================
+
+            elif tipo in ["pc", "local", "arquivo"]:
+
+                video_url = html.escape(
+                    url,
+                    quote=True
+                )
+
+                videos_html += f"""
+<div class="video-container">
+
+<video
+    controls
+    preload="metadata"
+>
+
+<source
+    src="../{video_url}"
+    type="video/mp4"
+>
+
+Seu navegador não suporta vídeo HTML5.
+
+</video>
+
+</div>
+"""
+
+    # =====================================================
+    # FORMATO ANTIGO
+    # =====================================================
+
+    elif post.get("video"):
+
+        video_id = youtube_id(
+            post.get("video", "")
+        )
+
+        if video_id:
+
+            videos_html += f"""
+<div class="video-container">
+
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+
+</div>
+"""
+
+    return videos_html
+
+
+# =========================================================
+# GERAR POST DO X
+# =========================================================
+
+def gerar_post_x(post):
+
+    x_url = str(
+        post.get("x", "")
     ).strip()
 
-
-def encontrar_por_tag(
-    elemento,
-    nomes
-):
-
-    if elemento is None:
-        return None
-
-    nomes = {
-        nome.lower()
-        for nome in nomes
-    }
-
-    for item in elemento.iter():
-
-        tag = item.tag
-
-        if not isinstance(tag, str):
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag in nomes:
-
-            return item
-
-    return None
-
-
-def link_item(item):
-
-    for filho in list(item):
-
-        tag = filho.tag
-
-        if not isinstance(tag, str):
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag != "link":
-            continue
-
-        href = filho.attrib.get(
-            "href",
-            ""
-        ).strip()
-
-        if href:
-
-            return normalizar_url(
-                href
-            )
-
-        texto = texto_elemento(
-            filho
-        )
-
-        if texto:
-
-            return normalizar_url(
-                texto
-            )
-
-    return ""
-
-
-def data_item(item):
-
-    for nome in (
-        "pubdate",
-        "published",
-        "updated",
-        "date",
-        "created",
-    ):
-
-        elemento = encontrar_por_tag(
-            item,
-            [nome]
-        )
-
-        if elemento is not None:
-
-            valor = texto_elemento(
-                elemento
-            )
-
-            if valor:
-
-                dt = interpretar_data(
-                    valor
-                )
-
-                if dt:
-
-                    return dt
-
-    return None
-
-
-def titulo_item(item):
-
-    elemento = encontrar_por_tag(
-        item,
-        ["title"]
-    )
-
-    if elemento is None:
+    if not x_url:
         return ""
 
-    return limpar_html(
-        texto_elemento(
-            elemento
-        )
+    if x_url == "xxx":
+        return ""
+
+    # Aceita somente links do X/Twitter
+    if not (
+        "x.com/" in x_url
+        or "twitter.com/" in x_url
+    ):
+        return ""
+
+    x_url = html.escape(
+        x_url,
+        quote=True
     )
 
+    return f"""
+<div class="x-container">
 
-def descricao_item(item):
+<blockquote class="twitter-tweet">
+    <a href="{x_url}"></a>
+</blockquote>
 
-    for nome in (
-        "description",
-        "summary",
-        "content",
-        "encoded",
-    ):
-
-        elemento = encontrar_por_tag(
-            item,
-            [nome]
-        )
-
-        if elemento is not None:
-
-            valor = texto_elemento(
-                elemento
-            )
-
-            if valor:
-
-                return limpar_html(
-                    valor
-                )
-
-    return ""
+</div>
+"""
 
 
 # =========================================================
-# IMAGENS
+# LISTA DAS PÁGINAS GERADAS
 # =========================================================
 
-def imagem_valida(url):
+generated_news_urls = []
 
-    if not url:
-        return False
 
-    url = normalizar_url(
-        url
+# =========================================================
+# GERAR TODAS AS NOTÍCIAS
+# =========================================================
+
+for post in posts:
+
+    post_id = str(
+        post.get("id", "")
+    ).strip()
+
+    if not post_id:
+        continue
+
+    titulo = html.escape(
+        str(
+            post.get(
+                "titulo",
+                "CavaloGameNews"
+            )
+        )
     )
 
-    if not url_valida(url):
-        return False
-
-    url_lower = url.lower()
-
-    palavras_ruins = (
-        "logo",
-        "avatar",
-        "favicon",
-        "sprite",
-        "tracking",
-        "pixel",
-        "emoji",
-        "icon",
-        "icon-",
-        "placeholder",
-        "gravatar",
+    resumo = html.escape(
+        str(
+            post.get(
+                "resumo",
+                ""
+            )
+        )
     )
 
-    if any(
-        palavra in url_lower
-        for palavra in palavras_ruins
-    ):
-        return False
-
-    if url_lower.startswith(
-        "data:"
-    ):
-        return False
-
-    return True
-
-
-def escolher_srcset(srcset):
-
-    if not srcset:
-        return ""
-
-    candidatos = []
-
-    for parte in srcset.split(","):
-
-        parte = parte.strip()
-
-        if not parte:
-            continue
-
-        pedacos = parte.split()
-
-        if not pedacos:
-            continue
-
-        url = pedacos[0]
-        peso = 0
-
-        if len(pedacos) > 1:
-
-            marcador = pedacos[1].lower()
-
-            match = re.match(
-                r"(\d+)w",
-                marcador
+    imagem = html.escape(
+        str(
+            post.get(
+                "imagem",
+                ""
             )
+        ),
+        quote=True
+    )
 
-            if match:
-
-                peso = int(
-                    match.group(1)
-                )
-
-            match = re.match(
-                r"([\d.]+)x",
-                marcador
+    categoria = html.escape(
+        str(
+            post.get(
+                "categoria",
+                "Notícia"
             )
+        )
+    )
 
-            if match:
+    data = html.escape(
+        str(
+            post.get(
+                "data",
+                ""
+            )
+        )
+    )
 
-                peso = int(
-                    float(
-                        match.group(1)
-                    ) * 1000
-                )
+    # =====================================================
+    # URL DA NOTÍCIA
+    # =====================================================
 
-        candidatos.append(
-            (peso, url)
+    news_url = (
+        f"{BASE_URL}/noticias/"
+        f"{post_id}.html"
+    )
+
+    generated_news_urls.append(
+        news_url
+    )
+
+    # =====================================================
+    # CONTEÚDO
+    # =====================================================
+
+    paragrafos = post.get("conteudo")
+
+    if not isinstance(paragrafos, list):
+
+        paragrafos = [
+            post.get(
+                "resumo",
+                ""
+            )
+        ]
+
+    conteudo_html = ""
+
+    # =====================================================
+    # POST DO X
+    # O X será inserido no meio do conteúdo.
+    # =====================================================
+
+    x_html = gerar_post_x(post)
+
+
+    # =====================================================
+    # RENDERIZAR ITEM DO CONTEÚDO
+    # Compatibilidade: strings antigas continuam funcionando.
+    # Novos formatos aceitos:
+    # texto/paragrafo, imagem, youtube e video/pc/local/arquivo.
+    # =====================================================
+
+    def preparar_texto(texto):
+
+        texto = html.escape(
+            str(texto or "")
         )
 
-    candidatos.sort(
-        reverse=True
-    )
-
-    for _, url in candidatos:
-
-        if imagem_valida(url):
-
-            return url
-
-    return ""
-
-
-def imagem_de_objeto(
-    valor,
-    pagina_url
-):
-
-    if isinstance(
-        valor,
-        str
-    ):
-
-        url = urljoin(
-            pagina_url,
-            valor.strip()
-        )
-
-        if imagem_valida(url):
-
-            return url
-
-        return ""
-
-    if isinstance(
-        valor,
-        list
-    ):
-
-        for item in valor:
-
-            resultado = imagem_de_objeto(
-                item,
-                pagina_url
-            )
-
-            if resultado:
-
-                return resultado
-
-        return ""
-
-    if isinstance(
-        valor,
-        dict
-    ):
-
-        for chave in (
-            "url",
-            "contentUrl",
-            "contenturl",
-            "@id",
-        ):
-
-            item = valor.get(
-                chave
-            )
-
-            if isinstance(
-                item,
-                str
-            ):
-
-                url = urljoin(
-                    pagina_url,
-                    item.strip()
-                )
-
-                if imagem_valida(url):
-
-                    return url
-
-        return ""
-
-    return ""
-
-
-def extrair_jsonld_imagem(
-    pagina_url,
-    texto
-):
-
-    padrao = re.compile(
-        r'<script[^>]+type=["\']'
-        r'application/ld\+json["\'][^>]*>'
-        r"(.*?)"
-        r"</script>",
-        flags=re.I | re.S,
-    )
-
-    def procurar(obj):
-
-        if isinstance(
-            obj,
-            dict
-        ):
-
-            for chave, valor in obj.items():
-
-                if str(chave).lower() == "image":
-
-                    resultado = imagem_de_objeto(
-                        valor,
-                        pagina_url
-                    )
-
-                    if resultado:
-
-                        return resultado
-
-                resultado = procurar(
-                    valor
-                )
-
-                if resultado:
-
-                    return resultado
-
-        elif isinstance(
-            obj,
-            list
-        ):
-
-            for item in obj:
-
-                resultado = procurar(
-                    item
-                )
-
-                if resultado:
-
-                    return resultado
-
-        return ""
-
-    for bloco in padrao.findall(
-        texto
-    ):
-
-        bloco = html.unescape(
-            bloco
-        ).strip()
-
-        try:
-
-            dados = json.loads(
-                bloco
-            )
-
-        except Exception:
-
-            continue
-
-        resultado = procurar(
-            dados
-        )
-
-        if resultado:
-
-            return resultado
-
-    return ""
-
-
-def extrair_imagem_meta(
-    pagina_url,
-    texto
-):
-
-    padroes = [
-
-        r'<meta[^>]+(?:property|name)=["\']'
-        r'og:image["\'][^>]+content=["\']'
-        r'([^"\']+)',
-
-        r'<meta[^>]+content=["\']'
-        r'([^"\']+)["\'][^>]+'
-        r'(?:property|name)=["\']og:image["\']',
-
-        r'<meta[^>]+(?:property|name)=["\']'
-        r'og:image:url["\'][^>]+content=["\']'
-        r'([^"\']+)',
-
-        r'<meta[^>]+content=["\']'
-        r'([^"\']+)["\'][^>]+'
-        r'(?:property|name)=["\']og:image:url["\']',
-
-        r'<meta[^>]+(?:property|name)=["\']'
-        r'twitter:image["\'][^>]+content=["\']'
-        r'([^"\']+)',
-
-        r'<meta[^>]+content=["\']'
-        r'([^"\']+)["\'][^>]+'
-        r'(?:property|name)=["\']twitter:image["\']',
-
-        r'<meta[^>]+(?:property|name)=["\']'
-        r'twitter:image:src["\'][^>]+content=["\']'
-        r'([^"\']+)',
-
-        r'<meta[^>]+content=["\']'
-        r'([^"\']+)["\'][^>]+'
-        r'(?:property|name)=["\']twitter:image:src["\']',
-
-        r'<link[^>]+rel=["\']image_src["\']'
-        r'[^>]+href=["\']([^"\']+)',
-
-        r'<link[^>]+href=["\']([^"\']+)["\']'
-        r'[^>]+rel=["\']image_src["\']',
-    ]
-
-    for padrao in padroes:
-
-        encontrados = re.findall(
-            padrao,
+        # [verde]texto[/verde] -> verde e negrito
+        texto = re.sub(
+            r"\[verde\](.*?)\[/verde\]",
+            r'<span class="texto-verde">\1</span>',
             texto,
-            flags=re.I
+            flags=re.IGNORECASE
         )
 
-        for url in encontrados:
-
-            url = urljoin(
-                pagina_url,
-                html.unescape(
-                    url
-                ).strip()
-            )
-
-            if imagem_valida(url):
-
-                return url
-
-    return ""
-
-
-def imagem_da_primeira_tag_img(
-    pagina_url,
-    texto
-):
-
-    padrao = re.compile(
-        r"<img\b([^>]+)>",
-        flags=re.I | re.S
-    )
-
-    atributos = (
-        "src",
-        "data-src",
-        "data-lazy-src",
-        "data-original",
-        "data-image",
-        "data-lazy",
-        "data-url",
-        "srcset",
-        "data-srcset",
-    )
-
-    for bloco in padrao.findall(
-        texto
-    ):
-
-        attrs = {}
-
-        for nome, valor in re.findall(
-            r'([a-zA-Z0-9_:-]+)\s*=\s*'
-            r'["\']([^"\']*)["\']',
-            bloco,
-            flags=re.I,
-        ):
-
-            attrs[
-                nome.lower()
-            ] = html.unescape(
-                valor
-            ).strip()
-
-        # Primeiro tenta srcset
-        for nome in (
-            "srcset",
-            "data-srcset"
-        ):
-
-            valor = attrs.get(
-                nome,
-                ""
-            )
-
-            if valor:
-
-                url = escolher_srcset(
-                    valor
-                )
-
-                if url:
-
-                    return urljoin(
-                        pagina_url,
-                        url
-                    )
-
-        for nome in atributos:
-
-            if nome.endswith(
-                "srcset"
-            ):
-                continue
-
-            valor = attrs.get(
-                nome,
-                ""
-            )
-
-            if not valor:
-                continue
-
-            url = urljoin(
-                pagina_url,
-                valor
-            )
-
-            if imagem_valida(url):
-
-                return url
-
-    return ""
-
-
-def extrair_imagem_pagina(
-    pagina_url
-):
-
-    """
-    Abre a página ORIGINAL da notícia
-    e tenta encontrar a imagem principal.
-
-    Ordem:
-    1. JSON-LD
-    2. Open Graph
-    3. Twitter Card
-    4. primeira imagem válida
-    """
-
-    texto, url_final = baixar(
-        pagina_url
-    )
-
-    if not texto:
-
-        return ""
-
-    # 1. JSON-LD
-    imagem = extrair_jsonld_imagem(
-        url_final,
-        texto
-    )
-
-    if imagem:
-
-        return imagem
-
-    # 2. Meta tags
-    imagem = extrair_imagem_meta(
-        url_final,
-        texto
-    )
-
-    if imagem:
-
-        return imagem
-
-    # 3. <img>
-    imagem = imagem_da_primeira_tag_img(
-        url_final,
-        texto
-    )
-
-    if imagem:
-
-        return imagem
-
-    return ""
-
-
-def extrair_imagem_rss(
-    item,
-    base_url
-):
-
-    # media:content / media:thumbnail
-    for elemento in item.iter():
-
-        tag = elemento.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag in (
-            "content",
-            "thumbnail"
-        ):
-
-            url = elemento.attrib.get(
-                "url",
-                ""
-            ).strip()
-
-            if url:
-
-                url = urljoin(
-                    base_url,
-                    html.unescape(
-                        url
-                    )
-                )
-
-                if imagem_valida(url):
-
-                    return url
-
-    # enclosure
-    for elemento in item.iter():
-
-        tag = elemento.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag == "enclosure":
-
-            url = elemento.attrib.get(
-                "url",
-                ""
-            ).strip()
-
-            tipo = elemento.attrib.get(
-                "type",
-                ""
-            ).lower()
-
-            if url and (
-                "image" in tipo
-                or not tipo
-            ):
-
-                url = urljoin(
-                    base_url,
-                    html.unescape(
-                        url
-                    )
-                )
-
-                if imagem_valida(url):
-
-                    return url
-
-    # Imagem dentro da descrição
-    descricao_raw = ""
-
-    for nome in (
-        "description",
-        "summary",
-        "content",
-        "encoded",
-    ):
-
-        elemento = encontrar_por_tag(
-            item,
-            [nome]
+        # [titulo]texto[/titulo] -> título destacado
+        texto = re.sub(
+            r"\[titulo\](.*?)\[/titulo\]",
+            r'<span class="paragrafo-titulo">\1</span>',
+            texto,
+            flags=re.IGNORECASE
         )
 
-        if elemento is not None:
-
-            descricao_raw = texto_elemento(
-                elemento
-            )
-
-            if descricao_raw:
-
-                break
-
-    if descricao_raw:
-
-        match = re.search(
-            r'<img[^>]+'
-            r'(?:src|data-src|data-lazy-src)'
-            r'=["\']([^"\']+)',
-            descricao_raw,
-            flags=re.I
-        )
-
-        if match:
-
-            url = urljoin(
-                base_url,
-                html.unescape(
-                    match.group(1)
-                ).strip()
-            )
-
-            if imagem_valida(url):
-
-                return url
-
-    return ""
-
-
-# =========================================================
-# CATEGORIA
-# =========================================================
-
-def descobrir_categoria(
-    titulo,
-    resumo,
-    categoria_padrao
-):
-
-    texto = (
-        f"{titulo} {resumo}"
-    ).lower()
-
-    if any(
-        palavra in texto
-        for palavra in (
-            "playstation",
-            "ps5",
-            "ps4",
-            "ps vr",
-            "sony",
-        )
-    ):
-
-        return "PlayStation"
-
-    if any(
-        palavra in texto
-        for palavra in (
-            "xbox",
-            "series x",
-            "series s",
-            "game pass",
-            "microsoft",
-        )
-    ):
-
-        return "Xbox"
-
-    if any(
-        palavra in texto
-        for palavra in (
-            "nintendo",
-            "switch",
-            "switch 2",
-            "zelda",
-            "mario",
-            "pokemon",
-        )
-    ):
-
-        return "Nintendo"
-
-    if any(
-        palavra in texto
-        for palavra in (
-            "pc",
-            "steam",
-            "epic games",
-            "windows",
-            "gpu",
-            "nvidia",
-            "amd",
-        )
-    ):
-
-        return "Pc"
-
-    return (
-        categoria_padrao
-        or "Notícias"
-    )
-
-
-# =========================================================
-# BUSCAR RSS
-# =========================================================
-
-def buscar_rss(fonte):
-
-    nome = fonte["nome"]
-    url = fonte["url"]
-
-    categoria = fonte.get(
-        "categoria",
-        "Notícias"
-    )
-
-    print(
-        f"\n[RSS] Lendo {nome}: {url}"
-    )
-
-    texto, url_final = baixar(
-        url
-    )
-
-    if not texto:
-
-        return []
-
-    try:
-
-        raiz = ET.fromstring(
+        # URLs continuam clicáveis
+        texto = re.sub(
+            r'(https?://[^\s<]+)',
+            r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
             texto
         )
 
-    except Exception as erro:
-
-        print(
-            f"[ERRO] RSS inválido "
-            f"em {nome}: {erro}"
-        )
-
-        return []
-
-    itens = []
-
-    for elemento in raiz.iter():
-
-        tag = elemento.tag
-
-        if not isinstance(
-            tag,
-            str
-        ):
-            continue
-
-        tag = tag.split(
-            "}"
-        )[-1].lower()
-
-        if tag not in (
-            "item",
-            "entry"
-        ):
-            continue
-
-        titulo = titulo_item(
-            elemento
-        )
-
-        link = link_item(
-            elemento
-        )
-
-        resumo = descricao_item(
-            elemento
-        )
-
-        data_publicacao = data_item(
-            elemento
-        )
-
-        if not titulo or not link:
-
-            continue
-
-        link = normalizar_url(
-            link
-        )
-
-        # Nunca aceitar Google News
-        if (
-            "news.google.com"
-            in urlparse(
-                link
-            ).netloc.lower()
-        ):
-
-            continue
-
-        if not url_valida(link):
-
-            continue
-
-        if data_publicacao is None:
-
-            data_publicacao = agora_utc()
-
-        idade = (
-            agora_utc()
-            - data_publicacao
-        )
-
-        if idade > timedelta(
-            hours=HORAS_MAXIMO
-        ):
-
-            continue
-
-        if idade < timedelta(
-            minutes=-10
-        ):
-
-            continue
-
-        imagem = extrair_imagem_rss(
-            elemento,
-            url_final
-        )
-
-        itens.append({
-            "titulo": titulo,
-            "link": link,
-            "resumo_rss": resumo,
-            "data_publicacao": data_publicacao,
-            "imagem": imagem,
-            "fonte": nome,
-            "categoria": categoria,
-        })
-
-    print(
-        f"[RSS] {nome}: "
-        f"{len(itens)} notícia(s) "
-        f"recente(s) encontrada(s)."
-    )
-
-    return itens
+        return texto
 
 
-# =========================================================
-# RESUMO / CONTEÚDO
-# =========================================================
+    def caminho_recurso(url):
 
-def criar_resumo(
-    titulo,
-    resumo_rss,
-    fonte
-):
+        url = str(url or "").strip()
 
-    resumo = limpar_html(
-        resumo_rss
-    )
+        if not url:
+            return ""
 
-    if not resumo:
+        if url.startswith((
+            "http://",
+            "https://",
+            "//",
+            "../"
+        )):
+            return url
 
-        resumo = (
-            f"{titulo} — confira "
-            "os principais detalhes "
-            "desta novidade."
-        )
-
-    resumo = re.sub(
-        r"\s+",
-        " ",
-        resumo
-    ).strip()
-
-    if len(resumo) > 300:
-
-        resumo = (
-            resumo[:297]
-            .rsplit(" ", 1)[0]
-            + "..."
-        )
-
-    # Evita atribuição ao Google News
-    resumo = resumo.replace(
-        "Google News",
-        ""
-    )
-
-    resumo = re.sub(
-        r"\s+",
-        " ",
-        resumo
-    ).strip()
-
-    if not resumo:
-
-        resumo = (
-            f"{titulo} — confira "
-            "os principais detalhes "
-            "desta novidade."
-        )
-
-    return resumo
+        return "../" + url.lstrip("/")
 
 
-def criar_conteudo(
-    titulo,
-    resumo,
-    fonte,
-    link
-):
+    def renderizar_item(item):
 
-    return [
+        # -------------------------------------------------
+        # FORMATO ANTIGO: "texto do parágrafo"
+        # -------------------------------------------------
+        if isinstance(item, str):
 
-        (
-            f"{titulo} ganhou destaque "
-            "entre as novidades recentes "
-            "do mundo dos videogames."
-        ),
+            texto = preparar_texto(item.strip())
 
-        resumo,
+            if not texto:
+                return ""
 
-        (
-            f"A informação foi publicada "
-            f"originalmente por {fonte}. "
-            "O CavaloGameNews reúne os "
-            "principais detalhes disponíveis "
-            "sobre o assunto."
-        ),
+            return f"""
+<p>
+{texto}
+</p>
+"""
 
-        f"🔗 Fonte: {link}",
+
+        # -------------------------------------------------
+        # NOVO FORMATO: objeto
+        # -------------------------------------------------
+        if not isinstance(item, dict):
+            return ""
+
+        tipo = str(
+            item.get("tipo", "texto")
+        ).lower().strip()
+
+        # -------------------------------------------------
+        # TEXTO
+        # -------------------------------------------------
+        if tipo in ("texto", "paragrafo", "p"):
+
+            texto_original = item.get(
+                "texto",
+                item.get(
+                    "paragrafo",
+                    item.get("conteudo", "")
+                )
+            )
+
+            texto = preparar_texto(
+                texto_original
+            )
+
+            if not texto:
+                return ""
+
+            return f"""
+<p>
+{texto}
+</p>
+"""
+
+        # -------------------------------------------------
+        # IMAGEM
+        # -------------------------------------------------
+        if tipo in ("imagem", "image"):
+
+            url = item.get(
+                "url",
+                item.get("imagem", "")
+            )
+
+            url = caminho_recurso(url)
+
+            if not url:
+                return ""
+
+            alt = html.escape(
+                str(
+                    item.get(
+                        "alt",
+                        item.get(
+                            "legenda",
+                            "Imagem da notícia"
+                        )
+                    )
+                ),
+                quote=True
+            )
+
+            legenda = str(
+                item.get(
+                    "legenda",
+                    ""
+                )
+            ).strip()
+
+            legenda_html = ""
+
+            if legenda:
+
+                legenda_html = f"""
+<div class="content-image-caption">
+{preparar_texto(legenda)}
+</div>
+"""
+
+            return f"""
+<figure class="content-image">
+
+<img
+    src="{html.escape(url, quote=True)}"
+    alt="{alt}"
+    loading="lazy"
+>
+
+{legenda_html}
+
+</figure>
+"""
+
+        # -------------------------------------------------
+        # VÍDEO YOUTUBE
+        # -------------------------------------------------
+        if tipo in ("youtube", "youtube_video"):
+
+            url = str(
+                item.get("url", "")
+            ).strip()
+
+            video_id = youtube_id(url)
+
+            if not video_id:
+                return ""
+
+            return f"""
+<div class="video-container content-video">
+
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id, quote=True)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+
+</div>
+"""
+
+        # -------------------------------------------------
+        # VÍDEO LOCAL / PC
+        # -------------------------------------------------
+        if tipo in ("video", "pc", "local", "arquivo"):
+
+            url = caminho_recurso(
+                item.get("url", "")
+            )
+
+            if not url:
+                return ""
+
+            video_url = html.escape(
+                url,
+                quote=True
+            )
+
+            extensao = urlparse(
+                urlparse(url).path
+            ).path.lower()
+
+            mime = "video/mp4"
+
+            if extensao.endswith(".webm"):
+                mime = "video/webm"
+            elif extensao.endswith(".ogg") or extensao.endswith(".ogv"):
+                mime = "video/ogg"
+            elif extensao.endswith(".m4v"):
+                mime = "video/mp4"
+
+            return f"""
+<div class="video-container content-video">
+
+<video
+    controls
+    preload="metadata"
+>
+
+<source
+    src="{video_url}"
+    type="{mime}"
+>
+
+Seu navegador não suporta vídeo HTML5.
+
+</video>
+
+</div>
+"""
+
+        return ""
+
+
+    # Só itens reconhecidos entram na contagem para posicionar o X.
+    itens_validos = [
+        item
+        for item in paragrafos
+        if renderizar_item(item).strip()
     ]
 
+    # Divide o conteúdo aproximadamente ao meio.
+    # Se houver poucos itens, o X entra depois do primeiro.
+    meio = len(itens_validos) // 2
 
-# =========================================================
-# DEDUPLICAÇÃO
-# =========================================================
+    if len(itens_validos) > 1:
+        meio = max(1, meio)
 
-def normalizar_titulo_para_comparacao(
-    titulo
-):
+    for indice, item in enumerate(itens_validos):
 
-    return slug(
-        titulo
-    )
-
-
-def coletar_chaves_existentes(
-    posts
-):
-
-    ids = set()
-    links = set()
-    titulos = set()
-
-    for post in posts:
-
-        if not isinstance(
-            post,
-            dict
-        ):
-
-            continue
-
-        post_id = str(
-            post.get(
-                "id",
-                ""
-            )
-        ).strip()
-
-        if post_id:
-
-            ids.add(
-                post_id
-            )
-
-        link = normalizar_url(
-            post.get(
-                "link",
-                ""
-            )
+        conteudo_html += renderizar_item(
+            item
         )
 
-        if link:
+        # Coloca o post do X no meio da notícia.
+        if x_html and indice + 1 == meio:
+            conteudo_html += x_html
 
-            links.add(
-                link.rstrip("/")
-            )
+    # Se houver apenas 1 item, coloca o X depois dele.
+    if x_html and len(itens_validos) == 1:
+        conteudo_html += x_html
 
-        titulo = (
-            normalizar_titulo_para_comparacao(
-                str(
-                    post.get(
-                        "titulo",
-                        ""
-                    )
+    # =====================================================
+    # VÍDEOS
+    # Os vídeos do campo "videos" continuam no final da notícia.
+    # =====================================================
+
+    videos_html = gerar_videos(post)
+
+    # =====================================================
+    # 3 ÚLTIMAS NOTÍCIAS
+    # =====================================================
+
+    relacionadas = [
+        p for p in posts
+        if str(p.get("id", "")).strip() != post_id
+    ][:3]
+
+    related_html = ""
+
+    for related in relacionadas:
+
+        related_id = html.escape(
+            str(
+                related.get(
+                    "id",
+                    ""
                 )
             )
         )
 
-        if titulo:
-
-            titulos.add(
-                titulo
+        related_titulo = html.escape(
+            str(
+                related.get(
+                    "titulo",
+                    "CavaloGameNews"
+                )
             )
+        )
 
-    return (
-        ids,
-        links,
-        titulos
+        related_imagem = html.escape(
+            str(
+                related.get(
+                    "imagem",
+                    ""
+                )
+            ),
+            quote=True
+        )
+
+        related_categoria = html.escape(
+            str(
+                related.get(
+                    "categoria",
+                    "Notícia"
+                )
+            )
+        )
+
+        related_data = html.escape(
+            str(
+                related.get(
+                    "data",
+                    ""
+                )
+            )
+        )
+
+        related_html += f"""
+<a
+    href="../noticias/{related_id}.html"
+    class="related-card"
+>
+
+<img
+    src="{related_imagem}"
+    alt="{related_titulo}"
+>
+
+<div class="related-content">
+
+<div class="category">
+{related_categoria}
+</div>
+
+<div class="related-date">
+{related_data}
+</div>
+
+<h3>
+{related_titulo}
+</h3>
+
+</div>
+
+</a>
+"""
+
+    # =====================================================
+    # HTML DA NOTÍCIA
+    # =====================================================
+
+    pagina = f"""<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8CNXSR7BXS');
+</script>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<link
+    rel="icon"
+    type="image/png"
+    href="../img/logo_cavalo.png"
+>
+
+<title>{titulo} - CavaloGameNews</title>
+
+<meta
+    name="description"
+    content="{resumo}"
+>
+
+
+<!-- =================================================
+     DISCORD / FACEBOOK / WHATSAPP
+================================================= -->
+
+<meta
+    property="og:type"
+    content="article"
+>
+
+<meta
+    property="og:title"
+    content="{titulo}"
+>
+
+<meta
+    property="og:description"
+    content="{resumo}"
+>
+
+<meta
+    property="og:image"
+    content="{imagem}"
+>
+
+<meta
+    property="og:url"
+    content="{news_url}"
+>
+
+<meta
+    property="og:site_name"
+    content="CavaloGameNews"
+>
+
+
+<!-- =================================================
+     TWITTER CARD
+================================================= -->
+
+<meta
+    name="twitter:card"
+    content="summary_large_image"
+>
+
+<meta
+    name="twitter:title"
+    content="{titulo}"
+>
+
+<meta
+    name="twitter:description"
+    content="{resumo}"
+>
+
+<meta
+    name="twitter:image"
+    content="{imagem}"
+>
+
+
+<style>
+
+/* =================================================
+   GERAL
+================================================= */
+
+* {{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}}
+
+
+body {{
+    background: #111;
+    color: #fff;
+}}
+
+
+/* =================================================
+   HEADER
+================================================= */
+
+header {{
+    background: #0f1115;
+    padding: 20px 30px;
+    border-bottom: 3px solid #00ff88;
+}}
+
+
+.top-back-button {{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    background: #181b20;
+    border: 1px solid #00ff88;
+    border-radius: 10px;
+    color: #00ff88;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}}
+
+.top-back-button:hover {{
+    background: #00ff88;
+    color: #111;
+    transform: translateX(-3px);
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.25);
+}}
+
+
+/* =================================================
+   ARTIGO
+================================================= */
+
+.article {{
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+}}
+
+
+.category {{
+    color: #00ff88;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}}
+
+
+h1 {{
+    font-size: 46px;
+    line-height: 1.15;
+    margin-bottom: 15px;
+}}
+
+
+.info {{
+    color: #999;
+    margin-bottom: 25px;
+}}
+
+
+/* =================================================
+   IMAGEM
+================================================= */
+
+.cover {{
+    width: 100%;
+    max-height: 560px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 30px;
+}}
+
+
+/* =================================================
+   IMAGENS DENTRO DO CONTEÚDO
+================================================= */
+
+.content-image {{
+    width: 100%;
+    margin: 35px 0;
+}}
+
+
+.content-image img {{
+    width: 100%;
+    max-height: 650px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+}}
+
+
+.content-image-caption {{
+    color: #888;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 9px;
+}}
+
+
+.content-video {{
+    margin: 35px 0;
+}}
+
+
+/* =================================================
+   TEXTO
+================================================= */
+
+.text {{
+    max-width: 800px;
+    margin: auto;
+}}
+
+
+.text p {{
+    color: #ddd;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}}
+
+.texto-verde {{
+    color: #00ff88;
+    font-weight: bold;
+}}
+
+.paragrafo-titulo {{
+    display: block;
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 1.35;
+    margin-bottom: 8px;
+}}
+
+
+/* =================================================
+   LINKS DO CONTEÚDO
+================================================= */
+
+.text p a {{
+    color: #00ff88;
+    font-weight: bold;
+    text-decoration: underline;
+}}
+
+
+.text p a:hover {{
+    color: #00cc6d;
+}}
+
+
+/* =================================================
+   VÍDEOS
+================================================= */
+
+.video-container {{
+    width: 100%;
+    margin: 30px 0;
+    aspect-ratio: 16 / 9;
+}}
+
+
+.video-container iframe {{
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 14px;
+    display: block;
+}}
+
+
+.video-container video {{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+    border-radius: 14px;
+    display: block;
+}}
+
+
+/* =================================================
+   POST DO X
+================================================= */
+
+.x-container {{
+    width: 100%;
+    max-width: 650px;
+    margin: 35px auto;
+}}
+
+
+/* =================================================
+   BOTÃO
+================================================= */
+
+.back-button {{
+    display: inline-block;
+    margin-top: 20px;
+    background: #00ff88;
+    color: #111;
+    padding: 12px 20px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}}
+
+
+/* =================================================
+   MAIS NOTÍCIAS
+================================================= */
+
+.related {{
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #333;
+}}
+
+
+.related h2 {{
+    color: #00ff88;
+    margin-bottom: 20px;
+}}
+
+
+.related-grid {{
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}}
+
+
+.related-card {{
+    background: #1b1b1b;
+    border: 1px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.2s;
+}}
+
+
+.related-card:hover {{
+    border-color: #00ff88;
+    transform: translateY(-3px);
+}}
+
+
+.related-card img {{
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+    display: block;
+}}
+
+
+.related-content {{
+    padding: 12px;
+}}
+
+
+.related-content h3 {{
+    font-size: 17px;
+    margin-top: 6px;
+    line-height: 1.3;
+}}
+
+
+.related-date {{
+    color: #888;
+    font-size: 12px;
+    margin-top: 5px;
+}}
+
+
+/* =================================================
+   FOOTER
+================================================= */
+
+footer {{
+    background: #1a1a1a;
+    text-align: center;
+    padding: 25px;
+    margin-top: 50px;
+    color: #888;
+}}
+
+
+/* =================================================
+   CELULAR
+================================================= */
+
+@media (max-width: 600px) {{
+
+    h1 {{
+        font-size: 30px;
+    }}
+
+    .article {{
+        width: 92%;
+    }}
+
+    .text p {{
+        font-size: 16px;
+    }}
+
+}}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="../index.html" class="top-back-button">
+    <span>←</span>
+    <span>Voltar para o CavaloGameNews</span>
+</a>
+
+</header>
+
+
+<main class="article">
+
+
+<div class="category">
+{categoria}
+</div>
+
+
+<h1>
+{titulo}
+</h1>
+
+
+<div class="info">
+{data} · CavaloGameNews
+</div>
+
+
+<img
+    class="cover"
+    src="{imagem}"
+    alt="{titulo}"
+>
+
+
+<div class="text">
+
+{conteudo_html}
+
+<!-- =================================================
+     VÍDEOS DO YOUTUBE / PC
+     Ficam sempre no final da notícia.
+================================================= -->
+
+{videos_html}
+
+</div>
+
+
+<div class="text">
+
+<a
+    class="back-button"
+    href="../index.html"
+>
+← Voltar para as notícias
+</a>
+
+
+<!-- =================================================
+     MAIS NOTÍCIAS
+================================================= -->
+
+<div class="related">
+
+<h2>
+Mais notícias
+</h2>
+
+
+<div class="related-grid">
+
+{related_html}
+
+</div>
+
+</div>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 CavaloGameNews -
+Todos os direitos reservados.
+
+</footer>
+
+
+<!-- =================================================
+     SCRIPT OFICIAL DO X
+================================================= -->
+
+<script
+    async
+    src="https://platform.twitter.com/widgets.js"
+    charset="utf-8">
+</script>
+
+
+</body>
+
+</html>
+"""
+
+
+    # =====================================================
+    # SALVAR HTML
+    # =====================================================
+
+    caminho = (
+        f"{NEWS_DIR}/{post_id}.html"
     )
-
-
-# =========================================================
-# POSTS.JSON
-# =========================================================
-
-def carregar_posts():
-
-    try:
-
-        with open(
-            POSTS_FILE,
-            "r",
-            encoding="utf-8"
-        ) as arquivo:
-
-            posts = json.load(
-                arquivo
-            )
-
-        if not isinstance(
-            posts,
-            list
-        ):
-
-            raise ValueError(
-                "O arquivo posts.json "
-                "precisa conter uma lista "
-                "de notícias."
-            )
-
-        return posts
-
-    except FileNotFoundError:
-
-        print(
-            f"[AVISO] {POSTS_FILE} "
-            "não encontrado. "
-            "Criando lista vazia."
-        )
-
-        return []
-
-    except json.JSONDecodeError as erro:
-
-        raise ValueError(
-            f"O arquivo {POSTS_FILE} "
-            f"contém JSON inválido: {erro}"
-        )
-
-
-def salvar_posts(posts):
 
     with open(
-        POSTS_FILE,
+        caminho,
         "w",
         encoding="utf-8"
     ) as arquivo:
 
-        json.dump(
-            posts,
-            arquivo,
-            ensure_ascii=False,
-            indent=2
-        )
-
-        arquivo.write(
-            "\n"
-        )
+        arquivo.write(pagina)
 
 
 # =========================================================
-# CRIAR POST
+# GERAR SITEMAP.XML
 # =========================================================
 
-def criar_post(noticia):
+today = date.today().isoformat()
 
-    titulo = noticia[
-        "titulo"
-    ].strip()
+sitemap_urls = [
 
-    link = noticia[
-        "link"
-    ].strip()
+    f"{BASE_URL}/",
+    f"{BASE_URL}/index.html",
 
-    fonte = noticia[
-        "fonte"
-    ]
+]
 
-    data_publicacao = (
-        noticia.get(
-            "data_publicacao"
-        )
-        or agora_utc()
-    )
+sitemap_urls.extend(
+    generated_news_urls
+)
 
-    data_id = (
-        data_publicacao.strftime(
-            "%Y%m%d"
-        )
-    )
 
-    data_str = data_brasil(
-        data_publicacao
-    )
+# Remover duplicados
 
-    resumo = criar_resumo(
-        titulo,
-        noticia.get(
-            "resumo_rss",
-            ""
-        ),
-        fonte
-    )
-
-    categoria = descobrir_categoria(
-        titulo,
-        resumo,
-        noticia.get(
-            "categoria",
-            "Notícias"
-        )
-    )
-
-    imagem = noticia.get(
-        "imagem",
-        ""
-    )
-
-    # Se o RSS não trouxe imagem,
-    # procura na página original.
-    if not imagem:
-
-        print(
-            "[IMAGEM] Procurando "
-            f"imagem original: {titulo}"
-        )
-
-        imagem = extrair_imagem_pagina(
-            link
-        )
-
-    if imagem:
-
-        print(
-            f"[IMAGEM] Encontrada: "
-            f"{imagem}"
-        )
-
-    else:
-
-        print(
-            "[IMAGEM] Nenhuma imagem "
-            "encontrada."
-        )
-
-    post_id = (
-        f"{data_id}-{slug(titulo)}"
-    )
-
-    return {
-
-        "id": post_id,
-
-        "titulo": titulo,
-
-        "categoria": categoria,
-
-        "data": data_str,
-
-        "imagem": imagem,
-
-        "resumo": resumo,
-
-        "link": link,
-
-        "x": "",
-
-        "videos": [
-            {
-                "tipo": "youtube",
-                "url": "xxx"
-            }
-        ],
-
-        "conteudo": criar_conteudo(
-            titulo,
-            resumo,
-            fonte,
-            link
-        )
-    }
+sitemap_urls = list(
+    dict.fromkeys(sitemap_urls)
+)
 
 
 # =========================================================
-# DISCORD
+# MONTAR XML
 # =========================================================
 
-def enviar_discord(post):
-    """
-    Envia uma notícia nova para o Discord
-    usando o webhook salvo no GitHub Secrets.
-    """
+sitemap_lines = [
 
-    webhook_url = os.getenv(
-        "DISCORD_WEBHOOK_URL",
-        ""
-    ).strip()
+    '<?xml version="1.0" encoding="UTF-8"?>',
 
-    if not webhook_url:
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
 
-        print(
-            "[DISCORD] Webhook não configurado."
-        )
+]
 
-        return
 
-    titulo = str(
-        post.get(
-            "titulo",
-            "Nova notícia"
-        )
-    ).strip()
+for url in sitemap_urls:
 
-    categoria = str(
-        post.get(
-            "categoria",
-            "Notícias"
-        )
-    ).strip()
-
-    resumo = str(
-        post.get(
-            "resumo",
-            ""
-        )
-    ).strip()
-
-    link = normalizar_url(
-        post.get(
-            "link",
-            ""
-        )
+    sitemap_lines.append(
+        "  <url>"
     )
 
-    imagem = normalizar_url(
-        post.get(
-            "imagem",
-            ""
-        )
+    sitemap_lines.append(
+        f"    <loc>{xml_escape(url)}</loc>"
     )
 
-    data = str(
-        post.get(
-            "data",
-            ""
-        )
-    ).strip()
-
-    # -----------------------------------------------------
-    # EMBED DO DISCORD
-    # -----------------------------------------------------
-
-    embed = {
-        "title": titulo[:256],
-        "description": resumo[:4096],
-        "color": 65280,
-        "fields": [
-            {
-                "name": "Categoria",
-                "value": categoria[:1024],
-                "inline": True
-            },
-            {
-                "name": "Data",
-                "value": data[:1024],
-                "inline": True
-            }
-        ],
-        "footer": {
-            "text": "CavaloGameNews"
-        }
-    }
-
-    # Link da notícia
-    if url_valida(link):
-
-        embed["url"] = link
-
-    # Imagem da notícia
-    if imagem and url_valida(imagem):
-
-        embed["image"] = {
-            "url": imagem
-        }
-
-    payload = {
-        "username": "CavaloGameNews",
-        "embeds": [
-            embed
-        ]
-    }
-
-    dados = json.dumps(
-        payload,
-        ensure_ascii=False
-    ).encode(
-        "utf-8"
+    sitemap_lines.append(
+        f"    <lastmod>{today}</lastmod>"
     )
 
-    try:
+    sitemap_lines.append(
+        "  </url>"
+    )
 
-        requisicao = Request(
-            webhook_url,
-            data=dados,
-            headers={
-                "Content-Type":
-                    "application/json",
-                "User-Agent":
-                    "CavaloGameNews Bot"
-            },
-            method="POST"
-        )
 
-        with urlopen(
-            requisicao,
-            timeout=20
-        ):
+sitemap_lines.append(
+    "</urlset>"
+)
 
-            pass
 
-        print(
-            "[DISCORD] Notícia enviada "
-            f"com sucesso: {titulo}"
-        )
-
-    except Exception as erro:
-
-        print(
-            "[DISCORD] Erro ao enviar "
-            f"notícia: {erro}"
-        )
+sitemap_content = "\n".join(
+    sitemap_lines
+)
 
 
 # =========================================================
-# MAIN
+# SALVAR SITEMAP
 # =========================================================
 
-def main():
+with open(
+    SITEMAP_FILE,
+    "w",
+    encoding="utf-8"
+) as f:
 
-    print("=" * 60)
-
-    print(
-        "CavaloGameNews - "
-        "Bot automático de notícias"
-    )
-
-    print("=" * 60)
-
-    posts = carregar_posts()
-
-    (
-        ids_existentes,
-        links_existentes,
-        titulos_existentes
-    ) = coletar_chaves_existentes(
-        posts
-    )
-
-    noticias = []
-
-    # -----------------------------------------------------
-    # LER TODAS AS FONTES
-    # -----------------------------------------------------
-
-    for fonte in FONTES:
-
-        try:
-
-            resultados = buscar_rss(
-                fonte
-            )
-
-            noticias.extend(
-                resultados
-            )
-
-        except Exception as erro:
-
-            print(
-                f"[ERRO] Falha ao "
-                f"processar {fonte['nome']}: "
-                f"{erro}"
-            )
-
-    # -----------------------------------------------------
-    # ORDENAR DA MAIS NOVA PARA A MAIS ANTIGA
-    # -----------------------------------------------------
-
-    noticias.sort(
-        key=lambda item: item.get(
-            "data_publicacao",
-            datetime.min.replace(
-                tzinfo=timezone.utc
-            )
-        ),
-        reverse=True
-    )
-
-    novas = []
-
-    # -----------------------------------------------------
-    # CRIAR NOTÍCIAS NOVAS
-    # -----------------------------------------------------
-
-    for noticia in noticias:
-
-        if len(novas) >= MAX_NOTICIAS:
-
-            break
-
-        link = normalizar_url(
-            noticia.get(
-                "link",
-                ""
-            )
-        )
-
-        titulo = noticia.get(
-            "titulo",
-            ""
-        ).strip()
-
-        chave_titulo = (
-            normalizar_titulo_para_comparacao(
-                titulo
-            )
-        )
-
-        # Já existe pelo link
-        if (
-            link
-            and link.rstrip("/")
-            in links_existentes
-        ):
-
-            continue
-
-        # Já existe pelo título
-        if (
-            chave_titulo
-            and chave_titulo
-            in titulos_existentes
-        ):
-
-            continue
-
-        post = criar_post(
-            noticia
-        )
-
-        if post[
-            "id"
-        ] in ids_existentes:
-
-            continue
-
-        novas.append(
-            post
-        )
-
-        ids_existentes.add(
-            post["id"]
-        )
-
-        if link:
-
-            links_existentes.add(
-                link.rstrip("/")
-            )
-
-        if chave_titulo:
-
-            titulos_existentes.add(
-                chave_titulo
-            )
-
-        print(
-            f"[NOVA] {post['titulo']}"
-        )
-
-    # -----------------------------------------------------
-    # NENHUMA NOTÍCIA NOVA
-    # -----------------------------------------------------
-
-    if not novas:
-
-        print(
-            "\nNenhuma notícia "
-            "nova encontrada."
-        )
-
-        return
-
-    # -----------------------------------------------------
-    # NOVAS NOTÍCIAS NO COMEÇO
-    # -----------------------------------------------------
-
-    posts = novas + posts
-
-    # Limite de segurança
-    posts = posts[:MAX_POSTS]
-
-    # -----------------------------------------------------
-    # SALVAR
-    # -----------------------------------------------------
-
-    salvar_posts(
-        posts
-    )
-
-    # -----------------------------------------------------
-    # ENVIAR NOVAS NOTÍCIAS PARA O DISCORD
-    # -----------------------------------------------------
-
-    print(
-        "\n[DISCORD] Enviando "
-        f"{len(novas)} notícia(s)..."
-    )
-
-    for post in novas:
-
-        enviar_discord(
-            post
-        )
-
-    print(
-        "\n"
-        + "=" * 60
-    )
-
-    print(
-        f"{len(novas)} notícia(s) "
-        "adicionada(s)."
-    )
-
-    print(
-        f"{len(posts)} notícia(s) "
-        f"atualmente em {POSTS_FILE}."
-    )
-
-    print(
-        "=" * 60
+    f.write(
+        sitemap_content
     )
 
 
 # =========================================================
-# EXECUTAR
+# FINAL
 # =========================================================
 
-if __name__ == "__main__":
+print(
+    f"{len(posts)} notícias geradas com sucesso!"
+)
 
-    main()
+print(
+    f"{len(generated_news_urls)} páginas adicionadas ao sitemap.xml!"
+)
+
+print(
+    f"Sitemap atualizado: {SITEMAP_FILE}"
+)
