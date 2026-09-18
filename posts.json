@@ -54,7 +54,10 @@
     "─────────────",
 
     "[verde]Gears of War: E-Day[/verde] será lançado mundialmente em [verde]6 de outubro de 2026[/verde]. A pré-instalação começa em 29 de setembro, permitindo que os jogadores deixem o jogo pronto antecipadamente.",
-
+    {
+    "tipo": "youtube",
+    "url": "https://www.youtube.com/watch?v=iSAd6YKG6yw"
+  },
     "Para acompanhar as novidades da franquia, a [verde]The Coalition[/verde] também disponibilizou informações adicionais sobre o jogo e sua lista completa de conquistas."
   ]
 },
