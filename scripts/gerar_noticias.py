@@ -331,29 +331,170 @@ for post in posts:
 
     x_html = gerar_post_x(post)
 
+    # Mantém textos e objetos do posts.json.
+    # Objetos como {"tipo": "imagem", "url": "..."} não podem
+    # ser convertidos para str(), pois precisam ser renderizados.
     paragrafos_validos = [
-        str(p).strip()
-        for p in paragrafos
-        if str(p).strip()
+        p for p in paragrafos
+        if (
+            isinstance(p, dict)
+            or (
+                isinstance(p, str)
+                and p.strip()
+            )
+        )
     ]
 
     # Divide o conteúdo aproximadamente ao meio.
-    # Se houver poucos parágrafos, o X entra depois do primeiro.
     meio = len(paragrafos_validos) // 2
 
     if len(paragrafos_validos) > 1:
         meio = max(1, meio)
 
-    for indice, paragrafo in enumerate(paragrafos_validos):
-
-        texto = html.escape(paragrafo)
+    for indice, item in enumerate(paragrafos_validos):
 
         # =================================================
-        # CORES NO TEXTO
+        # IMAGEM NO MEIO DA NOTÍCIA
         # =================================================
-        # No posts.json:
-        # [verde]palavra ou frase[/verde] -> verde
-        # [titulo]título[/titulo] -> verde e destacado
+        if isinstance(item, dict):
+
+            tipo = str(
+                item.get("tipo", "")
+            ).lower().strip()
+
+            if tipo in ["imagem", "image"]:
+
+                url = str(
+                    item.get("url", "")
+                ).strip()
+
+                if url:
+
+                    url = html.escape(
+                        url,
+                        quote=True
+                    )
+
+                    alt = html.escape(
+                        str(
+                            item.get(
+                                "alt",
+                                "Imagem da notícia"
+                            )
+                        ),
+                        quote=True
+                    )
+
+                    legenda = str(
+                        item.get(
+                            "legenda",
+                            ""
+                        )
+                    ).strip()
+
+                    legenda_html = ""
+
+                    if legenda:
+                        legenda_html = f"""
+<figcaption>
+{html.escape(legenda)}
+</figcaption>
+"""
+
+                    conteudo_html += f"""
+<figure class="content-image">
+
+<img
+    src="{url}"
+    alt="{alt}"
+    loading="lazy"
+>
+
+{legenda_html}
+
+</figure>
+"""
+
+                if x_html and indice + 1 == meio:
+                    conteudo_html += x_html
+
+                continue
+
+            # =================================================
+            # YOUTUBE DENTRO DO CONTEÚDO
+            # =================================================
+            if tipo in ["youtube", "youtube_video"]:
+
+                url = str(
+                    item.get("url", "")
+                ).strip()
+
+                video_id = youtube_id(url)
+
+                if video_id:
+                    conteudo_html += f"""
+<div class="video-container">
+
+<iframe
+    src="https://www.youtube.com/embed/{html.escape(video_id)}"
+    title="Vídeo da notícia"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+</iframe>
+
+</div>
+"""
+
+                continue
+
+            # =================================================
+            # VÍDEO LOCAL / PC DENTRO DO CONTEÚDO
+            # =================================================
+            if tipo in ["video", "pc", "local", "arquivo"]:
+
+                url = str(
+                    item.get("url", "")
+                ).strip()
+
+                if url:
+                    video_url = html.escape(
+                        url,
+                        quote=True
+                    )
+
+                    conteudo_html += f"""
+<div class="video-container">
+
+<video
+    controls
+    preload="metadata"
+>
+
+<source
+    src="../{video_url}"
+    type="video/mp4"
+>
+
+Seu navegador não suporta vídeo HTML5.
+
+</video>
+
+</div>
+"""
+
+                continue
+
+            continue
+
+        # =================================================
+        # TEXTO NORMAL
+        # =================================================
+
+        texto = html.escape(
+            str(item).strip()
+        )
+
         texto = re.sub(
             r"\[verde\](.*?)\[/verde\]",
             r'<span class="texto-verde">\1</span>',
@@ -368,10 +509,6 @@ for post in posts:
             flags=re.IGNORECASE
         )
 
-        # =================================================
-        # TRANSFORMAR URLs EM LINKS CLICÁVEIS
-        # =================================================
-
         texto = re.sub(
             r'(https?://[^\s<]+)',
             r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
@@ -384,11 +521,9 @@ for post in posts:
 </p>
 """
 
-        # Coloca o post do X no meio da notícia
         if x_html and indice + 1 == meio:
             conteudo_html += x_html
 
-    # Se houver apenas 1 parágrafo, coloca o X depois dele.
     if x_html and len(paragrafos_validos) == 1:
         conteudo_html += x_html
 
@@ -732,6 +867,28 @@ h1 {{
     color: #00ff88;
     font-weight: bold;
     text-decoration: underline;
+}}
+
+.content-image {{
+    width: 100%;
+    margin: 35px auto;
+    text-align: center;
+}}
+
+.content-image img {{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 14px;
+}}
+
+.content-image figcaption {{
+    color: #888;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 8px;
+    text-align: center;
 }}
 
 
