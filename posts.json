@@ -49,10 +49,11 @@
     "A [verde]The Coalition[/verde] também revelou as especificações completas para PC de [verde]Gears of War: E-Day[/verde]. Segundo o estúdio, melhorias de estabilidade e desempenho foram realizadas desde o Open Beta multiplayer realizado em julho.",
 
     {
-      "tipo": "imagem",
-      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/09/GoW_EDAY_PC-Launch-Specs_4K-28e34879688dfeb2ad31-1024x576.jpg",
-      "legenda": "Especificações oficiais de PC de Gears of War: E-Day."
-    },
+    "tipo": "imagem",
+    "ur": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/09/GoW_EDAY_PC-Launch-Specs_4K-28e34879688dfeb2ad31-1024x576.jpg",
+    "alt": "Imagem do jogo",
+    "legenda": "Nova imagem do jogo"
+  },
 
     "As configurações apresentadas representam as especificações finais planejadas para o lançamento no PC. A imagem acima reúne os requisitos divulgados oficialmente pelo estúdio.",
 
