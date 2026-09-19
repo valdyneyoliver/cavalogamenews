@@ -1,5 +1,32 @@
 [
  {
+  "id": "rayman-legends-retold-visao-geral",
+  "titulo": "Rayman Legends Retold ganha apresentação com novo conteúdo reimaginado",
+  "categoria": "Notícia",
+  "data": "19/09/2026",
+  "imagem": "https://pbs.twimg.com/media/HSiEgazboAAkafr?format=jpg&name=medium",
+  "resumo": "Uma nova apresentação de Rayman Legends Retold mostrará detalhes do conteúdo reimaginado do jogo em 22 de setembro.",
+  "x": "xxx",
+  "conteudo": [
+    "A [verde]Ubisoft[/verde] prepara uma nova apresentação de [verde]Rayman Legends Retold[/verde], marcada para [verde]22 de setembro[/verde]. O vídeo promete mostrar mais detalhes sobre o novo conteúdo e os elementos reimaginados do jogo.",
+
+    "─────────────",
+    "[verde]Rayman Legends Retold[/verde]",
+    "─────────────",
+
+    "A apresentação contará com a participação de [verde]Elana Dunkelman[/verde], dubladora de Barbara, que conduzirá uma visão mais detalhada das novidades preparadas para esta nova versão.",
+
+    "O evento será transmitido em [verde]22 de setembro às 9h PT / 12h ET / 17h BST / 18h CEST[/verde].",
+
+    "Confira abaixo a apresentação de [verde]Rayman Legends Retold[/verde]:",
+
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=w3JsAX5cuho"
+    }
+  ]
+},
+ {
   "id": "rocket-league-temporada-24",
   "titulo": "Rocket League anuncia Temporada 24 com novos modos, eventos e Rocket Pass",
   "categoria": "Notícia",
