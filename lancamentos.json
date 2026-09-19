@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-18",
+  "atualizado_em": "2026-09-19",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -79,6 +79,21 @@
       "link_rawg": "https://rawg.io/games/silent-hill-townfall-2"
     },
     {
+      "id": 1020061,
+      "nome": "EA SPORTS FC 27",
+      "slug": "ea-sports-fc-27",
+      "data": "2026-09-25",
+      "data_formatada": "25/09/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/d9b/d9b0ef34a249647310c5bc7577ce68e3.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/ea-sports-fc-27"
+    },
+    {
       "id": 1019727,
       "nome": "Transport Fever 3",
       "slug": "transport-fever-3",
@@ -154,6 +169,18 @@
         "Xbox"
       ],
       "link_rawg": "https://rawg.io/games/gears-of-war-e-day"
+    },
+    {
+      "id": 1020039,
+      "nome": "Battleplan",
+      "slug": "battleplan",
+      "data": "2026-10-11",
+      "data_formatada": "11/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/252/252c359a0db2bcf04802bab5e488fe69.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/battleplan"
     },
     {
       "id": 1008986,
@@ -260,6 +287,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/ecstatica"
+    },
+    {
+      "id": 1016708,
+      "nome": "EmberVille",
+      "slug": "emberville",
+      "data": "2026-10-26",
+      "data_formatada": "26/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/a65/a65915e30efd086919dafcb7f79a6b79.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/emberville"
     },
     {
       "id": 1019656,
