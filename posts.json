@@ -1,5 +1,32 @@
 [
  {
+  "id": "castlevania-a-maldicao-de-belmont-demo",
+  "titulo": "Castlevania: A Maldição de Belmont recebe demo em 1º de outubro",
+  "categoria": "Notícia",
+  "data": "20/09/2026",
+  "imagem": "https://pbs.twimg.com/media/HSndqDhb0AAn8od?format=jpg&name=4096x4096",
+  "resumo": "Castlevania: A Maldição de Belmont terá uma demo disponível a partir de 1º de outubro, com possibilidade de transferir os dados salvos para o jogo completo.",
+  "x": "https://x.com/Castlevania_JP/status/2101560650032124041?s=20",
+  "conteudo": [
+    "[verde]Castlevania: A Maldição de Belmont[/verde] receberá uma versão demo no dia [verde]1º de outubro[/verde], permitindo que os jogadores experimentem o jogo antes do lançamento completo.",
+
+    "Uma das principais novidades é que os [verde]dados salvos da demo poderão ser transferidos para o jogo completo[/verde]. Dessa forma, o progresso realizado durante o período de testes poderá continuar quando o título completo estiver disponível.",
+
+    "─────────────",
+    "[verde]Demo em 1º de outubro[/verde]",
+    "─────────────",
+
+    "A demo dará aos jogadores uma oportunidade de conhecer a experiência de [verde]Castlevania: A Maldição de Belmont[/verde] antes do lançamento completo.",
+
+    "Confira o vídeo de apresentação abaixo:",
+
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=BLmoxceW5dI"
+    }
+  ]
+},
+ {
   "id": "rayman-legends-retold-visao-geral",
   "titulo": "Rayman Legends Retold ganha apresentação com novo conteúdo reimaginado",
   "categoria": "Notícia",
