@@ -23,7 +23,7 @@ jobs:
           pip install requests beautifulsoup4 feedparser
 
       - name: Executar bot de notícias
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          python bot_noticias.py
+  env:
+    DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+  run: |
+    python scripts/bot_noticias.py
