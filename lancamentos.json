@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-20",
+  "atualizado_em": "2026-09-21",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -248,6 +248,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/tenebris-somnia-demo"
+    },
+    {
+      "id": 1004664,
+      "nome": "Mycopunk",
+      "slug": "mycopunk",
+      "data": "2026-10-20",
+      "data_formatada": "20/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/2e0/2e0721ea99ea466968c35ef501985c47.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/mycopunk"
     },
     {
       "id": 1019334,
