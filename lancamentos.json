@@ -1,19 +1,7 @@
 {
-  "atualizado_em": "2026-09-21",
+  "atualizado_em": "2026-09-22",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1019698,
-      "nome": "Well Dweller",
-      "slug": "well-dweller",
-      "data": "2026-09-21",
-      "data_formatada": "21/09/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/773/77371e56a9482d41b41565d04046a912.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/well-dweller"
-    },
     {
       "id": 1019728,
       "nome": "Alien Breed 35th Anniversary",
