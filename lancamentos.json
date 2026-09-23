@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-22",
+  "atualizado_em": "2026-09-23",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -475,6 +475,20 @@
         "PlayStation"
       ],
       "link_rawg": "https://rawg.io/games/ananta"
+    },
+    {
+      "id": 469645,
+      "nome": "Titan Quest 2",
+      "slug": "titan-quest-2",
+      "data": "2027-01-19",
+      "data_formatada": "19/01/2027",
+      "imagem": "https://media.rawg.io/media/games/233/233b58ed99520a1e0b19109f7263f011.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/titan-quest-2"
     }
   ]
 }
