@@ -1,47 +1,7 @@
 {
-  "atualizado_em": "2026-09-24",
+  "atualizado_em": "2026-09-25",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1015409,
-      "nome": "Control Resonant",
-      "slug": "control-resonant",
-      "data": "2026-09-24",
-      "data_formatada": "24/09/2026",
-      "imagem": "https://media.rawg.io/media/games/bfc/bfc7b45c6e9d3e21bb1c613c16c088f2.jpeg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/control-resonant"
-    },
-    {
-      "id": 868088,
-      "nome": "Silent Hill Townfall",
-      "slug": "silent-hill-townfall",
-      "data": "2026-09-24",
-      "data_formatada": "24/09/2026",
-      "imagem": "https://media.rawg.io/media/games/d1c/d1c4e52d3084231530fcab5d90033d42.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation"
-      ],
-      "link_rawg": "https://rawg.io/games/silent-hill-townfall"
-    },
-    {
-      "id": 1018062,
-      "nome": "Silent Hill: Townfall",
-      "slug": "silent-hill-townfall-2",
-      "data": "2026-09-24",
-      "data_formatada": "24/09/2026",
-      "imagem": "https://media.rawg.io/media/games/8ff/8ff55788736c59fcb7b814d862c2ae6f.jpeg",
-      "plataformas": [
-        "PC",
-        "PlayStation"
-      ],
-      "link_rawg": "https://rawg.io/games/silent-hill-townfall-2"
-    },
     {
       "id": 1020061,
       "nome": "EA SPORTS FC 27",
