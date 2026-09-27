@@ -19,7 +19,11 @@
     "[verde]Novo mapa chega em novembro[/verde]",
     "─────────────",
     "O novo mapa está previsto para chegar em [verde]novembro[/verde]. Mais detalhes sobre a atualização e o funcionamento do tsunami devem ser apresentados próximo ao lançamento.",
-    "Confira o vídeo com a apresentação da novidade: https://www.youtube.com/watch?v=4BMwAeXLF1g"
+    "Confira o vídeo com a apresentação da novidade",
+    {
+    "tipo": "youtube",
+    "url": "https://www.youtube.com/watch?v=4BMwAeXLF1g"
+    },
   ]
 },
   {
