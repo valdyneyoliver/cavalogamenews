@@ -449,6 +449,40 @@ for post in posts:
                 continue
 
             # =================================================
+            # POST DO X DENTRO DO CONTEÚDO
+            # =================================================
+            if tipo in ["x", "twitter"]:
+
+                url = str(
+                    item.get("url", "")
+                ).strip()
+
+                if (
+                    url
+                    and url != "xxx"
+                    and (
+                        "x.com/" in url
+                        or "twitter.com/" in url
+                    )
+                ):
+                    x_url = html.escape(
+                        url,
+                        quote=True
+                    )
+
+                    conteudo_html += f"""
+<div class="x-container">
+
+<blockquote class="twitter-tweet">
+    <a href="{x_url}"></a>
+</blockquote>
+
+</div>
+"""
+
+                continue
+
+            # =================================================
             # VÍDEO LOCAL / PC DENTRO DO CONTEÚDO
             # =================================================
             if tipo in ["video", "pc", "local", "arquivo"]:
