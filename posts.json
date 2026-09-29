@@ -6,7 +6,7 @@
   "data": "29/09/2026",
   "imagem": "https://pbs.twimg.com/media/HTZl5iUWEAICZ0y?format=jpg&name=large",
   "resumo": "Novos detalhes de GTA 6 revelam um sistema de clima mais avançado, mais de 170 espécies de animais e NPCs com maior variedade visual em Leonida.",
-  "x": "https://x.com/RockstarGames/status/2104981920714993841?s=20",
+  "x": "",
   "conteudo": [
     "Novos detalhes de [verde]GTA 6[/verde] destacam algumas das melhorias planejadas pela Rockstar para o mundo de Leonida, incluindo um sistema climático mais avançado, uma grande variedade de animais e NPCs com características visuais mais diversificadas.",
     "As informações foram divulgadas pela [verde]Game Informer[/verde].",
@@ -18,6 +18,10 @@
     {
       "tipo": "imagem",
       "url": "https://pbs.twimg.com/media/HTZgOliWkAAs1Rh?format=jpg&name=4096x4096"
+    },
+    {
+    "tipo": "x",
+    "url": "https://x.com/RockstarGames/status/2104981920714993841?s=20"
     },
     "Durante tempestades fortes, a água poderá jorrar de telhados e postes de iluminação, deixando o ambiente visivelmente encharcado.",
     "O sistema de vento também foi desenvolvido para simular diferentes condições, incluindo brisas vindas do mar após o pôr do sol, correntes convectivas e alterações causadas por edifícios que bloqueiam o fluxo de ar.",
@@ -36,7 +40,11 @@
     "A representação dos diferentes tipos de pele também recebeu atenção, com características como sardas, manchas e marcas de bronzeamento.",
     "A Rockstar também trabalhou em uma variedade maior de tatuagens, buscando estilos que sejam apropriados para diferentes regiões e culturas.",
     "Penteados e cuidados corporais também terão mais opções visuais, incluindo uma variedade maior de estilos étnicos.",
-    "Esses detalhes reforçam a proposta da Rockstar de criar um mundo mais dinâmico e diversificado em [verde]GTA 6[/verde], com mudanças perceptíveis no clima, na vida selvagem e na aparência dos habitantes de Leonida."
+    "Esses detalhes reforçam a proposta da Rockstar de criar um mundo mais dinâmico e diversificado em [verde]GTA 6[/verde], com mudanças perceptíveis no clima, na vida selvagem e na aparência dos habitantes de Leonida.",
+    {
+    "tipo": "youtube",
+    "url": "https://www.youtube.com/watch?v=tJbzMqJGH4k&t=12s",
+  }
   ]
 },
   {
