@@ -1,5 +1,69 @@
 [
   {
+  "id": "modern-warfare-4-pc-detalhes-requisitos",
+  "titulo": "Call of Duty: Modern Warfare 4 revela detalhes e requisitos para PC",
+  "categoria": "PC",
+  "data": "29/09/2026",
+  "imagem": "https://image.api.playstation.com/vulcan/ap/rnd/202605/1419/63142285b9e04bc0ef3f6af46b665ecea4e47bfa311eb217.jpg",
+  "resumo": "Modern Warfare 4 chega ao PC em 23 de outubro com suporte a Ray Tracing, DLSS 4.5, FSR Redstone, XeSS 3 e novos recursos de desempenho.",
+  "x": "xxx",
+  "conteudo": [
+    "A Activision revelou novos detalhes da versão para PC de [verde]Call of Duty: Modern Warfare 4[/verde], que chega em 23 de outubro ao Xbox no PC, Battle.net e Steam.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=zuzBlGUDxx4"
+    },
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-001.webp"
+    },
+    "─────────────",
+    "[verde]Recursos para PC[/verde]",
+    "─────────────",
+    "O jogo terá mais de 800 opções de personalização e suporte a monitores de 4K, 1440p, 1080p e Ultrawide. Também contará com [verde]DLSS 4.5, AMD FSR Redstone, Intel XeSS 3[/verde] e Filmic SMAA T2X.",
+    "Entre as melhorias estão FOV aprimorado exclusivo para PC, novos controles de nitidez, sombras e reflexos, além de melhorias na visibilidade durante os combates.",
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-002.webp"
+    },
+    "O Ray Tracing estará disponível na [verde]Campanha, Multiplayer e DMZ[/verde]. A desenvolvedora também promete desempenho de até 90 FPS nas configurações recomendadas.",
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-003.webp"
+    },
+    "─────────────",
+    "[verde]Novo modo Collateral[/verde]",
+    "─────────────",
+    "O multiplayer receberá [verde]Collateral[/verde], um novo modo inspirado em Search and Destroy. As equipes atacam e defendem locais de bomba enquanto ganham dinheiro para comprar armas, equipamentos e vantagens.",
+    "Respawns, Killstreaks, regeneração automática de vida e carregamentos personalizados estarão desativados.",
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-006.webp"
+    },
+    "─────────────",
+    "[verde]Pré-carregamento e acesso antecipado[/verde]",
+    "─────────────",
+    "O pré-carregamento no PC começa em [verde]15 de outubro, às 9h PT[/verde]. Quem comprar o jogo antecipadamente terá acesso à campanha a partir de 16 de outubro.",
+    "O lançamento completo acontece em [verde]23 de outubro[/verde], à meia-noite no horário local.",
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-007.webp"
+    },
+    "─────────────",
+    "[verde]Requisitos de PC[/verde]",
+    "─────────────",
+    "Mínimo: Windows 10 64-bit, Ryzen 5 1400 ou Core i5-6600, 8 GB de RAM, Radeon RX 470 ou GTX 970/1060, 3 GB de VRAM e 115 GB em SSD.",
+    "Recomendado para 90 FPS: Windows 11 64-bit, Ryzen 5 3600 ou Core i7-8700K, 16 GB de RAM, Radeon RX 6600 XT ou RTX 3060 Ti, 8 GB de VRAM e 115 GB em SSD.",
+    "Para Ray Tracing em 4K: Ryzen 7 3700X ou Core i7-10700K, 32 GB de RAM, Radeon RX 9070 XT ou RTX 5070 Ti, 16 GB de VRAM e 115 GB em SSD.",
+    {
+      "tipo": "imagem",
+      "url": "https://imgs.callofduty.com/content/dam/atvi/callofduty/cod-touchui/blog/body/mw4/pc-trailer-blog/MW4-PC-TECH-008.jpg"
+    },
+    "O jogo exige [verde]TPM 2.0, Secure Boot, DirectX 12 e conexão de internet[/verde]. GPUs Intel Arc também precisam de Resizable BAR.",
+    "As especificações podem ser atualizadas após o lançamento."
+  ]
+},
+  {
   "id": "the-crew-motorfest-tomb-raider-niihau",
   "titulo": "The Crew Motorfest recebe aventura de Tomb Raider com Lara Croft e dinossauros",
   "categoria": "Notícia",
