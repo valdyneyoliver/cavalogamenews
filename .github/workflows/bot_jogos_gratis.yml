@@ -3,7 +3,7 @@ name: Bot Jogos Grátis
 on:
   schedule:
     # Executa todos os dias às 12:00 no horário de Brasília
-    - cron: "0 15 * * *"
+    - cron: "0 14 * * *"
 
   workflow_dispatch:
 permissions:
