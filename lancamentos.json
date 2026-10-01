@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-09-30",
+  "atualizado_em": "2026-10-01",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -397,19 +397,6 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/they-come-in-fives"
-    },
-    {
-      "id": 1015972,
-      "nome": "Kena: Scars of Kosmora",
-      "slug": "kena-scars-of-kosmora",
-      "data": "2026-12-31",
-      "data_formatada": "31/12/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/3a3/3a3855e1b5218c02ab038dcb873eacde.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation"
-      ],
-      "link_rawg": "https://rawg.io/games/kena-scars-of-kosmora"
     },
     {
       "id": 490430,
