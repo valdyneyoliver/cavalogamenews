@@ -1,33 +1,7 @@
 {
-  "atualizado_em": "2026-10-01",
+  "atualizado_em": "2026-10-02",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1004513,
-      "nome": "End of Abyss",
-      "slug": "end-of-abyss",
-      "data": "2026-10-01",
-      "data_formatada": "01/10/2026",
-      "imagem": "https://media.rawg.io/media/games/9b7/9b755942f5c8006891c20e50095dae09.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/end-of-abyss"
-    },
-    {
-      "id": 1019418,
-      "nome": "Ghost of Yōtei: Echoes of Sekigahara",
-      "slug": "ghost-of-yotei-echoes-of-sekigahara",
-      "data": "2026-10-01",
-      "data_formatada": "01/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/c36/c369c40764cab0de8491d414289cbf6c.jpg",
-      "plataformas": [
-        "PlayStation"
-      ],
-      "link_rawg": "https://rawg.io/games/ghost-of-yotei-echoes-of-sekigahara"
-    },
     {
       "id": 1015425,
       "nome": "Ace Combat 8: Wings of Theve",
