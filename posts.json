@@ -1,5 +1,21 @@
 [
   {
+  "id": "bounty-train-gratis-gog",
+  "titulo": "Bounty Train está grátis por tempo limitado na GOG",
+  "categoria": "Jogos Grátis",
+  "data": "02/10/2026",
+  "imagem": "https://www.adrenaline.com.br/wp-content/uploads/2026/10/bounty-train.webp",
+  "resumo": "Bounty Train pode ser resgatado gratuitamente na GOG por tempo limitado e ficará permanentemente na biblioteca após a reivindicação.",
+  "conteudo": [
+    "O [verde]Bounty Train[/verde] está disponível gratuitamente por meio de uma nova promoção da [verde]GOG[/verde]. Os jogadores podem adicionar o jogo à biblioteca sem pagar durante o período da oferta.",
+    "Para garantir o jogo, basta acessar a promoção e clicar no botão [verde]Add to library[/verde]. Depois de resgatado, o título fica disponível na biblioteca da conta.",
+    "─────────────",
+    "[verde]Sobre a promoção[/verde]",
+    "Ao clicar no botão para adicionar Bounty Train à biblioteca, o usuário concorda em receber comunicações de marketing da GOG por e-mail e por meio dos serviços da GOG e de seus parceiros confiáveis.",
+    "A oferta também está vinculada à política de privacidade da GOG: https://www.gog.com/en/game/bounty_train"
+  ]
+},
+  {
   "id": "bridge-constructor-studio-gratis-mobile",
   "titulo": "Bridge Constructor Studio está grátis no Android e iOS por tempo limitado",
   "categoria": "Jogos Grátis",
