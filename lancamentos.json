@@ -1,21 +1,7 @@
 {
-  "atualizado_em": "2026-10-02",
+  "atualizado_em": "2026-10-03",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1015425,
-      "nome": "Ace Combat 8: Wings of Theve",
-      "slug": "ace-combat-8-wings-of-theve",
-      "data": "2026-10-02",
-      "data_formatada": "02/10/2026",
-      "imagem": "https://media.rawg.io/media/games/541/541d6c97a674635d68ea3d19737f090b.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox"
-      ],
-      "link_rawg": "https://rawg.io/games/ace-combat-8-wings-of-theve"
-    },
     {
       "id": 983213,
       "nome": "Gears of War: E-Day",
@@ -88,13 +74,25 @@
       "slug": "valor-mortis",
       "data": "2026-10-13",
       "data_formatada": "13/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/b33/b33060428bd146f3412bfcedc44fd7ce.jpg",
+      "imagem": "https://media.rawg.io/media/games/61d/61d1431d20f9f6e19b27cb89aa4a4402.jpg",
       "plataformas": [
         "PC",
         "PlayStation",
         "Xbox"
       ],
       "link_rawg": "https://rawg.io/games/valor-mortis"
+    },
+    {
+      "id": 1020260,
+      "nome": "Odd Town",
+      "slug": "odd-town",
+      "data": "2026-10-14",
+      "data_formatada": "14/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/2b4/2b4850537a381a06ef236f57c5ff77b7.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/odd-town"
     },
     {
       "id": 1018102,
@@ -112,6 +110,21 @@
       "link_rawg": "https://rawg.io/games/castlevania-belmonts-curse"
     },
     {
+      "id": 1020290,
+      "nome": "Disney/Pixar Toy Story 3 Complete Edition",
+      "slug": "disneypixar-toy-story-3-complete-edition",
+      "data": "2026-10-15",
+      "data_formatada": "15/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/24e/24e4aefbd856a211efd74bd384bd33a2.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox",
+        "Switch"
+      ],
+      "link_rawg": "https://rawg.io/games/disneypixar-toy-story-3-complete-edition"
+    },
+    {
       "id": 975605,
       "nome": "Enshrouded",
       "slug": "enshrouded-2",
@@ -122,6 +135,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/enshrouded-2"
+    },
+    {
+      "id": 1020259,
+      "nome": "Penguin Colony",
+      "slug": "penguin-colony",
+      "data": "2026-10-15",
+      "data_formatada": "15/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/8eb/8ebf9110459339d6bded00aa37b73941.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/penguin-colony"
     },
     {
       "id": 1016322,
@@ -141,7 +166,7 @@
       "slug": "mycopunk",
       "data": "2026-10-20",
       "data_formatada": "20/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/2e0/2e0721ea99ea466968c35ef501985c47.jpg",
+      "imagem": "https://media.rawg.io/media/games/cbf/cbf5b06692e82e312a5dc9db32ed5b4c.jpg",
       "plataformas": [
         "PC"
       ],
