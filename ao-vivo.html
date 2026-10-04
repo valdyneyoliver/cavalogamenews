@@ -35,7 +35,7 @@ video{width:100%;background:#050505;border-radius:12px;display:block;max-height:
 
 <section class="panel">
 <h2>🎮 Criar transmissão</h2>
-<p class="small" style="margin:10px 0 15px">Você escolhe a tela ou janela que deseja compartilhar.</p>
+<p class="small" style="margin:10px 0 15px">Modo leve para jogar: captura em até 720p/30 FPS e sem áudio do sistema.</p>
 <button id="createBtn">CRIAR SALA</button>
 <button id="shareBtn" class="secondary hidden">COPIAR LINK DA SALA</button>
 <p id="hostStatus" class="status">Nenhuma sala criada.</p>
@@ -73,7 +73,7 @@ const shareBtn=document.getElementById("shareBtn");
 const watchBtn=document.getElementById("watchBtn");
 const roomInput=document.getElementById("roomInput");
 
-let peer=null,screenStream=null,currentCall=null;
+let peer=null,screenStream=null,currentCall=null,activeCalls=[];
 
 function status(el,text,cls=""){el.textContent=text;el.className="status "+cls}
 function roomId(){return "cgn-"+Math.random().toString(36).slice(2,10)+"-"+Date.now().toString(36)}
@@ -93,15 +93,34 @@ createBtn.onclick=async()=>{
 
     try{
       screenStream=await navigator.mediaDevices.getDisplayMedia({
-        video:{frameRate:{ideal:30,max:60}},audio:true
+        video:{
+          width:{ideal:1280,max:1280},
+          height:{ideal:720,max:720},
+          frameRate:{ideal:30,max:30}
+        },
+        audio:false
       });
+
+      // Mantém a captura leve para jogar + transmitir ao mesmo tempo.
+      const track=screenStream.getVideoTracks()[0];
+      try{
+        await track.applyConstraints({
+          width:{ideal:1280,max:1280},
+          height:{ideal:720,max:720},
+          frameRate:{ideal:30,max:30}
+        });
+      }catch(e){ console.log("Não foi possível aplicar todas as restrições de captura.",e); }
+      track.contentHint="motion";
+
       localVideo.srcObject=screenStream;
       localVideo.classList.remove("hidden");
       status(hostStatus,"🔴 Transmissão pronta! Envie o link.","ok");
 
       screenStream.getVideoTracks()[0].addEventListener("ended",()=>{
         status(hostStatus,"Compartilhamento encerrado.","warn");
-        if(currentCall) currentCall.close();
+        activeCalls.forEach(call=>{try{call.close()}catch(e){}});
+        activeCalls=[];
+        currentCall=null;
       });
     }catch(e){
       status(hostStatus,"Você cancelou o compartilhamento da tela.","warn");
@@ -114,12 +133,31 @@ createBtn.onclick=async()=>{
   peer.on("connection",conn=>{
     conn.on("open",()=>{
       if(!screenStream) return;
-      currentCall=peer.call(conn.peer,screenStream);
-      if(currentCall){
-        currentCall.on("close",()=>{
-          console.log("Visualizador saiu da transmissão.");
-        });
-      }
+
+      const call=peer.call(conn.peer,screenStream);
+      currentCall=call;
+      activeCalls.push(call);
+
+      // Limita o bitrate para evitar que jogar + transmitir sature o upload.
+      try{
+        const pc=call.peerConnection;
+        if(pc){
+          pc.getSenders().forEach(sender=>{
+            if(sender.track && sender.track.kind==="video"){
+              const params=sender.getParameters();
+              params.encodings=params.encodings||[{}];
+              params.encodings[0].maxBitrate=1500000;
+              params.encodings[0].maxFramerate=30;
+              sender.setParameters(params).catch(()=>{});
+            }
+          });
+        }
+      }catch(e){ console.log("Limite de bitrate não aplicado.",e); }
+
+      call.on("close",()=>{
+        activeCalls=activeCalls.filter(c=>c!==call);
+        console.log("Visualizador saiu da transmissão.");
+      });
     });
   });
 
