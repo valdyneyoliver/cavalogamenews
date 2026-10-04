@@ -109,9 +109,18 @@ createBtn.onclick=async()=>{
     }
   });
 
-  peer.on("call",call=>{
-    currentCall=call;
-    call.answer(screenStream);
+  // O visitante primeiro abre uma conexão de dados para avisar
+  // ao host que quer assistir. O host então inicia a chamada de vídeo.
+  peer.on("connection",conn=>{
+    conn.on("open",()=>{
+      if(!screenStream) return;
+      currentCall=peer.call(conn.peer,screenStream);
+      if(currentCall){
+        currentCall.on("close",()=>{
+          console.log("Visualizador saiu da transmissão.");
+        });
+      }
+    });
   });
 
   peer.on("error",err=>{
@@ -140,8 +149,25 @@ watchBtn.onclick=()=>{
 
   status(watchStatus,"Conectando à transmissão...");
   peer.on("open",()=>{
-    currentCall=peer.call(target);
-    if(!currentCall)return status(watchStatus,"Não foi possível conectar.","warn");
+    // Primeiro pedimos ao host, por uma conexão de dados, para iniciar
+    // a transmissão. Isso evita depender de peer.call() sem stream.
+    const conn=peer.connect(target,{reliable:true});
+
+    conn.on("open",()=>{
+      status(watchStatus,"Pedido enviado. Aguardando a transmissão...");
+    });
+
+    conn.on("error",err=>{
+      console.error(err);
+      status(watchStatus,"Não foi possível conectar à sala.","warn");
+    });
+  });
+
+  // O host fará peer.call(thisPeerId, screenStream).
+  // O visitante apenas responde à chamada, sem enviar câmera/microfone.
+  peer.on("call",call=>{
+    currentCall=call;
+    call.answer();
 
     currentCall.on("stream",stream=>{
       remoteVideo.srcObject=stream;
@@ -149,10 +175,12 @@ watchBtn.onclick=()=>{
       status(watchStatus,"🟢 Transmissão conectada.","ok");
       remoteVideo.play().catch(()=>{});
     });
+
     currentCall.on("close",()=>{
       status(watchStatus,"A transmissão foi encerrada.","warn");
       remoteVideo.srcObject=null;
     });
+
     currentCall.on("error",err=>{
       console.error(err);
       status(watchStatus,"Erro ao receber a transmissão.","warn");
