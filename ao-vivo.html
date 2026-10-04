@@ -25,6 +25,10 @@ video{width:100%;background:#050505;border-radius:12px;display:block;max-height:
 .hidden{display:none}
 .room{font-size:14px;color:#aaa;word-break:break-all;margin-top:10px}
 .small{font-size:13px;color:#888;line-height:1.5}
+.settings{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 15px}
+.settings label{display:flex;flex-direction:column;gap:6px;color:#aaa;font-size:13px;font-weight:bold}
+.settings select{background:#0d0f0e;color:#fff;border:1px solid #39423c;border-radius:9px;padding:11px 14px;min-width:130px}
+.settings select:focus{outline:1px solid #00ff88;border-color:#00ff88}
 </style>
 </head>
 <body>
@@ -35,7 +39,21 @@ video{width:100%;background:#050505;border-radius:12px;display:block;max-height:
 
 <section class="panel">
 <h2>🎮 Criar transmissão</h2>
-<p class="small" style="margin:10px 0 15px">Modo leve para jogar: captura em até 720p/30 FPS.</p>
+<p class="small" style="margin:10px 0 15px">Escolha a qualidade e o FPS antes de compartilhar a tela.</p>
+<div class="settings">
+  <label>Qualidade
+    <select id="qualitySelect">
+      <option value="720">720p</option>
+      <option value="1080">1080p</option>
+    </select>
+  </label>
+  <label>FPS
+    <select id="fpsSelect">
+      <option value="30">30 FPS</option>
+      <option value="60">60 FPS</option>
+    </select>
+  </label>
+</div>
 <button id="createBtn">CRIAR SALA</button>
 <button id="shareBtn" class="secondary hidden">COPIAR LINK DA SALA</button>
 <p id="hostStatus" class="status">Nenhuma sala criada.</p>
@@ -72,6 +90,8 @@ const createBtn=document.getElementById("createBtn");
 const shareBtn=document.getElementById("shareBtn");
 const watchBtn=document.getElementById("watchBtn");
 const roomInput=document.getElementById("roomInput");
+const qualitySelect=document.getElementById("qualitySelect");
+const fpsSelect=document.getElementById("fpsSelect");
 
 let peer=null,screenStream=null,currentCall=null,activeCalls=[];
 
@@ -92,22 +112,26 @@ createBtn.onclick=async()=>{
     shareBtn.classList.remove("hidden");
 
     try{
+      const quality=Number(qualitySelect.value);
+      const fps=Number(fpsSelect.value);
+      const width=quality===1080?1920:1280;
+      const height=quality===1080?1080:720;
+
       screenStream=await navigator.mediaDevices.getDisplayMedia({
         video:{
-          width:{ideal:1280,max:1280},
-          height:{ideal:720,max:720},
-          frameRate:{ideal:30,max:30}
+          width:{ideal:width,max:width},
+          height:{ideal:height,max:height},
+          frameRate:{ideal:fps,max:fps}
         },
         audio:true
       });
 
-      // Mantém a captura leve para jogar + transmitir ao mesmo tempo.
       const track=screenStream.getVideoTracks()[0];
       try{
         await track.applyConstraints({
-          width:{ideal:1280,max:1280},
-          height:{ideal:720,max:720},
-          frameRate:{ideal:30,max:30}
+          width:{ideal:width,max:width},
+          height:{ideal:height,max:height},
+          frameRate:{ideal:fps,max:fps}
         });
       }catch(e){ console.log("Não foi possível aplicar todas as restrições de captura.",e); }
       track.contentHint="motion";
@@ -146,8 +170,10 @@ createBtn.onclick=async()=>{
             if(sender.track && sender.track.kind==="video"){
               const params=sender.getParameters();
               params.encodings=params.encodings||[{}];
-              params.encodings[0].maxBitrate=1500000;
-              params.encodings[0].maxFramerate=30;
+              const quality=Number(qualitySelect.value);
+              const fps=Number(fpsSelect.value);
+              params.encodings[0].maxBitrate=quality===1080 ? (fps===60 ? 5000000 : 4000000) : (fps===60 ? 3000000 : 2000000);
+              params.encodings[0].maxFramerate=fps;
               sender.setParameters(params).catch(()=>{});
             }
           });
