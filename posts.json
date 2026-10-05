@@ -1,5 +1,32 @@
 [
   {
+  "id": "the-witcher-3-remastered-proxima-atualizacao",
+  "titulo": "The Witcher 3 Remastered terá mais melhorias de desempenho, visuais e áudio no próximo update",
+  "categoria": "Notícia",
+  "data": "05/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HT31aZJXIAAXKyD?format=jpg&name=large",
+  "resumo": "A CD Projekt Red revelou algumas das melhorias e correções em desenvolvimento para a próxima atualização de The Witcher 3 Remastered.",
+  "conteudo": [
+    "A equipe de [verde]The Witcher 3: Wild Hunt - Remastered[/verde] divulgou uma rápida atualização sobre alguns dos problemas e melhorias que estão sendo trabalhados para o próximo update.",
+    "─────────────",
+    "[verde]Melhorias em desenvolvimento[/verde]",
+    "Entre as novidades planejadas estão mais melhorias de desempenho, principalmente na versão para [verde]PS5[/verde], além de novos ajustes visuais.",
+    "A equipe também está trabalhando em correções relacionadas ao sistema [verde]My Rewards[/verde] e aos [verde]Twitch Drops[/verde].",
+    "─────────────",
+    "[verde]Localização em ucraniano[/verde]",
+    "Outra mudança em desenvolvimento é tornar a localização em [verde]ucraniano[/verde] disponível em outras regiões no PlayStation 5 e no Xbox Series X|S.",
+    "─────────────",
+    "[verde]Correções de áudio[/verde]",
+    "A atualização também deverá corrigir problemas relacionados ao áudio das dublagens nos consoles.",
+    "A equipe informou que pretende incluir muitas dessas melhorias no próximo update. Outros problemas relatados pela comunidade continuam sendo investigados.",
+    "Os jogadores podem continuar enviando relatos e problemas encontrados pelo suporte oficial: https://support.cdprojektred.com/en/",
+    {
+      "tipo": "x",
+      "url": "https://x.com/thewitcher/status/2107110225224286255?s=20"
+    }
+  ]
+},
+  {
   "id": "arc-raiders-teste-gratuito-frozen-trail",
   "titulo": "ARC Raiders terá teste gratuito de quatro dias com a chegada da atualização Frozen Trail",
   "categoria": "Notícia",
