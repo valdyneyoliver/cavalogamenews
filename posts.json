@@ -1,5 +1,28 @@
 [
   {
+  "id": "road-kings-gameplay-furacoes-caminhoes",
+  "titulo": "Road Kings ganha novos vídeos de gameplay com missões e furacões",
+  "categoria": "Notícia",
+  "data": "06/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HT8vgkNXUAAgxmR?format=jpg&name=4096x4096",
+  "resumo": "Novos vídeos de gameplay de Road Kings mostram missões nos cais de embarque, furacões e detalhes sobre o realismo dos caminhões.",
+  "conteudo": [
+    "Uma nova prévia de [verde]Road Kings[/verde] foi divulgada com longos vídeos de gameplay que mostram diferentes situações encontradas durante as missões do jogo.",
+    "As imagens levam os jogadores desde trabalhos realizados nos cais de embarque até situações envolvendo [verde]furacões[/verde], destacando também novos detalhes relacionados ao realismo dos caminhões.",
+    "Os vídeos foram apresentados como uma prévia exclusiva dos [verde]Road Kings[/verde], com agradecimentos a [verde]GameRiot[/verde] e [verde]TmarTn2[/verde] pelo conteúdo.",
+    "─────────────",
+    "[verde]Gameplay de Road Kings[/verde]",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=Qwx-k6vJ6Ko"
+    },
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=8owhVJg6ptk"
+    }
+  ]
+},
+  {
   "id": "gears-of-war-e-day-atualizacao-early-access",
   "titulo": "Gears of War: E-Day recebe atualização com melhorias de desempenho e diversas correções",
   "categoria": "Xbox",
