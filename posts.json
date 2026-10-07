@@ -1,5 +1,91 @@
 [
  {
+  "id": "assetto-corsa-evo-free-roam",
+  "titulo": "Assetto Corsa EVO revela oito novidades importantes do modo de mundo aberto",
+  "categoria": "PC",
+  "data": "07/10/2026",
+  "imagem": "https://traxion.gg/wp-content/uploads/2026/10/15-1-1024x576.jpg",
+  "resumo": "Assetto Corsa EVO revelou novos detalhes do modo free-roam, incluindo multiplayer, modo a pé, animais, abastecimento, lavagem de carros, desafios Time Attack, teletransporte e futuras expansões do mapa.",
+  "conteudo": [
+    "A [verde]Kunos Simulazioni[/verde] apresentou novos detalhes do aguardado modo [verde]free-roam[/verde] de [verde]Assetto Corsa EVO[/verde]. A primeira versão desse sistema fará parte da atualização [verde]V0.10 Early Access[/verde].",
+    "Durante a apresentação, Marco Massarutto, cofundador e diretor executivo da Kunos Simulazioni, mostrou diversos recursos que estarão disponíveis na região de [verde]Eifel[/verde], incluindo áreas inspiradas no mundo real.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=kKrW-8NQtVE"
+    },
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/Play-Assetto-Corsa-EVOs-free-roam-at-the-SimRacing-Expo-Frankfurt-1536x864.jpg"
+    },
+    "─────────────",
+    "[verde]Multiplayer desde o lançamento[/verde]",
+    "O modo free-roam poderá ser jogado tanto no [verde]multiplayer[/verde] quanto no [verde]single-player[/verde] desde o início. Os jogadores poderão entrar em servidores online e encontrar amigos enquanto exploram o mapa.",
+    "Também será possível alterar o clima e o horário do dia. O tráfego controlado pela inteligência artificial poderá ser ativado ou desativado.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/16-1-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Modo a pé, NPCs e animais[/verde]",
+    "Os jogadores poderão sair dos carros e caminhar pelo mundo. NPCs realistas estarão espalhados pelas ruas da região próxima ao Nordschleife.",
+    "A fauna também fará parte do cenário, com animais como cervos, além de mariposas e borboletas. Vacas também já haviam sido mostradas anteriormente.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/13-1-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Lavagem, abastecimento e troca de pneus[/verde]",
+    "Os jogadores poderão parar em postos de combustível para abastecer os carros com gasolina super. A apresentação também confirmou a possibilidade de lavar os veículos durante a exploração.",
+    "Também haverá centros especializados em troca de pneus. Ainda não está claro se diferentes fabricantes de pneus estarão disponíveis além da Pirelli, embora a marca BF Goodrich também apareça na apresentação.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/18-1-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Off-road[/verde]",
+    "A exploração não ficará limitada às estradas. O mapa permitirá dirigir por áreas fora de estrada, algo que já havia sido mostrado anteriormente com veículos como a Ferrari Purosangue.",
+    "Durante a nova apresentação, o [verde]Mercedes-Benz G63[/verde] também apareceu explorando áreas fora das estradas, reforçando que diferentes regiões do mapa poderão ser acessadas.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/2-6-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Desafios Time Attack[/verde]",
+    "O modo free-roam também terá desafios de [verde]Time Attack[/verde]. Eles serão realizados em rotas ponto a ponto, com início, chegada e pontos de controle.",
+    "Os desafios aparecerão na interface do mapa e contarão com classificações online após a conclusão, permitindo comparar os tempos com outros jogadores.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/10-1-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Navegação e teletransporte[/verde]",
+    "A apresentação confirmou que o mundo terá um sistema de navegação, embora ele ainda não tenha sido mostrado completamente.",
+    "O mapa do mundo exibirá diferentes ícones e permitirá selecionar locais específicos para iniciar uma rota de navegação.",
+    "Também será possível utilizar uma função de [verde]teletransporte[/verde], permitindo chegar rapidamente a diferentes pontos da região.",
+    "A apresentação mostrou essa interface utilizando a versão 0.11 do jogo, embora ainda exista expectativa de que recursos semelhantes estejam disponíveis na versão V0.10.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/2-5-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Expansões futuras do mapa[/verde]",
+    "A dimensão inicial do mapa free-roam de Eifel ainda não foi detalhada, mas a Kunos afirmou que as regiões serão reproduções em escala [verde]1:1[/verde] dos locais reais, incluindo prédios, pontos de referência e estabelecimentos.",
+    "A equipe também pretende adicionar novos recursos, conteúdos e modos de jogo ao free-roam ao longo do tempo.",
+    "A expansão completa do mundo deverá chegar eventualmente a uma área total de aproximadamente [verde]1.600 km²[/verde].",
+    "Durante a apresentação, também foram citados mods conhecidos de Assetto Corsa, como [verde]LA Canyons[/verde] e [verde]Transfăgărășan[/verde], embora não esteja confirmado se novas regiões inspiradas neles serão produzidas oficialmente para EVO.",
+    {
+      "tipo": "imagem",
+      "url": "https://traxion.gg/wp-content/uploads/2026/10/13-1-1024x576.jpg"
+    },
+    "─────────────",
+    "[verde]Novos carros[/verde]",
+    "A apresentação também revelou alguns veículos que apareceram no modo free-roam.",
+    "Entre eles estão o [verde]Mercedes-Benz AMG GT 63 (C192)[/verde] e o [verde]Mercedes-Benz A45[/verde], já mostrados anteriormente, mas que ainda não haviam aparecido na versão de acesso antecipado.",
+    "O [verde]Lamborghini Temerario[/verde] também foi mostrado em movimento pela primeira vez.",
+    "Outro destaque foi o [verde]Mercedes-Benz G63[/verde], um veículo off-road equipado com motor V8 que combina com a proposta de exploração do novo mapa."
+  ]
+},
+ {
   "id": "gta-6-xbox-cloud-gaming-esclarecimento",
   "titulo": "Xbox desmente exclusividade de streaming de GTA 6 após relatório do The Verge",
   "categoria": "Xbox",
