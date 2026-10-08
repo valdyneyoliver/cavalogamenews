@@ -1,5 +1,51 @@
 [
  {
+  "id": "xbox-apresenta-divisao-xp",
+  "titulo": "Xbox apresenta XP, nova divisão focada em filmes, produtos, experiências e parcerias",
+  "categoria": "Xbox",
+  "data": "08/10/2026",
+  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/XP-Logo-e3e9296b3ae0466dea8f-1600x900.jpg",
+  "resumo": "A Xbox anunciou a XP, uma nova divisão dedicada a expandir suas franquias para filmes, produtos, experiências ao vivo e novas parcerias.",
+  "conteudo": [
+    "A [verde]Xbox[/verde] anunciou a criação da [verde]XP[/verde], uma nova divisão criada para ampliar a presença de suas principais franquias além dos videogames e oferecer novas formas de os fãs se conectarem com esses universos.",
+    "A divisão será liderada por [verde]Kayleen Walters[/verde], recém-nomeada presidente da XP, e reunirá áreas que já existiam em diferentes equipes da Xbox. A nova estrutura será responsável por iniciativas envolvendo filmes e televisão, produtos, parcerias estratégicas e experiências ao vivo.",
+    "─────────────",
+    "[verde]Quatro áreas de investimento[/verde]",
+    "A formação da XP será organizada em quatro grandes áreas de atuação:",
+    "[verde]Xbox Pictures[/verde] — levar os mundos e personagens das franquias Xbox para novos públicos por meio de filmes, séries e outras formas de narrativa audiovisual.",
+    "[verde]Xbox Products[/verde] — criar produtos ligados às franquias, permitindo que os fãs celebrem e expressem seu interesse pelos universos que gostam.",
+    "[verde]Xbox Places[/verde] — aproximar comunidades por meio de eventos ao vivo, experiências imersivas, atrações, transmissões e destinos temáticos.",
+    "[verde]Xbox Partnerships[/verde] — trabalhar com criadores, marcas e comunidades para desenvolver novas experiências, patrocínios e parcerias.",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/BlizzCon-2026-in-Anaheim-bdffa9a0498790bbc39f-1024x683.jpg"
+    },
+    "─────────────",
+    "[verde]Jogos continuam no centro[/verde]",
+    "Segundo a Xbox, os grandes jogos continuarão sendo o centro de suas franquias. A XP trabalhará em conjunto com os estúdios da empresa e parceiros criativos para ampliar essas propriedades e criar novas maneiras de os fãs conhecerem e vivenciarem seus mundos favoritos.",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/Minecraft-Momoa-aefd16689866b8f16265-1024x683.jpg"
+    },
+    "A nova divisão também pretende ajudar as franquias a alcançar mais pessoas, fortalecer a conexão com jogadores e novos fãs e criar oportunidades para que essas comunidades cresçam ao redor do mundo.",
+    "─────────────",
+    "[verde]Kayleen Walters[/verde]",
+    "A Xbox destacou a experiência de Kayleen Walters na administração de grandes propriedades de entretenimento. Antes de chegar à Mojang, ela passou 13 anos na Lucasfilm, onde ajudou no crescimento e relançamento de uma das franquias mais influentes da indústria.",
+    "Durante sua passagem pela Mojang, Minecraft passou de 350 milhões para mais de 425 milhões de unidades vendidas. O negócio de produtos licenciados também se tornou um dos 20 maiores do mundo.",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/WWE_Gears-a7881d53984c2f38ffd9-1024x683.jpg"
+    },
+    "A Xbox também destacou o desempenho de [verde]A Minecraft Movie[/verde], que teve o maior fim de semana de estreia da história entre adaptações de videogames e terminou em primeiro lugar nas bilheterias domésticas. A Mojang também garantiu sua primeira presença em parques temáticos, com outras iniciativas planejadas para o futuro.",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/Minecraft-Movie-b430d7fadd88354c8c47-1024x681.jpg"
+    },
+    "A Xbox afirma que a XP está apenas começando e que a nova divisão terá como objetivo encontrar novas maneiras de expandir suas franquias sem perder os elementos que fizeram esses universos conquistarem seus fãs.",
+    "Fonte: [verde]Xbox Wire[/verde]"
+  ]
+},
+ {
   "id": "gta-6-novo-gameplay-vazamento",
   "titulo": "GTA 6: novo vazamento revela cerca de 25 minutos de gameplay",
   "categoria": "Notícia",
