@@ -1,5 +1,37 @@
 [
   {
+  "id": "phantom-blade-zero-detalhes-gameplay-lancamento",
+  "titulo": "Phantom Blade Zero: imprensa destaca combate brutal, 4K a 60 FPS e dezenas de armas",
+  "categoria": "Notícias",
+  "data": "09/10/2026",
+  "imagem": "https://gameoverdrive.com.br/wp-content/uploads/2026/08/phantom-blade-zero-tera-modo-facil-veja-todas-as-1-1280x720.png",
+  "resumo": "Após seis horas de teste, a imprensa destacou o combate intenso de Phantom Blade Zero, desempenho em 4K a 60 FPS e um arsenal com dezenas de armas. O lançamento está previsto para 29 de outubro no PS5 e PC.",
+  "conteudo": [
+    "[verde]Phantom Blade Zero[/verde] recebeu novos detalhes após sessões de teste de aproximadamente seis horas com membros da imprensa. As impressões destacam um sistema de combate intenso, animações impressionantes e uma experiência que busca entregar na prática a ação brutal mostrada nos trailers.",
+    "─────────────",
+    "[verde]Desempenho em 4K a 60 FPS[/verde]",
+    "Segundo as informações divulgadas, o jogo apresentou desempenho em [verde]4K a 60 FPS[/verde], oferecendo uma experiência fluida durante os combates.",
+    "─────────────",
+    "[verde]Dezenas de armas e combinações[/verde]",
+    "O arsenal contará com [verde]30 armas principais[/verde] e [verde]25 armas secundárias[/verde], conhecidas como Phantom Blades. A variedade permitirá combinar diferentes equipamentos e executar sequências de ataques em tempo real.",
+    "─────────────",
+    "[verde]Inimigos derrotados não reaparecem ao descansar[/verde]",
+    "Outro detalhe destacado é o comportamento dos inimigos nos pontos de controle. Os adversários derrotados não reaparecerão simplesmente porque o jogador descansou, evitando a necessidade de repetir determinadas áreas apenas por utilizar esses pontos.",
+    "─────────────",
+    "[verde]Combate baseado na Aura[/verde]",
+    "O sistema de combate exigirá atenção à chamada [verde]Aura[/verde] e aos sinais dos ataques inimigos. Golpes azuis podem ser bloqueados, enquanto ataques vermelhos exigem esquivas precisas para evitar o dano.",
+    "─────────────",
+    "[verde]Data de lançamento[/verde]",
+    "[verde]Phantom Blade Zero[/verde] tem lançamento previsto para [verde]29 de outubro de 2026[/verde], com versões para PlayStation 5 e PC.",
+    "─────────────",
+    "[verde]Confira o vídeo[/verde]",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=V_RZaZhICKE"
+    }
+  ]
+},
+  {
   "id": "battlefield-6-roadmap-temporada-5",
   "titulo": "Battlefield 6 revela roadmap da Temporada 5 com novas armas, mapas e modo REDSEC",
   "categoria": "Notícia",
