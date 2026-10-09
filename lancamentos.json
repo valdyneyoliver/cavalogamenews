@@ -1,22 +1,7 @@
 {
-  "atualizado_em": "2026-10-08",
+  "atualizado_em": "2026-10-09",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1015542,
-      "nome": "Clive Barker's Hellraiser: Revival",
-      "slug": "clive-barkers-hellraiser-revival",
-      "data": "2026-10-08",
-      "data_formatada": "08/10/2026",
-      "imagem": "https://media.rawg.io/media/games/816/8167f331942bc2cb8a6711938cd17f5c.jpg",
-      "plataformas": [
-        "PC",
-        "PlayStation",
-        "Xbox",
-        "Switch"
-      ],
-      "link_rawg": "https://rawg.io/games/clive-barkers-hellraiser-revival"
-    },
     {
       "id": 1020039,
       "nome": "Battleplan",
