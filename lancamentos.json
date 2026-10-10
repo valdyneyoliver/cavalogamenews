@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-10-09",
+  "atualizado_em": "2026-10-10",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -25,6 +25,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/fire-and-ashes"
+    },
+    {
+      "id": 1020423,
+      "nome": "Thank You Bus Driver",
+      "slug": "thank-you-bus-driver",
+      "data": "2026-10-13",
+      "data_formatada": "13/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/730/730de75e5e4b795f4540ed2ca03d055f.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/thank-you-bus-driver"
     },
     {
       "id": 1008986,
@@ -194,6 +206,18 @@
       "link_rawg": "https://rawg.io/games/remothered-red-nuns-legacy"
     },
     {
+      "id": 1020422,
+      "nome": "Gennady",
+      "slug": "gennady",
+      "data": "2026-10-27",
+      "data_formatada": "27/10/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/f52/f524ede20617fc1a2671f0be5f3e2c75.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/gennady"
+    },
+    {
       "id": 1019805,
       "nome": "Crimson Desert: Charting the Unknown",
       "slug": "crimson-desert-charting-the-unknown",
@@ -233,6 +257,18 @@
       "link_rawg": "https://rawg.io/games/tavern-farkle-gb"
     },
     {
+      "id": 1020430,
+      "nome": "Project Afterfall",
+      "slug": "project-afterfall",
+      "data": "2026-11-02",
+      "data_formatada": "02/11/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/f75/f759c46190eff24d83a72fa4f76aa55a.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/project-afterfall"
+    },
+    {
       "id": 1020130,
       "nome": "Underkeep",
       "slug": "underkeep",
@@ -267,6 +303,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/after-the-wane"
+    },
+    {
+      "id": 1020421,
+      "nome": "Warhammer Survivors",
+      "slug": "warhammer-survivors",
+      "data": "2026-11-09",
+      "data_formatada": "09/11/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/bb7/bb7fca4136eccec5e2e82b8a19849489.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/warhammer-survivors"
     },
     {
       "id": 1019738,
