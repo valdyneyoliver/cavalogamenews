@@ -11,7 +11,7 @@ from xml.sax.saxutils import escape as xml_escape
 # CONFIGURAÇÕES
 # =========================================================
 
-BASE_URL = "https://valdyneyoliver.github.io/cavalogamenews"
+BASE_URL = "https://cavalogamenews.com.br"
 
 POSTS_FILE = "posts.json"
 NEWS_DIR = "noticias"
