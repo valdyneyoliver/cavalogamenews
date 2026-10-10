@@ -666,6 +666,9 @@ Seu navegador não suporta vídeo HTML5.
 <html lang="pt-BR">
 
 <head>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2309633346352325"
+     crossorigin="anonymous"></script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-8CNXSR7BXS"></script>
