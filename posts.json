@@ -1,5 +1,25 @@
 [
   {
+  "id": "forza-horizon-1-port-pc-pinyon-shift",
+  "titulo": "Forza Horizon 1 ganha port não oficial para PC com Windows",
+  "categoria": "PC",
+  "data": "11/10/2026",
+  "imagem": "https://store-images.s-microsoft.com/image/apps.17592.70158812030598618.d392f4f7-994d-4142-9423-85b22caff779.3ce497ca-b22d-47e5-b8bb-8d9370dd5dab",
+  "resumo": "Forza Horizon 1, originalmente exclusivo do Xbox 360, agora pode ser jogado no PC com Windows por meio do projeto Pinyon Shift, que recompila o jogo para criar uma versão nativa para computadores.",
+  "conteudo": [
+    "🏎️ Os fãs de corrida ganharam uma nova maneira de jogar [verde]Forza Horizon 1[/verde] no PC. O projeto não oficial [verde]Pinyon Shift[/verde] disponibilizou uma versão de preview jogável que permite executar no Windows o jogo originalmente lançado como exclusivo do Xbox 360 em 2012.",
+    "O projeto utiliza uma recompilação do jogo para gerar código nativo para computadores, possibilitando um port para PC e abrindo caminho para aproveitar o clássico de corrida fora do console original.",
+    "─────────────",
+    "[verde]Tempo de instalação e espaço necessário[/verde]",
+    "Segundo as informações divulgadas pelo projeto, o processo de instalação pode levar entre 20 e 60 minutos. Também é necessário ter aproximadamente 25 GB de espaço livre em disco.",
+    "─────────────",
+    "[verde]Como baixar Forza Horizon 1 para PC[/verde]",
+    "O projeto Pinyon Shift está disponível no GitHub. Para conferir os arquivos e as instruções de instalação, acesse a página oficial da versão 0.4.0c.",
+    "🔗 Download: https://github.com/arcanite24/pinyon-shift/releases/tag/v0.4.0c",
+    "⚠️ Vale lembrar que este é um projeto não oficial e ainda está em fase de preview jogável. A compatibilidade e o funcionamento podem variar conforme o computador e a configuração utilizada."
+  ]
+},
+  {
   "id": "fireside-feelings-gratis-steam-outubro-2026",
   "titulo": "Fireside Feelings está grátis no Steam por tempo limitado",
   "categoria": "Jogos Grátis",
