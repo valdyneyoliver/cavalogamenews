@@ -1480,42 +1480,6 @@
       }
 
     }
-    /* ===== MODO CLARO ===== */
-
-html[data-theme="light"] body {
-    background: #f2f4f3 !important;
-    color: #202522 !important;
-}
-
-html[data-theme="light"] header,
-html[data-theme="light"] nav {
-    background: #ffffff !important;
-}
-
-html[data-theme="light"] section,
-html[data-theme="light"] article,
-html[data-theme="light"] .card,
-html[data-theme="light"] .featured,
-html[data-theme="light"] .release-card,
-html[data-theme="light"] .free-game-card {
-    background-color: #ffffff !important;
-    color: #202522 !important;
-}
-
-html[data-theme="light"] p,
-html[data-theme="light"] h1,
-html[data-theme="light"] h2,
-html[data-theme="light"] h3,
-html[data-theme="light"] label {
-    color: #202522;
-}
-
-html[data-theme="light"] input,
-html[data-theme="light"] select {
-    background: #ffffff;
-    color: #202522;
-    border-color: #cccccc;
-}
 
   </style>
 
@@ -1625,16 +1589,6 @@ html[data-theme="light"] select {
       >
         APOIE
       </a>
-
-            <button
-        id="themeToggle"
-        type="button"
-        aria-label="Alternar tema"
-        title="Alternar tema"
-        style="background:#181b20;color:#00ff88;border:1px solid #00ff88;border-radius:8px;padding:9px 12px;cursor:pointer;font-size:18px;"
-      >
-        ☀️
-      </button>
 
     </nav>
 
@@ -3149,46 +3103,6 @@ window.addEventListener(
   atualizarSetas
 );
 
-</script>
-
-<script>
-(function () {
-    const botao = document.getElementById("themeToggle");
-    const html = document.documentElement;
-
-    if (!botao) return;
-
-    function aplicarTema(tema) {
-        html.setAttribute("data-theme", tema);
-
-        botao.textContent = tema === "light" ? "🌙" : "☀️";
-
-        botao.title = tema === "light"
-            ? "Ativar modo escuro"
-            : "Ativar modo claro";
-
-        botao.setAttribute("aria-label", botao.title);
-    }
-
-    let temaSalvo = "dark";
-
-    try {
-        temaSalvo = localStorage.getItem("cgn-theme") || "dark";
-    } catch (e) {}
-
-    aplicarTema(temaSalvo);
-
-    botao.addEventListener("click", function () {
-        const temaAtual = html.getAttribute("data-theme");
-        const novoTema = temaAtual === "light" ? "dark" : "light";
-
-        aplicarTema(novoTema);
-
-        try {
-            localStorage.setItem("cgn-theme", novoTema);
-        } catch (e) {}
-    });
-})();
 </script>
 
 </body>
