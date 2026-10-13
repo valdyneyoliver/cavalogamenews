@@ -28,6 +28,7 @@ jobs:
       - name: Executar bot de notícias
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL_2: ${{ secrets.DISCORD_WEBHOOK_URL_2 }}
         run: |
           python scripts/bot_noticias.py
 
