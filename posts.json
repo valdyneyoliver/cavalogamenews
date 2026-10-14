@@ -1,5 +1,36 @@
 [
   {
+  "id": "epic-games-launcher-preview-linux-desempenho",
+  "titulo": "Novo Epic Games Launcher promete ser mais rápido que o Steam e finalmente ganha suporte ao Linux",
+  "categoria": "PC",
+  "data": "14/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HUmJV_hbgAA5e_7?format=jpg&name=large",
+  "resumo": "A Epic Games lançou uma versão Preview reformulada de seu Launcher, com inicialização mais rápida, biblioteca renovada e suporte nativo ao Linux. Fortnite, porém, ainda não está disponível no sistema.",
+  "conteudo": [
+    "A [verde]Epic Games[/verde] anunciou uma versão reformulada do Epic Games Launcher, disponível inicialmente em Preview. A atualização promete resolver reclamações antigas dos usuários, oferecendo inicialização mais rápida, navegação fluida e menor consumo de recursos.",
+    "─────────────",
+    "[verde]🎮 Principais novidades[/verde]",
+    "Segundo testes internos da empresa, o Launcher abre em aproximadamente 5,47 segundos. A biblioteca também foi reformulada, com visualizações em grade ou lista, coleções e pesquisa aprimorada.",
+    "A atualização inclui informações detalhadas sobre downloads, acesso a grupos e bate-papo por voz, integração de bibliotecas de jogos de PC e uma barra superior personalizável para jogos e aplicativos favoritos.",
+    {
+      "tipo": "imagem",
+      "url": "https://pbs.twimg.com/media/HUml2m8WsAAgswI?format=jpg&name=large"
+    },
+    "─────────────",
+    "[verde]🐧 Suporte ao Linux e situação do Fortnite[/verde]",
+    "Uma das principais novidades é a chegada de uma versão nativa do Launcher para Linux, além das versões para Windows e macOS. A Epic também trabalha para levar Fortnite ao sistema, mas ainda precisa resolver questões relacionadas ao Easy Anti-Cheat e a outros requisitos de segurança. Por enquanto, o jogo não está disponível no Linux por meio do novo Launcher.",
+    "─────────────",
+    "[verde]⚠️ Preview ainda tem limitações[/verde]",
+    "A versão de testes ainda não inclui todos os recursos do Launcher tradicional. Por isso, a Epic recomenda que jogadores competitivos e desenvolvedores com projetos ativos continuem utilizando a versão antiga.",
+    "A empresa afirma que jogos comprados, instalações, salvamentos na nuvem e progresso continuam vinculados à conta Epic Games e são preservados durante a utilização da versão Preview.",
+    "─────────────",
+    "[verde]🔗 Onde baixar[/verde]",
+    "O novo Epic Games Launcher Preview pode ser encontrado no site oficial da Epic Games:",
+    "https://launcher.epicgames.com/",
+    "Fonte oficial: https://store.epicgames.com/news/epic-games-launcher-preview"
+  ]
+},
+  {
   "id": "squad-busters-data-encerramento-dezembro-2026",
   "titulo": "Squad Busters será encerrado em dezembro de 2026",
   "categoria": "Notícias",
