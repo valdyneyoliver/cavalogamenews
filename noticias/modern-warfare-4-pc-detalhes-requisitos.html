@@ -609,6 +609,56 @@ footer {
   });
 })();
 </script>
+<script>
+(function() {
+  const openButton = document.getElementById('supportButton');
+  const overlay = document.getElementById('supportOverlay');
+  const closeButton = document.getElementById('supportClose');
+  const copyButton = document.getElementById('copyPix');
+  const pixKey = document.getElementById('pixKey');
+  const feedback = document.getElementById('pixFeedback');
+
+  if (!openButton || !overlay || !closeButton || !copyButton) return;
+
+  function openModal() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeButton.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    openButton.focus();
+  }
+
+  openButton.addEventListener('click', openModal);
+  closeButton.addEventListener('click', closeModal);
+
+  overlay.addEventListener('click', function(event) {
+    if (event.target === overlay) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+      closeModal();
+    }
+  });
+
+  copyButton.addEventListener('click', async function() {
+    try {
+      await navigator.clipboard.writeText(pixKey.textContent.trim());
+      feedback.textContent = 'Chave Pix copiada com sucesso!';
+    } catch (error) {
+      feedback.textContent = 'Não foi possível copiar automaticamente. Selecione a chave e copie manualmente.';
+    }
+  });
+})();
+</script>
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
