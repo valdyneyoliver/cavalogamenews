@@ -451,7 +451,7 @@ a {{ color: inherit; }}
 
 .pix-qrcode {{
   display: block;
-  width: 100px;
+  width: 150px;
   max-width: 100%;
   height: auto;
   margin: 18px auto;
