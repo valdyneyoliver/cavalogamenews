@@ -352,7 +352,7 @@ a {{ color: inherit; }}
   box-shadow: var(--shadow);
 }}
 .header-inner {{
-  width: min(1200px, 92%);
+  width: min(1000px, 92%);
   min-height: 30px;
   margin: auto;
   display: flex;
@@ -369,7 +369,7 @@ a {{ color: inherit; }}
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 32px;
+  min-height: 42px;
   padding: 10px 14px;
   border: 1px solid var(--border);
   border-radius: 10px;
