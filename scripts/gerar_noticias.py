@@ -365,27 +365,6 @@ a {{ color: inherit; }}
 .brand img {{ display: block; width: min(400px, 100%); max-height: 40px; object-fit: contain; }}
 .header-actions {{ display: flex; align-items: center; gap: 10px; }}
 .theme-toggle, .home-button {{
-.support-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 10px 14px;
-  border: 1px solid var(--accent);
-  border-radius: 10px;
-  background: var(--accent);
-  color: #06140d;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform .18s ease, background .18s ease;
-}
-
-.support-button:hover {
-  background: var(--accent-strong);
-  transform: translateY(-2px);
-}
   display: inline-flex;
   align-items: center;
   justify-content: center;
