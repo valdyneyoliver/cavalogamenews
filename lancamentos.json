@@ -1,19 +1,7 @@
 {
-  "atualizado_em": "2026-10-14",
+  "atualizado_em": "2026-10-15",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1020260,
-      "nome": "Odd Town",
-      "slug": "odd-town",
-      "data": "2026-10-14",
-      "data_formatada": "14/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/2b4/2b4850537a381a06ef236f57c5ff77b7.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/odd-town"
-    },
     {
       "id": 1018102,
       "nome": "Castlevania: Belmont's Curse",
@@ -431,6 +419,20 @@
         "Xbox"
       ],
       "link_rawg": "https://rawg.io/games/metro-2039"
+    },
+    {
+      "id": 1015421,
+      "nome": "Tomb Raider: Legacy of Atlantis",
+      "slug": "tomb-raider-legacy-of-atlantis",
+      "data": "2027-02-12",
+      "data_formatada": "12/02/2027",
+      "imagem": "https://media.rawg.io/media/games/c2b/c2b8a3ef89b3edd35c1804dc0d68d7bb.jpg",
+      "plataformas": [
+        "PC",
+        "PlayStation",
+        "Xbox"
+      ],
+      "link_rawg": "https://rawg.io/games/tomb-raider-legacy-of-atlantis"
     }
   ]
 }
