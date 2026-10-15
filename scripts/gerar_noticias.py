@@ -384,6 +384,27 @@ a {{ color: inherit; }}
   border-color: var(--accent);
   transform: translateY(-2px);
 }}
+.support-button {{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: var(--accent);
+  color: #06140d;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease;
+}}
+
+.support-button:hover {{
+  background: var(--accent-strong);
+  transform: translateY(-2px);
+}}
 .theme-toggle:focus-visible, .home-button:focus-visible, a:focus-visible {{
   outline: 2px solid var(--accent);
   outline-offset: 3px;
