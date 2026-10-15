@@ -353,7 +353,7 @@ a {{ color: inherit; }}
 }}
 .header-inner {{
   width: min(1200px, 92%);
-  min-height: 96px;
+  min-height: 70px;
   margin: auto;
   display: flex;
   align-items: center;
