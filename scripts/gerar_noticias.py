@@ -384,6 +384,92 @@ a {{ color: inherit; }}
   border-color: var(--accent);
   transform: translateY(-2px);
 }}
+.support-overlay {{
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(5px);
+}}
+
+.support-overlay.is-open {{
+  display: flex;
+}}
+
+.support-modal {{
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 24px;
+  border: 1px solid var(--accent);
+  border-radius: 18px;
+  background: var(--card);
+  color: var(--text);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}}
+
+.support-modal h2 {{
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 25px;
+}}
+
+.support-modal p {{
+  line-height: 1.6;
+}}
+
+.support-close {{
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}}
+
+.pix-key {{
+  display: block;
+  margin: 20px 0 14px;
+  padding: 14px 10px;
+  overflow-wrap: anywhere;
+  border: 1px dashed var(--accent);
+  border-radius: 10px;
+  background: var(--bg);
+  font-weight: 700;
+  user-select: all;
+}}
+
+.copy-pix-button {{
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #06140d;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}}
+
+.copy-pix-button:hover {{
+  filter: brightness(1.08);
+}}
+
+.pix-feedback {{
+  min-height: 24px;
+  margin-bottom: 0;
+  font-size: 14px;
+}}
 .support-button {{
   display: inline-flex;
   align-items: center;
