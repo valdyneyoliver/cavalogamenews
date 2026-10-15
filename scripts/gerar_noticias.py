@@ -580,12 +580,17 @@ footer {{
       <img src="{LOGO_PATH}" alt="CavaloGameNews">
     </a>
     <div class="header-actions">
-      <a class="home-button" href="../index.html">← Página inicial</a>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
-        <span id="themeIcon" aria-hidden="true">☀</span>
-        <span id="themeLabel">Tema claro</span>
-      </button>
-    </div>
+  <a class="home-button" href="../index.html">← Página inicial</a>
+
+  <button class="support-button" id="supportButton" type="button">
+    💚 Apoie
+  </button>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
+    <span id="themeIcon" aria-hidden="true">☀</span>
+    <span id="themeLabel">Tema claro</span>
+  </button>
+</div>
   </div>
 </header>
 
