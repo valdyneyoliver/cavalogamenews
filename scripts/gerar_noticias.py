@@ -405,7 +405,8 @@ a {{ color: inherit; }}
   background: var(--accent-strong);
   transform: translateY(-2px);
 }}
-.theme-toggle:focus-visible, .home-button:focus-visible, a:focus-visible {{
+.theme-toggle:focus-visible, .home-button:focus-visible,
+.support-button:focus-visible, a:focus-visible {{
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }}
