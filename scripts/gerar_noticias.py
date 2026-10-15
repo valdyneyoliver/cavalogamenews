@@ -351,15 +351,15 @@ a {{ color: inherit; }}
   border-bottom: 3px solid var(--accent);
   box-shadow: var(--shadow);
 }}
-.header-inner {{
+.header-inner {
   width: min(1200px, 92%);
-  min-height: 96px;
+  min-height: 0;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 22px;
-  padding: 14px 0;
+  padding: 6px 0;
 }}
 .brand {{ display: inline-flex; align-items: center; text-decoration: none; min-width: 0; }}
 .brand img {{ display: block; width: min(400px, 100%); max-height: 50px; object-fit: contain; }}
