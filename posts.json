@@ -9,8 +9,10 @@
   "conteudo": [
     "A expansão [verde]DayZ Badlands[/verde] já está disponível para PC, Xbox e PlayStation. Para celebrar o lançamento, o jogo recebeu um desconto de 10%, reduzindo o preço para aproximadamente US$ 22,50. Quem já possui o jogo base também pode adquirir DayZ Badlands e DayZ Frostline no pacote Hot & Cool Bundle.",
     "─────────────",
-    "[verde]Trailer de lançamento[/verde]",
-    "https://www.youtube.com/watch?v=BnMQS-jrkwI",
+    {
+  "tipo": "youtube",
+  "url": "https://www.youtube.com/watch?v=BnMQS-jrkwI"
+    },
     "─────────────",
     "[verde]Novo mapa Nasdara[/verde]",
     "O principal destaque da expansão é Nasdara, um mapa inédito de 267 km², considerado o maior terreno já desenvolvido pela equipe para DayZ. A região apresenta montanhas, planícies desérticas, zonas de evacuação, campos de petróleo abandonados e bases militares em ruínas.",
