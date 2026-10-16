@@ -1,4 +1,25 @@
 [
+  {
+  "id": "microsoft-atualiza-modo-xbox-pc",
+  "titulo": "Microsoft atualiza o Modo Xbox no PC com novos atalhos no Windows 11",
+  "categoria": "PC",
+  "data": "16/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HUxZgCuXIAE2EZ6?format=jpg&name=large",
+  "resumo": "A Microsoft continua aprimorando o Modo Xbox no Windows 11. A nova visualização para jogos adicionará atalhos para retornar rapidamente à área de trabalho e acessar opções de desligamento.",
+  "conteudo": [
+    "A Microsoft continua aprimorando o Modo Xbox no Windows 11, com novidades voltadas a facilitar a experiência de quem utiliza o PC para jogar. A nova visualização de tarefas promete adicionar atalhos solicitados pelos jogadores.",
+    "─────────────",
+    "[verde]Novos atalhos para facilitar o uso[/verde]",
+    "Entre as mudanças previstas estão opções para retornar rapidamente à área de trabalho e acessar funções de desligamento de maneira mais direta. A proposta é tornar a navegação entre os jogos e as funções do Windows mais prática.",
+    "A atualização faz parte dos esforços da Microsoft para aprimorar o Modo Xbox no PC e oferecer uma experiência mais conveniente aos jogadores que utilizam o Windows 11.",
+    "─────────────",
+    "[verde]Publicação sobre a novidade[/verde]",
+    {
+      "tipo": "x",
+      "url": "https://x.com/JezCorden/status/2111227614849368284?s=20"
+    }
+  ]
+},
 {
   "id": "shrek-2-remastered-trailer-vazado",
   "titulo": "Trailer de Shrek 2 Remastered vaza e revela gráficos em 4K e cooperativo para quatro jogadores",
