@@ -1,5 +1,33 @@
 [
   {
+  "id": "steam-reformula-sistema-conquistas-dlcs-distintivos",
+  "titulo": "Steam reformula sistema de conquistas, separa DLCs e ganha distintivos para jogos completados",
+  "categoria": "PC",
+  "data": "15/10/2026",
+  "imagem": "https://clan.fastly.steamstatic.com/images/27766192/5df563f2fd6d40f3234c81d1c089236fdafa12a8_960x311.png",
+  "resumo": "A Valve está testando mudanças no sistema de conquistas da Steam. A atualização permite separar conquistas por conjuntos, preservar a conclusão de jogos e exibir novos distintivos no perfil.",
+  "conteudo": [
+    "A [verde]Valve[/verde] começou a testar uma reformulação do sistema de conquistas da [verde]Steam[/verde]. A novidade permite organizar conquistas em conjuntos separados, incluindo jogo base, modos multiplayer e DLCs, facilitando a organização para quem busca completar os jogos em 100%.",
+    {
+      "tipo": "imagem",
+      "url": "https://clan.fastly.steamstatic.com/images/27766192/9077397835ae4bea5989f01bf2644783b799fdfd.png"
+    },
+    "─────────────",
+    "[verde]O que muda com a atualização?[/verde]",
+    "As conquistas poderão ser organizadas por conjuntos, separando diferentes conteúdos do jogo. Assim, novas conquistas adicionadas posteriormente, como as de DLCs, não apagarão a conclusão de um conjunto já completado.",
+    "Ao desbloquear todas as conquistas de um conjunto, o jogador receberá um distintivo exibido no perfil. A atualização também adiciona filtros para conquistas bloqueadas, desbloqueadas ou pertencentes a conjuntos específicos, além de opções para comparar o progresso com amigos.",
+    "─────────────",
+    "[verde]Steam terá troféu de platina?[/verde]",
+    "O novo sistema lembra os troféus de platina do PlayStation, mas a Valve utiliza o nome Achievement Sets, ou conjuntos de conquistas. Cada conjunto concluído recebe sua própria indicação no perfil, em vez de um único troféu de platina para o jogo inteiro.",
+    "─────────────",
+    "[verde]Disponibilidade[/verde]",
+    "O recurso está em fase beta e depende da implementação dos conjuntos pelos desenvolvedores. Por isso, as novidades ainda não estarão disponíveis da mesma forma em todos os jogos.",
+    "─────────────",
+    "[verde]Fonte oficial[/verde]",
+    "https://store.steampowered.com/news/app/593110?l=brazilian&emclan=103582791457287600&emgid=710037059469839141"
+  ]
+},
+  {
   "id": "netflix-aumento-precos-brasil-outubro-2026",
   "titulo": "Netflix aumenta preços no Brasil e plano Premium chega a R$ 71,90 por mês",
   "categoria": "Notícia",
