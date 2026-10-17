@@ -3158,7 +3158,7 @@ function carregarJogosGratis() {
         return;
       }
 
-      container.innerHTML = jogosGratis.slice(0, 2).map(post => `
+      container.innerHTML = jogosGratis.slice(0, 4).map(post => `
         <a href="${linkDaNoticia(post)}" class="free-game-card">
           <img src="${post.imagem}" alt="${post.titulo}" loading="lazy">
           <div class="free-game-info">
