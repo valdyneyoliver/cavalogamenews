@@ -3194,6 +3194,33 @@ window.addEventListener(
   atualizarSetas
 );
 
+  // ALTERNAR ENTRE TEMA CLARO E ESCURO
+const themeToggle = document.getElementById("themeToggle");
+
+function aplicarTema(modo) {
+    document.body.classList.toggle("modo-claro", modo === "claro");
+
+    if (themeToggle) {
+        themeToggle.textContent = modo === "claro" ? "🌙" : "☀️";
+        themeToggle.title = modo === "claro"
+            ? "Mudar para tema escuro"
+            : "Mudar para tema claro";
+    }
+
+    localStorage.setItem("tema-cavalogamenews", modo);
+}
+
+const temaSalvo = localStorage.getItem("tema-cavalogamenews");
+
+aplicarTema(temaSalvo === "claro" ? "claro" : "escuro");
+
+if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+        const estaClaro = document.body.classList.contains("modo-claro");
+        aplicarTema(estaClaro ? "escuro" : "claro");
+    });
+}
+
 </script>
 
 </body>
