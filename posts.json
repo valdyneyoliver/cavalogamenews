@@ -1,5 +1,81 @@
 [
   {
+  "id": "xbox-apoia-desenvolvedores-latino-americanos",
+  "titulo": "Xbox destaca seis jogos de estúdios latino-americanos e amplia apoio à indústria de games",
+  "categoria": "Xbox",
+  "data": "16/10/2026",
+  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/Hero-XBOX-Game-Camp-Mexico-no-tagline-14501227b4e11fbbce23-1600x900.jpg",
+  "resumo": "A Xbox reforçou seu apoio aos desenvolvedores da América Latina e destacou seis jogos de estúdios do México, Brasil, Chile e Argentina. A iniciativa inclui suporte financeiro, recursos técnicos e oportunidades de divulgação.",
+  "conteudo": [
+    "A Xbox destacou o crescimento da indústria de jogos na América Latina e apresentou seis projetos de estúdios independentes da região. A iniciativa faz parte dos esforços da empresa para apoiar desenvolvedores locais e ajudá-los a levar suas criações para jogadores do mundo inteiro.",
+    "Por meio do programa ID@Xbox Developer Acceleration Program, a empresa já trabalhou com mais de 60 estúdios de países latino-americanos e ajudou a levar mais de 30 jogos culturalmente distintos ao ecossistema Xbox desde 2023. O programa oferece recursos técnicos, apoio comercial, orientação e outras oportunidades para os desenvolvedores.",
+    "─────────────",
+    "[verde]Xbox Game Camp chega à Cidade do México[/verde]",
+    "A Xbox Game Camp terá sua primeira edição na Cidade do México em 17 de outubro, durante as comemorações dos 25 anos da Xbox e junto ao Xbox FanFest. O encontro reunirá estúdios mexicanos para um dia de aprendizado, troca de experiências e contato com profissionais da indústria.",
+    "A programação contará com palestras, seminários para desenvolvedores e conversas com representantes do setor. Entre os participantes estará Jens Bergensten, diretor criativo da Mojang Studios, em uma conversa com Peter Zetterberg, fundador da Xbox Game Camp.",
+    "─────────────",
+    "[verde]Seis jogos latino-americanos para ficar de olho[/verde]",
+    "A Xbox também apresentou seis projetos que representam a variedade de estilos, histórias e referências culturais presentes na produção de jogos da América Latina.",
+    "[verde]Mariachi Legends — Halberd Studios, México[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/MCL_Horizontal_Poster_Logo-f62ae4e9b0b78d967044-1024x576.jpg"
+    },
+    "Mariachi Legends é um Metroidvania de combate intenso com gráficos em pixel art, ambientado no México. O jogador controla Pablo Cruz, um detetive que faz um acordo com a própria Morte e ganha a capacidade de se transformar na entidade sobrenatural La Sombra.",
+    "A aventura mistura combates de ação e elementos de RPG durante as celebrações do Dia dos Mortos. Um dos diferenciais é a possibilidade de coletar ingredientes e preparar pratos tradicionais mexicanos para fortalecer o personagem. O jogo também conta com um ciclo de dia e noite que influencia as áreas acessíveis.",
+    "O estúdio destaca que o apoio da Xbox ajudou a preparar o jogo para Xbox Series X|S, além de oferecer suporte técnico e oportunidades de divulgação.",
+    "─────────────",
+    "[verde]Colorbound — Panpipe Studio, Chile[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/colorbound_keyart_logo_HD-db1ac25480ec0da64f7f-1024x576.jpg"
+    },
+    "Colorbound é uma aventura de plataforma e quebra-cabeças protagonizada por Anku. A principal mecânica permite alterar as cores do ambiente para resolver desafios, descobrir segredos e ajudar uma família de músicos a se reunir para um concerto de despedida.",
+    "O jogo combina arte, música e narrativa inspiradas na cultura andina da América Latina. Segundo o estúdio, o programa da Xbox contribuiu com parte do financiamento da produção e da pós-produção, ajudando a acelerar o desenvolvimento.",
+    "─────────────",
+    "[verde]Sky Dust — Orbit Studio, Brasil[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/SkyDust_Keyart-607aeaabfc0c273b0d75-1024x576.jpg"
+    },
+    "Sky Dust é um jogo de ação e aventura para um jogador, com elementos de RPG e ambientação cyberpunk. A história se passa em um futuro distópico após a destruição da Lua, levando o protagonista a explorar as ruas de São Paulo e um mundo digital conhecido como Cyberverse.",
+    "A jogabilidade combina combate com espada, exploração, plataformas e invasão de sistemas. O personagem também pode utilizar braços cibernéticos com habilidades personalizáveis, permitindo experimentar diferentes estratégias durante os confrontos.",
+    "O projeto apresenta uma visão brasileira do gênero cyberpunk, utilizando a identidade urbana e os contrastes de São Paulo como parte de seu universo. A Orbit Studio recebeu apoio financeiro do programa ID@Xbox para levar o jogo ao Xbox e ao Windows.",
+    "─────────────",
+    "[verde]Treetopians — Aparato Games, Argentina[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/treetopians_key_art-5bd3d6cd1dba6378820a-1024x576.jpg"
+    },
+    "Treetopians é um simulador de colônia com uma proposta aconchegante. Os jogadores constroem vilarejos verticais no alto das árvores, administram recursos e cuidam de uma comunidade de habitantes com necessidades e personalidades próprias.",
+    "O jogo permite expandir os assentamentos, explorar novos ambientes e descobrir diferentes biomas. A combinação de construção vertical e gerenciamento de comunidade é um dos principais diferenciais do projeto.",
+    "O suporte da Xbox tem ajudado a pequena equipe independente a avançar no desenvolvimento e a preparar o jogo para chegar aos jogadores do ecossistema Xbox.",
+    "─────────────",
+    "[verde]GHOSTLESS — Coffeenauts, Brasil[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/GHOSTLESS_KeyArt_1920x1080_Logo_A-62d970768e3941dfa100-1024x576.jpg"
+    },
+    "GHOSTLESS é uma aventura de ficção científica ambientada em uma versão alternativa do século XX. Nesse universo, uma inteligência artificial desenvolvida durante a Guerra Fria se voltou contra a humanidade, dando início a um cenário pós-apocalíptico.",
+    "Os jogadores precisam reunir recursos, encontrar sobreviventes, expandir sua base e identificar androides infiltrados na resistência. A experiência combina ação e aventura em 2,5D com construção e gerenciamento de uma colônia.",
+    "O estúdio Coffeenauts também destacou a importância da parceria com a Xbox em sua trajetória. O apoio anterior contribuiu para o desenvolvimento de Spacelines from the Far Out, um dos primeiros jogos brasileiros a chegar ao Game Pass. Agora, GHOSTLESS também faz parte do programa de aceleração da empresa.",
+    "─────────────",
+    "[verde]Greak 2: Alliance of the Storms — Navegante, México[/verde]",
+    {
+      "tipo": "imagem",
+      "url": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/10/Greak2_IDXbox_Sep2026-69c7ee16deab76d71075-1024x576.jpg"
+    },
+    "Greak 2: Alliance of the Storms é a sequência de Greak: Memories of Azur. O jogo é um Metroidvania com animação desenhada à mão e permite jogar sozinho ou em modo cooperativo local e online.",
+    "A aventura acompanha Greak e Adara, separados em dimensões paralelas pelo inimigo Ilikun. Cada personagem interage com elementos diferentes de sua própria realidade, exigindo que os jogadores combinem habilidades e resolvam quebra-cabeças para avançar.",
+    "O estúdio Navegante afirma que o programa ID@Xbox ofereceu suporte para levar o jogo ao Xbox, além de oportunidades educacionais e de divulgação. A equipe também busca criar uma aventura cooperativa acessível tanto para jogadores iniciantes quanto para fãs experientes do gênero.",
+    "─────────────",
+    "[verde]Apoio para ampliar a presença latino-americana[/verde]",
+    "Os seis projetos mostram diferentes abordagens de desenvolvimento, desde aventuras inspiradas no folclore mexicano até experiências cyberpunk ambientadas no Brasil e jogos cooperativos com arte desenhada à mão.",
+    "Com iniciativas como o ID@Xbox Developer Acceleration Program e a Xbox Game Camp, a empresa pretende fortalecer a comunidade de desenvolvedores da América Latina e criar mais oportunidades para que estúdios independentes apresentem seus jogos a públicos internacionais.",
+    "fonte xbox wire: https://news.xbox.com/en-us/2026/10/16/xbox-latin-american-latam-game-camp-id-xbox/"
+  ]
+},
+  {
   "id": "microsoft-atualiza-modo-xbox-pc",
   "titulo": "Microsoft atualiza o Modo Xbox no PC com novos atalhos no Windows 11",
   "categoria": "PC",
