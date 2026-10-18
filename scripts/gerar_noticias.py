@@ -199,11 +199,38 @@ def renderizar_conteudo(post):
             texto,
             flags=re.IGNORECASE
         )
-        texto = re.sub(
-            r'(https?://[^\s<]+)',
-            r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
-            texto
-        )
+       # Transforma [nome](URL) em um link clicável
+links_personalizados = []
+
+def guardar_link(match):
+    nome = match.group(1)
+    url = html.unescape(match.group(2))
+
+    link = (
+        f'<a href="{html.escape(url, quote=True)}" '
+        f'target="_blank" rel="noopener noreferrer">{nome}</a>'
+    )
+
+    marcador = f"MARCADORLINK{len(links_personalizados)}FIM"
+    links_personalizados.append((marcador, link))
+    return marcador
+
+texto = re.sub(
+    r'\[([^\]]+)\]\((https?://[^\s)]+)\)',
+    guardar_link,
+    texto
+)
+
+# Transforma URLs comuns em links clicáveis
+texto = re.sub(
+    r'(https?://[^\s<]+)',
+    r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
+    texto
+)
+
+# Restaura os links personalizados
+for marcador, link in links_personalizados:
+    texto = texto.replace(marcador, link)
         conteudo_html += f"<p>{texto}</p>\n"
 
         if x_html and indice + 1 == meio:
