@@ -199,7 +199,7 @@ def renderizar_conteudo(post):
             texto,
             flags=re.IGNORECASE
         )
-      texto = re.sub(
+        texto = re.sub(
             r'(https?://[^\s<]+)',
             r'<a href="\1" target="_blank" rel="noopener noreferrer">\1</a>',
             texto
