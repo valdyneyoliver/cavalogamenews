@@ -186,7 +186,7 @@ def renderizar_conteudo(post):
                 continue
             continue
 
-               texto = html.escape(str(item).strip())
+        texto = html.escape(str(item).strip())
         texto = re.sub(
             r"\[verde\](.*?)\[/verde\]",
             r'<span class="texto-verde">\1</span>',
