@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-10-18",
+  "atualizado_em": "2026-10-19",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -417,6 +417,18 @@
         "Xbox"
       ],
       "link_rawg": "https://rawg.io/games/tomb-raider-legacy-of-atlantis"
+    },
+    {
+      "id": 1018045,
+      "nome": "God of War Laufey",
+      "slug": "god-of-war-laufey",
+      "data": "2027-02-16",
+      "data_formatada": "16/02/2027",
+      "imagem": "https://media.rawg.io/media/games/d9e/d9e30f2182a8535a0ef02949dfb1ffed.jpg",
+      "plataformas": [
+        "PlayStation"
+      ],
+      "link_rawg": "https://rawg.io/games/god-of-war-laufey"
     }
   ]
 }
