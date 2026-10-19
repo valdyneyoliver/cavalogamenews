@@ -1,5 +1,33 @@
 [
   {
+  "id": "subnautica-2-trailer-early-access-atualizacao",
+  "titulo": "Subnautica 2 ganha trailer que antecipa novidades da próxima atualização",
+  "categoria": "Notícias",
+  "data": "18/10/2026",
+  "imagem": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1962700/16b68b0941ed9c5ac1eea74e478fa726d425bebf/ss_16b68b0941ed9c5ac1eea74e478fa726d425bebf.jpg",
+  "resumo": "A Unknown Worlds divulgou um novo trailer de Subnautica 2 e anunciou uma série de diários de desenvolvimento que mostrará os bastidores do jogo e antecipará novidades planejadas para a próxima grande atualização.",
+  "conteudo": [
+    "A Unknown Worlds divulgou o trailer \"The Voyage to Early Access 2 Begins\", de Subnautica 2. O vídeo apresenta uma nova série de diários de desenvolvimento que mostrará os bastidores da produção e dará aos jogadores uma prévia das novidades planejadas para a próxima grande atualização.",
+    "─────────────",
+    "[verde]Diários de desenvolvimento vão revelar novidades[/verde]",
+    "No trailer, o diretor criativo Anthony Gallegos apresenta a proposta da nova série e explica que os próximos episódios contarão com a participação de integrantes da equipe de desenvolvimento.",
+    "Os vídeos também devem trazer pequenas prévias dos conteúdos que estão sendo preparados para o jogo, permitindo acompanhar o trabalho da equipe antes da chegada da próxima grande atualização.",
+   {
+    "tipo": "youtube",
+    "url": "https://www.youtube.com/watch?v=i5wK-XyAonE"
+   }
+    "─────────────",
+    "[verde]Próxima atualização ainda não tem detalhes[/verde]",
+    "A desenvolvedora ainda não revelou todos os recursos que serão adicionados na próxima grande atualização. Por enquanto, o trailer funciona como uma introdução à série, que deverá apresentar mais informações ao longo dos próximos episódios.",
+    "─────────────",
+    "[verde]Sobre Subnautica 2[/verde]",
+    "Subnautica 2 é um jogo de sobrevivência e exploração submarina ambientado em um planeta alienígena. A experiência permite jogar sozinho ou em modo cooperativo com até quatro pessoas.",
+    "Os jogadores podem explorar ambientes subaquáticos, construir bases e fabricar equipamentos para sobreviver aos perigos desse mundo desconhecido.",
+    "A equipe da Unknown Worlds também convida a comunidade a acompanhar os próximos vídeos e compartilhar ideias sobre o futuro do jogo.",
+    "Fonte: Unknown Worlds"
+  ]
+},
+  {
   "id": "xbox-especialista-jogos-fisicos-project-helix",
   "titulo": "Xbox procura especialista em jogos físicos e levanta dúvidas sobre a próxima geração",
   "categoria": "Xbox",
