@@ -1,5 +1,36 @@
 [
   {
+  "id": "steam-vem-ai-demonstracoes-lista-de-desejos",
+  "titulo": "Steam Next Fest está de volta permite experimentar demos gratuitas e descobrir próximos lançamentos",
+  "categoria": "PC",
+  "data": "19/10/2026",
+  "imagem": "https://img.youtube.com/vi/hRiAstgNtps/maxresdefault.jpg",
+  "resumo": "O Steam Vem Aí reúne jogos que estão chegando à plataforma, com demonstrações gratuitas para experimentar e opções para adicionar os títulos favoritos à lista de desejos.",
+  "conteudo": [
+    "O Steam Vem Aí é uma oportunidade para descobrir jogos que serão lançados na plataforma, experimentar demonstrações gratuitas e adicionar os títulos favoritos à lista de desejos. Assim, os jogadores podem conhecer novas experiências antes do lançamento e receber notificações quando os jogos escolhidos estiverem disponíveis.",
+    {
+      "tipo": "x",
+      "url": "https://x.com/Steam/status/2112232698785976649?s=20"
+    },
+    "─────────────",
+    "[verde]Experimente demonstrações gratuitas[/verde]",
+    "Durante o evento, os jogadores podem encontrar demonstrações jogáveis de diferentes títulos. Para instalar uma demo, basta passar o cursor do mouse sobre o jogo e selecionar o botão de instalação.",
+    "A proposta é permitir que o público experimente os jogos antes de decidir quais deseja acompanhar ou comprar futuramente.",
+    "─────────────",
+    "[verde]Adicione jogos à lista de desejos[/verde]",
+    "Encontrou um jogo interessante? Passe o cursor sobre ele e clique no ícone de estrela, localizado no canto superior direito, para adicioná-lo à sua lista de desejos.",
+    "Ao fazer isso, você poderá receber um e-mail quando o jogo for lançado, facilitando o acompanhamento dos títulos que despertaram seu interesse.",
+    "─────────────",
+    "[verde]Como os jogos são organizados?[/verde]",
+    "Inicialmente, o Steam organiza aleatoriamente os jogos na maioria das seções do evento. A partir de quarta-feira, a plataforma utiliza as estatísticas dos primeiros dias para melhorar as recomendações apresentadas aos usuários.",
+    "Dessa forma, a seleção de jogos recomendados pode se tornar mais adequada aos interesses do público conforme o evento avança.",
+    "─────────────",
+    "[verde]Descubra seu próximo jogo favorito[/verde]",
+    "O Steam Vem Aí permite explorar futuros lançamentos, testar demonstrações gratuitas e acompanhar os jogos mais interessantes por meio da lista de desejos.",
+    "Fonte: [verde][Steam](https://store.steampowered.com/sale/nextfest)[/verde]."
+  ]
+},
+  {
   "id": "american-truck-simulator-atualizacao-162-tourist-boards",
   "titulo": "American Truck Simulator: atualização 1.62 adicionará novos pontos turísticos e recompensas",
   "categoria": "PC",
