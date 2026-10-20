@@ -3,7 +3,7 @@ import os
 import html
 import re
 from urllib.parse import urlparse, parse_qs
-from datetime import date
+from datetime import date, datetime
 from xml.sax.saxutils import escape as xml_escape
 
 # =========================================================
@@ -113,6 +113,17 @@ def gerar_post_x(post):
 
 def escape_attr(value):
     return html.escape(str(value or ""), quote=True)
+
+
+def formatar_data_publicacao(data_hora):
+    meses = [
+        "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+        "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+    ]
+    return (
+        f"Em {data_hora.day} de {meses[data_hora.month - 1]} de "
+        f"{data_hora.year} às {data_hora:%H:%M}"
+    )
 
 
 def renderizar_conteudo(post):
@@ -299,6 +310,19 @@ for post in posts:
 
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
+
+    # Adiciona autoria apenas às páginas criadas a partir desta versão do gerador.
+    # Páginas antigas continuam sem a linha de autoria, mesmo quando regeneradas.
+    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
+    if not os.path.exists(caminho):
+        data_hora_publicacao = datetime.now().astimezone()
+        data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
+        metadados_noticia_html = f"""
+        <div class="info autor">Por Valdiney Oliver</div>
+        <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
+        """
+    else:
+        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
@@ -776,7 +800,7 @@ footer {{
       <div class="article-head">
         <div class="category">{categoria}</div>
         <h1>{titulo}</h1>
-        <div class="info">{data} · CavaloGameNews</div>
+        {metadados_noticia_html}
       </div>
       <img class="cover" src="{imagem}" alt="{titulo}" fetchpriority="high">
       <div class="text">
@@ -882,7 +906,6 @@ footer {{
 </html>
 """
 
-    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
     with open(caminho, "w", encoding="utf-8") as arquivo:
         arquivo.write(pagina)
 
