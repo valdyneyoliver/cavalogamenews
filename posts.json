@@ -1,5 +1,184 @@
 [
   {
+  "id": "id-xbox-ign-showcase-outubro-2026",
+  "titulo": "ID@Xbox e IGN Showcase: veja todos os anúncios, trailers e jogos revelados",
+  "categoria": "Xbox",
+  "data": "20/10/2026",
+  "imagem": "https://xboxwire.thesourcemediaassets.com/sites/2/2026/04/ID-IGN-61b15219c956b2a188e6.jpg",
+  "resumo": "O ID@Xbox e IGN Showcase de outubro de 2026 revelou novos jogos independentes para Xbox Series X|S e PC, além de novidades para o Game Pass. Entre os destaques estão A Game About Digging a Hole Together, Magenta Down, Shrek 2 Remastered e The Wolf Among Us Remastered. Confira todos os anúncios e seus trailers.",
+  "conteudo": [
+    "A Microsoft apresentou uma nova edição do ID@Xbox e IGN Showcase em 20 de outubro de 2026, reunindo anúncios, trailers inéditos e datas de lançamento de diversos jogos independentes. A apresentação também trouxe novidades sobre títulos que chegarão ao Xbox Game Pass e confirmou o lançamento surpresa de Arctic Eggs.",
+    "Entre os destaques estão A Game About Digging a Hole Together, sequência da experiência de escavação que agora permite jogar com amigos, e Magenta Down, uma aventura de ficção científica em um planeta hostil. O evento também revelou novidades de jogos como Croak, Graytail e Waveling Island.",
+    "Vários títulos apresentados terão suporte ao Xbox Play Anywhere, permitindo jogar no console Xbox e no PC com uma única compra, nos casos aplicáveis, sem custo adicional para adquirir uma segunda versão. Confira os principais detalhes e todos os trailers divulgados no evento.",
+    "─────────────",
+    "[verde]A Game About Digging a Hole Together[/verde]",
+    "A sequência da aventura de escavação transforma a busca por tesouros em uma experiência cooperativa. Os jogadores poderão cavar juntos, coletar recursos, vender materiais e aprimorar equipamentos enquanto procuram um tesouro enterrado nas profundezas da areia.",
+    "O jogo chega em 4 de dezembro de 2026 para Xbox Series X|S e Xbox no PC, com lançamento também no Game Pass.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/BkFHdDpwcaU"
+    },
+    "─────────────",
+    "[verde]Chronoscript: The Endless End[/verde]",
+    "Este jogo de ação e aventura aposta na exploração de dois mundos diferentes: uma mansão tridimensional repleta de páginas de manuscritos e os cenários bidimensionais ilustrados que existem dentro dessas páginas.",
+    "Os jogadores enfrentarão criaturas conhecidas como Ruined e descobrirão uma narrativa envolvendo uma vampira imortal e seu editor. Chronoscript: The Endless End está previsto para o verão de 2027 no Hemisfério Norte, entre junho e setembro, para Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/rJir5dLFFFA"
+    },
+    "─────────────",
+    "[verde]Croak[/verde]",
+    "Croak é um jogo de plataforma 2D desenhado à mão no qual os jogadores controlam um príncipe sapo. A aventura combina movimentos de precisão, saltos, uso da língua para alcançar pontos distantes, chefes e itens escondidos.",
+    "O título também terá classificações online de velocidade, permitindo comparar os tempos com outros jogadores. O lançamento está previsto para março de 2027 no Xbox Series X|S e Xbox no PC, com chegada ao Game Pass no primeiro dia e suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/hOwiNLRcyAY"
+    },
+    "─────────────",
+    "[verde]CRITICAL REFLEX: Arctic Eggs, Mouthwashing e No, I'm Not Human[/verde]",
+    "Três jogos independentes da publicadora CRITICAL REFLEX estão chegando ao ecossistema Xbox, com propostas bastante diferentes entre si.",
+    "[verde]Arctic Eggs[/verde]",
+    "Arctic Eggs é um simulador de preparo de ovos com física peculiar, ambientado em uma cidade antártica distópica. O jogo mistura paciência, situações absurdas e ingredientes incomuns. Já está disponível para Xbox Series X|S.",
+    "[verde]Mouthwashing[/verde]",
+    "Este jogo de terror psicológico acompanha a tripulação de uma nave cargueira espacial após um desastre. O lançamento está marcado para 29 de outubro de 2026 no Xbox Series X|S, Xbox One e Xbox no PC, com disponibilidade no Game Pass.",
+    "[verde]No, I'm Not a Human[/verde]",
+    "Em um cenário apocalíptico, os jogadores precisam interrogar desconhecidos que aparecem à porta e identificar impostores capazes de mudar de forma. O lançamento está previsto para 2027 no Xbox Series X|S e Xbox One, com chegada ao Game Pass.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/q9Yz15z-5AM"
+    },
+    "─────────────",
+    "[verde]Drill Keeper[/verde]",
+    "Drill Keeper combina construção de baralhos com defesa estratégica em estilo roguelike. Os jogadores viajam pelo espaço em busca de recursos e constroem fortalezas ao redor de operações de mineração, utilizando armadilhas e caminhos para dificultar o avanço dos inimigos.",
+    "O jogo terá diferentes heróis e facções, além de combinações de cartas que permitem experimentar estratégias distintas. A chegada ao Xbox no PC e ao Game Pass está prevista para o verão de 2027 no Hemisfério Norte.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/MdLffnBhlAw"
+    },
+    "─────────────",
+    "[verde]Graytail[/verde]",
+    "Graytail é uma aventura de ação e mistério com gráficos em pixel art 2.5D. A história começa após o desaparecimento de um piloto famoso no Pacífico. Um detetive com uma dor de cabeça persistente assume o caso acompanhado pela filha do desaparecido.",
+    "A investigação leva os jogadores a explorar uma ilha, descobrir segredos e questionar em quem podem confiar. Graytail chega em novembro de 2027 ao Xbox Series X|S e Xbox no PC, com suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/_OQGcmIpo78"
+    },
+    "─────────────",
+    "[verde]Love Is a Roguelite[/verde]",
+    "Conhecido também pela sigla LIAR, o jogo mistura combate tático por turnos, construção de baralhos e simulação de relacionamentos em uma história de amor gerada proceduralmente.",
+    "As escolhas dos jogadores influenciam as relações, enquanto o sistema de combate permite usar diferentes classes de personagens. A experiência apresenta 16 combinações românticas distintas, e será necessário completar várias partidas para descobrir toda a narrativa.",
+    "Love Is a Roguelite está previsto para o outono de 2027 no Hemisfério Norte, entre setembro e dezembro, para Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/zPn8ex5CIpA"
+    },
+    "─────────────",
+    "[verde]Magenta Down[/verde]",
+    "Dos criadores de Unto The End, Magenta Down é uma aventura de ficção científica ambientada em um exoplaneta remoto e hostil. Os jogadores precisam lidar com ferimentos, exposição à radiação e recursos limitados enquanto tentam encontrar uma maneira de salvar a si mesmos e à tripulação.",
+    "O lançamento está previsto para o início de 2027 no Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/203U4tDw2Lw"
+    },
+    "─────────────",
+    "[verde]Mr. Magpie's Harmless Card Game[/verde]",
+    "Este jogo combina construção de baralhos e elementos roguelike em uma experiência com atmosfera sombria. Os jogadores precisam administrar riscos e combinar cartas para criar sinergias poderosas, enquanto tentam impressionar o misterioso anfitrião Mr. Magpie, dublado por Matt Mercer.",
+    "O título chega no início de 2027 ao Xbox Series X|S e Xbox no PC, além de integrar o Game Pass desde o lançamento. Também terá suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/xYQ-bvuo1x0"
+    },
+    "─────────────",
+    "[verde]Mr. Records[/verde]",
+    "Mr. Records é uma aventura musical protagonizada por George e seu cachorro Buzz. Cada disco de vinil transporta o jogador para um mundo de memórias e emoções, com cenários psicodélicos que precisam ser atravessados no ritmo da música.",
+    "Ao receber clientes na loja de discos, George desbloqueia novas gravações e descobre histórias pessoais, lições de vida e amizades. O jogo está previsto para a primavera de 2027 no Hemisfério Norte, entre março e junho, no Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/nspklAoahbo"
+    },
+    "─────────────",
+    "[verde]Paper Shredder[/verde]",
+    "Em Paper Shredder, o objetivo é destruir documentos de uma empresa para tentar alcançar um pagamento de um milhão de dólares. A proposta incremental começa com pequenas pilhas de papel e evolui para montanhas de documentos, com melhorias que aceleram o processo.",
+    "O jogo chega ao Xbox Series X|S e Xbox no PC durante o inverno de 2026 no Hemisfério Norte, entre dezembro de 2026 e março de 2027. Também terá suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/cUuMAgaZeDk"
+    },
+    "─────────────",
+    "[verde]Red Kiss[/verde]",
+    "Red Kiss é um RPG tático narrativo ambientado na Berlim da Guerra Fria, com espiões vampiros e uma trama repleta de conspirações. Os jogadores comandam agentes misteriosos, conquistam sua confiança e utilizam suas habilidades para avançar pela história.",
+    "O jogo está anunciado para Xbox Series X|S, com lançamento previsto também no Game Pass desde o primeiro dia. A data exata ainda não foi divulgada, e o título terá suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/MrVm76qStYQ"
+    },
+    "─────────────",
+    "[verde]Rustown[/verde]",
+    "Ambientado cinco anos após uma pandemia fictícia conhecida como vírus idiota, Rustown acompanha Jian, que chega a uma cidade habitada por sobreviventes que enfrentam dificuldades cognitivas e exclusão social. Ela procura o pai, desaparecido três anos antes.",
+    "A aventura aposta em furtividade e narrativa: os jogadores exploram o ambiente, evitam perigos sem entrar em combate e descobrem pistas enquanto conhecem os moradores. Desenvolvido pela Plotrick, Rustown será lançado em 30 de junho de 2027 para Xbox Series X|S e Xbox no PC, com suporte ao Xbox Play Anywhere.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/GQtb0qqrgN8"
+    },
+    "─────────────",
+    "[verde]Scramble Knights Online[/verde]",
+    "Scramble Knights Online é um RPG de ação online com elementos de MMO, desenvolvido para jogar com amigos. Os jogadores exploram o reino compartilhado de Terracott, cumprem missões, enfrentam monstros, conquistam masmorras e coletam equipamentos para melhorar seus personagens.",
+    "O lançamento está marcado para 26 de outubro de 2026 no Xbox Series X|S e Xbox no PC, com disponibilidade no Game Pass.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/d5P181mDcfs"
+    },
+    "─────────────",
+    "[verde]Shrek 2 Remastered[/verde]",
+    "Shrek 2 Remastered traz de volta a aventura de ação cooperativa inspirada no filme da DreamWorks Animation, agora com gráficos aprimorados e novos recursos. A edição inclui um Modo Foto para registrar momentos da jornada e um Modo de Trapaças para desbloquear opções extras durante a partida.",
+    "O jogo já está disponível para pré-venda no Xbox Series X|S e será lançado em 10 de novembro de 2026. Até 9 de novembro, assinantes do Xbox Game Pass podem obter até 20% de desconto na pré-venda; quem não é assinante recebe 10% de desconto, conforme anunciado pela Microsoft.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/CL36wpvgeis"
+    },
+    "─────────────",
+    "[verde]VANRAN[/verde]",
+    "VANRAN é um RPG de ação de fantasia sombria centrado em combates intensos contra chefes. Os jogadores enfrentarão inimigos perigosos, escalarão criaturas colossais e procurarão pontos fracos para derrotá-las em batalhas de curta distância.",
+    "O lançamento está previsto para o início de 2027 no Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/fCqFe6GzyMY"
+    },
+    "─────────────",
+    "[verde]Waveling Island[/verde]",
+    "Waveling Island é um jogo aconchegante de coleta de criaturas, ambientado em uma ilha desenhada em pixel art. Os jogadores poderão explorar, fabricar itens, batalhar, fazer amizades e descobrir os segredos das criaturas conhecidas como Wavelings.",
+    "O título está previsto para o início de 2027 no Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/3VoDO5QzffQ"
+    },
+    "─────────────",
+    "[verde]The Wolf Among Us Remastered[/verde]",
+    "Bigby Wolf está de volta em The Wolf Among Us Remastered, versão aprimorada do thriller investigativo da Telltale ambientado em Fabletown. O novo trailer de história apresenta uma primeira prévia da forma de lobisomem redesenhada do protagonista.",
+    "A edição inclui melhorias visuais, animações e áudio aprimorados, um novo Modo Noir, conteúdo dos bastidores e cenas jogáveis restauradas da produção original de 2013.",
+    "O lançamento digital está marcado para 29 de outubro de 2026 no Xbox Series X|S e Xbox One.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/hwG35qPd1Ac"
+    },
+    "─────────────",
+    "[verde]ZERO PARADES: Director's Cut[/verde]",
+    "O RPG de espionagem da ZA/UM chega ao Xbox em sua edição definitiva. Os jogadores assumem o papel de Hershel Wilk, um espião brilhante, mas esgotado, convocado para uma última missão em busca de redenção.",
+    "A Director's Cut inclui aproximadamente 40 mil palavras de história inédita, o Backstage Mode e dublagem completa em inglês. O lançamento está marcado para 3 de novembro de 2026 no Xbox Series X|S e Xbox no PC.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/embed/q0kzMHLNIgs"
+    },
+    "─────────────",
+    "[verde]O que esperar dos próximos lançamentos[/verde]",
+    "O showcase apresentou uma mistura de jogos cooperativos, aventuras narrativas, experiências musicais, RPGs e títulos de terror. Entre os lançamentos mais próximos estão Arctic Eggs, já disponível, Scramble Knights Online em 26 de outubro, Mouthwashing em 29 de outubro, The Wolf Among Us Remastered também em 29 de outubro e ZERO PARADES: Director's Cut em 3 de novembro.",
+    "Para quem assina o Game Pass, os anúncios incluem novos jogos previstos para chegar ao catálogo desde o lançamento, como Croak, Mouthwashing, No, I'm Not Human, Mr. Magpie's Harmless Card Game e Scramble Knights Online. As datas e plataformas podem variar conforme cada título, por isso vale acompanhar os anúncios oficiais.",
+    "─────────────",
+    "[verde]Fonte oficial[/verde]",
+    "[verde][Xbox Wire — ID@Xbox x IGN Showcase Recap: All the News and Announcements](https://news.xbox.com/)[/verde]."
+  ]
+},
+  {
   "id": "xbox-project-helix-lancamento-2028",
   "titulo": "Project Helix: novo Xbox pode chegar no Natal de 2028 e custar até US$ 1.800",
   "categoria": "Xbox",
