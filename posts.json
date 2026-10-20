@@ -1,5 +1,46 @@
 [
   {
+  "id": "xbox-series-xs-amd-fsr-41",
+  "titulo": "Xbox Series X|S receberá AMD FSR 4.1 para melhorar gráficos e desempenho",
+  "categoria": "Xbox",
+  "data": "20/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HVFZLHRWcAASnhD?format=jpg&name=large",
+  "resumo": "A Microsoft e a AMD confirmaram a chegada do FSR Upscaling 4.1 ao Xbox Series X|S. A tecnologia utiliza aprendizado de máquina para aprimorar a reconstrução de imagens, enquanto o futuro Project Helix utilizará o FSR Diamond.",
+  "conteudo": [
+    "A Microsoft e a AMD confirmaram que a tecnologia AMD FidelityFX Super Resolution (FSR) Upscaling 4.1 chegará ao Xbox Series X e Xbox Series S. A novidade utiliza aprendizado de máquina para reconstruir imagens e pode ajudar os desenvolvedores a equilibrar qualidade visual e desempenho nos jogos.",
+    "A tecnologia permite renderizar um jogo em uma resolução interna menor e reconstruir a imagem para produzir um resultado mais detalhado. Isso pode reduzir a carga sobre a GPU, mas os ganhos reais dependerão da implementação de cada desenvolvedor e das características de cada jogo.",
+    "─────────────",
+    "[verde]Como o FSR 4.1 pode melhorar os jogos no Xbox?[/verde]",
+    "O FSR 4.1 utiliza técnicas de reconstrução de imagem baseadas em aprendizado de máquina para aprimorar a qualidade visual. Em vez de depender exclusivamente da renderização na resolução final, o sistema utiliza informações da imagem para reconstruir o resultado com mais definição.",
+    "Essa abordagem pode permitir que os estúdios encontrem um equilíbrio melhor entre resolução, qualidade gráfica e taxa de quadros. No entanto, a tecnologia não aumenta automaticamente o desempenho de todos os jogos: os resultados variam conforme a implementação e o hardware disponível.",
+    "─────────────",
+    "[verde]Xbox Series S pode se beneficiar da tecnologia[/verde]",
+    "O Xbox Series S pode ter benefícios importantes com técnicas de reconstrução de imagem, já que possui menos recursos gráficos que o Xbox Series X. O recurso poderá oferecer aos desenvolvedores mais opções para equilibrar a qualidade visual e o desempenho no console de entrada da geração.",
+    "O Xbox Series X também receberá a tecnologia. Ainda assim, não há garantia de que todos os jogos compatíveis terão mais FPS ou apresentarão melhorias visuais perceptíveis. Será necessário avaliar os resultados em cada título.",
+    "─────────────",
+    "[verde]ROG Xbox Ally receberá o FSR 4.1 primeiro[/verde]",
+    "Segundo as informações divulgadas, o FSR Upscaling 4.1 começará a chegar aos dispositivos portáteis ROG Xbox Ally compatíveis ainda nesta semana. Para o Xbox Series X|S, a chegada foi anunciada para um futuro próximo, sem uma data específica confirmada.",
+    "A compatibilidade também depende do modelo do dispositivo portátil. As informações citadas indicam que o ROG Xbox Ally básico não é compatível com essa implementação da tecnologia.",
+    "─────────────",
+    "[verde]Project Helix utilizará o FSR Diamond[/verde]",
+    "A Microsoft e a AMD também anteciparam novidades para a próxima geração de hardware Xbox. O Project Helix, nome anunciado para o próximo console da Microsoft, utilizará o FSR Diamond, uma tecnologia diferente do FSR 4.1 previsto para os dispositivos atuais.",
+    "A parceria pretende avançar no uso de aprendizado de máquina e nas técnicas de renderização para permitir experiências gráficas mais ambiciosas. Entretanto, ainda não foram divulgados detalhes suficientes sobre o funcionamento do FSR Diamond ou sobre os ganhos que ele poderá proporcionar.",
+    "─────────────",
+    "[verde]O que muda para os jogadores?[/verde]",
+    "A chegada do FSR 4.1 representa uma nova ferramenta para os estúdios aproveitarem o hardware do Xbox Series X|S. Se os resultados forem positivos, os desenvolvedores poderão encontrar novas formas de melhorar a definição das imagens e administrar os recursos gráficos dos jogos.",
+    "Por enquanto, ainda faltam uma data exata para a atualização nos consoles e uma lista de jogos compatíveis. Os primeiros títulos com suporte e os testes práticos serão importantes para determinar o impacto real da tecnologia no desempenho e na qualidade visual.",
+    "─────────────",
+    "[verde]Assista ao vídeo[/verde]",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=fT6TIXnmv-s"
+    },
+    "─────────────",
+    "[verde]Fonte[/verde]",
+    "[verde][Windows Central — AMD e Microsoft anunciam suporte ao FSR 4.1 para Xbox Series X|S e Xbox Ally](https://www.windowscentral.com/gaming/xbox/amd-and-microsoft-announce-fsr-4-1-support-for-xbox-series-x-s-and-xbox-ally-bringing-huge-performance-gains)[/verde]."
+  ]
+},
+  {
   "id": "xbox-game-pass-jogos-outubro-novembro-2026",
   "titulo": "Xbox Game Pass recebe Final Fantasy VII Remake Intergrade, The Séance of Blake Manor e mais jogos",
   "categoria": "Xbox",
