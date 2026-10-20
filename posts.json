@@ -1,5 +1,37 @@
 [
   {
+  "id": "cyberpunk-2077-atualizacao-2-5-edgerunners-2",
+  "titulo": "Cyberpunk 2077 anuncia atualização 2.5 com novidades inspiradas em Edgerunners 2",
+  "categoria": "Notícias",
+  "data": "20/10/2026",
+  "imagem": "https://pbs.twimg.com/media/HVEAMhXXIAADxYv?format=jpg&name=4096x4096",
+  "resumo": "A CD Projekt RED anunciou a atualização gratuita 2.5 de Cyberpunk 2077, com novos recursos de personalização, mudanças no combate e conteúdos inspirados em Edgerunners 2.",
+  "conteudo": [
+    "A CD Projekt RED anunciou nesta terça-feira (20) a atualização 2.5 de Cyberpunk 2077. Batizada de Edgerunners 2 Update, a atualização gratuita promete trazer novos itens e recursos ao RPG, incluindo conteúdos inspirados no anime Cyberpunk: Edgerunners 2.",
+    "─────────────",
+    "[verde]Quando chega a atualização 2.5?[/verde]",
+    "A atualização será lançada em 22 de outubro de 2026 para PC, PlayStation 5 e Xbox Series X|S. A versão para Nintendo Switch 2 chegará posteriormente, mas ainda não tem uma data de lançamento confirmada.",
+    "─────────────",
+    "[verde]Novidades serão reveladas nesta semana[/verde]",
+    "A desenvolvedora realizará uma transmissão especial do REDstreams em 21 de outubro para apresentar os principais recursos da atualização. As notas oficiais com os detalhes das mudanças também serão divulgadas na mesma data.",
+    "Entre as novidades já mencionadas estão novas opções de personalização de cibernéticos e um estilo de combate que permite utilizar duas armas. Outros recursos ainda serão apresentados pela equipe.",
+    {
+      "tipo": "x",
+      "url": "https://x.com/CyberpunkGame/status/2112484169523876130?s=20"
+    },
+    "─────────────",
+    "[verde]Cyberpunk 2077 continua recebendo novidades[/verde]",
+    "Mesmo após anos desde seu lançamento original, Cyberpunk 2077 continua recebendo suporte da CD Projekt RED. A atualização 2.5 promete ampliar as opções disponíveis aos jogadores e aproximar ainda mais o jogo do universo do anime.",
+    "Mais informações sobre os conteúdos e as mudanças serão divulgadas durante a apresentação oficial.",
+    "─────────────",
+   {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=RgvsbigEylQ"
+    },
+    "Fonte oficial:[verde][CD Projekt RED — anúncio da atualização 2.5](https://www.cyberpunk.net/en/news/52098/redstreams-cyberpunk-2077-edgerunners-2-update-2-5-is-coming)[/verde]."
+  ]
+},
+  {
   "id": "cinder-city-trailer-gameplay-combate",
   "titulo": "Cinder City ganha novo trailer com gameplay e detalhes do combate",
   "categoria": "PC",
