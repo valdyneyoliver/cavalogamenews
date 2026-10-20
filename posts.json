@@ -1,5 +1,35 @@
 [
   {
+  "id": "cinder-city-trailer-gameplay-combate",
+  "titulo": "Cinder City ganha novo trailer com gameplay e detalhes do combate",
+  "categoria": "PC",
+  "data": "19/10/2026",
+  "imagem": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4651830/b4b846a6040dcfc87f3427065edc97465a718753/ss_b4b846a6040dcfc87f3427065edc97465a718753.jpg",
+  "resumo": "A NC apresentou um novo trailer de Cinder City, destacando equipamentos táticos, habilidades de combate, veículos e atividades cooperativas no mundo aberto ambientado em uma versão distópica de Seul.",
+  "conteudo": [
+    "A NC, antiga NCSOFT, divulgou um novo vídeo de Cinder City, seu próximo jogo de ação em mundo aberto desenvolvido pela BigFire Games. Intitulado \"Gameplay and Tactical Systems Overview\", o trailer apresenta mais detalhes sobre o combate, a exploração e as atividades cooperativas.",
+    "Ambientado em uma versão distópica de Seul, no século XXIII, o jogo acompanha Seven, um personagem que precisa enfrentar ameaças em uma cidade devastada por acontecimentos catastróficos.",
+    "─────────────",
+    "[verde]Combate com equipamentos táticos e habilidades[/verde]",
+    "Um dos destaques do vídeo é o sistema Tactical Gear, que reúne habilidades e equipamentos especializados. Entre os recursos apresentados estão escudos, robôs de apoio, armadilhas e mecanismos de recuperação de proteção.",
+    "A proposta é permitir que os jogadores combinem diferentes recursos de acordo com cada situação. O gerenciamento dos equipamentos e de seus tempos de recarga terá um papel importante durante os confrontos.",
+    "─────────────",
+    "[verde]Veículos, exploração e batalhas cooperativas[/verde]",
+    "O trailer também mostra diferentes veículos disponíveis no mundo aberto, incluindo motocicletas, carros e helicópteros. Alguns deles poderão ajudar durante confrontos e batalhas contra inimigos poderosos.",
+    "Além da exploração individual, Cinder City contará com atividades cooperativas, missões dinâmicas, masmorras e confrontos contra chefes que exigirão a participação de vários jogadores.",
+    "─────────────",
+    "[verde]Assista ao novo trailer[/verde]",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=i7mzy-Kahd0"
+    },
+    "─────────────",
+    "[verde]Quando Cinder City será lançado?[/verde]",
+    "Apesar da nova apresentação, a desenvolvedora ainda não confirmou uma data exata de lançamento. O jogo está em desenvolvimento para PC e consoles.",
+    "Com o novo vídeo, a equipe oferece uma visão mais detalhada dos sistemas que pretende combinar em sua experiência de ação e exploração em mundo aberto."
+  ]
+},
+  {
   "id": "star-wars-battlefront-3-rumores-estudios",
   "titulo": "Star Wars Battlefront 3 pode estar em negociação com EA DICE e Bungie, aponta rumor",
   "categoria": "Notícia",
