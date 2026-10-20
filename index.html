@@ -1822,6 +1822,34 @@ body.modo-claro #themeToggle {
 
 </header>
 
+  <!-- LETREIRO ANIMADO CAVALOGAMENEWS -->
+
+<div class="letreiro-cgn">
+    <div class="letreiro-cgn-conteudo" id="letreiroCGN">
+
+        <div class="letreiro-cgn-grupo" id="letreiroGrupoOriginal">
+            <span><b>◆</b> CAVALOGAMENEWS</span>
+            <span><b>◆</b> NOTÍCIAS DE GAMES</span>
+            <span><b>◆</b> XBOX</span>
+            <span><b>◆</b> PLAYSTATION</span>
+            <span><b>◆</b> PC</span>
+            <span><b>◆</b> NINTENDO</span>
+            <span><b>◆</b> LANÇAMENTOS</span>
+            <span><b>◆</b> JOGOS GRÁTIS</span>
+        </div>
+
+        <div class="letreiro-cgn-grupo" aria-hidden="true" id="letreiroGrupoCopia"></div>
+
+    </div>
+</div>
+
+<script>
+    const grupoOriginal = document.getElementById("letreiroGrupoOriginal");
+    const grupoCopia = document.getElementById("letreiroGrupoCopia");
+
+    grupoCopia.innerHTML = grupoOriginal.innerHTML;
+</script>
+
 <!-- =====================================================
      CALENDÁRIO + JOGOS GRÁTIS
 ===================================================== -->
