@@ -1630,6 +1630,73 @@ body.modo-claro #themeToggle {
     margin-left: auto;
     font-size: 18px;
 }
+/* =====================================================
+   LETREIRO ANIMADO CAVALOGAMENEWS
+===================================================== */
+
+.letreiro-cgn {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: transparent;
+    border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+    padding: 10px 0;
+}
+
+.letreiro-cgn-conteudo {
+    display: flex;
+    width: max-content;
+    animation: mover-letreiro-cgn 35s linear infinite;
+}
+
+.letreiro-cgn-grupo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 35px;
+    padding-right: 35px;
+}
+
+.letreiro-cgn-grupo span {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    letter-spacing: 1px;
+}
+
+.letreiro-cgn-grupo span b {
+    color: #00ff88;
+}
+
+.letreiro-cgn:hover .letreiro-cgn-conteudo {
+    animation-play-state: paused;
+}
+
+@keyframes mover-letreiro-cgn {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 600px) {
+    .letreiro-cgn {
+        padding: 8px 0;
+    }
+
+    .letreiro-cgn-grupo {
+        gap: 22px;
+        padding-right: 22px;
+    }
+
+    .letreiro-cgn-grupo span {
+        font-size: 11px;
+    }
+}
 
   </style>
 
