@@ -315,7 +315,7 @@ for post in posts:
     # Páginas antigas continuam sem a linha de autoria, mesmo quando regeneradas.
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
     if not os.path.exists(caminho):
-        data_hora_publicacao = datetime.now().astimezone()
+        data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
         data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
         metadados_noticia_html = f"""
         <div class="info autor">Por Valdiney Oliver</div>
