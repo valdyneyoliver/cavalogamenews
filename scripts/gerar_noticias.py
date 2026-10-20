@@ -312,18 +312,49 @@ for post in posts:
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
 
-    # Adiciona autoria apenas às páginas criadas a partir desta versão do gerador.
-    # Páginas antigas continuam sem a linha de autoria, mesmo quando regeneradas.
+    ```python
+    # Mantém a autoria e a data/hora quando a notícia já foi gerada.
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
-    if not os.path.exists(caminho):
+
+    metadados_antigos = ""
+    if os.path.exists(caminho):
+        try:
+            with open(caminho, "r", encoding="utf-8") as arquivo_existente:
+                html_antigo = arquivo_existente.read()
+
+            inicio = html_antigo.find('<div class="info autor">')
+            fim = html_antigo.find("</div>", inicio)
+
+            if inicio != -1 and fim != -1:
+                fim += len("</div>")
+                metadados_antigos = html_antigo[inicio:fim]
+
+                inicio_data = html_antigo.find(
+                    '<div class="info data-publicacao">',
+                    fim
+                )
+
+                if inicio_data != -1:
+                    fim_data = html_antigo.find("</div>", inicio_data)
+                    if fim_data != -1:
+                        fim_data += len("</div>")
+                        metadados_antigos += "\n" + html_antigo[inicio_data:fim_data]
+
+        except (OSError, UnicodeError):
+            metadados_antigos = ""
+
+    if metadados_antigos:
+        metadados_noticia_html = metadados_antigos
+    elif os.path.exists(caminho):
+        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
+    else:
         data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
         data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
+
         metadados_noticia_html = f"""
         <div class="info autor">Por Valdiney Oliver</div>
         <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
         """
-    else:
-        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
