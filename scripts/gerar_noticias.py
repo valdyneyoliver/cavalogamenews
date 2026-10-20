@@ -312,7 +312,6 @@ for post in posts:
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
 
-    ```python
     # Mantém a autoria e a data/hora quando a notícia já foi gerada.
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
 
