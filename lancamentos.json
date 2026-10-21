@@ -1,19 +1,7 @@
 {
-  "atualizado_em": "2026-10-20",
+  "atualizado_em": "2026-10-21",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1004664,
-      "nome": "Mycopunk",
-      "slug": "mycopunk",
-      "data": "2026-10-20",
-      "data_formatada": "20/10/2026",
-      "imagem": "https://media.rawg.io/media/games/cbf/cbf5b06692e82e312a5dc9db32ed5b4c.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/mycopunk"
-    },
     {
       "id": 1019334,
       "nome": "Stupid Never Dies",
