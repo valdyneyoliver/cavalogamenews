@@ -1,5 +1,55 @@
 [
   {
+  "id": "fable-apresenta-bowerstone-guia-turistico-albion",
+  "titulo": "Fable apresenta Bowerstone em novo guia turístico de Albion",
+  "categoria": "Xbox",
+  "data": "22/10/2026",
+  "imagem": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2769570/8d483674199a602caa1a71e15ebcbc24ce45e11b/ss_8d483674199a602caa1a71e15ebcbc24ce45e11b.1920x1080.jpg?t=1788984944",
+  "resumo": "A Playground Games publicou um guia turístico oficial de Bowerstone, cidade icônica de Albion em Fable. O material destaca monumentos, a Guilda dos Heróis, estabelecimentos comerciais e opções para jogadores que desejam construir sua própria vida no reino.",
+  "conteudo": [
+    "A Playground Games publicou nesta quinta-feira (22) um novo conteúdo oficial de Fable que convida os jogadores a conhecer Bowerstone, uma das cidades mais conhecidas de Albion. Apresentado como um guia turístico, o material destaca pontos de interesse, comércios e curiosidades, mantendo o humor característico da franquia.",
+    "A publicação oferece uma prévia da cidade que os jogadores poderão explorar na nova aventura, mostrando locais históricos, estabelecimentos e opções para diferentes estilos de vida.",
+    "─────────────",
+    "[verde]Castelo de Bowerstone, Guilda dos Heróis e torre do relógio[/verde]",
+    "Entre os principais pontos turísticos está o Castelo de Bowerstone, acompanhado pelos Jardins de Fairfax. O guia também destaca a Guilda dos Heróis, atualmente liderada por Humphry, o Dourado, e a conhecida torre do relógio.",
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_World_of_Albion_Fairfax_7cef8ce7ea.webp"
+    },
+    "O material apresenta os monumentos com comentários bem-humorados e referências ao cotidiano dos habitantes de Albion. Bares, mercados e outros estabelecimentos também fazem parte do passeio pela cidade.",
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_XBOX_Magazine_Heroes_Guild_Final_27720970b8.webp"
+    },
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_World_of_Albion_Clock_Tower_deb778cbb0.webp"
+    },
+    "─────────────",
+    "[verde]Bares, lojas e opções para diferentes bolsos[/verde]",
+    "O guia também apresenta opções para visitantes que desejam economizar e para aqueles que preferem uma vida luxuosa. Enquanto alguns monumentos podem ser admirados gratuitamente, o distrito comercial de Bowerminster reúne lojas sofisticadas, roupas exclusivas e outros itens de alto padrão.",
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_World_of_Albion_The_Pour_House_212827cffa.webp"
+    },
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_World_of_Albion_Fit_For_A_King_6d9b447a70.webp"
+    },
+    "A publicação também menciona a possibilidade de comprar casas, reforçando a proposta de permitir que os jogadores construam sua própria vida em Albion. Além de explorar o mundo e enfrentar desafios, será possível buscar oportunidades e desenvolver uma reputação dentro da sociedade.",
+    {
+      "tipo": "imagem",
+      "url": "https://pgfableweqzl6jpbr734gosa.blob.core.windows.net/blobpgfablewe-qzl6jpbr734go/uploads/xlarge_World_of_Albion_Cyclamen_Grange_30cf2cd7a5.webp"
+    },
+    "─────────────",
+    "[verde]Quando Fable será lançado?[/verde]",
+    "O novo Fable está previsto para 23 de fevereiro de 2027, com lançamento para Xbox Series X|S, PC e PlayStation 5. O jogo também estará disponível no Xbox Game Pass.",
+    "A Playground Games prepara uma versão reimaginada de Albion, preservando o humor peculiar da série e a liberdade para que cada jogador construa sua própria história. O guia de Bowerstone oferece mais uma amostra do mundo que estará disponível na próxima aventura.",
+    "─────────────",
+    "[verde][Fonte: Site oficial de Fable — Visite Bowerstone](https://fablethegame.com/pt-BR/news/visit-bowerstone)[/verde]"
+  ]
+},
+  {
   "id": "xbox-free-play-days-quatro-jogos-outubro-2026",
   "titulo": "Xbox free play days libera 4 jogos para jogar de graça neste fim de semana; confira a lista",
   "categoria": "Xbox",
