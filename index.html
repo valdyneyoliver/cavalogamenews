@@ -966,96 +966,181 @@ body.modo-claro .free-games-error {
 
 
     .featured {
-
       position: relative;
-
       height: 440px;
-
-      border-radius: 16px;
-
+      border-radius: 18px;
       overflow: hidden;
-
-      margin-bottom: 35px;
-
+      margin-bottom: 18px;
       background: #111;
-
       border: 1px solid #28332c;
+      isolation: isolate;
     }
 
-
-    .featured img {
-
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: cover;
-
+    .featured-slide {
+      position: absolute;
+      inset: 0;
       display: block;
-
-      transition: 0.35s;
+      color: inherit;
+      text-decoration: none;
+      animation: featuredFade .45s ease;
     }
 
+    .featured-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .7s ease;
+    }
+
+    .featured-slide:hover img { transform: scale(1.035); }
+
+    .featured-slide::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.62) 43%, rgba(0,0,0,.08) 100%),
+        linear-gradient(0deg, rgba(0,0,0,.52), transparent 55%);
+      pointer-events: none;
+    }
 
     .featured-overlay {
-
       position: absolute;
-
-      inset: auto 0 0 0;
-
+      z-index: 2;
+      left: 0;
+      bottom: 0;
+      width: min(820px, 78%);
       padding: 38px;
-
-      background:
-        linear-gradient(
-          transparent,
-          rgba(0,0,0,0.95)
-        );
+      background: transparent;
     }
 
+    .featured-overlay .category {
+      display: inline-block;
+      color: #00ff88;
+      letter-spacing: .8px;
+      font-size: 12px;
+    }
 
     .featured-overlay h2 {
-
-      font-size: 34px;
-
+      font-size: clamp(25px, 3vw, 36px);
+      line-height: 1.12;
       margin: 10px 0;
-
       max-width: 900px;
+      text-wrap: balance;
     }
 
+    .featured-overlay .date {
+      color: #c1c9c3;
+      margin: 8px 0 12px;
+    }
 
     .featured-overlay p {
-
-      color: #ddd;
-
+      color: #f0f0f0;
       max-width: 750px;
-
-      line-height: 1.5;
-
-      margin-bottom: 15px;
+      line-height: 1.55;
+      margin-bottom: 18px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
-
 
     .read-button {
-
       display: inline-block;
-
       background: #00ff88;
-
       color: #061009;
-
-      padding: 10px 18px;
-
-      border-radius: 6px;
-
+      padding: 11px 19px;
+      border-radius: 7px;
       font-weight: bold;
+      transition: transform .2s, background .2s;
     }
 
-
-    .featured:hover img {
-
-      transform: scale(1.03);
+    .featured-slide:hover .read-button {
+      background: #24ffa0;
+      transform: translateY(-2px);
     }
 
+    .featured-dots {
+      position: absolute;
+      z-index: 5;
+      right: 22px;
+      bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .featured-dot {
+      width: 10px;
+      height: 10px;
+      border: 1px solid rgba(255,255,255,.8);
+      border-radius: 50%;
+      padding: 0;
+      background: rgba(255,255,255,.35);
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .featured-dot.active {
+      width: 26px;
+      border-color: #00ff88;
+      border-radius: 10px;
+      background: #00ff88;
+    }
+
+    .featured-arrow {
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(0,0,0,.55);
+      font-size: 25px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .featured-arrow:hover {
+      color: #07100a;
+      background: #00ff88;
+      border-color: #00ff88;
+    }
+
+    .featured-arrow.prev { left: 15px; }
+    .featured-arrow.next { right: 15px; }
+
+    @keyframes featuredFade {
+      from { opacity: .45; }
+      to { opacity: 1; }
+    }
+
+    body.modo-claro .featured { border-color: #dce5de; }
+
+    @media (max-width: 900px) {
+      .featured { height: 400px; }
+      .featured-overlay { width: 88%; padding: 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .featured { height: 390px; border-radius: 13px; }
+      .featured-overlay { width: 100%; padding: 22px 18px 48px; }
+      .featured-overlay h2 { font-size: 24px; }
+      .featured-overlay p { font-size: 14px; -webkit-line-clamp: 3; }
+      .featured-arrow { width: 34px; height: 34px; font-size: 20px; }
+      .featured-arrow.prev { left: 9px; }
+      .featured-arrow.next { right: 9px; }
+      .featured-dots { right: 50%; transform: translateX(50%); bottom: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .featured-slide { animation: none; }
+      .featured-slide img, .read-button { transition: none; }
+    }
 
     /* =====================================================
        TÍTULO NOTÍCIAS
@@ -2764,6 +2849,133 @@ function carregarMais() {
 
 
 /* =====================================================
+   BANNER ROTATIVO: 4 NOTÍCIAS MAIS RECENTES
+===================================================== */
+
+let noticiasDestaque = [];
+let indiceDestaque = 0;
+let temporizadorDestaque = null;
+
+function escaparTextoHTML(valor) {
+  return String(valor ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function montarBannerDestaque(posts) {
+  const area = document.getElementById("featured");
+  noticiasDestaque = posts.filter(post => post && post.id && post.imagem);
+  indiceDestaque = 0;
+
+  if (temporizadorDestaque) clearInterval(temporizadorDestaque);
+
+  if (!noticiasDestaque.length) {
+    area.innerHTML = "";
+    return;
+  }
+
+  area.innerHTML = `
+    <div class="featured" id="featuredBanner" aria-label="Notícias em destaque">
+      <div id="featuredCurrent"></div>
+      ${noticiasDestaque.length > 1 ? `
+        <button class="featured-arrow prev" type="button" id="featuredPrev" aria-label="Notícia anterior">‹</button>
+        <button class="featured-arrow next" type="button" id="featuredNext" aria-label="Próxima notícia">›</button>
+        <div class="featured-dots" id="featuredDots" aria-label="Escolher notícia em destaque"></div>
+      ` : ""}
+    </div>
+  `;
+
+  const dots = document.getElementById("featuredDots");
+  if (dots) {
+    dots.innerHTML = noticiasDestaque.map((post, i) => `
+      <button type="button" class="featured-dot${i === 0 ? " active" : ""}"
+        data-slide="${i}" aria-label="Mostrar notícia ${i + 1}"></button>
+    `).join("");
+
+    dots.querySelectorAll("button").forEach(botao => {
+      botao.addEventListener("click", () => {
+        mostrarDestaque(Number(botao.dataset.slide));
+        reiniciarTemporizadorDestaque();
+      });
+    });
+  }
+
+  const anterior = document.getElementById("featuredPrev");
+  const proximo = document.getElementById("featuredNext");
+
+  if (anterior) anterior.addEventListener("click", () => {
+    mostrarDestaque((indiceDestaque - 1 + noticiasDestaque.length) % noticiasDestaque.length);
+    reiniciarTemporizadorDestaque();
+  });
+
+  if (proximo) proximo.addEventListener("click", () => {
+    mostrarDestaque((indiceDestaque + 1) % noticiasDestaque.length);
+    reiniciarTemporizadorDestaque();
+  });
+
+  mostrarDestaque(0);
+
+  const banner = document.getElementById("featuredBanner");
+  if (banner && noticiasDestaque.length > 1) {
+    banner.addEventListener("mouseenter", pausarTemporizadorDestaque);
+    banner.addEventListener("mouseleave", reiniciarTemporizadorDestaque);
+    banner.addEventListener("focusin", pausarTemporizadorDestaque);
+    banner.addEventListener("focusout", reiniciarTemporizadorDestaque);
+  }
+
+  iniciarTemporizadorDestaque();
+}
+
+function mostrarDestaque(indice) {
+  if (!noticiasDestaque.length) return;
+  indiceDestaque = (indice + noticiasDestaque.length) % noticiasDestaque.length;
+  const post = noticiasDestaque[indiceDestaque];
+  const current = document.getElementById("featuredCurrent");
+  if (!current) return;
+
+  current.innerHTML = `
+    <a href="${linkDaNoticia(post)}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
+      <img src="${escaparTextoHTML(post.imagem)}" alt="${escaparTextoHTML(post.titulo)}">
+      <div class="featured-overlay">
+        <span class="category">${escaparTextoHTML(post.categoria || "Notícia")}</span>
+        <h2>${escaparTextoHTML(post.titulo)}</h2>
+        <div class="date">${escaparTextoHTML(post.data || "")}</div>
+        <p>${escaparTextoHTML(post.resumo || "")}</p>
+        <span class="read-button">LER NOTÍCIA →</span>
+      </div>
+    </a>
+  `;
+
+  document.querySelectorAll("#featuredDots .featured-dot").forEach((dot, i) => {
+    dot.classList.toggle("active", i === indiceDestaque);
+    dot.setAttribute("aria-current", i === indiceDestaque ? "true" : "false");
+  });
+}
+
+function iniciarTemporizadorDestaque() {
+  pausarTemporizadorDestaque();
+  if (noticiasDestaque.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  temporizadorDestaque = setInterval(() => {
+    mostrarDestaque((indiceDestaque + 1) % noticiasDestaque.length);
+  }, 6000);
+}
+
+function pausarTemporizadorDestaque() {
+  if (temporizadorDestaque) {
+    clearInterval(temporizadorDestaque);
+    temporizadorDestaque = null;
+  }
+}
+
+function reiniciarTemporizadorDestaque() {
+  iniciarTemporizadorDestaque();
+}
+
+
+/* =====================================================
    CARREGAR NOTÍCIAS
 ===================================================== */
 
@@ -2807,72 +3019,13 @@ function carregarNoticias() {
 
 
       if (posts.length > 0) {
-
-        const principal =
-          posts[0];
-
-
-        featured.innerHTML = `
-
-          <a
-            href="${linkDaNoticia(principal)}"
-            class="featured-link"
-          >
-
-            <article
-              class="featured"
-            >
-
-              <img
-                src="${principal.imagem}"
-                alt="${principal.titulo}"
-              >
-
-              <div
-                class="featured-overlay"
-              >
-
-                <span
-                  class="category"
-                >
-                  ${principal.categoria}
-                </span>
-
-                <h2>
-                  ${principal.titulo}
-                </h2>
-
-                <div class="date">
-                  ${principal.data}
-                </div>
-
-                <p>
-                  ${principal.resumo}
-                </p>
-
-                <span
-                  class="read-button"
-                >
-                  LER NOTÍCIA →
-                </span>
-
-              </div>
-
-            </article>
-
-          </a>
-
-        `;
-
+        montarBannerDestaque(posts.slice(0, 4));
       }
 
-
-      noticiasDaPaginaInicial =
-        posts.slice(1);
-
+      // A lista de últimas notícias também inclui a notícia que aparece no banner.
+      noticiasDaPaginaInicial = posts.slice(0);
 
       quantidadeExibida = 0;
-
 
       mostrarMaisNoticias();
 
