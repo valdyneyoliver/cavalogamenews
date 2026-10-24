@@ -2,7 +2,7 @@
   {
   "id": "droiddeck-060-xbox-game-pass-android",
   "titulo": "Xbox Game Pass chega ao Android com suporte experimental do DroidDeck 0.6.0",
-  "categoria": "PC",
+  "categoria": "Notícias",
   "data": "24/10/2026",
   "imagem": "https://raw.githubusercontent.com/Droid-Deck/DroidDeck/0.5.0/docs/releases/media/0.5.0/play-steamvr-glasses.jpg",
   "resumo": "O DroidDeck 0.6.0 adiciona suporte experimental às bibliotecas do Xbox e PC Game Pass no Android, permitindo baixar e executar jogos de PC compatíveis diretamente no dispositivo, sem depender exclusivamente do streaming em nuvem.",
