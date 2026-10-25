@@ -1804,11 +1804,66 @@ body.modo-claro #themeToggle {
       line-height: 1.5;
       margin-bottom: 20px;
     }
-    .produtos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 230px));
-      gap: 20px;
-    }
+.produtos-grid {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 5px 2px 12px;
+}
+
+.produtos-grid::-webkit-scrollbar {
+  display: none;
+}
+  .produtos-carrossel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.produto-card {
+  flex: 0 0 230px;
+  scroll-snap-align: start;
+}
+
+.produtos-seta {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 45px;
+  border: 1px solid #00ff88;
+  border-radius: 8px;
+  background: #101810;
+  color: #00ff88;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.produtos-seta:hover {
+  background: #00ff88;
+  color: #061009;
+}
+
+@media (max-width: 600px) {
+  .produtos-carrossel {
+    gap: 6px;
+  }
+
+  .produtos-seta {
+    flex-basis: 32px;
+    width: 32px;
+    height: 40px;
+    font-size: 25px;
+  }
+
+  .produto-card {
+    flex-basis: 200px;
+  }
+}
     .produto-card {
       min-width: 0;
       overflow: hidden;
@@ -2221,6 +2276,14 @@ body.modo-claro #themeToggle {
   <h2 id="tituloProdutos">🛒 Produtos Recomendados</h2>
   <p class="produtos-subtitulo">Acessórios e equipamentos para sua jogatina.</p>
 
+ <div class="produtos-carrossel">
+
+  <button class="produtos-seta produtos-seta-anterior"
+          type="button"
+          aria-label="Ver produtos anteriores">
+    &#8249;
+  </button>
+
   <div class="produtos-grid">
     <article class="produto-card">
       <div class="produto-imagem">
@@ -2388,6 +2451,14 @@ body.modo-claro #themeToggle {
   </div>
 </article>
   </div>
+
+   <button class="produtos-seta produtos-seta-proxima"
+          type="button"
+          aria-label="Ver próximos produtos">
+    &#8250;
+  </button>
+
+</div>
 </section>
 
   <h2 id="tituloNoticias">
@@ -3867,6 +3938,28 @@ if (themeToggle) {
     });
 }
 
+</script>
+
+<script>
+document.querySelectorAll('.produtos-carrossel').forEach(carrossel => {
+  const lista = carrossel.querySelector('.produtos-grid');
+  const anterior = carrossel.querySelector('.produtos-seta-anterior');
+  const proxima = carrossel.querySelector('.produtos-seta-proxima');
+
+  anterior.addEventListener('click', () => {
+    lista.scrollBy({
+      left: -250,
+      behavior: 'smooth'
+    });
+  });
+
+  proxima.addEventListener('click', () => {
+    lista.scrollBy({
+      left: 250,
+      behavior: 'smooth'
+    });
+  });
+});
 </script>
 
 </body>
