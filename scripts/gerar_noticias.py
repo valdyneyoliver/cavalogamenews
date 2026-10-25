@@ -17,41 +17,27 @@ SITEMAP_FILE = "sitemap.xml"
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
 
-# Produtos de afiliado exibidos nas notícias NOVAS.
-# Confira se as imagens existem dentro de img/produtos/.
+# Produtos de afiliado carregados de produtos.json.
+# Para adicionar produtos, edite apenas esse arquivo JSON.
+PRODUCTS_FILE = "produtos.json"
+
+try:
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as arquivo_produtos:
+        PRODUTOS_AFILIADOS = json.load(arquivo_produtos)
+except FileNotFoundError:
+    raise FileNotFoundError(
+        "Não encontrei produtos.json. Deixe esse arquivo na mesma pasta de gerar_noticias.py."
+    )
+
+if not isinstance(PRODUTOS_AFILIADOS, list):
+    raise ValueError("produtos.json precisa conter uma lista de produtos.")
+
 PRODUTOS_AFILIADOS = [
-    {
-        "nome": "Controle PlayStation DualSense — Gray Camouflage",
-        "categoria": "🎮 Controle para PS5",
-        "descricao": "Controle sem fio DualSense para PS5 com design camuflado em tons de cinza.",
-        "imagem": "dualsense-gray-camouflage.png",
-        "alt": "Controle PlayStation DualSense Gray Camouflage",
-        "url": "https://www.amazon.com.br/Controle-sem-fio-PlayStation-DualSenseTM/dp/B0FY6YRGRS?linkCode=sl2&tag=cavalogamenew-20&linkId=c7c41e856b198417e1f85ee01e5150e8",
-    },
-    {
-        "nome": "Controle 8BitDo Ultimate 2C Wired",
-        "categoria": "🎮 Controle para PC",
-        "descricao": "Controle com fio para jogar no PC, com sticks e gatilhos responsivos.",
-        "imagem": "8bitdo-ultimate-2c-mint.png",
-        "alt": "Controle 8BitDo Ultimate 2C Wired Mint",
-        "url": "https://www.amazon.com.br/8Bitdo-Ultimate-Controller-Joysticks-Remappable/dp/B0D72WYT8Z?tag=cavalogamenew-20",
-    },
-    {
-        "nome": "GameSir Nova Lite",
-        "categoria": "🎮 Controle gamer",
-        "descricao": "Uma opção versátil de controle para suas sessões de jogo.",
-        "imagem": "gamesir-nova-lite.png",
-        "alt": "Controle GameSir Nova Lite",
-        "url": "https://www.amazon.com.br/dp/B0DQY49JJ9?tag=cavalogamenew-20",
-    },
-    {
-        "nome": "Mouse Redragon Predator M612 RGB",
-        "categoria": "🖱️ Mouse gamer",
-        "descricao": "Mouse gamer com iluminação RGB para completar seu setup.",
-        "imagem": "redragon-predator-m612.png",
-        "alt": "Mouse Redragon Predator M612 RGB",
-        "url": "https://www.amazon.com.br/dp/B08T68T1T6?tag=cavalogamenew-20",
-    },
+    produto for produto in PRODUTOS_AFILIADOS
+    if isinstance(produto, dict)
+    and produto.get("nome")
+    and produto.get("imagem")
+    and produto.get("url")
 ]
 
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
