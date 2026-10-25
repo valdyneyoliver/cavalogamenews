@@ -17,6 +17,43 @@ SITEMAP_FILE = "sitemap.xml"
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
 
+# Produtos de afiliado exibidos nas notícias NOVAS.
+# Confira se as imagens existem dentro de img/produtos/.
+PRODUTOS_AFILIADOS = [
+    {
+        "nome": "Controle PlayStation DualSense — Gray Camouflage",
+        "categoria": "🎮 Controle para PS5",
+        "descricao": "Controle sem fio DualSense para PS5 com design camuflado em tons de cinza.",
+        "imagem": "dualsense-gray-camouflage.png",
+        "alt": "Controle PlayStation DualSense Gray Camouflage",
+        "url": "https://www.amazon.com.br/Controle-sem-fio-PlayStation-DualSenseTM/dp/B0FY6YRGRS?linkCode=sl2&tag=cavalogamenew-20&linkId=c7c41e856b198417e1f85ee01e5150e8",
+    },
+    {
+        "nome": "Controle 8BitDo Ultimate 2C Wired",
+        "categoria": "🎮 Controle para PC",
+        "descricao": "Controle com fio para jogar no PC, com sticks e gatilhos responsivos.",
+        "imagem": "8bitdo-ultimate-2c-mint.png",
+        "alt": "Controle 8BitDo Ultimate 2C Wired Mint",
+        "url": "https://www.amazon.com.br/8Bitdo-Ultimate-Controller-Joysticks-Remappable/dp/B0D72WYT8Z?tag=cavalogamenew-20",
+    },
+    {
+        "nome": "GameSir Nova Lite",
+        "categoria": "🎮 Controle gamer",
+        "descricao": "Uma opção versátil de controle para suas sessões de jogo.",
+        "imagem": "gamesir-nova-lite.png",
+        "alt": "Controle GameSir Nova Lite",
+        "url": "https://www.amazon.com.br/dp/B0DQY49JJ9?tag=cavalogamenew-20",
+    },
+    {
+        "nome": "Mouse Redragon Predator M612 RGB",
+        "categoria": "🖱️ Mouse gamer",
+        "descricao": "Mouse gamer com iluminação RGB para completar seu setup.",
+        "imagem": "redragon-predator-m612.png",
+        "alt": "Mouse Redragon Predator M612 RGB",
+        "url": "https://www.amazon.com.br/dp/B08T68T1T6?tag=cavalogamenew-20",
+    },
+]
+
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
 
@@ -127,7 +164,38 @@ def formatar_data_publicacao(data_hora):
     )
 
 
-def renderizar_conteudo(post):
+def gerar_anuncio_produto(post):
+    """Escolhe um produto de forma estável para cada notícia."""
+    if not PRODUTOS_AFILIADOS:
+        return ""
+    post_id = str(post.get("id", "0"))
+    indice = sum(ord(caractere) for caractere in post_id) % len(PRODUTOS_AFILIADOS)
+    produto = PRODUTOS_AFILIADOS[indice]
+    nome = html.escape(produto["nome"])
+    categoria = html.escape(produto["categoria"])
+    descricao = html.escape(produto["descricao"])
+    imagem = html.escape("../img/produtos/" + produto["imagem"], quote=True)
+    alt = html.escape(produto["alt"], quote=True)
+    url = html.escape(produto["url"], quote=True)
+    return f"""
+<aside class="anuncio-produto" aria-label="Produto recomendado">
+  <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
+  <div class="anuncio-produto-conteudo">
+    <img src="{imagem}" alt="{alt}" loading="lazy">
+    <div class="anuncio-produto-info">
+      <span class="anuncio-produto-categoria">{categoria}</span>
+      <h3>{nome}</h3>
+      <p>{descricao}</p>
+      <a class="anuncio-produto-botao" href="{url}" target="_blank"
+         rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
+      <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
+    </div>
+  </div>
+</aside>
+"""
+
+
+def renderizar_conteudo(post, incluir_anuncio=False):
     paragrafos = post.get("conteudo")
     if not isinstance(paragrafos, list):
         paragrafos = [post.get("resumo", "")]
@@ -249,6 +317,18 @@ def renderizar_conteudo(post):
 
     if x_html and len(validos) == 1:
         conteudo_html += x_html
+
+    # Para não alterar notícias antigas, o anúncio só entra nas páginas novas.
+    if incluir_anuncio:
+        anuncio_html = gerar_anuncio_produto(post)
+        if anuncio_html:
+            primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
+            if primeiro_paragrafo:
+                posicao = primeiro_paragrafo.end()
+                conteudo_html = conteudo_html[:posicao] + anuncio_html + conteudo_html[posicao:]
+            else:
+                conteudo_html += anuncio_html
+
     return conteudo_html
 
 
@@ -273,7 +353,9 @@ for post in posts:
 
     news_url = f"{BASE_URL}/noticias/{post_id}.html"
     generated_news_urls.append(news_url)
-    conteudo_html = renderizar_conteudo(post)
+    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
+    incluir_anuncio = not os.path.exists(caminho)
+    conteudo_html = renderizar_conteudo(post, incluir_anuncio=incluir_anuncio)
     videos_html = gerar_videos(post)
 
     # As primeiras notícias de posts.json são consideradas as mais recentes.
@@ -313,7 +395,6 @@ for post in posts:
     more_html = montar_cards(relacionadas_mais)
 
     # Mantém a autoria e a data/hora quando a notícia já foi gerada.
-    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
 
     metadados_antigos = ""
     if os.path.exists(caminho):
@@ -771,6 +852,59 @@ footer {{
 }}
 @media (prefers-reduced-motion: reduce) {{
   *, *::before, *::after {{ scroll-behavior: auto !important; transition: none !important; }}
+}}
+.anuncio-produto {{
+  margin: 28px 0;
+  padding: 18px;
+  border: 1px solid var(--accent);
+  border-radius: 14px;
+  background: var(--surface-2);
+  overflow: hidden;
+}}
+.anuncio-produto-label {{
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}}
+.anuncio-produto-conteudo {{
+  display: grid;
+  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+}}
+.anuncio-produto-conteudo > img {{
+  display: block;
+  width: 100%;
+  max-height: 190px;
+  object-fit: contain;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+}}
+.anuncio-produto-categoria {{ color: var(--accent); font-size: 11px; font-weight: 800; }}
+.anuncio-produto-info h3 {{ margin: 5px 0 8px; font-size: 19px; line-height: 1.35; }}
+.anuncio-produto-info p {{ margin: 0 0 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }}
+.anuncio-produto-botao {{
+  display: inline-block;
+  padding: 11px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #06140d;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}}
+.anuncio-produto-botao:hover {{ filter: brightness(.92); }}
+.anuncio-produto-info small {{ display: block; margin-top: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }}
+@media (max-width: 480px) {{
+  .anuncio-produto {{ padding: 13px; }}
+  .anuncio-produto-conteudo {{ grid-template-columns: minmax(0, 1fr); gap: 12px; }}
+  .anuncio-produto-conteudo > img {{ max-height: 150px; }}
+  .anuncio-produto-info h3 {{ font-size: 17px; }}
+  .anuncio-produto-botao {{ display: block; text-align: center; }}
 }}
 </style>
 </head>
