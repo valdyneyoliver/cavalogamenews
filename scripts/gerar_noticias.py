@@ -11,15 +11,19 @@ from xml.sax.saxutils import escape as xml_escape
 # CONFIGURAÇÕES
 # =========================================================
 BASE_URL = "https://cavalogamenews.com.br"
-POSTS_FILE = "posts.json"
-NEWS_DIR = "noticias"
-SITEMAP_FILE = "sitemap.xml"
+
+# O gerar_noticias.py fica em scripts/, mas os arquivos do site ficam na raiz.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+POSTS_FILE = os.path.join(BASE_DIR, "posts.json")
+NEWS_DIR = os.path.join(BASE_DIR, "noticias")
+SITEMAP_FILE = os.path.join(BASE_DIR, "sitemap.xml")
+
+# Caminhos usados dentro das páginas HTML, que ficam em noticias/.
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
 
-# Produtos de afiliado carregados de produtos.json.
+# Produtos de afiliado carregados de produtos.json na raiz do repositório.
 # Para adicionar produtos, edite apenas esse arquivo JSON.
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRODUCTS_FILE = os.path.join(BASE_DIR, "produtos.json")
 
 try:
@@ -27,7 +31,7 @@ try:
         PRODUTOS_AFILIADOS = json.load(arquivo_produtos)
 except FileNotFoundError:
     raise FileNotFoundError(
-        "Não encontrei produtos.json. Deixe esse arquivo na mesma pasta de gerar_noticias.py."
+        "Não encontrei produtos.json na raiz do repositório. Deixe esse arquivo junto de index.html e posts.json."
     )
 
 if not isinstance(PRODUTOS_AFILIADOS, list):
