@@ -3812,9 +3812,24 @@ if (themeToggle) {
       const card = criarElemento("article", "produto-card");
       const caixaImagem = criarElemento("div", "produto-imagem");
       const imagem = document.createElement("img");
-      imagem.src = "img/produtos/" + produto.imagem.replace(/^\/+/, "");
+      const caminhoImagem = String(produto.imagem).trim();
+      // Aceita URL completa ou caminho/nome de arquivo dentro de img/produtos/.
+      if (/^https?:\/\//i.test(caminhoImagem) || caminhoImagem.startsWith("data:")) {
+        imagem.src = caminhoImagem;
+      } else if (caminhoImagem.startsWith("/")) {
+        imagem.src = caminhoImagem;
+      } else if (caminhoImagem.startsWith("img/")) {
+        imagem.src = caminhoImagem;
+      } else {
+        imagem.src = "img/produtos/" + caminhoImagem.replace(/^\/+/, "");
+      }
       imagem.alt = produto.alt || produto.nome;
       imagem.loading = "lazy";
+      imagem.onerror = () => {
+        imagem.onerror = null;
+        imagem.alt = "Imagem indisponível: " + (produto.alt || produto.nome);
+        imagem.style.display = "none";
+      };
       caixaImagem.appendChild(imagem);
 
       const info = criarElemento("div", "produto-info");
