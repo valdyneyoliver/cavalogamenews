@@ -2,6 +2,7 @@ import json
 import os
 import html
 import re
+import random
 from urllib.parse import urlparse, parse_qs
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
@@ -11,39 +12,30 @@ from xml.sax.saxutils import escape as xml_escape
 # CONFIGURAÇÕES
 # =========================================================
 BASE_URL = "https://cavalogamenews.com.br"
-
-# O gerar_noticias.py fica em scripts/, mas os arquivos do site ficam na raiz.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 POSTS_FILE = os.path.join(BASE_DIR, "posts.json")
 NEWS_DIR = os.path.join(BASE_DIR, "noticias")
 SITEMAP_FILE = os.path.join(BASE_DIR, "sitemap.xml")
-
-# Caminhos usados dentro das páginas HTML, que ficam em noticias/.
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
-
-# Produtos de afiliado carregados de produtos.json na raiz do repositório.
-# Para adicionar produtos, edite apenas esse arquivo JSON.
 PRODUCTS_FILE = os.path.join(BASE_DIR, "produtos.json")
 
+# Produtos vêm do produtos.json (fonte única do catálogo).
 try:
-    with open(PRODUCTS_FILE, "r", encoding="utf-8") as arquivo_produtos:
-        PRODUTOS_AFILIADOS = json.load(arquivo_produtos)
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+        produtos_json = json.load(f)
+    if not isinstance(produtos_json, list):
+        raise ValueError("O arquivo produtos.json precisa conter uma lista de produtos.")
+    PRODUTOS_AFILIADOS = [
+        produto for produto in produtos_json
+        if isinstance(produto, dict)
+        and produto.get("nome")
+        and produto.get("imagem")
+        and produto.get("url")
+    ]
 except FileNotFoundError:
-    raise FileNotFoundError(
-        "Não encontrei produtos.json na raiz do repositório. Deixe esse arquivo junto de index.html e posts.json."
-    )
-
-if not isinstance(PRODUTOS_AFILIADOS, list):
-    raise ValueError("produtos.json precisa conter uma lista de produtos.")
-
-PRODUTOS_AFILIADOS = [
-    produto for produto in PRODUTOS_AFILIADOS
-    if isinstance(produto, dict)
-    and produto.get("nome")
-    and produto.get("imagem")
-    and produto.get("url")
-]
+    print("Aviso: produtos.json não encontrado. As notícias serão geradas sem anúncio de produto.")
+    PRODUTOS_AFILIADOS = []
 
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
@@ -156,18 +148,23 @@ def formatar_data_publicacao(data_hora):
 
 
 def gerar_anuncio_produto(post):
-    """Escolhe um produto de forma estável para cada notícia."""
+    """Escolhe aleatoriamente um produto do produtos.json para a notícia nova."""
     if not PRODUTOS_AFILIADOS:
         return ""
-    post_id = str(post.get("id", "0"))
-    indice = sum(ord(caractere) for caractere in post_id) % len(PRODUTOS_AFILIADOS)
-    produto = PRODUTOS_AFILIADOS[indice]
-    nome = html.escape(produto["nome"])
-    categoria = html.escape(produto["categoria"])
-    descricao = html.escape(produto["descricao"])
-    imagem = html.escape("../img/produtos/" + produto["imagem"], quote=True)
-    alt = html.escape(produto["alt"], quote=True)
-    url = html.escape(produto["url"], quote=True)
+
+    produto = random.choice(PRODUTOS_AFILIADOS)
+    nome = html.escape(str(produto.get("nome", "Produto recomendado")))
+    categoria = html.escape(str(produto.get("categoria", "Games")))
+    descricao = html.escape(str(produto.get("descricao", "")))
+    alt = html.escape(str(produto.get("alt", produto.get("nome", "Produto recomendado"))), quote=True)
+    url = html.escape(str(produto["url"]), quote=True)
+
+    imagem_arquivo = str(produto["imagem"]).strip()
+    if imagem_arquivo.startswith(("https://", "http://")):
+        imagem = html.escape(imagem_arquivo, quote=True)
+    else:
+        imagem = html.escape("../img/produtos/" + imagem_arquivo.lstrip("/"), quote=True)
+
     return f"""
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
