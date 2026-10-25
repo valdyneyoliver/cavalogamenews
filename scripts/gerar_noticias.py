@@ -19,7 +19,8 @@ FAVICON_PATH = "../img/logo_cavalo.png"
 
 # Produtos de afiliado carregados de produtos.json.
 # Para adicionar produtos, edite apenas esse arquivo JSON.
-PRODUCTS_FILE = "produtos.json"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PRODUCTS_FILE = os.path.join(BASE_DIR, "produtos.json")
 
 try:
     with open(PRODUCTS_FILE, "r", encoding="utf-8") as arquivo_produtos:
