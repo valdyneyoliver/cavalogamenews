@@ -1,5 +1,40 @@
 [
   {
+  "id": "stalker-2-update-2-1-the-zone-lookout-lancamento",
+  "titulo": "STALKER 2 recebe atualização 2.1 The Zone Lookout com melhorias no A-Life e viagem rápida",
+  "categoria": "Notícias",
+  "data": "26/10/2026",
+  "imagem": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1643320/54b6c2abef1f91cdcfae36dc707da28034ee239d/ss_54b6c2abef1f91cdcfae36dc707da28034ee239d.1920x1080.jpg?t=1793009305",
+  "resumo": "A atualização 2.1 de STALKER 2: Heart of Chornobyl, chamada The Zone Lookout, já está disponível. O patch traz melhorias no sistema A-Life, ajustes no combate e viagens rápidas com líderes de esquadrão.",
+  "conteudo": [
+    "A GSC Game World lançou a atualização 2.1 de STALKER 2: Heart of Chornobyl, intitulada The Zone Lookout. O novo patch traz melhorias importantes para a exploração da Zona, ajustes no combate e uma opção de viagem rápida com líderes de esquadrão.",
+    "A atualização chega após a versão 2.0 e amplia as melhorias solicitadas pela comunidade. Entre as principais novidades está a possibilidade de controlar a distância em que os personagens do sistema A-Life aparecem no mundo do jogo.",
+    {
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/watch?v=cRvrAOs_RZc"
+    },
+    "─────────────",
+    "[verde]A-Life permite visualizar NPCs a distâncias maiores[/verde]",
+    "Uma das principais novidades é a opção de ajustar manualmente o alcance de visualização dos NPCs controlados pelo sistema A-Life, responsável por simular as atividades e interações dos habitantes da Zona.",
+    "Os jogadores podem encontrar as opções nas configurações do jogo. Existem diferentes predefinições, incluindo uma opção dinâmica que ajusta automaticamente o alcance conforme a capacidade do PC ou console.",
+    "Aumentar a distância de visualização pode afetar o desempenho. Por isso, a configuração escolhida deve levar em consideração a capacidade do dispositivo.",
+    "─────────────",
+    "[verde]Combates a longa distância recebem melhorias[/verde]",
+    "A atualização também inclui ajustes no combate e na balística das armas. Com as mudanças, os confrontos poderão ser percebidos a distâncias maiores, tornando os encontros na Zona mais naturais.",
+    "─────────────",
+    "[verde]Viagem rápida com líderes de esquadrão[/verde]",
+    "Outra novidade permite viajar rapidamente com líderes de esquadrão amigáveis ou neutros encontrados durante a exploração. Esses personagens podem oferecer deslocamentos para determinados destinos.",
+    "Para utilizar o recurso, basta conversar com um líder de esquadrão e verificar as opções disponíveis. O serviço custa dinheiro, e os destinos dependem das opções oferecidas pelo personagem.",
+    "─────────────",
+    "[verde]Correções de erros e melhorias gerais[/verde]",
+    "Além dos novos recursos, The Zone Lookout inclui correções de erros, melhorias internas e ajustes gerais. A atualização foi desenvolvida com base no feedback recebido da comunidade.",
+    "─────────────",
+    "[verde]STALKER 2: The Zone Lookout já está disponível[/verde]",
+    "A atualização 2.1 está disponível para STALKER 2: Heart of Chornobyl. Com o alcance ajustável do A-Life, os combates aprimorados e a viagem rápida com líderes de esquadrão, o novo patch procura tornar a exploração mais dinâmica e melhorar a experiência dos jogadores na Zona.",
+    "[verde][Confira o anúncio oficial da atualização na Steam](https://store.steampowered.com/news/app/1643320/view/719044892364375221)[/verde]"
+  ]
+},
+  {
   "id": "phantom-blade-zero-notas-critica-metacritic",
   "titulo": "Phantom Blade Zero recebe boa notas da crítica e alcança média 88 no Metacritic",
   "categoria": "Notícia",
