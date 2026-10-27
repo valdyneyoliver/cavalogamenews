@@ -1,43 +1,7 @@
 {
-  "atualizado_em": "2026-10-26",
+  "atualizado_em": "2026-10-27",
   "fonte": "RAWG",
   "jogos": [
-    {
-      "id": 1016708,
-      "nome": "EmberVille",
-      "slug": "emberville",
-      "data": "2026-10-26",
-      "data_formatada": "26/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/a65/a65915e30efd086919dafcb7f79a6b79.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/emberville"
-    },
-    {
-      "id": 1019656,
-      "nome": "Remothered: Red Nun's Legacy",
-      "slug": "remothered-red-nuns-legacy",
-      "data": "2026-10-26",
-      "data_formatada": "26/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/7ea/7ea439920ce17884b49e2e3988f8786a.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/remothered-red-nuns-legacy"
-    },
-    {
-      "id": 1020499,
-      "nome": "The Boss Gangster: Criminal Empire",
-      "slug": "the-boss-gangster-criminal-empire",
-      "data": "2026-10-26",
-      "data_formatada": "26/10/2026",
-      "imagem": "https://media.rawg.io/media/screenshots/f84/f841da91d5ecdf8b073f5aea5570b1cd.jpg",
-      "plataformas": [
-        "PC"
-      ],
-      "link_rawg": "https://rawg.io/games/the-boss-gangster-criminal-empire"
-    },
     {
       "id": 1020422,
       "nome": "Gennady",
