@@ -357,14 +357,22 @@ for post in posts:
                 html_existente_produto,
                 flags=re.IGNORECASE | re.DOTALL
             )
-            if anuncio_existente and 'class="anuncio-produto"' not in conteudo_html:
-                bloco_anuncio = anuncio_existente.group(0)
-                primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
-                if primeiro_paragrafo:
-                    posicao = primeiro_paragrafo.end()
-                    conteudo_html = conteudo_html[:posicao] + "\n" + bloco_anuncio + conteudo_html[posicao:]
+            if 'class="anuncio-produto"' not in conteudo_html:
+                # Preserva o anúncio antigo quando ele ainda existe no HTML.
+                # Se já tiver sido apagado em uma execução anterior, recria um
+                # anúncio usando o catálogo atual de produtos.json.
+                if anuncio_existente:
+                    bloco_anuncio = anuncio_existente.group(0)
                 else:
-                    conteudo_html += "\n" + bloco_anuncio
+                    bloco_anuncio = gerar_anuncio_produto(post)
+
+                if bloco_anuncio:
+                    primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
+                    if primeiro_paragrafo:
+                        posicao = primeiro_paragrafo.end()
+                        conteudo_html = conteudo_html[:posicao] + "\n" + bloco_anuncio + "\n" + conteudo_html[posicao:]
+                    else:
+                        conteudo_html += "\n" + bloco_anuncio
         except (OSError, UnicodeError):
             pass
 
