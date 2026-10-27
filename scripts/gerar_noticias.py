@@ -342,8 +342,32 @@ for post in posts:
     news_url = f"{BASE_URL}/noticias/{post_id}.html"
     generated_news_urls.append(news_url)
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
-    incluir_anuncio = not os.path.exists(caminho)
+    pagina_existente = os.path.exists(caminho)
+    incluir_anuncio = not pagina_existente
     conteudo_html = renderizar_conteudo(post, incluir_anuncio=incluir_anuncio)
+
+    # Ao regenerar o site, preserva o produto que já estava nesta notícia.
+    # Assim, publicar uma notícia nova não apaga os anúncios das notícias anteriores.
+    if pagina_existente:
+        try:
+            with open(caminho, "r", encoding="utf-8") as arquivo_existente:
+                html_existente_produto = arquivo_existente.read()
+            anuncio_existente = re.search(
+                r'<aside class="anuncio-produto"\b.*?</aside>',
+                html_existente_produto,
+                flags=re.IGNORECASE | re.DOTALL
+            )
+            if anuncio_existente and 'class="anuncio-produto"' not in conteudo_html:
+                bloco_anuncio = anuncio_existente.group(0)
+                primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
+                if primeiro_paragrafo:
+                    posicao = primeiro_paragrafo.end()
+                    conteudo_html = conteudo_html[:posicao] + "\n" + bloco_anuncio + conteudo_html[posicao:]
+                else:
+                    conteudo_html += "\n" + bloco_anuncio
+        except (OSError, UnicodeError):
+            pass
+
     videos_html = gerar_videos(post)
 
     # As primeiras notícias de posts.json são consideradas as mais recentes.
