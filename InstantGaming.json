@@ -1,66 +1,162 @@
 [
   {
-    "nome": "Injustice: Gods Among Us Ultimate Edition",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/369/pcover/1920x620/369.jpg",
-    "preco": "R$ 6,46",
+    "nome": "Mugsters",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/3308/380x218/mugsters-pc-mac-jogo-steam-cover.jpg?v=1720609284",
+    "preco": "R$ 5,87",
     "desconto": "-95%",
-    "url": "https://www.instant-gaming.com/br/369-comprar-injustice-gods-among-us-ultimate-edition-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/3308-comprar-mugsters-pc-mac-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Hell Clock",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/19798/pcover/1920x620/19798.jpg",
+    "nome": "Syberia 2",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/1245/380x218/syberia-2-pc-mac-jogo-steam-cover.jpg?v=1649154325",
+    "preco": "R$ 5,87",
+    "desconto": "-92%",
+    "url": "https://www.instant-gaming.com/pt/1245-comprar-syberia-2-pc-mac-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "EA Sports FC 24 - 2800 FC Points",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/14586/380x218/ea-sports-fc-24-2800-fc-points-2800-fc-pc-jogo-ea-app-cover.jpg?v=1718879654",
+    "preco": "R$ 11,79",
+    "desconto": "-92%",
+    "url": "https://www.instant-gaming.com/pt/14586-comprar-ea-sports-fc-24-2800-fc-points-2800-fc-pc-jogo-ea-app/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Yrminsul",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/5056/380x218/yrminsul-pc-mac-jogo-steam-cover.jpg?v=1716212515",
     "preco": "R$ 5,87",
     "desconto": "-90%",
-    "url": "https://www.instant-gaming.com/pt/19798-comprar-hell-clock-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/5056-comprar-yrminsul-pc-mac-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Human: Fall Flat",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/1611/pcover/1920x620/1611.jpg",
-    "preco": "R$ 5,84",
+    "nome": "Battlefield 2042 Cross-Gen Ultimate",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/9901/380x218/battlefield-2042-cross-gen-ultimate-cross-gen-ultimate-xbox-series-x-s-xbox-one-jogo-microsoft-store-cover.jpg?v=1739373913",
+    "preco": "R$ 59,21",
+    "desconto": "-88%",
+    "url": "https://www.instant-gaming.com/pt/9901-comprar-battlefield-2042-cross-gen-ultimate-cross-gen-ultimate-xbox-series-x-s-xbox-one-jogo-microsoft-store/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Magin: The Rat Project Stories",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/22202/380x218/magin-the-rat-project-stories-pc-steam-cover.jpg?v=1777542268",
+    "preco": "R$ 17,72",
     "desconto": "-85%",
-    "url": "https://www.instant-gaming.com/pt/1611-comprar-human-fall-flat-pc-mac-jogo-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/22202-comprar-magin-the-rat-project-stories-pc-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "The Plucky Squire",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/12124/pcover/1920x620/12124.jpg",
-    "preco": "R$ 9,96",
-    "desconto": "-94%",
-    "url": "https://www.instant-gaming.com/pt/12124-comprar-the-plucky-squire-pc-game-steam/?igr=gamer-c0b7c0b"
+    "nome": "No More Room in Hell 2 - First Responder Pack",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/23631/380x218/no-more-room-in-hell-2-first-responder-pack-pc-steam-cover.jpg?v=1787219168",
+    "preco": "R$ 5,87",
+    "desconto": "-81%",
+    "url": "https://www.instant-gaming.com/pt/23631-comprar-no-more-room-in-hell-2-first-responder-pack-pc-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Middle-earth: Shadow of War Definitive Edition",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/3155/pcover/1920x620/3155.jpg",
-    "preco": "R$ 13,57",
-    "desconto": "-94%",
-    "url": "https://www.instant-gaming.com/pt/3155-comprar-middle-earth-shadow-of-war-definitive-edition-pc-steam/?igr=gamer-c0b7c0b"
+    "nome": "Rover Rescue",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/4732/380x218/rover-rescue-pc-jogo-steam-cover.jpg?v=1716392912",
+    "preco": "R$ 5,87",
+    "desconto": "-80%",
+    "url": "https://www.instant-gaming.com/pt/4732-comprar-rover-rescue-pc-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Assetto Corsa Competizione",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/3153/pcover/1920x620/3153.jpg",
-    "preco": "R$ 23,06",
-    "desconto": "-86%",
-    "url": "https://www.instant-gaming.com/br/3153-comprar-assetto-corsa-competizione-pc-steam/?igr=gamer-c0b7c0b"
+    "nome": "Battle Stations Blockade",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/23013/380x218/battle-stations-blockade-pc-steam-cover.jpg?v=1782900040",
+    "preco": "R$ 11,79",
+    "desconto": "-80%",
+    "url": "https://www.instant-gaming.com/pt/23013-comprar-battle-stations-blockade-pc-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Grand Theft Auto V Enhanced",
-    "plataforma": "PC (Rockstar)",
-    "imagem": "https://gaming-cdn.com/img/products/4211/pcover/1920x620/4211.jpg",
-    "preco": "R$ 58,02",
-    "desconto": "-61%",
-    "url": "https://www.instant-gaming.com/pt/4211-comprar-grand-theft-auto-v-enhanced-pc-rockstar/?igr=gamer-c0b7c0b"
+    "nome": "Aztecs The Last Sun",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/9251/380x218/aztecs-the-last-sun-pc-steam-cover.jpg?v=1758705327",
+    "preco": "R$ 23,65",
+    "desconto": "-80%",
+    "url": "https://www.instant-gaming.com/pt/9251-comprar-aztecs-the-last-sun-pc-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Superhero Simulator",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/img/products/20476/pcover/1920x620/20476.jpg",
-    "preco": "R$ 7,05",
-    "desconto": "-53%",
-    "url": "https://www.instant-gaming.com/pt/20476-comprar-superhero-simulator-pc-steam/?igr=gamer-c0b7c0b"
+    "nome": "Survivor - Castaway Island",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/15158/380x218/survivor-castaway-island-pc-jogo-steam-cover.jpg?v=1697030346",
+    "preco": "R$ 29,58",
+    "desconto": "-80%",
+    "url": "https://www.instant-gaming.com/pt/15158-comprar-survivor-castaway-island-pc-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Girl Genius: Adventures In Castle Heterodyne",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/23129/380x218/girl-genius-adventures-in-castle-heterodyne-pc-mac-steam-cover.jpg?v=1783079839",
+    "preco": "R$ 35,50",
+    "desconto": "-79%",
+    "url": "https://www.instant-gaming.com/pt/23129-comprar-girl-genius-adventures-in-castle-heterodyne-pc-mac-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Spellcasters Chronicles - Architect Pack",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/21925/380x218/spellcasters-chronicles-architect-pack-pc-steam-cover.jpg?v=1772191078",
+    "preco": "R$ 88,84",
+    "desconto": "-79%",
+    "url": "https://www.instant-gaming.com/pt/21925-comprar-spellcasters-chronicles-architect-pack-pc-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Snowflake Tatoo",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/4773/380x218/snowflake-tatoo-pc-jogo-steam-cover.jpg?v=1680707613",
+    "preco": "R$ 5,87",
+    "desconto": "-78%",
+    "url": "https://www.instant-gaming.com/pt/4773-comprar-snowflake-tatoo-pc-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "The Expanse: A Telltale Series",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/14682/380x218/the-expanse-a-telltale-series-xbox-one-jogo-microsoft-store-estados-unidos-cover.jpg?v=1749408959",
+    "preco": "R$ 29,58",
+    "desconto": "-78%",
+    "url": "https://www.instant-gaming.com/pt/14682-comprar-the-expanse-a-telltale-series-xbox-one-jogo-microsoft-store-estados-unidos/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Ghostwire Tokyo Deluxe Edition",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/13898/380x218/ghostwire-tokyo-deluxe-edition-deluxe-edition-xbox-series-x-s-jogo-microsoft-store-cover.jpg?v=1739357946",
+    "preco": "R$ 118,48",
+    "desconto": "-78%",
+    "url": "https://www.instant-gaming.com/pt/13898-comprar-ghostwire-tokyo-deluxe-edition-deluxe-edition-xbox-series-x-s-jogo-microsoft-store/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Cats on Duty - Deluxe Upgrade Pack",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/17369/380x218/cats-on-duty-deluxe-upgrade-pack-pc-jogo-steam-cover.jpg?v=1723812897",
+    "preco": "R$ 5,87",
+    "desconto": "-75%",
+    "url": "https://www.instant-gaming.com/pt/17369-comprar-cats-on-duty-deluxe-upgrade-pack-pc-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Exoprimal",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/13905/380x218/exoprimal-xbox-series-x-s-xbox-one-jogo-microsoft-store-cover.jpg?v=1739358080",
+    "preco": "R$ 88,84",
+    "desconto": "-75%",
+    "url": "https://www.instant-gaming.com/pt/13905-comprar-exoprimal-xbox-series-x-s-xbox-one-jogo-microsoft-store/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "LEGO 2K Drive Awesome Rivals Edition",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/14384/380x218/lego-2k-drive-awesome-rivals-edition-awesome-rivals-edition-xbox-series-x-s-xbox-one-jogo-microsoft-store-estados-unidos-cover.jpg?v=1738595429",
+    "preco": "R$ 118,48",
+    "desconto": "-75%",
+    "url": "https://www.instant-gaming.com/pt/14384-comprar-lego-2k-drive-awesome-rivals-edition-awesome-rivals-edition-xbox-series-x-s-xbox-one-jogo-microsoft-store-estados-unidos/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Train Simulator: New Haven FL9 Loco",
+    "plataforma": "PC",
+    "imagem": "https://gaming-cdn.com/images/products/15607/380x218/train-simulator-new-haven-fl9-loco-pc-jogo-steam-cover.jpg?v=1703072459",
+    "preco": "R$ 23,65",
+    "desconto": "-71%",
+    "url": "https://www.instant-gaming.com/pt/15607-comprar-train-simulator-new-haven-fl9-loco-pc-jogo-steam/?itm_source=daily_deals&itm_medium=product_deals&igr=gamer-c0b7c0b"
   }
 ]
