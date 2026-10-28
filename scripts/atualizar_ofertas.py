@@ -152,7 +152,7 @@ def buscar_ofertas():
         elif src.startswith("/"):
             src = "https://www.instant-gaming.com" + src
 
-               texto_plataforma = texto_cartao.lower()
+        texto_plataforma = texto_cartao.lower()
 
         if "nintendo switch 2" in texto_plataforma:
             plataforma = "Nintendo Switch 2"
@@ -168,14 +168,14 @@ def buscar_ofertas():
             plataforma = "Xbox One"
         elif "steam" in texto_plataforma:
             plataforma = "PC (Steam)"
-        elif "pc" in texto_plataforma:
-            plataforma = "PC"
         elif "ea app" in texto_plataforma or "ea play" in texto_plataforma:
             plataforma = "PC (EA app)"
         elif "ubisoft connect" in texto_plataforma:
             plataforma = "PC (Ubisoft Connect)"
         elif "rockstar" in texto_plataforma:
             plataforma = "PC (Rockstar)"
+        elif "pc" in texto_plataforma:
+            plataforma = "PC"
         else:
             plataforma = "Plataforma não identificada"
 
