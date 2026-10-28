@@ -1953,6 +1953,39 @@ body.modo-claro #themeToggle {
       .produto-card { max-width: 100%; }
     }
 
+
+
+    /* =====================================================
+       OFERTAS INSTANT GAMING
+    ===================================================== */
+    .instant-gaming-section { width: calc(100% - 40px); max-width: 1450px; margin: 18px auto 28px; }
+    .instant-gaming-heading { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:8px; }
+    .instant-gaming-section h2 { color:#ff6548; font-size:27px; margin-bottom:8px; }
+    .instant-gaming-subtitle { color:#aab4ad; font-size:14px; line-height:1.5; margin-bottom:18px; }
+    .instant-gaming-pill { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border:1px solid rgba(255,101,72,.4); border-radius:999px; color:#ff8a72; background:rgba(255,101,72,.08); font-size:11px; font-weight:bold; white-space:nowrap; }
+    .instant-gaming-section .produto-imagem { background:linear-gradient(145deg,#191d1b,#0d100e); height:150px; padding:0; position:relative; overflow:hidden; }
+    .instant-gaming-section .produto-imagem img { object-fit:cover; transition:transform .3s; }
+    .instant-gaming-section .produto-card:hover .produto-imagem img { transform:scale(1.045); }
+    .instant-gaming-section .produto-info { padding:14px; }
+    .instant-gaming-section .produto-categoria { color:#ff8a72; }
+    .instant-gaming-section .produto-info h3 { min-height:44px; }
+    .instant-gaming-section .produto-descricao { min-height:38px; }
+    .instant-gaming-section .produto-preco { margin:12px 0 15px; font-size:22px; }
+    .instant-gaming-section .produto-botao { background:#ff6548; color:#1a0905; }
+    .instant-gaming-section .produto-botao:hover { filter:brightness(1.12); }
+    .instant-gaming-section .produto-aviso { margin-top:9px; }
+    .instant-gaming-loading { color:#8f9992; padding:25px 10px; }
+    body.modo-claro .instant-gaming-subtitle { color:#5f6b62; }
+    body.modo-claro .instant-gaming-section .produto-imagem { background:#e9eeeb; }
+    @media(max-width:600px) {
+      .instant-gaming-section { width:calc(100% - 24px); margin:18px auto 24px; }
+      .instant-gaming-section h2 { font-size:23px; }
+      .instant-gaming-heading { align-items:flex-start; }
+      .instant-gaming-pill { font-size:10px; padding:6px 8px; }
+      .instant-gaming-section .produto-card { flex-basis:200px; }
+      .instant-gaming-section .produto-imagem { height:135px; }
+    }
+
   </style>
 
 </head>
@@ -2237,6 +2270,27 @@ body.modo-claro #themeToggle {
 </div>
 </div>
 </div>
+
+
+<!-- =====================================================
+     OFERTAS INSTANT GAMING
+===================================================== -->
+<section class="instant-gaming-section" aria-labelledby="tituloInstantGaming">
+  <div class="instant-gaming-heading">
+    <div>
+      <h2 id="tituloInstantGaming">🔥 Ofertas Instant Gaming</h2>
+      <p class="instant-gaming-subtitle">Descubra jogos para sua próxima aventura gamer.</p>
+    </div>
+    <span class="instant-gaming-pill">🎮 OFERTAS PARA JOGAR</span>
+  </div>
+  <div class="produtos-carrossel instant-gaming-carousel">
+    <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver ofertas anteriores">&#8249;</button>
+    <div class="produtos-grid" id="instantGamingGrid" aria-live="polite">
+      <p class="instant-gaming-loading">🔥 Carregando ofertas...</p>
+    </div>
+    <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximas ofertas">&#8250;</button>
+  </div>
+</section>
 
 <!-- =====================================================
      NOTÍCIAS
@@ -3850,6 +3904,79 @@ document.querySelectorAll('.produtos-carrossel').forEach(carrossel => {
       behavior: 'smooth'
     });
   });
+});
+</script>
+
+
+<script>
+(async function carregarOfertasInstantGaming() {
+  const grade = document.getElementById("instantGamingGrid");
+  if (!grade) return;
+
+  const elemento = (tag, classe, texto) => {
+    const el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texto !== undefined) el.textContent = texto;
+    return el;
+  };
+
+  try {
+    const resposta = await fetch("InstantGaming.json", { cache: "no-cache" });
+    if (!resposta.ok) throw new Error("Não foi possível carregar InstantGaming.json");
+    const jogos = await resposta.json();
+    if (!Array.isArray(jogos)) throw new Error("O arquivo precisa conter uma lista JSON");
+
+    const validos = jogos.filter(j => j && typeof j.nome === "string" && j.nome.trim() &&
+      typeof j.imagem === "string" && j.imagem.trim() &&
+      typeof j.url === "string" && /^https:\/\//i.test(j.url));
+    grade.replaceChildren();
+
+    if (!validos.length) {
+      grade.appendChild(elemento("p", "instant-gaming-loading", "As ofertas serão adicionadas em breve."));
+      return;
+    }
+
+    validos.forEach(jogo => {
+      const card = elemento("article", "produto-card");
+      const caixaImagem = elemento("div", "produto-imagem");
+      const imagem = document.createElement("img");
+      imagem.src = jogo.imagem;
+      imagem.alt = jogo.alt || ("Capa de " + jogo.nome);
+      imagem.loading = "lazy";
+      imagem.onerror = () => { imagem.onerror = null; imagem.style.display = "none"; };
+      caixaImagem.appendChild(imagem);
+
+      const info = elemento("div", "produto-info");
+      info.appendChild(elemento("span", "produto-categoria", [jogo.plataforma || "Jogo", jogo.categoria].filter(Boolean).join(" · ")));
+      info.appendChild(elemento("h3", "", jogo.nome));
+      info.appendChild(elemento("p", "produto-descricao", jogo.descricao || "Confira os detalhes e a disponibilidade na loja."));
+      if (jogo.desconto && String(jogo.desconto).trim()) {
+        const desconto = elemento("span", "instant-gaming-pill", "🔥 " + String(jogo.desconto).trim());
+        desconto.style.marginBottom = "8px";
+        info.appendChild(desconto);
+      }
+      info.appendChild(elemento("div", "produto-preco", jogo.preco ? String(jogo.preco) : "Confira o preço na loja"));
+      const link = elemento("a", "produto-botao", "VEJA MAIS");
+      link.href = jogo.url;
+      link.target = "_blank";
+      link.rel = "sponsored nofollow noopener noreferrer";
+      info.appendChild(link);
+      info.appendChild(elemento("small", "produto-aviso", "Preço e disponibilidade podem mudar. Link de afiliado."));
+      card.append(caixaImagem, info);
+      grade.appendChild(card);
+    });
+  } catch (erro) {
+    console.error("Erro ao carregar ofertas Instant Gaming:", erro);
+    grade.replaceChildren(elemento("p", "instant-gaming-loading", "Não foi possível carregar as ofertas no momento."));
+  }
+})();
+
+document.querySelectorAll('.instant-gaming-carousel').forEach(carrossel => {
+  const lista = carrossel.querySelector('.produtos-grid');
+  const anterior = carrossel.querySelector('.produtos-seta-anterior');
+  const proxima = carrossel.querySelector('.produtos-seta-proxima');
+  anterior.addEventListener('click', () => lista.scrollBy({ left: -250, behavior: 'smooth' }));
+  proxima.addEventListener('click', () => lista.scrollBy({ left: 250, behavior: 'smooth' }));
 });
 </script>
 
