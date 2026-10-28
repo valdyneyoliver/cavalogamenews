@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "nome": "Superhero Simulator",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/img/products/20476/pcover/1920x620/20476.jpg",
+    "preco": "R$ 7,05",
+    "desconto": "-53%",
+    "url": "https://www.instant-gaming.com/pt/20476-comprar-superhero-simulator-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Hell Clock",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/img/products/19798/pcover/1920x620/19798.jpg?v=1779282624",
+    "preco": "R$ 5,86",
+    "desconto": "-90%",
+    "url": "https://www.instant-gaming.com/pt/19798-comprar-hell-clock-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Human: Fall Flat",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/img/products/1611/pcover/1920x620/1611.jpg?v=1686583894",
+    "preco": "R$ 5,86",
+    "desconto": "-85%",
+    "url": "https://www.instant-gaming.com/pt/1611-comprar-human-fall-flat-pc-mac-jogo-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Grand Theft Auto V Enhanced",
+    "plataforma": "PC (Rockstar)",
+    "imagem": "https://gaming-cdn.com/img/products/4211/pcover/1920x620/4211.jpg",
+    "preco": "R$ 57,96",
+    "desconto": "-61%",
+    "url": "https://www.instant-gaming.com/pt/4211-comprar-grand-theft-auto-v-enhanced-pc-rockstar/?igr=gamer-c0b7c0b"
+  }
+]
