@@ -5,7 +5,7 @@
     "imagem": "https://gaming-cdn.com/img/products/369/pcover/1920x620/369.jpg",
     "preco": "R$ 6,46",
     "desconto": "-95%",
-    "link": "https://www.instant-gaming.com/br/369-comprar-injustice-gods-among-us-ultimate-edition-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/br/369-comprar-injustice-gods-among-us-ultimate-edition-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Hell Clock",
@@ -13,7 +13,7 @@
     "imagem": "https://gaming-cdn.com/img/products/19798/pcover/1920x620/19798.jpg",
     "preco": "R$ 5,87",
     "desconto": "-90%",
-    "link": "https://www.instant-gaming.com/pt/19798-comprar-hell-clock-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/19798-comprar-hell-clock-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Human: Fall Flat",
@@ -21,7 +21,7 @@
     "imagem": "https://gaming-cdn.com/img/products/1611/pcover/1920x620/1611.jpg",
     "preco": "R$ 5,84",
     "desconto": "-85%",
-    "link": "https://www.instant-gaming.com/pt/1611-comprar-human-fall-flat-pc-mac-jogo-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/1611-comprar-human-fall-flat-pc-mac-jogo-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "The Plucky Squire",
@@ -29,7 +29,7 @@
     "imagem": "https://gaming-cdn.com/img/products/12124/pcover/1920x620/12124.jpg",
     "preco": "R$ 9,96",
     "desconto": "-94%",
-    "link": "https://www.instant-gaming.com/pt/12124-comprar-the-plucky-squire-pc-game-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/12124-comprar-the-plucky-squire-pc-game-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Middle-earth: Shadow of War Definitive Edition",
@@ -37,7 +37,7 @@
     "imagem": "https://gaming-cdn.com/img/products/3155/pcover/1920x620/3155.jpg",
     "preco": "R$ 16,45",
     "desconto": "-94%",
-    "link": "https://www.instant-gaming.com/pt/3155-comprar-middle-earth-shadow-of-war-definitive-edition-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/3155-comprar-middle-earth-shadow-of-war-definitive-edition-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Assetto Corsa Competizione",
@@ -45,7 +45,7 @@
     "imagem": "https://gaming-cdn.com/img/products/3153/pcover/1920x620/3153.jpg",
     "preco": "R$ 23,06",
     "desconto": "-86%",
-    "link": "https://www.instant-gaming.com/br/3153-comprar-assetto-corsa-competizione-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/br/3153-comprar-assetto-corsa-competizione-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Grand Theft Auto V Enhanced",
@@ -53,7 +53,7 @@
     "imagem": "https://gaming-cdn.com/img/products/4211/pcover/1920x620/4211.jpg",
     "preco": "R$ 58,02",
     "desconto": "-61%",
-    "link": "https://www.instant-gaming.com/pt/4211-comprar-grand-theft-auto-v-enhanced-pc-rockstar/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/4211-comprar-grand-theft-auto-v-enhanced-pc-rockstar/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Superhero Simulator",
@@ -61,7 +61,7 @@
     "imagem": "https://gaming-cdn.com/img/products/20476/pcover/1920x620/20476.jpg",
     "preco": "R$ 7,05",
     "desconto": "-53%",
-    "link": "https://www.instant-gaming.com/pt/20476-comprar-superhero-simulator-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/20476-comprar-superhero-simulator-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Assetto Corsa",
@@ -69,7 +69,7 @@
     "imagem": "https://gaming-cdn.com/img/products/4212/pcover/1920x620/4212.jpg",
     "preco": "R$ 22,94",
     "desconto": "-62%",
-    "link": "https://www.instant-gaming.com/pt/4212-comprar-assetto-corsa-pc-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/4212-comprar-assetto-corsa-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Minecraft: Java & Bedrock Edition",
@@ -77,6 +77,6 @@
     "imagem": "https://gaming-cdn.com/img/products/5084/pcover/1920x620/5084.jpg",
     "preco": "R$ 100,70",
     "desconto": "-43%",
-    "link": "https://www.instant-gaming.com/pt/5084-comprar-minecraft-java-bedrock-edition-pc/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/5084-comprar-minecraft-java-bedrock-edition-pc/?igr=gamer-c0b7c0b"
   }
 ]
