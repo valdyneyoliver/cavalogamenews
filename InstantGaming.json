@@ -1,7 +1,7 @@
 [
   {
     "nome": "Mugsters",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/3308/380x218/mugsters-pc-mac-jogo-steam-cover.jpg?v=1720609284",
     "preco": "R$ 5,87",
     "desconto": "-95%",
@@ -9,7 +9,7 @@
   },
   {
     "nome": "Syberia 2",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/1245/380x218/syberia-2-pc-mac-jogo-steam-cover.jpg?v=1649154325",
     "preco": "R$ 5,87",
     "desconto": "-92%",
@@ -17,7 +17,7 @@
   },
   {
     "nome": "EA Sports FC 24 - 2800 FC Points",
-    "plataforma": "PC",
+    "plataforma": "PC (EA app)",
     "imagem": "https://gaming-cdn.com/images/products/14586/380x218/ea-sports-fc-24-2800-fc-points-2800-fc-pc-jogo-ea-app-cover.jpg?v=1718879654",
     "preco": "R$ 11,79",
     "desconto": "-92%",
@@ -25,7 +25,7 @@
   },
   {
     "nome": "Yrminsul",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/5056/380x218/yrminsul-pc-mac-jogo-steam-cover.jpg?v=1716212515",
     "preco": "R$ 5,87",
     "desconto": "-90%",
@@ -33,7 +33,7 @@
   },
   {
     "nome": "Battlefield 2042 Cross-Gen Ultimate",
-    "plataforma": "PC",
+    "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/9901/380x218/battlefield-2042-cross-gen-ultimate-cross-gen-ultimate-xbox-series-x-s-xbox-one-jogo-microsoft-store-cover.jpg?v=1739373913",
     "preco": "R$ 59,21",
     "desconto": "-88%",
@@ -41,7 +41,7 @@
   },
   {
     "nome": "Magin: The Rat Project Stories",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/22202/380x218/magin-the-rat-project-stories-pc-steam-cover.jpg?v=1777542268",
     "preco": "R$ 17,72",
     "desconto": "-85%",
@@ -49,7 +49,7 @@
   },
   {
     "nome": "No More Room in Hell 2 - First Responder Pack",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/23631/380x218/no-more-room-in-hell-2-first-responder-pack-pc-steam-cover.jpg?v=1787219168",
     "preco": "R$ 5,87",
     "desconto": "-81%",
@@ -57,7 +57,7 @@
   },
   {
     "nome": "Rover Rescue",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/4732/380x218/rover-rescue-pc-jogo-steam-cover.jpg?v=1716392912",
     "preco": "R$ 5,87",
     "desconto": "-80%",
@@ -65,7 +65,7 @@
   },
   {
     "nome": "Battle Stations Blockade",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/23013/380x218/battle-stations-blockade-pc-steam-cover.jpg?v=1782900040",
     "preco": "R$ 11,79",
     "desconto": "-80%",
@@ -73,7 +73,7 @@
   },
   {
     "nome": "Aztecs The Last Sun",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/9251/380x218/aztecs-the-last-sun-pc-steam-cover.jpg?v=1758705327",
     "preco": "R$ 23,65",
     "desconto": "-80%",
@@ -81,7 +81,7 @@
   },
   {
     "nome": "Survivor - Castaway Island",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/15158/380x218/survivor-castaway-island-pc-jogo-steam-cover.jpg?v=1697030346",
     "preco": "R$ 29,58",
     "desconto": "-80%",
@@ -89,7 +89,7 @@
   },
   {
     "nome": "Girl Genius: Adventures In Castle Heterodyne",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/23129/380x218/girl-genius-adventures-in-castle-heterodyne-pc-mac-steam-cover.jpg?v=1783079839",
     "preco": "R$ 35,50",
     "desconto": "-79%",
@@ -97,7 +97,7 @@
   },
   {
     "nome": "Spellcasters Chronicles - Architect Pack",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/21925/380x218/spellcasters-chronicles-architect-pack-pc-steam-cover.jpg?v=1772191078",
     "preco": "R$ 88,84",
     "desconto": "-79%",
@@ -105,7 +105,7 @@
   },
   {
     "nome": "Snowflake Tatoo",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/4773/380x218/snowflake-tatoo-pc-jogo-steam-cover.jpg?v=1680707613",
     "preco": "R$ 5,87",
     "desconto": "-78%",
@@ -113,7 +113,7 @@
   },
   {
     "nome": "The Expanse: A Telltale Series",
-    "plataforma": "PC",
+    "plataforma": "Xbox One",
     "imagem": "https://gaming-cdn.com/images/products/14682/380x218/the-expanse-a-telltale-series-xbox-one-jogo-microsoft-store-estados-unidos-cover.jpg?v=1749408959",
     "preco": "R$ 29,58",
     "desconto": "-78%",
@@ -121,7 +121,7 @@
   },
   {
     "nome": "Ghostwire Tokyo Deluxe Edition",
-    "plataforma": "PC",
+    "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/13898/380x218/ghostwire-tokyo-deluxe-edition-deluxe-edition-xbox-series-x-s-jogo-microsoft-store-cover.jpg?v=1739357946",
     "preco": "R$ 118,48",
     "desconto": "-78%",
@@ -129,7 +129,7 @@
   },
   {
     "nome": "Cats on Duty - Deluxe Upgrade Pack",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/17369/380x218/cats-on-duty-deluxe-upgrade-pack-pc-jogo-steam-cover.jpg?v=1723812897",
     "preco": "R$ 5,87",
     "desconto": "-75%",
@@ -137,7 +137,7 @@
   },
   {
     "nome": "Exoprimal",
-    "plataforma": "PC",
+    "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/13905/380x218/exoprimal-xbox-series-x-s-xbox-one-jogo-microsoft-store-cover.jpg?v=1739358080",
     "preco": "R$ 88,84",
     "desconto": "-75%",
@@ -145,7 +145,7 @@
   },
   {
     "nome": "LEGO 2K Drive Awesome Rivals Edition",
-    "plataforma": "PC",
+    "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/14384/380x218/lego-2k-drive-awesome-rivals-edition-awesome-rivals-edition-xbox-series-x-s-xbox-one-jogo-microsoft-store-estados-unidos-cover.jpg?v=1738595429",
     "preco": "R$ 118,48",
     "desconto": "-75%",
@@ -153,7 +153,7 @@
   },
   {
     "nome": "Train Simulator: New Haven FL9 Loco",
-    "plataforma": "PC",
+    "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/15607/380x218/train-simulator-new-haven-fl9-loco-pc-jogo-steam-cover.jpg?v=1703072459",
     "preco": "R$ 23,65",
     "desconto": "-71%",
