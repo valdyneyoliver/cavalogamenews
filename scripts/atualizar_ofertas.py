@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 ARQUIVO = "InstantGaming.json"
-URL_OFERTAS = "https://www.instant-gaming.com/pt/mais-vendidos/?currency=BRL"
+URL_OFERTAS = "https://www.instant-gaming.com/pt/pesquisar/?sort_by=bestsellers_desc"
 AFILIADO = "gamer-c0b7c0b"
 LIMITE = 20
 
