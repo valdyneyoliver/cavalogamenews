@@ -1,0 +1,38 @@
+name: Enviar notícias para aprovação no Discord
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install discord.py
+
+      - name: Enviar notícias pendentes
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: python scripts/enviar_noticias_aprovacao.py
+
+      - name: Salvar histórico
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add noticias_enviadas_discord.json noticias_pendentes.json
+          git diff --cached --quiet || git commit -m "Bot: atualizar aprovações do Discord"
+          git push
