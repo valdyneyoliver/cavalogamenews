@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 ARQUIVO = "InstantGaming.json"
 URL_OFERTAS = "https://www.instant-gaming.com/pt/ofertas-do-dia/?currency=BRL"
 AFILIADO = "gamer-c0b7c0b"
-LIMITE = 20
+LIMITE = 30
 
 
 def adicionar_afiliado(url):
