@@ -154,30 +154,30 @@ def buscar_ofertas():
 
         texto_plataforma = texto_cartao.lower()
 
-        if "nintendo switch 2" in texto_plataforma:
-            plataforma = "Nintendo Switch 2"
-        elif "nintendo switch" in texto_plataforma:
-            plataforma = "Nintendo Switch"
-        elif "playstation 5" in texto_plataforma or "ps5" in texto_plataforma:
-            plataforma = "PlayStation 5"
-        elif "playstation 4" in texto_plataforma or "ps4" in texto_plataforma:
-            plataforma = "PlayStation 4"
-        elif "xbox series" in texto_plataforma:
-            plataforma = "Xbox Series X|S"
-        elif "xbox one" in texto_plataforma:
-            plataforma = "Xbox One"
-        elif "steam" in texto_plataforma:
-            plataforma = "PC (Steam)"
-        elif "ea app" in texto_plataforma or "ea play" in texto_plataforma:
-            plataforma = "PC (EA app)"
-        elif "ubisoft connect" in texto_plataforma:
-            plataforma = "PC (Ubisoft Connect)"
-        elif "rockstar" in texto_plataforma:
-            plataforma = "PC (Rockstar)"
-        elif "pc" in texto_plataforma:
-            plataforma = "PC"
-        else:
-            plataforma = "Plataforma não identificada"
+if "nintendo switch 2" in texto_plataforma:
+    plataforma = "Nintendo Switch 2"
+elif "nintendo switch" in texto_plataforma:
+    plataforma = "Nintendo Switch"
+elif "playstation 5" in texto_plataforma or "ps5" in texto_plataforma:
+    plataforma = "PlayStation 5"
+elif "playstation 4" in texto_plataforma or "ps4" in texto_plataforma:
+    plataforma = "PlayStation 4"
+elif "xbox series x|s" in texto_plataforma or "xbox series x" in texto_plataforma or "xbox series s" in texto_plataforma:
+    plataforma = "Xbox Series X|S"
+elif "xbox one" in texto_plataforma:
+    plataforma = "Xbox One"
+elif "ubisoft connect" in texto_plataforma:
+    plataforma = "PC (Ubisoft Connect)"
+elif "ea app" in texto_plataforma or "ea play" in texto_plataforma:
+    plataforma = "PC (EA app)"
+elif "rockstar" in texto_plataforma:
+    plataforma = "PC (Rockstar)"
+elif "steam" in texto_plataforma:
+    plataforma = "PC (Steam)"
+elif "pc" in texto_plataforma:
+    plataforma = "PC"
+else:
+    plataforma = "Plataforma não identificada"
 
         ofertas.append({
             "nome": nome,
