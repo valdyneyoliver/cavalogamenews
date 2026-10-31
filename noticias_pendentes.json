@@ -2,7 +2,7 @@
   {
     "id": "fa-de-prince-of-persia-oferece-5-milhoes-de-euros-para-ubisoft-finalizar-o-remak",
     "titulo": "Fã de Prince of Persia oferece 5 milhões de euros para Ubisoft finalizar o remake de The Sands of Time",
-    "categoria": "Notícia",
+    "categoria": "Notícias",
     "fonte": "PXN Games",
     "link_original": "https://pxngames.com/noticia/fa-de-prince-of-persia-oferece-5-milhoes-de-euros-para-ubisoft-finalizar-o-remak",
     "resumo": "Os fãs da franquia imploram para que a empresa não abandonem o remake, que supostamente estava quase finalizado.",
@@ -12,7 +12,7 @@
   {
     "id": "orcamento-de-gears-of-war-e-day-poe-em-duvida-gastos-da-industria-americana",
     "titulo": "Orçamento de Gears of War: E-Day põe em dúvida gastos da indústria americana",
-    "categoria": "Notícia",
+    "categoria": "Notícias",
     "fonte": "PXN Games",
     "link_original": "https://pxngames.com/noticia/orcamento-de-gears-of-war-e-day-poe-em-duvida-gastos-da-industria-americana",
     "resumo": "Recente análise compara 4 dos principais lançamentos recentes, e apontam dado drástico para indústria de jogos americana.",
@@ -20,39 +20,9 @@
     "status": "pendente"
   },
   {
-    "id": "conta-pra-nos-o-que-voce-anda-assistindo",
-    "titulo": "Conta pra nós, o que você anda assistindo?",
-    "categoria": "Notícia",
-    "fonte": "PXN Games",
-    "link_original": "https://pxngames.com/noticia/conta-pra-nos-o-que-voce-anda-assistindo",
-    "resumo": "Seja série, filme ou animes, compartilha ai o que você vem assistindo nos últimos dias.",
-    "imagem": "https://img.pxngames.com/blog/u/3/f1c16a5079df6a751b09f86f1a1d2477.webp",
-    "status": "pendente"
-  },
-  {
-    "id": "ceo-da-openai-exige-que-donos-de-pc-entreguem-suas-memorias-ram-para-ia-em-nuvem",
-    "titulo": "CEO da OpenAI exige que donos de PC entreguem suas Memórias RAM para IA em nuvem",
-    "categoria": "Pc",
-    "fonte": "PXN Games",
-    "link_original": "https://pxngames.com/noticia/ceo-da-openai-exige-que-donos-de-pc-entreguem-suas-memorias-ram-para-ia-em-nuvem",
-    "resumo": "Sam Altman argumentou que componentes seriam melhor aproveitados em servidores de inteligência artificial na nuvem do que em simples computadores de usuários c…",
-    "imagem": "https://img.pxngames.com/blog/u/19/38508705eb9fe1a60f2c258ab84579ad.webp",
-    "status": "pendente"
-  },
-  {
-    "id": "recompilacao-a-salvacao-definitiva-dos-classicos",
-    "titulo": "Recompilação: a salvação definitiva dos clássicos?",
-    "categoria": "Pc",
-    "fonte": "PXN Games",
-    "link_original": "https://pxngames.com/noticia/recompilacao-a-salvacao-definitiva-dos-classicos",
-    "resumo": "Ao transformar códigos antigos em versões nativas para PC, a recompilação comunitária dá vida nova a clássicos esquecidos pela própria indústria.",
-    "imagem": "https://img.pxngames.com/blog/u/4/1901d06a4cde2a64876377fa983550d7.webp",
-    "status": "pendente"
-  },
-  {
     "id": "jogos-de-terror-batem-us-1-3-bilhao-na-steam-em-2026-puxados-por-resident-evil-e",
     "titulo": "Jogos de terror batem US$ 1,3 bilhão na Steam em 2026 puxados por Resident Evil e indies cooperativos",
-    "categoria": "Pc",
+    "categoria": "PC",
     "fonte": "PXN Games",
     "link_original": "https://pxngames.com/noticia/jogos-de-terror-batem-us-1-3-bilhao-na-steam-em-2026-puxados-por-resident-evil-e",
     "resumo": "Gênero cresce 17% antes do fim do ano, impulsionado por Resident Evil Requiem. Confira o top 10 da plataforma.",
@@ -70,19 +40,9 @@
     "status": "pendente"
   },
   {
-    "id": "my-chemical-romance-kojima",
-    "titulo": "Musica: MCR, Tsai, Kojima E Eilish Unem Forças em Prelude to The End",
-    "categoria": "Notícia",
-    "fonte": "PXN Games",
-    "link_original": "https://pxngames.com/noticia/my-chemical-romance-kojima",
-    "resumo": "Depois de 20 anos sendo fã da banda, Kojima finalmente conseguiu trabalhar com eles.",
-    "imagem": "https://img.pxngames.com/blog/u/2/6175a31985d2a31e29a22560ad2ad408.webp",
-    "status": "pendente"
-  },
-  {
     "id": "cancelado-pela-microsoft-novo-shooter-de-john-romero-ganha-nova-publisher-e-reco",
     "titulo": "Cancelado pela Microsoft, novo shooter de John Romero ganha nova publisher e recontrata equipe",
-    "categoria": "Notícia",
+    "categoria": "Notícias",
     "fonte": "PXN Games",
     "link_original": "https://pxngames.com/noticia/cancelado-pela-microsoft-novo-shooter-de-john-romero-ganha-nova-publisher-e-reco",
     "resumo": "Criador de DOOM fecha parceria misteriosa com liberdade criativa total, recontrata líderes de equipe e redesenha o FPS cancelado pela Microsoft.",
@@ -92,7 +52,7 @@
   {
     "id": "ps-plus-de-novembro-traz-dead-island-2-e-tomb-raider",
     "titulo": "PS Plus de novembro traz Dead Island 2 e Tomb Raider",
-    "categoria": "Notícia",
+    "categoria": "PlayStation",
     "fonte": "PXN Games",
     "link_original": "https://pxngames.com/noticia/ps-plus-de-novembro-traz-dead-island-2-e-tomb-raider",
     "resumo": "PS Plus de novembro terá Dead Island 2, Tomb Raider IV–VI Remastered e Monster Train 2. Os três jogos poderão ser resgatados a partir de 3 de novembro.",
