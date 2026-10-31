@@ -4,7 +4,7 @@ import json
 import re
 import time
 from pathlib import Path
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, urldefrag
 
 import requests
 from bs4 import BeautifulSoup
@@ -25,11 +25,46 @@ HEADERS = {
 }
 
 CATEGORIAS = {
-    "xbox": ["xbox"],
-    "playstation": ["playstation", "ps5", "ps4"],
-    "nintendo": ["nintendo", "switch"],
-    "pc": ["pc", "steam"],
+    "Xbox": ["xbox"],
+    "PlayStation": ["playstation", "ps5", "ps4", "psn", "ps plus"],
+    "Nintendo": ["nintendo", "switch"],
+    "PC": ["steam", "pc", "epic games", "epic games store"]
 }
+
+# Termos que ajudam a identificar notícias sobre games.
+PALAVRAS_GAMES = [
+    "game", "games", "jogo", "jogos", "gamer",
+    "videogame", "videogames", "gaming",
+    "xbox", "playstation", "nintendo", "switch",
+    "ps5", "ps4", "steam", "pc", "ubisoft",
+    "rockstar", "capcom", "sega", "konami",
+    "square enix", "electronic arts", "ea sports",
+    "activision", "blizzard", "bethesda",
+    "epic games", "riot games", "valve",
+    "playstation plus", "game pass",
+    "dlc", "expansão", "update", "atualização",
+    "lançamento", "jogabilidade", "desenvolvedora",
+    "desenvolvimento", "estúdio", "servidores",
+    "multiplayer", "single-player", "rpg",
+    "shooter", "fps", "mmo", "console",
+    "controle", "videogame"
+]
+
+# Expressões de conteúdos claramente fora do tema.
+CONTEUDOS_FORA_DE_GAMES = [
+    "o que você anda assistindo",
+    "o que voce anda assistindo",
+    "programação de tv",
+    "programacao de tv",
+    "novela",
+    "reality show",
+    "lançamento musical",
+    "lancamento musical",
+    "novo álbum",
+    "novo album",
+    "novo single",
+    "clipe musical"
+]
 
 
 # ==========================================
@@ -66,14 +101,73 @@ def limpar_texto(texto):
     return re.sub(r"\s+", " ", texto or "").strip()
 
 
+def normalizar_url(url):
+    if not url:
+        return ""
+
+    # Remove fragmentos como #comentarios.
+    url, _ = urldefrag(url)
+
+    return url.rstrip("/")
+
+
 def identificar_categoria(texto):
     texto = texto.lower()
 
     for categoria, palavras in CATEGORIAS.items():
         if any(palavra in texto for palavra in palavras):
-            return categoria.capitalize()
+            return categoria
 
     return "Notícias"
+
+
+def eh_noticia_de_games(titulo, descricao):
+    texto = f"{titulo} {descricao}".lower()
+
+    # Descarta conteúdos claramente fora do tema.
+    for palavra in CONTEUDOS_FORA_DE_GAMES:
+        if palavra in texto:
+            return False
+
+    # Exige pelo menos um indicador relacionado a games.
+    return any(palavra in texto for palavra in PALAVRAS_GAMES)
+
+
+def remover_duplicadas(noticias):
+    unicas = []
+    encontrados = {}
+
+    for noticia in noticias:
+        if not isinstance(noticia, dict):
+            continue
+
+        link = normalizar_url(noticia.get("link_original", ""))
+        identificador = noticia.get("id", "")
+
+        chave = link or identificador
+
+        if not chave:
+            unicas.append(noticia)
+            continue
+
+        if chave not in encontrados:
+            noticia["link_original"] = link
+            encontrados[chave] = noticia
+            unicas.append(noticia)
+            continue
+
+        existente = encontrados[chave]
+
+        # Preserva uma aprovação ou rejeição já realizada.
+        status_existente = existente.get("status", "pendente")
+        status_novo = noticia.get("status", "pendente")
+
+        if status_existente == "pendente" and status_novo != "pendente":
+            existente["status"] = status_novo
+
+        print(f"[DUPLICADA REMOVIDA] {noticia.get('titulo', chave)}")
+
+    return unicas
 
 
 def obter_pagina(url):
@@ -120,8 +214,12 @@ def obter_noticias_do_site():
     links = []
     encontrados = set()
 
-    for link in soup.select('a[href*="/noticia/"]'):
-        url = urljoin(SITE, link.get("href", ""))
+    for elemento in soup.select('a[href*="/noticia/"]'):
+        url = urljoin(SITE, elemento.get("href", ""))
+        url = normalizar_url(url)
+
+        if not url:
+            continue
 
         if url in encontrados:
             continue
@@ -129,7 +227,7 @@ def obter_noticias_do_site():
         encontrados.add(url)
         links.append(url)
 
-    print(f"[INFO] Encontrados {len(links)} links de notícias.")
+    print(f"[INFO] Encontrados {len(links)} links únicos.")
 
     return links[:LIMITE]
 
@@ -148,6 +246,12 @@ def extrair_noticia(url):
         return None
 
     descricao = obter_descricao(soup)
+
+    # Não adiciona conteúdos que não sejam notícias de games.
+    if not eh_noticia_de_games(titulo, descricao):
+        print(f"[IGNORADA] Conteúdo fora do tema: {titulo}")
+        return None
+
     imagem = obter_imagem(soup)
 
     categoria = identificar_categoria(
@@ -175,8 +279,17 @@ def extrair_noticia(url):
 def main():
     pendentes = carregar_pendentes()
 
+    # Limpa duplicadas que já estavam no arquivo.
+    total_anterior = len(pendentes)
+    pendentes = remover_duplicadas(pendentes)
+
+    removidas = total_anterior - len(pendentes)
+
+    if removidas:
+        print(f"[INFO] Duplicadas antigas removidas: {removidas}")
+
     links_existentes = {
-        noticia.get("link_original")
+        normalizar_url(noticia.get("link_original", ""))
         for noticia in pendentes
         if isinstance(noticia, dict)
     }
@@ -186,6 +299,8 @@ def main():
     novas = []
 
     for url in links:
+        url = normalizar_url(url)
+
         if url in links_existentes:
             continue
 
@@ -194,8 +309,9 @@ def main():
 
             if noticia:
                 novas.append(noticia)
+                links_existentes.add(url)
 
-                print(f"[NOVA] {noticia['titulo']}")
+                print(f"[NOVA PENDENTE] {noticia['titulo']}")
 
             time.sleep(1)
 
@@ -207,12 +323,17 @@ def main():
 
     if novas:
         pendentes.extend(novas)
+
+    # Salva também quando só houver duplicadas antigas para limpar.
+    if novas or removidas:
         salvar_pendentes(pendentes)
 
     print("--------------------------------")
+    print(f"[RESUMO] Duplicadas removidas: {removidas}")
     print(f"[RESUMO] Novas notícias: {len(novas)}")
-    print(f"[RESUMO] Total pendente: {len(pendentes)}")
+    print(f"[RESUMO] Total no arquivo: {len(pendentes)}")
     print("--------------------------------")
+    print("[INFO] Nenhuma notícia foi publicada no site.")
 
 
 if __name__ == "__main__":
