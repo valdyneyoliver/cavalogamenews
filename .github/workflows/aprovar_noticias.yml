@@ -1,0 +1,31 @@
+name: Aprovar notícias
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  aprovar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Executar aprovação
+        run: python scripts/aprovar_noticias.py
+
+      - name: Salvar notícias aprovadas
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add noticias_aprovadas.json
+          git diff --cached --quiet || git commit -m "Bot: notícia aprovada"
+          git push
