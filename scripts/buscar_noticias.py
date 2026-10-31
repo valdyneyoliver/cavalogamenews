@@ -73,7 +73,7 @@ def identificar_categoria(texto):
         if any(palavra in texto for palavra in palavras):
             return categoria.capitalize()
 
-    return "Notícia"
+    return "Notícias"
 
 
 def obter_pagina(url):
