@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-10-30",
+  "atualizado_em": "2026-10-31",
   "fonte": "RAWG",
   "jogos": [
     {
@@ -63,6 +63,18 @@
       "link_rawg": "https://rawg.io/games/after-the-wane"
     },
     {
+      "id": 1020621,
+      "nome": "Vampire: The Masquerade - Oaths & Ashes",
+      "slug": "vampire-the-masquerade-oaths-ashes",
+      "data": "2026-11-09",
+      "data_formatada": "09/11/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/6d8/6d8c0c86ce7b2c3626497d7758a15a2c.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/vampire-the-masquerade-oaths-ashes"
+    },
+    {
       "id": 1020421,
       "nome": "Warhammer Survivors",
       "slug": "warhammer-survivors",
@@ -73,6 +85,18 @@
         "PC"
       ],
       "link_rawg": "https://rawg.io/games/warhammer-survivors"
+    },
+    {
+      "id": 1020620,
+      "nome": "Wall World Strategy",
+      "slug": "wall-world-strategy",
+      "data": "2026-11-10",
+      "data_formatada": "10/11/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/7ce/7cec93f4886cf961dc39bb30ce535811.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/wall-world-strategy"
     },
     {
       "id": 1019738,
