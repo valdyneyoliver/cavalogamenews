@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sala CavaloGameNews</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #0b0f14;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 18px;
+            background: #111820;
+            border-bottom: 1px solid #00e887;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            color: #00e887;
+            font-size: 24px;
+        }
+
+        header p {
+            color: #aaa;
+            margin-bottom: 0;
+        }
+
+        #meet {
+            width: 100%;
+            height: calc(100vh - 90px);
+            min-height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🐴 CavaloGameNews</h1>
+    <p>🎮 Sala de conversa da comunidade</p>
+</header>
+
+<div id="meet"></div>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+
+<script>
+    const nome = prompt("Digite seu apelido para entrar na sala:");
+
+    if (nome && nome.trim()) {
+        const api = new JitsiMeetExternalAPI("meet.jit.si", {
+            roomName: "CavaloGameNewsSalaOficial2026",
+            parentNode: document.querySelector("#meet"),
+            width: "100%",
+            height: "100%",
+            lang: "ptBR",
+
+            userInfo: {
+                displayName: nome.trim()
+            },
+
+            configOverwrite: {
+                startWithAudioMuted: true,
+                startWithVideoMuted: true,
+                prejoinConfig: {
+                    enabled: true
+                }
+            }
+        });
+    } else {
+        document.querySelector("#meet").innerHTML =
+            "<p style='text-align:center;padding:40px'>Atualize a página e informe seu apelido para entrar.</p>";
+    }
+</script>
+
+</body>
+</html>
