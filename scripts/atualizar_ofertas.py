@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import unicodedata
 from urllib.parse import urljoin, urlparse, parse_qs, urlencode, urlunparse
 
 from playwright.sync_api import sync_playwright
@@ -9,6 +10,13 @@ ARQUIVO = "InstantGaming.json"
 URL_OFERTAS = "https://www.instant-gaming.com/pt/tendencias/?currency=BRL"
 AFILIADO = "gamer-c0b7c0b"
 LIMITE = 30
+MINIMO_VALIDO = 5
+
+
+def normalizar(texto):
+    texto = unicodedata.normalize("NFKD", texto or "")
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return texto.casefold()
 
 
 def adicionar_afiliado(url):
@@ -26,29 +34,41 @@ def adicionar_afiliado(url):
     ))
 
 
-def carregar_lista_anterior():
-    try:
-        with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
-            dados = json.load(arquivo)
-        return dados if isinstance(dados, list) else []
-    except (FileNotFoundError, json.JSONDecodeError):
-        return []
-
-
 def ler_preco(texto):
     encontrados = re.findall(
         r"R\$\s*[\d.]+,\d{2}",
-        texto.replace("\xa0", " ")
+        (texto or "").replace("\xa0", " ")
     )
 
-    if not encontrados:
-        return ""
+    return encontrados[0] if encontrados else "Preço não informado"
 
-    return encontrados[0]
+
+def ler_desconto(texto):
+    encontrado = re.search(r"-\s*(\d{1,3})\s*%", texto or "")
+
+    if not encontrado:
+        return "Sem desconto informado"
+
+    return f"-{encontrado.group(1)}%"
+
+
+def regiao_permitida(texto):
+    texto = normalizar(texto)
+
+    regioes = [
+        "global",
+        "america latina",
+        "latin america",
+        "latam",
+        "brasil",
+        "brazil"
+    ]
+
+    return any(regiao in texto for regiao in regioes)
 
 
 def identificar_plataforma(texto):
-    texto = texto.lower()
+    texto = normalizar(texto)
 
     if "nintendo switch 2" in texto:
         return "Nintendo Switch 2"
@@ -76,6 +96,17 @@ def identificar_plataforma(texto):
     return "Plataforma não identificada"
 
 
+def carregar_lista_anterior():
+    try:
+        with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+
+        return dados if isinstance(dados, list) else []
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+
+
 def buscar_ofertas():
     ofertas = []
     vistos = set()
@@ -99,20 +130,22 @@ def buscar_ofertas():
 
         pagina.wait_for_timeout(8000)
 
-        # Rola a página para carregar mais jogos.
-        for _ in range(6):
+        for _ in range(8):
             pagina.mouse.wheel(0, 1800)
             pagina.wait_for_timeout(1500)
 
         cartoes = pagina.locator('a[href*="comprar-"]')
         quantidade = cartoes.count()
 
-        print(f"Cartões encontrados na página: {quantidade}")
+        print(f"Cartões encontrados: {quantidade}")
 
         for i in range(quantidade):
-            link = cartoes.nth(i)
+            if len(ofertas) >= LIMITE:
+                break
 
             try:
+                link = cartoes.nth(i)
+
                 url = link.get_attribute("href")
 
                 if not url:
@@ -131,21 +164,18 @@ def buscar_ofertas():
                 nome = (
                     imagem.get_attribute("alt")
                     or link.get_attribute("title")
-                    or ""
+                    or link.inner_text()
                 ).strip()
 
                 if not nome:
-                    nome = link.inner_text().strip()
-
-                if not nome:
                     continue
 
-                nome_lower = nome.casefold()
+                nome_normalizado = normalizar(nome)
 
-                if nome_lower in vistos:
+                if nome_normalizado in vistos:
                     continue
 
-                if nome_lower.startswith(("dlc ", "gift card")):
+                if nome_normalizado.startswith(("dlc ", "gift card")):
                     continue
 
                 src = (
@@ -160,34 +190,44 @@ def buscar_ofertas():
                 src = urljoin(URL_OFERTAS, src)
 
                 texto = link.inner_text().strip()
-                preco = ler_preco(texto)
 
-                desconto_encontrado = re.search(
-                    r"-\s*(\d{1,3})\s*%",
-                    texto
-                )
+                # Procura informações de região no cartão e nos elementos
+                # próximos. Só aceita regiões explicitamente identificadas.
+                informacoes = texto + " " + nome
 
-                if desconto_encontrado:
-                    desconto = f"-{desconto_encontrado.group(1)}%"
-                else:
-                    desconto = "Sem desconto informado"
+                for seletor in [
+                    "xpath=..",
+                    "xpath=../..",
+                    "xpath=../../.."
+                ]:
+                    try:
+                        elemento = link.locator(seletor).first
+                        informacoes += " " + elemento.inner_text(timeout=2000)
+                    except Exception:
+                        pass
+
+                if not regiao_permitida(informacoes):
+                    print(f"[REGIÃO NÃO CONFIRMADA] {nome}")
+                    continue
+
+                preco = ler_preco(informacoes)
+                desconto = ler_desconto(informacoes)
 
                 ofertas.append({
                     "nome": nome,
-                    "plataforma": identificar_plataforma(texto),
+                    "plataforma": identificar_plataforma(informacoes),
                     "imagem": src,
-                    "preco": preco or "Preço não informado",
+                    "preco": preco,
                     "desconto": desconto,
                     "url": adicionar_afiliado(url)
                 })
 
-                vistos.add(nome_lower)
+                vistos.add(nome_normalizado)
 
-                if len(ofertas) >= LIMITE:
-                    break
+                print(f"[ADICIONADO] {nome}")
 
             except Exception as erro:
-                print(f"Cartão {i} ignorado: {erro}")
+                print(f"[AVISO] Cartão {i} ignorado: {erro}")
 
         navegador.close()
 
@@ -199,14 +239,14 @@ def main():
 
     try:
         ofertas = buscar_ofertas()
+
     except Exception as erro:
         print(f"Falha ao consultar tendências: {erro}")
         raise SystemExit(1)
 
-    # Proteção contra resultados vazios ou incompletos.
-    if len(ofertas) < 5:
+    if len(ofertas) < MINIMO_VALIDO:
         print(
-            f"Apenas {len(ofertas)} jogos encontrados. "
+            f"Somente {len(ofertas)} jogos com região confirmada. "
             "A lista anterior será preservada."
         )
         raise SystemExit(1)
@@ -214,13 +254,20 @@ def main():
     temporario = ARQUIVO + ".tmp"
 
     with open(temporario, "w", encoding="utf-8") as arquivo:
-        json.dump(ofertas, arquivo, ensure_ascii=False, indent=2)
+        json.dump(
+            ofertas,
+            arquivo,
+            ensure_ascii=False,
+            indent=2
+        )
 
     os.replace(temporario, ARQUIVO)
 
-    print(f"Tendências atualizadas: {len(ofertas)} jogos.")
-    print(f"Lista anterior: {len(anteriores)} jogos.")
-    print("Arquivo InstantGaming.json salvo com sucesso.")
+    print("--------------------------------")
+    print(f"Jogos atualizados: {len(ofertas)}")
+    print(f"Jogos anteriores: {len(anteriores)}")
+    print("InstantGaming.json atualizado!")
+    print("--------------------------------")
 
 
 if __name__ == "__main__":
