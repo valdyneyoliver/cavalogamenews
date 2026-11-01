@@ -52,21 +52,6 @@ def ler_desconto(texto):
     return f"-{encontrado.group(1)}%"
 
 
-def regiao_permitida(texto):
-    texto = normalizar(texto)
-
-    regioes = [
-        "global",
-        "america latina",
-        "latin america",
-        "latam",
-        "brasil",
-        "brazil"
-    ]
-
-    return any(regiao in texto for regiao in regioes)
-
-
 def identificar_plataforma(texto):
     texto = normalizar(texto)
 
@@ -82,6 +67,8 @@ def identificar_plataforma(texto):
         return "Xbox Series X|S"
     elif "xbox one" in texto:
         return "Xbox One"
+    elif "xbox" in texto:
+        return "Xbox"
     elif "ubisoft connect" in texto:
         return "PC (Ubisoft Connect)"
     elif "ea app" in texto or "ea play" in texto:
@@ -92,6 +79,8 @@ def identificar_plataforma(texto):
         return "PC (Steam)"
     elif "pc" in texto:
         return "PC"
+    elif "mac" in texto:
+        return "Mac"
 
     return "Plataforma não identificada"
 
@@ -105,6 +94,36 @@ def carregar_lista_anterior():
 
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+
+
+def obter_informacoes(link, nome):
+    textos = [nome]
+
+    try:
+        texto_link = link.inner_text(timeout=3000).strip()
+        if texto_link:
+            textos.append(texto_link)
+    except Exception:
+        pass
+
+    # Procura informações nos elementos próximos,
+    # sem utilizar ancestrais muito grandes.
+    for seletor in ["xpath=..", "xpath=../..", "xpath=../../.."]:
+        try:
+            elemento = link.locator(seletor).first
+            texto = elemento.inner_text(timeout=2000).strip()
+
+            if texto and len(texto) <= 1500:
+                textos.append(texto)
+
+                # Para quando já encontrou preço.
+                if re.search(r"R\$\s*[\d.]+,\d{2}", texto):
+                    break
+
+        except Exception:
+            pass
+
+    return " ".join(textos)
 
 
 def buscar_ofertas():
@@ -152,8 +171,9 @@ def buscar_ofertas():
                     continue
 
                 url = urljoin(URL_OFERTAS, url)
+                dominio = urlparse(url).netloc
 
-                if "instant-gaming.com" not in url:
+                if not dominio.endswith("instant-gaming.com"):
                     continue
 
                 imagem = link.locator("img").first
@@ -175,7 +195,9 @@ def buscar_ofertas():
                 if nome_normalizado in vistos:
                     continue
 
-                if nome_normalizado.startswith(("dlc ", "gift card")):
+                if nome_normalizado.startswith(
+                    ("dlc ", "gift card", "giftcard ")
+                ):
                     continue
 
                 src = (
@@ -189,42 +211,30 @@ def buscar_ofertas():
 
                 src = urljoin(URL_OFERTAS, src)
 
-                texto = link.inner_text().strip()
-
-                # Procura informações de região no cartão e nos elementos
-                # próximos. Só aceita regiões explicitamente identificadas.
-                informacoes = texto + " " + nome
-
-                for seletor in [
-                    "xpath=..",
-                    "xpath=../..",
-                    "xpath=../../.."
-                ]:
-                    try:
-                        elemento = link.locator(seletor).first
-                        informacoes += " " + elemento.inner_text(timeout=2000)
-                    except Exception:
-                        pass
-
-                if not regiao_permitida(informacoes):
-                    print(f"[REGIÃO NÃO CONFIRMADA] {nome}")
-                    continue
+                informacoes = obter_informacoes(link, nome)
 
                 preco = ler_preco(informacoes)
                 desconto = ler_desconto(informacoes)
+                plataforma = identificar_plataforma(
+                    nome + " " + informacoes
+                )
 
-                ofertas.append({
+                oferta = {
                     "nome": nome,
-                    "plataforma": identificar_plataforma(informacoes),
+                    "plataforma": plataforma,
                     "imagem": src,
                     "preco": preco,
                     "desconto": desconto,
                     "url": adicionar_afiliado(url)
-                })
+                }
 
+                ofertas.append(oferta)
                 vistos.add(nome_normalizado)
 
-                print(f"[ADICIONADO] {nome}")
+                print(
+                    f"[ADICIONADO] {nome} | "
+                    f"{plataforma} | {preco}"
+                )
 
             except Exception as erro:
                 print(f"[AVISO] Cartão {i} ignorado: {erro}")
@@ -246,7 +256,7 @@ def main():
 
     if len(ofertas) < MINIMO_VALIDO:
         print(
-            f"Somente {len(ofertas)} jogos com região confirmada. "
+            f"Somente {len(ofertas)} jogos encontrados. "
             "A lista anterior será preservada."
         )
         raise SystemExit(1)
