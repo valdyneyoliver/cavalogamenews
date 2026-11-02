@@ -71,60 +71,43 @@ body {
 }
 a { color: inherit; }
 .site-header {
-  background: rgba(5, 7, 6, .96);
-  border-bottom: 1px solid #1c2b22;
-  padding: 12px 25px;
-  position: relative;
-  z-index: 100;
+  background: var(--surface);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: var(--shadow);
 }
 .header-inner {
-  max-width: 1450px;
+  width: min(1200px, 92%);
+  min-height: 10px;
   margin: auto;
   display: flex;
   align-items: center;
-  gap: 25px;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 6px 0;
 }
-.brand { display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-.brand img { height: 44px; width: auto; max-width: 340px; display: block; object-fit: contain; }
-.main-nav {
-  display: flex;
+.brand { display: inline-flex; align-items: center; text-decoration: none; min-width: 0; }
+.brand img { display: block; width: min(400px, 100%); max-height: 40px; object-fit: contain; }
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.theme-toggle, .home-button {
+  display: inline-flex;
   align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  flex: 1;
-}
-.main-nav a {
-  color: #eee;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 13px;
-  text-transform: uppercase;
-  transition: .2s;
-  white-space: nowrap;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
 }
-.main-nav a:hover { color: #00ff88; }
-.main-nav .live-link { color: #ff5555; }
-.main-nav .support-link { color: #00ff88; }
-.search-box { width: 38px; height: 38px; flex-shrink: 0; position: relative; }
-.search-button {
-  width: 38px; height: 38px; border: 1px solid #303630; border-radius: 50%;
-  background: #0d100e; color: #fff; cursor: pointer; font-size: 17px;
-  display: flex; align-items: center; justify-content: center; transition: .25s;
+.theme-toggle:hover, .home-button:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }
-.search-button:hover { color: #00ff88; border-color: #00ff88; }
-.search-box input {
-  position: absolute; top: 48px; left: 0; width: 230px; padding: 12px 17px;
-  background: #0d100e; color: #fff; border: 1px solid #303630; border-radius: 25px;
-  font-size: 14px; outline: none; opacity: 0; visibility: hidden;
-  transform: translateY(-5px); transition: .25s; z-index: 150;
-}
-.search-box.open input { opacity: 1; visibility: visible; transform: translateY(0); }
-.theme-toggle {
-  width: 38px; height: 38px; flex-shrink: 0; border: 1px solid #303630;
-  border-radius: 50%; background: #0d100e; color: #fff; cursor: pointer;
-  font-size: 17px; display: flex; align-items: center; justify-content: center;
-}
-.theme-toggle:hover { color: #00ff88; border-color: #00ff88; }
 .support-overlay {
   display: none;
   position: fixed;
@@ -399,12 +382,10 @@ footer {
   .related-card img { width: 78px; height: 68px; }
 }
 @media (max-width: 760px) {
-  .site-header { padding: 12px 4%; }
-  .header-inner { width: 100%; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .header-inner { width: 92%; min-height: 0; flex-wrap: wrap; gap: 12px; padding: 12px 0; }
   .brand { flex: 1 1 100%; justify-content: center; }
-  .brand img { height: 52px; max-width: min(340px, 88vw); }
-  .main-nav { justify-content: center; gap: 14px; }
-  .search-box { order: -1; }
+  .brand img { width: min(260px, 82vw); max-height: 66px; }
+  .header-actions { width: 100%; justify-content: space-between; }
   .page-wrap { margin-top: 22px; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar-card { position: static; }
@@ -493,26 +474,20 @@ footer {
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="../index.html" aria-label="CavaloGameNews - página inicial">
-      <img src="../img/logo.png" alt="CavaloGameNews" class="logo">
+      <img src="../img/logo.png" alt="CavaloGameNews">
     </a>
-    <nav class="main-nav" aria-label="Navegação principal">
-      <div class="search-box">
-        <button class="search-button" id="articleSearchButton" type="button" aria-label="Pesquisar">🔍</button>
-        <input type="search" id="articleSearchInput" placeholder="Buscar notícia..." aria-label="Buscar notícia">
-      </div>
-      <a href="../index.html">INÍCIO</a>
-      <a href="../index.html">NOTÍCIAS</a>
-      <a href="../index.html">XBOX</a>
-      <a href="../index.html">PLAYSTATION</a>
-      <a href="../index.html">PC</a>
-      <a href="../index.html">NINTENDO</a>
-      <a href="../index.html">JOGOS GRÁTIS</a>
-      <a class="live-link" href="../ao-vivo.html">TRANSMITIR A TELA</a>
-      <a class="support-link" href="#" id="headerSupportLink">APOIE</a>
-      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Alternar entre tema claro e escuro" title="Alternar entre tema claro e escuro">
-        <span id="themeIcon" aria-hidden="true">☀</span>
-      </button>
-    </nav>
+    <div class="header-actions">
+  <a class="home-button" href="../index.html">← Página inicial</a>
+
+  <button class="support-button" id="supportButton" type="button">
+    💚 Apoie
+  </button>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
+    <span id="themeIcon" aria-hidden="true">☀</span>
+    <span id="themeLabel">Tema claro</span>
+  </button>
+</div>
   </div>
 </header>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
@@ -563,12 +538,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="../img/produtos/8bitdo-ultimate-2c-mint.png" alt="Controle 8BitDo Ultimate 2C Wired Mint" loading="lazy">
+    <img src="../img/produtos/gta-6-ps5.png" alt="Grand Theft Auto VI para PlayStation 5" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Controle para PC</span>
-      <h3>Controle 8BitDo Ultimate 2C Wired</h3>
-      <p>Controle com fio para jogar no PC, com sticks e gatilhos responsivos.</p>
-      <a class="anuncio-produto-botao" href="https://www.amazon.com.br/8Bitdo-Ultimate-Controller-Joysticks-Remappable/dp/B0D72WYT8Z?tag=cavalogamenew-20" target="_blank"
+      <span class="anuncio-produto-categoria">Jogos de PlayStation 5</span>
+      <h3>Grand Theft Auto VI — PlayStation 5</h3>
+      <p>Garanta o seu Grand Theft Auto VI para PlayStation 5.</p>
+      <a class="anuncio-produto-botao" href="https://link.amazon/B00xfkIlQ" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -664,38 +639,16 @@ footer {
 
 <script>
 (function() {
-  const box = document.querySelector('.search-box');
-  const searchButton = document.getElementById('articleSearchButton');
-  const searchInput = document.getElementById('articleSearchInput');
-  if (box && searchButton && searchInput) {
-    searchButton.addEventListener('click', function() {
-      box.classList.toggle('open');
-      if (box.classList.contains('open')) searchInput.focus();
-    });
-    searchInput.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter' && searchInput.value.trim()) {
-        window.location.href = '../index.html?busca=' + encodeURIComponent(searchInput.value.trim());
-      }
-    });
-  }
-  const supportLink = document.getElementById('headerSupportLink');
-  if (supportLink) supportLink.addEventListener('click', function(event) {
-    event.preventDefault();
-    const supportButton = document.getElementById('supportButton');
-    if (supportButton) supportButton.click();
-  });
-})();
-</script>
-<script>
-(function() {
   const root = document.documentElement;
   const button = document.getElementById('themeToggle');
   const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
 
   function applyTheme(theme) {
     root.setAttribute('data-theme', theme);
     const light = theme === 'light';
     icon.textContent = light ? '☾' : '☀';
+    label.textContent = light ? 'Tema escuro' : 'Tema claro';
     button.setAttribute('aria-label', light ? 'Ativar tema escuro' : 'Ativar tema claro');
     try { localStorage.setItem('cgn-theme', theme); } catch (e) {}
   }
