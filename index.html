@@ -1157,108 +1157,130 @@ body.modo-claro .free-games-error {
 
 
     /* =====================================================
-       NOTÍCIAS
+       NOTÍCIAS - MODELO HORIZONTAL
     ===================================================== */
 
-   .news-grid {
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(
-          auto-fit,
-          minmax(260px, 1fr)
-        );
-
-      gap: 20px;
+    .news-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-
     .news-link {
-
       text-decoration: none;
-
       color: inherit;
-
       display: block;
     }
 
-
     .card {
-
+      display: flex;
+      align-items: stretch;
+      min-height: 165px;
       background: #101310;
-
       border: 1px solid #303730;
-
       border-radius: 12px;
-
       overflow: hidden;
-
       transition: 0.2s;
     }
 
-
     .card:hover {
-
       border-color: #00ff88;
-
-      transform: translateY(-3px);
+      transform: translateY(-2px);
     }
 
-
     .card img {
-
-      width: 100%;
-
-      height: 170px;
-
+      width: 165px;
+      min-width: 165px;
+      height: auto;
+      min-height: 165px;
       object-fit: cover;
-
       display: block;
     }
 
-
     .card-content {
-
-      padding: 15px;
+      padding: 15px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
     }
 
-
     .category {
-
       color: #00ff88;
-
       font-size: 12px;
-
       font-weight: bold;
-
       text-transform: uppercase;
     }
 
-
     .date {
-
       color: #888;
-
       font-size: 12px;
-
-      margin: 6px 0 12px;
+      margin: 5px 0 9px;
     }
-
 
     .card h3 {
-
-      margin-bottom: 10px;
-
+      margin-bottom: 7px;
       line-height: 1.3;
+      font-size: 17px;
     }
 
-
     .card p {
-
       color: #bbb;
-
       line-height: 1.5;
+      font-size: 14px;
+    }
+
+    body.modo-claro .card {
+      background: #fff;
+      border-color: #dce5de;
+      color: #202820;
+    }
+
+    body.modo-claro .card p {
+      color: #4b554e;
+    }
+
+    body.modo-claro .date {
+      color: #68736b;
+    }
+
+    body.modo-claro .category {
+      color: #087a45;
+    }
+
+    @media (max-width: 600px) {
+      .news-grid {
+        gap: 10px;
+      }
+
+      .card {
+        min-height: 125px;
+      }
+
+      .card img {
+        width: 115px;
+        min-width: 115px;
+        min-height: 125px;
+      }
+
+      .card-content {
+        padding: 10px;
+      }
+
+      .card h3 {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      .card p {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .category,
+      .date {
+        font-size: 10px;
+      }
     }
 
 
@@ -2952,48 +2974,38 @@ let quantidadeExibida = 0;
 ===================================================== */
 
 function criarCardNoticia(post) {
-
   return `
-
     <a
       href="${linkDaNoticia(post)}"
       class="news-link"
     >
-
-      <div class="card">
-
+      <article class="card">
         <img
-          src="${post.imagem}"
-          alt="${post.titulo}"
+          src="${escaparTextoHTML(post.imagem)}"
+          alt="${escaparTextoHTML(post.titulo)}"
           loading="lazy"
         >
 
         <div class="card-content">
-
           <div class="category">
-            ${post.categoria}
+            ${escaparTextoHTML(post.categoria || "Notícia")}
           </div>
 
           <div class="date">
-            ${post.data}
+            ${escaparTextoHTML(post.data || "")}
           </div>
 
           <h3>
-            ${post.titulo}
+            ${escaparTextoHTML(post.titulo)}
           </h3>
 
           <p>
-            ${post.resumo}
+            ${escaparTextoHTML(post.resumo || "")}
           </p>
-
         </div>
-
-      </div>
-
+      </article>
     </a>
-
   `;
-
 }
 
 
