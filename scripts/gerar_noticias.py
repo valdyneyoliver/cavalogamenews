@@ -543,7 +543,7 @@ a {{ color: inherit; }}
   gap: 25px;
 }}
 .brand {{ display: inline-flex; align-items: center; text-decoration: none; flex-shrink: 0; }}
-.brand img {{ height: 42px; width: auto; max-width: 230px; display: block; object-fit: contain; }}
+.brand img {{ height: 58px; width: auto; max-width: 340px; display: block; object-fit: contain; }}
 .main-nav {{
   display: flex;
   align-items: center;
@@ -860,7 +860,7 @@ footer {{
   .site-header {{ padding: 12px 4%; }}
   .header-inner {{ width: 100%; flex-wrap: wrap; justify-content: center; gap: 12px; }}
   .brand {{ flex: 1 1 100%; justify-content: center; }}
-  .brand img {{ height: 42px; max-width: min(260px, 82vw); }}
+  .brand img {{ height: 52px; max-width: min(340px, 88vw); }}
   .main-nav {{ justify-content: center; gap: 14px; }}
   .search-box {{ order: -1; }}
   .page-wrap {{ margin-top: 22px; }}
