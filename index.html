@@ -3523,16 +3523,17 @@ function carregarNoticias() {
    FILTRAR CATEGORIA
 ===================================================== */
 
-function normalizarCategoria(valor) {
-  return String(valor || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toLowerCase();
-}
-
-
 function filtrarNoticias(categoria) {
+
+  // Nas abas de categoria, mostrar somente a lista de notícias.
+  // Na página inicial (todos), manter calendário, jogos grátis e ofertas.
+  const mostrarSecoesIniciais = categoria === "todos";
+
+  document.querySelectorAll(
+    ".home-top, .instant-gaming-section, .produtos-recomendados"
+  ).forEach(secao => {
+    secao.style.display = mostrarSecoesIniciais ? "" : "none";
+  });
 
   const titulo =
     document.getElementById(
@@ -3604,13 +3605,13 @@ function filtrarNoticias(categoria) {
 
     .then(posts => {
 
-      const categoriaSelecionada =
-        normalizarCategoria(categoria);
-
       const filtradas =
         posts.filter(post =>
-          normalizarCategoria(post.categoria) ===
-          categoriaSelecionada
+
+          post.categoria
+            .toLowerCase() ===
+          categoria.toLowerCase()
+
         );
 
 
