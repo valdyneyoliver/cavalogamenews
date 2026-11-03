@@ -3523,6 +3523,15 @@ function carregarNoticias() {
    FILTRAR CATEGORIA
 ===================================================== */
 
+function normalizarCategoria(valor) {
+  return String(valor || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+}
+
+
 function filtrarNoticias(categoria) {
 
   const titulo =
@@ -3595,13 +3604,13 @@ function filtrarNoticias(categoria) {
 
     .then(posts => {
 
+      const categoriaSelecionada =
+        normalizarCategoria(categoria);
+
       const filtradas =
         posts.filter(post =>
-
-          post.categoria
-            .toLowerCase() ===
-          categoria.toLowerCase()
-
+          normalizarCategoria(post.categoria) ===
+          categoriaSelecionada
         );
 
 
