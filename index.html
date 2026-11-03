@@ -1986,6 +1986,242 @@ body.modo-claro #themeToggle {
       .instant-gaming-section .produto-imagem { height:135px; }
     }
 
+
+
+    /* =====================================================
+       NOVA IDENTIDADE VISUAL — PORTAL GAMER + TECNOLOGIA
+       Camada visual adicionada sem substituir os recursos atuais.
+    ===================================================== */
+    :root {
+      --cgn-bg: #080d0b;
+      --cgn-panel: #101814;
+      --cgn-panel-2: #141e18;
+      --cgn-border: rgba(132, 164, 143, .19);
+      --cgn-text: #f2f7f3;
+      --cgn-muted: #a2b0a7;
+      --cgn-green: #00e887;
+      --cgn-green-soft: rgba(0, 232, 135, .10);
+      --cgn-radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background:
+        radial-gradient(ellipse at 12% 0%, rgba(0,232,135,.10), transparent 34rem),
+        radial-gradient(ellipse at 95% 25%, rgba(32,110,75,.10), transparent 30rem),
+        var(--cgn-bg);
+      color: var(--cgn-text);
+      line-height: 1.55;
+      letter-spacing: .005em;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(7, 12, 9, .94);
+      border-bottom: 1px solid var(--cgn-border);
+      box-shadow: 0 8px 28px rgba(0,0,0,.22);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner { max-width: 1500px; gap: 28px; }
+    .logo { height: 44px; }
+    nav { gap: clamp(10px, 1.35vw, 21px); }
+    nav a {
+      color: #dce6df;
+      font-size: 12px;
+      letter-spacing: .045em;
+      transition: color .2s ease, text-shadow .2s ease;
+    }
+    nav a:hover { color: var(--cgn-green); text-shadow: 0 0 14px rgba(0,232,135,.3); }
+    .search-button, #themeToggle {
+      border-color: var(--cgn-border);
+      background: #111a14;
+      border-radius: 10px;
+    }
+
+    .letreiro-cgn {
+      background: linear-gradient(90deg, rgba(0,232,135,.055), transparent 25%, transparent 75%, rgba(0,232,135,.055));
+      border-bottom: 1px solid var(--cgn-border);
+      padding: 11px 0;
+    }
+    .letreiro-cgn-grupo span { font-size: 12px; letter-spacing: .055em; }
+
+    .hero {
+      min-height: 190px;
+      padding: 52px 20px;
+      background:
+        linear-gradient(110deg, rgba(0,232,135,.13), rgba(5,12,8,.2) 48%, rgba(0,232,135,.055)),
+        repeating-linear-gradient(135deg, transparent 0 22px, rgba(255,255,255,.012) 22px 23px);
+      border-bottom: 1px solid var(--cgn-border);
+    }
+    .hero h2 { font-size: clamp(27px, 3.3vw, 42px); letter-spacing: -.035em; }
+    .hero p { color: var(--cgn-muted); font-size: 16px; }
+
+    .home-top, .container, .produtos-recomendados, .instant-gaming-section {
+      max-width: 1500px;
+    }
+    .home-top { margin-top: 24px; margin-bottom: 28px; gap: 22px; }
+    .release-calendar, .free-games-box {
+      background: linear-gradient(145deg, #121b15, #0d130f);
+      border: 1px solid var(--cgn-border);
+      border-radius: var(--cgn-radius);
+      box-shadow: 0 16px 42px rgba(0,0,0,.22);
+    }
+    .release-calendar { padding: 22px; }
+    .release-title, .free-games-title { font-size: 21px; letter-spacing: -.02em; }
+    .release-subtitle, .free-games-subtitle { color: var(--cgn-muted); }
+    .release-filter {
+      border-color: var(--cgn-border);
+      background: #111a14;
+      border-radius: 999px;
+      padding: 9px 15px;
+    }
+    .release-filter.active { background: var(--cgn-green); box-shadow: 0 0 18px rgba(0,232,135,.18); }
+    .release-card, .free-game-card {
+      border-color: var(--cgn-border);
+      border-radius: 13px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+    }
+    .release-card:hover, .free-game-card:hover { border-color: var(--cgn-green); }
+    .free-games-box { padding: 22px; }
+
+    .container { margin-top: 28px; }
+    .featured {
+      height: clamp(360px, 37vw, 500px);
+      border: 1px solid var(--cgn-border);
+      border-radius: 20px;
+      box-shadow: 0 20px 55px rgba(0,0,0,.28);
+    }
+    .featured-slide::after {
+      background:
+        linear-gradient(90deg, rgba(3,8,5,.94) 0%, rgba(3,8,5,.72) 42%, rgba(3,8,5,.08) 100%),
+        linear-gradient(0deg, rgba(3,8,5,.58), transparent 62%);
+    }
+    .featured-overlay { padding: clamp(22px, 3.2vw, 48px); }
+    .featured-overlay .category { color: var(--cgn-green); font-weight: 800; letter-spacing: .12em; }
+    .featured-overlay h2 { font-size: clamp(26px, 3.4vw, 43px); letter-spacing: -.035em; }
+    .featured-overlay p { color: #e0e9e3; }
+    .read-button, #loadMoreButton, .produto-botao {
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,232,135,.12);
+    }
+
+    #tituloNoticias, .produtos-recomendados h2, .instant-gaming-section h2 {
+      font-size: clamp(22px, 2.2vw, 29px);
+      letter-spacing: -.025em;
+      color: var(--cgn-text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #tituloNoticias::after, .produtos-recomendados h2::after {
+      content: "";
+      height: 2px;
+      flex: 1;
+      background: linear-gradient(90deg, var(--cgn-green), transparent);
+      opacity: .65;
+    }
+    .news-grid { gap: 22px; }
+    .card, .produto-card {
+      background: linear-gradient(155deg, #141d17, #0e1511);
+      border: 1px solid var(--cgn-border);
+      border-radius: 15px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.16);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+    .card:hover, .produto-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(0,232,135,.65);
+      box-shadow: 0 16px 34px rgba(0,0,0,.28), 0 0 0 1px rgba(0,232,135,.06);
+    }
+    .card img { height: 190px; }
+    .card-content { padding: 18px; }
+    .category { color: var(--cgn-green); letter-spacing: .07em; }
+    .date { color: #8d9b91; }
+    .card h3 { font-size: 17px; line-height: 1.35; letter-spacing: -.012em; }
+    .card p { color: #aebbb2; font-size: 14px; }
+
+    .produtos-recomendados, .instant-gaming-section { margin-top: 42px; margin-bottom: 42px; }
+    .produtos-subtitulo, .instant-gaming-subtitle { color: var(--cgn-muted); }
+    .produto-card { overflow: hidden; }
+    .produto-imagem { background: #f4f6f4; }
+    .produto-info { padding: 17px; }
+    .produto-info h3 { font-size: 16px; }
+    .produto-descricao { color: #aebbb2; }
+    .produto-preco { color: #fff; }
+    .produtos-seta {
+      border-color: rgba(0,232,135,.5);
+      background: #111a14;
+      border-radius: 11px;
+    }
+    .instant-gaming-section {
+      padding: 23px;
+      border: 1px solid rgba(255,101,72,.2);
+      border-radius: var(--cgn-radius);
+      background: linear-gradient(145deg, rgba(255,101,72,.045), rgba(15,20,17,.92));
+    }
+
+    footer {
+      background: #070b08;
+      border-top: 1px solid var(--cgn-border);
+      color: #9ba89f;
+      padding: 38px 20px;
+    }
+    #apoie {
+      background: linear-gradient(145deg, #121b15, #0c120e);
+      border: 1px solid var(--cgn-border);
+      border-radius: var(--cgn-radius);
+    }
+    #apoie h2 { color: var(--cgn-green); }
+
+    body.modo-claro {
+      --cgn-text: #1b2920;
+      --cgn-muted: #59685e;
+      background: #f1f5f2;
+      color: #1b2920;
+    }
+    body.modo-claro header { background: rgba(248,251,249,.96); border-color: #dce7df; }
+    body.modo-claro nav a { color: #26372c; }
+    body.modo-claro .search-button, body.modo-claro #themeToggle { background: #fff; color: #24352a; border-color: #dce7df; }
+    body.modo-claro .letreiro-cgn { background: #eaf3ed; border-color: #dce7df; }
+    body.modo-claro .letreiro-cgn-grupo span { color: #24352a; }
+    body.modo-claro .release-calendar, body.modo-claro .free-games-box,
+    body.modo-claro .card, body.modo-claro .produto-card,
+    body.modo-claro #apoie { background: #fff; border-color: #dce7df; box-shadow: 0 8px 24px rgba(20,50,30,.06); }
+    body.modo-claro .release-title, body.modo-claro .free-games-title,
+    body.modo-claro .card h3, body.modo-claro .produto-info h3,
+    body.modo-claro .produto-preco { color: #1b2920; }
+    body.modo-claro .release-subtitle, body.modo-claro .free-games-subtitle,
+    body.modo-claro .card p, body.modo-claro .produto-descricao { color: #58675d; }
+    body.modo-claro .instant-gaming-section { background: #fff8f6; }
+    body.modo-claro footer { background: #e8efea; color: #58675d; }
+
+    @media (max-width: 900px) {
+      header { position: relative; }
+      .header-inner { gap: 13px; }
+      .featured { height: 410px; }
+      .home-top { margin-top: 18px; }
+    }
+    @media (max-width: 600px) {
+      .hero { min-height: 165px; padding: 32px 16px; }
+      .hero h2 { font-size: 24px; }
+      .hero p { font-size: 14px; }
+      .home-top, .container { width: calc(100% - 24px); }
+      .release-calendar, .free-games-box { padding: 15px; }
+      .featured { height: 390px; border-radius: 14px; }
+      .featured-overlay { padding: 20px 17px 48px; }
+      .featured-overlay h2 { font-size: 23px; }
+      .card img { height: 175px; }
+      .card-content { padding: 15px; }
+      .instant-gaming-section { padding: 15px; }
+      .produtos-recomendados, .instant-gaming-section { margin-top: 28px; margin-bottom: 28px; }
+      footer { padding: 28px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+
   </style>
 
 </head>
