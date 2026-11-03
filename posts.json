@@ -1,5 +1,35 @@
 [
   {
+  "id": "xbox-cloud-gaming-celular-como-controle-phone-controller",
+  "titulo": "Xbox Cloud Gaming pode ganhar recurso que transforma celular em controle",
+  "categoria": "Xbox",
+  "data": "03/11/2026",
+  "imagem": "https://assets.play.xbox.com/playxbox/static/media/CloudGaming_LetterBox.scale-200.ef909bf4.png",
+  "resumo": "Referências encontradas no código do Xbox Cloud Gaming indicam que a Microsoft pode estar preparando um recurso chamado Phone Controller, que permitiria usar o celular como controle.",
+  "conteudo": [
+    "O Xbox Cloud Gaming pode estar preparando uma novidade interessante para quem utiliza o serviço de jogos na nuvem. Uma descoberta no código da plataforma revelou referências a um recurso chamado “Phone controller”, identificado internamente pelo nome “Caccs”.",
+    "A informação foi compartilhada por redphx, desenvolvedor responsável pelo Better xCloud, que encontrou referências à novidade enquanto analisava o código do serviço.",
+   {"tipo": "x", "url": "https://x.com/redphx/status/2117420146310746176"},
+    "─────────────",
+    "[verde]Celular pode funcionar como controle[/verde]",
+    "A principal possibilidade é que o recurso permita utilizar um smartphone como controle para jogar no Xbox Cloud Gaming.",
+    "Na prática, isso poderia permitir que jogadores transmitissem um jogo diretamente para uma televisão ou outra tela e utilizassem o celular para controlar a partida, sem precisar conectar um controle tradicional.",
+    "Entretanto, essa possibilidade ainda não foi confirmada. O próprio responsável pela descoberta afirmou que não sabe exatamente qual será a função do recurso.",
+    "─────────────",
+    "[verde]Descoberta menciona 368 jogos[/verde]",
+    "Uma captura de tela compartilhada pelo desenvolvedor também mostra uma categoria chamada “Plays great with phone controller”, que reúne 368 jogos.",
+    "Entre os títulos exibidos estão Fortnite, Cyberpunk 2077, Halo Infinite, The Sims 4 e Sea of Thieves.",
+    "Ainda não está claro se todos esses jogos terão suporte ao novo recurso ou se a categoria representa apenas uma classificação interna da plataforma.",
+    "─────────────",
+    "[verde]Microsoft ainda não confirmou a novidade[/verde]",
+    "Atualmente, o Xbox Cloud Gaming já oferece controles por toque em determinados jogos, permitindo jogar diretamente pela tela do celular.",
+    "A possível novidade seria diferente: em vez de utilizar o smartphone para visualizar e controlar o jogo ao mesmo tempo, ele poderia funcionar como um controle separado, enquanto a imagem seria transmitida para outra tela.",
+    "Até o momento, a Microsoft não anunciou oficialmente o recurso Phone Controller nem divulgou uma previsão de lançamento.",
+    "─────────────",
+    "[verde][Fonte: redphx / Better xCloud](https://x.com/redphx)[/verde]"
+  ]
+},
+  {
   "id": "phantom-blade-zero-4-milhoes-vendas-72-horas",
   "titulo": "Phantom Blade Zero ultrapassa 4 milhões de cópias vendidas em apenas 72 horas",
   "categoria": "Notícias",
