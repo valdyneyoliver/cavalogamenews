@@ -2256,12 +2256,9 @@ body.modo-claro #themeToggle {
       position: sticky;
       top: 18px;
       align-self: start;
-      /* Permite acessar todos os blocos sem a lateral sair da tela */
-      max-height: calc(100vh - 36px);
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      scrollbar-width: thin;
-      scrollbar-gutter: stable;
+      /* A lateral acompanha a rolagem normal da página, sem barra interna */
+      max-height: none;
+      overflow: visible;
     }
     .home-sidebar .home-top {
       width: 100%; max-width: none; margin: 0;
