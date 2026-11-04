@@ -2248,7 +2248,21 @@ body.modo-claro #themeToggle {
     .home-news-column .container {
       width: 100%; max-width: none; margin: 0;
     }
-    .home-sidebar { display: flex; flex-direction: column; gap: 22px; }
+    .home-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      /* Mantém a lateral acompanhando a rolagem da página */
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      /* Permite acessar todos os blocos sem a lateral sair da tela */
+      max-height: calc(100vh - 36px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-gutter: stable;
+    }
     .home-sidebar .home-top {
       width: 100%; max-width: none; margin: 0;
       display: flex; flex-direction: column; gap: 18px;
@@ -2281,7 +2295,16 @@ body.modo-claro #themeToggle {
     }
     @media (max-width: 800px) {
       .home-content-layout { grid-template-columns: 1fr; width: calc(100% - 24px); }
-      .home-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+      .home-sidebar {
+        position: static;
+        top: auto;
+        max-height: none;
+        overflow: visible;
+        scrollbar-gutter: auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+      }
       .home-sidebar .home-top { display: contents; }
       .home-sidebar .release-calendar, .home-sidebar .free-games-box,
       .home-sidebar .instant-gaming-section, .home-sidebar .produtos-recomendados { height: 100%; }
