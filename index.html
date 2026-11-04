@@ -1266,39 +1266,51 @@ body.modo-claro .free-games-error {
        CARREGAR MAIS
     ===================================================== */
 
-    .load-more-container {
-
-      text-align: center;
-
-      margin: 30px 0;
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 32px 0 42px;
     }
 
-
-    #loadMoreButton {
-
-      display: none;
-
-      background: #00ff88;
-
-      color: #07100a;
-
-      border: none;
-
-      padding: 12px 24px;
-
-      border-radius: 7px;
-
-      font-size: 16px;
-
+    .pagination-button {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid #344239;
+      border-radius: 8px;
+      background: #101612;
+      color: #dce8df;
       font-weight: bold;
-
       cursor: pointer;
+      transition: .2s;
     }
 
+    .pagination-button:hover,
+    .pagination-button.active {
+      background: #00ff88;
+      border-color: #00ff88;
+      color: #07100a;
+    }
 
-    #loadMoreButton:hover {
+    .pagination-button:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
 
-      background: #00d976;
+    body.modo-claro .pagination-button {
+      background: #fff;
+      color: #26332a;
+      border-color: #d0ddd3;
+    }
+
+    body.modo-claro .pagination-button.active,
+    body.modo-claro .pagination-button:hover {
+      background: #00c96b;
+      color: #07100a;
+      border-color: #00c96b;
     }
 
 
@@ -2483,9 +2495,7 @@ body.modo-claro #themeToggle {
     <div class="container">
       <h2 id="tituloNoticias">Últimas Notícias</h2>
       <div id="news" class="news-grid"></div>
-      <div class="load-more-container">
-        <button id="loadMoreButton" onclick="carregarMais()">CARREGAR MAIS</button>
-      </div>
+      <div id="pagination" class="pagination-container" aria-label="Paginação das notícias"></div>
     </div>
   </main>
 
@@ -3143,14 +3153,53 @@ function linkDaNoticia(post) {
 
 
 /* =====================================================
-   PAGINAÇÃO
+   PAGINAÇÃO DAS NOTÍCIAS
 ===================================================== */
 
-const NOTICIAS_POR_VEZ = 44;
-
+const NOTICIAS_POR_VEZ = 12;
 let noticiasDaPaginaInicial = [];
+let paginaAtual = 1;
 
-let quantidadeExibida = 0;
+function renderizarPagina(posts, pagina = 1) {
+  const container = document.getElementById("news");
+  const paginacao = document.getElementById("pagination");
+  const totalPaginas = Math.max(1, Math.ceil(posts.length / NOTICIAS_POR_VEZ));
+  paginaAtual = Math.min(Math.max(1, pagina), totalPaginas);
+  const inicio = (paginaAtual - 1) * NOTICIAS_POR_VEZ;
+  const itens = posts.slice(inicio, inicio + NOTICIAS_POR_VEZ);
+
+  container.innerHTML = itens.map(criarCardNoticia).join("");
+  paginacao.innerHTML = "";
+  if (totalPaginas <= 1) return;
+
+  const criarBotao = (texto, destino, ativo = false, desabilitado = false) => {
+    const botao = document.createElement("button");
+    botao.type = "button";
+    botao.className = "pagination-button" + (ativo ? " active" : "");
+    botao.textContent = texto;
+    botao.disabled = desabilitado;
+    botao.setAttribute("aria-label", texto === "‹" ? "Página anterior" : texto === "›" ? "Próxima página" : "Página " + texto);
+    botao.addEventListener("click", () => {
+      renderizarPagina(posts, destino);
+      document.getElementById("tituloNoticias").scrollIntoView({behavior:"smooth", block:"start"});
+    });
+    paginacao.appendChild(botao);
+  };
+
+  criarBotao("‹", paginaAtual - 1, false, paginaAtual === 1);
+  let primeira = Math.max(1, paginaAtual - 2);
+  let ultima = Math.min(totalPaginas, paginaAtual + 2);
+  if (primeira > 1) criarBotao("1", 1, paginaAtual === 1);
+  if (primeira > 2) {
+    const pontos = document.createElement("span"); pontos.textContent = "…"; paginacao.appendChild(pontos);
+  }
+  for (let n = primeira; n <= ultima; n++) criarBotao(String(n), n, n === paginaAtual);
+  if (ultima < totalPaginas - 1) {
+    const pontos = document.createElement("span"); pontos.textContent = "…"; paginacao.appendChild(pontos);
+  }
+  if (ultima < totalPaginas) criarBotao(String(totalPaginas), totalPaginas, paginaAtual === totalPaginas);
+  criarBotao("›", paginaAtual + 1, false, paginaAtual === totalPaginas);
+}
 
 
 /* =====================================================
@@ -3199,88 +3248,6 @@ function criarCardNoticia(post) {
     </a>
 
   `;
-
-}
-
-
-/* =====================================================
-   BOTÃO CARREGAR MAIS
-===================================================== */
-
-function atualizarBotaoCarregarMais() {
-
-  const botao =
-    document.getElementById(
-      "loadMoreButton"
-    );
-
-
-  if (!botao) return;
-
-
-  botao.style.display =
-
-    quantidadeExibida <
-    noticiasDaPaginaInicial.length
-
-      ? "inline-block"
-
-      : "none";
-
-}
-
-
-/* =====================================================
-   MOSTRAR MAIS
-===================================================== */
-
-function mostrarMaisNoticias() {
-
-  const container =
-    document.getElementById("news");
-
-
-  const proximaQuantidade =
-    Math.min(
-
-      quantidadeExibida +
-      NOTICIAS_POR_VEZ,
-
-      noticiasDaPaginaInicial.length
-
-    );
-
-
-  for (
-    let i = quantidadeExibida;
-    i < proximaQuantidade;
-    i++
-  ) {
-
-    container.innerHTML +=
-      criarCardNoticia(
-        noticiasDaPaginaInicial[i]
-      );
-
-  }
-
-
-  quantidadeExibida =
-    proximaQuantidade;
-
-
-  atualizarBotaoCarregarMais();
-
-}
-
-
-/* =====================================================
-   CARREGAR MAIS
-===================================================== */
-
-function carregarMais() {
-
-  mostrarMaisNoticias();
 
 }
 
@@ -3461,10 +3428,7 @@ function carregarNoticias() {
 
       // A lista de últimas notícias também inclui a notícia que aparece no banner.
       noticiasDaPaginaInicial = posts.slice(0);
-
-      quantidadeExibida = 0;
-
-      mostrarMaisNoticias();
+      renderizarPagina(noticiasDaPaginaInicial, 1);
 
     })
 
@@ -3539,20 +3503,6 @@ function filtrarNoticias(categoria) {
     );
 
 
-  const loadMoreButton =
-    document.getElementById(
-      "loadMoreButton"
-    );
-
-
-  if (loadMoreButton) {
-
-    loadMoreButton.style.display =
-      "none";
-
-  }
-
-
   if (categoria === "todos") {
 
     carregarNoticias();
@@ -3586,65 +3536,13 @@ function filtrarNoticias(categoria) {
 
 
       if (filtradas.length === 0) {
-
-        container.innerHTML = `
-
-          <p>
-            Nenhuma notícia encontrada
-            nessa categoria.
-          </p>
-
-        `;
-
+        document.getElementById("pagination").innerHTML = "";
+        container.innerHTML = `<p>Nenhuma notícia encontrada nessa categoria.</p>`;
         return;
-
       }
 
-
-      filtradas.forEach(post => {
-
-        container.innerHTML += `
-
-          <a
-            href="${linkDaNoticia(post)}"
-            class="news-link"
-          >
-
-            <div class="card">
-
-              <img
-                src="${post.imagem}"
-                alt="${post.titulo}"
-                loading="lazy"
-              >
-
-              <div class="card-content">
-
-                <div class="category">
-                  ${post.categoria}
-                </div>
-
-                <div class="date">
-                  ${post.data}
-                </div>
-
-                <h3>
-                  ${post.titulo}
-                </h3>
-
-                <p>
-                  ${post.resumo}
-                </p>
-
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      });
+      noticiasDaPaginaInicial = filtradas;
+      renderizarPagina(noticiasDaPaginaInicial, 1);
 
     })
 
@@ -3714,20 +3612,6 @@ function buscarNoticias() {
     );
 
 
-  const loadMoreButton =
-    document.getElementById(
-      "loadMoreButton"
-    );
-
-
-  if (loadMoreButton) {
-
-    loadMoreButton.style.display =
-      "none";
-
-  }
-
-
   if (termo === "") {
 
     carregarNoticias();
@@ -3773,64 +3657,13 @@ function buscarNoticias() {
 
 
       if (resultados.length === 0) {
-
-        container.innerHTML = `
-
-          <p>
-            Nenhuma notícia encontrada.
-          </p>
-
-        `;
-
+        document.getElementById("pagination").innerHTML = "";
+        container.innerHTML = `<p>Nenhuma notícia encontrada.</p>`;
         return;
-
       }
 
-
-      resultados.forEach(post => {
-
-        container.innerHTML += `
-
-          <a
-            href="${linkDaNoticia(post)}"
-            class="news-link"
-          >
-
-            <div class="card">
-
-              <img
-                src="${post.imagem}"
-                alt="${post.titulo}"
-                loading="lazy"
-              >
-
-              <div class="card-content">
-
-                <div class="category">
-                  ${post.categoria}
-                </div>
-
-                <div class="date">
-                  ${post.data}
-                </div>
-
-                <h3>
-                  ${post.titulo}
-                </h3>
-
-                <p>
-                  ${post.resumo}
-                </p>
-
-              </div>
-
-            </div>
-
-          </a>
-
-        `;
-
-      });
+      noticiasDaPaginaInicial = resultados;
+      renderizarPagina(noticiasDaPaginaInicial, 1);
 
     })
 
