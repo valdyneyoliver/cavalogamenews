@@ -2222,6 +2222,64 @@ body.modo-claro #themeToggle {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
 
+
+
+    /* Layout do portal: notícias à esquerda e utilidades na lateral direita */
+    .home-content-layout {
+      width: min(1500px, calc(100% - 40px));
+      margin: 28px auto 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(290px, 350px);
+      gap: 26px;
+      align-items: start;
+    }
+    .home-news-column, .home-sidebar { min-width: 0; }
+    .home-news-column .container {
+      width: 100%; max-width: none; margin: 0;
+    }
+    .home-sidebar { display: flex; flex-direction: column; gap: 22px; }
+    .home-sidebar .home-top {
+      width: 100%; max-width: none; margin: 0;
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .home-sidebar .release-calendar,
+    .home-sidebar .free-games-box,
+    .home-sidebar .instant-gaming-section,
+    .home-sidebar .produtos-recomendados {
+      width: 100%; max-width: none; min-width: 0;
+      margin: 0; padding: 17px; box-sizing: border-box;
+    }
+    .home-sidebar .release-calendar { overflow: hidden; }
+    .home-sidebar .release-filters { display: flex; flex-wrap: wrap; gap: 7px; }
+    .home-sidebar .release-filter { padding: 7px 10px; font-size: 12px; }
+    .home-sidebar .release-games { min-width: 0; }
+    .home-sidebar .instant-gaming-heading { display: block; }
+    .home-sidebar .instant-gaming-pill { display: inline-block; margin-top: 9px; }
+    .home-sidebar .produtos-carrossel { min-width: 0; }
+    .home-sidebar .produtos-grid { min-width: 0; }
+    .home-sidebar .produtos-seta { flex: 0 0 30px; }
+    .home-sidebar .produto-card { min-width: 0; }
+    .home-sidebar .instant-gaming-section h2,
+    .home-sidebar .produtos-recomendados h2 { font-size: 21px; }
+    .home-sidebar .instant-gaming-section .produto-imagem { height: 125px; }
+    .home-sidebar .produtos-recomendados .produto-imagem { height: 125px; }
+    .home-sidebar .free-games-title { font-size: 20px; }
+    .home-sidebar .free-game-card { min-width: 0; }
+    @media (max-width: 1050px) {
+      .home-content-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; }
+    }
+    @media (max-width: 800px) {
+      .home-content-layout { grid-template-columns: 1fr; width: calc(100% - 24px); }
+      .home-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+      .home-sidebar .home-top { display: contents; }
+      .home-sidebar .release-calendar, .home-sidebar .free-games-box,
+      .home-sidebar .instant-gaming-section, .home-sidebar .produtos-recomendados { height: 100%; }
+    }
+    @media (max-width: 560px) {
+      .home-sidebar { display: flex; flex-direction: column; }
+      .home-content-layout { margin-top: 18px; }
+    }
+
   </style>
 
 </head>
@@ -2377,219 +2435,92 @@ body.modo-claro #themeToggle {
 </script>
 
 <!-- =====================================================
-     CALENDÁRIO + JOGOS GRÁTIS
+     CONTEÚDO PRINCIPAL + COLUNA LATERAL
 ===================================================== -->
+<div class="home-content-layout">
 
-<div class="home-top">
-
-<section class="release-calendar">
-
-  <div class="release-header">
-
-    <div>
-
-      <h2 class="release-title">
-        🎮 Calendário de Lançamentos
-      </h2>
-
-      <p class="release-subtitle">
-        Confira os próximos jogos que chegam ao PC e consoles.
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <div class="release-filters">
-
-    <button
-      class="release-filter active"
-      data-platform="todos"
-    >
-      ▦ Todos
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="PC"
-    >
-      🖥️ PC
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="Xbox"
-    >
-      🎮 Xbox
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="PlayStation"
-    >
-      🎮 PlayStation
-    </button>
-
-
-    <button
-      class="release-filter"
-      data-platform="Switch"
-    >
-      🎮 Switch
-    </button>
-
-  </div>
-
-
-  <div class="release-wrapper">
-
-    <button
-      class="release-arrow release-arrow-left"
-      id="releasePrev"
-      aria-label="Jogos anteriores"
-    >
-      ‹
-    </button>
-
-
-    <div
-      id="releaseGames"
-      class="release-games"
-    >
-
-      <div class="release-loading">
-        🎮 Carregando lançamentos...
+  <main class="home-news-column">
+    <div class="container">
+      <div id="featured"></div>
+      <h2 id="tituloNoticias">Últimas Notícias</h2>
+      <div id="news" class="news-grid"></div>
+      <div class="load-more-container">
+        <button id="loadMoreButton" onclick="carregarMais()">CARREGAR MAIS</button>
       </div>
+    </div>
+  </main>
 
+  <aside class="home-sidebar" aria-label="Calendário, jogos grátis, ofertas e produtos">
+
+    <div class="home-top">
+      <section class="release-calendar">
+        <div class="release-header">
+          <div>
+            <h2 class="release-title">🎮 Calendário de Lançamentos</h2>
+            <p class="release-subtitle">Confira os próximos jogos que chegam ao PC e consoles.</p>
+          </div>
+        </div>
+        <div class="release-filters">
+          <button class="release-filter active" data-platform="todos">▦ Todos</button>
+          <button class="release-filter" data-platform="PC">🖥️ PC</button>
+          <button class="release-filter" data-platform="Xbox">🎮 Xbox</button>
+          <button class="release-filter" data-platform="PlayStation">🎮 PlayStation</button>
+          <button class="release-filter" data-platform="Switch">🎮 Switch</button>
+        </div>
+        <div class="release-wrapper">
+          <button class="release-arrow release-arrow-left" id="releasePrev" aria-label="Jogos anteriores">‹</button>
+          <div id="releaseGames" class="release-games">
+            <div class="release-loading">🎮 Carregando lançamentos...</div>
+          </div>
+          <button class="release-arrow release-arrow-right" id="releaseNext" aria-label="Próximos jogos">›</button>
+        </div>
+      </section>
+
+      <div class="free-games-box">
+        <div class="free-games-header">
+          <h2 class="free-games-title">🎁 Jogos Grátis</h2>
+          <p class="free-games-subtitle">Confira os jogos disponíveis gratuitamente.</p>
+        </div>
+        <div id="freeGamesList" class="free-games-list">
+          <div class="free-games-loading">🎁 Carregando jogos grátis...</div>
+        </div>
+        <div class="supporters-area">
+          <h3>🎮 Aumente sua biblioteca sem gastar nada! 💚 ⏳ **ÚLTIMA CHANCE!** Resgate os jogos grátis ANTES QUE O PRAZO ACABE! 🔥</h3>
+        </div>
+      </div>
     </div>
 
+    <section class="instant-gaming-section" aria-labelledby="tituloInstantGaming">
+      <div class="instant-gaming-heading">
+        <div>
+          <h2 id="tituloInstantGaming">🔥 Ofertas Instant Gaming</h2>
+          <p class="instant-gaming-subtitle">Nova seleção de ofertas para aproveitar.</p>
+        </div>
+        <span class="instant-gaming-pill">🎮 OFERTAS PARA JOGAR</span>
+      </div>
+      <div class="produtos-carrossel instant-gaming-carousel">
+        <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver ofertas anteriores">&#8249;</button>
+        <div class="produtos-grid" id="instantGamingGrid" aria-live="polite">
+          <p class="instant-gaming-loading">🔥 Carregando ofertas...</p>
+        </div>
+        <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximas ofertas">&#8250;</button>
+      </div>
+    </section>
 
-    <button
-      class="release-arrow release-arrow-right"
-      id="releaseNext"
-      aria-label="Próximos jogos"
-    >
-      ›
-    </button>
+    <section class="produtos-recomendados" aria-labelledby="tituloProdutos">
+      <h2 id="tituloProdutos">🛒 Produtos Recomendados</h2>
+      <p class="produtos-subtitulo">Acessórios e equipamentos para sua jogatina.</p>
+      <div class="produtos-carrossel">
+        <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver produtos anteriores">&#8249;</button>
+        <div class="produtos-grid" id="produtosGrid" aria-live="polite">
+          <p class="produtos-loading">Carregando produtos...</p>
+        </div>
+        <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximos produtos">&#8250;</button>
+      </div>
+    </section>
 
-  </div>
-
-</section>
-
-<div class="free-games-box">
-
-  <div class="free-games-header">
-    <h2 class="free-games-title">🎁 Jogos Grátis</h2>
-    <p class="free-games-subtitle">
-      Confira os jogos disponíveis gratuitamente.
-    </p>
-  </div>
-
-  <div id="freeGamesList" class="free-games-list">
-    <div class="free-games-loading">
-      🎁 Carregando jogos grátis...
-    </div>
-  </div>
-
-    <!-- APOIADORES DO CAVALOGAMENEWS -->
-<div class="supporters-area">
-
-    <h3>🎮 Aumente sua biblioteca sem gastar nada! 💚 ⏳ **ÚLTIMA CHANCE!** Resgate os jogos grátis ANTES QUE O PRAZO ACABE! 🔥
-</h3>
-
-
-
+  </aside>
 </div>
-</div>
-</div>
-
-
-<!-- =====================================================
-     OFERTAS INSTANT GAMING
-===================================================== -->
-<section class="instant-gaming-section" aria-labelledby="tituloInstantGaming">
-  <div class="instant-gaming-heading">
-    <div>
-      <h2 id="tituloInstantGaming">🔥 Ofertas Instant Gaming</h2>
-      <p class="instant-gaming-subtitle">20 nova seleção todos os dias durante apenas 24 horas.</p>
-    </div>
-    <span class="instant-gaming-pill">🎮 OFERTAS PARA JOGAR</span>
-  </div>
-  <div class="produtos-carrossel instant-gaming-carousel">
-    <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver ofertas anteriores">&#8249;</button>
-    <div class="produtos-grid" id="instantGamingGrid" aria-live="polite">
-      <p class="instant-gaming-loading">🔥 Carregando ofertas...</p>
-    </div>
-    <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximas ofertas">&#8250;</button>
-  </div>
-</section>
-
-<!-- =====================================================
-     NOTÍCIAS
-===================================================== -->
-
-<div class="container">
-
-  <div id="featured"></div>
-  
-<!-- =====================================================
-     PRODUTOS RECOMENDADOS
-===================================================== -->
-<section class="produtos-recomendados" aria-labelledby="tituloProdutos">
-  <h2 id="tituloProdutos">🛒 Produtos Recomendados</h2>
-  <p class="produtos-subtitulo">Acessórios e equipamentos para sua jogatina.</p>
-
- <div class="produtos-carrossel">
-
-  <button class="produtos-seta produtos-seta-anterior"
-          type="button"
-          aria-label="Ver produtos anteriores">
-    &#8249;
-  </button>
-
-  <div class="produtos-grid" id="produtosGrid" aria-live="polite">
-    <p class="produtos-loading">Carregando produtos...</p>
-  </div>
-
-   <button class="produtos-seta produtos-seta-proxima"
-          type="button"
-          aria-label="Ver próximos produtos">
-    &#8250;
-  </button>
-
-</div>
-</section>
-
-  <h2 id="tituloNoticias">
-    Últimas Notícias
-  </h2>
-
-  <div
-    id="news"
-    class="news-grid"
-  ></div>
-
-
-  <div class="load-more-container">
-
-    <button
-      id="loadMoreButton"
-      onclick="carregarMais()"
-    >
-      CARREGAR MAIS
-    </button>
-
-  </div>
-
-</div>
-
-
-
-
 
 <!-- =====================================================
      RODAPÉ
