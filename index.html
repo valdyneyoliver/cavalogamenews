@@ -2224,10 +2224,21 @@ body.modo-claro #themeToggle {
 
 
 
+    /* Banner principal amplo, acima das notícias e da lateral */
+    .home-featured-banner {
+      width: min(1500px, calc(100% - 40px));
+      margin: 28px auto 8px;
+    }
+    .home-featured-banner .featured {
+      width: 100%;
+      height: clamp(420px, 34vw, 540px);
+      margin-bottom: 0;
+    }
+
     /* Layout do portal: notícias à esquerda e utilidades na lateral direita */
     .home-content-layout {
       width: min(1500px, calc(100% - 40px));
-      margin: 28px auto 48px;
+      margin: 18px auto 48px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(290px, 350px);
       gap: 26px;
@@ -2278,6 +2289,8 @@ body.modo-claro #themeToggle {
     @media (max-width: 560px) {
       .home-sidebar { display: flex; flex-direction: column; }
       .home-content-layout { margin-top: 18px; }
+      .home-featured-banner { width: calc(100% - 24px); margin-top: 18px; }
+      .home-featured-banner .featured { height: 390px; }
     }
 
   </style>
@@ -2435,13 +2448,19 @@ body.modo-claro #themeToggle {
 </script>
 
 <!-- =====================================================
-     CONTEÚDO PRINCIPAL + COLUNA LATERAL
+     BANNER PRINCIPAL EM DESTAQUE
+===================================================== -->
+<div class="home-featured-banner">
+  <div id="featured"></div>
+</div>
+
+<!-- =====================================================
+     ÚLTIMAS NOTÍCIAS + COLUNA LATERAL
 ===================================================== -->
 <div class="home-content-layout">
 
   <main class="home-news-column">
     <div class="container">
-      <div id="featured"></div>
       <h2 id="tituloNoticias">Últimas Notícias</h2>
       <div id="news" class="news-grid"></div>
       <div class="load-more-container">
