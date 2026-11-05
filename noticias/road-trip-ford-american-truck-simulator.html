@@ -63,7 +63,7 @@ html[data-theme="light"] {
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  padding-top: 58px;
+  padding-top: 0;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -72,48 +72,57 @@ body {
 }
 a { color: inherit; }
 .site-header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
   z-index: 1000;
-  background: var(--surface);
-  border-bottom: 3px solid var(--accent);
-  box-shadow: var(--shadow);
+  width: 100%;
+  padding: 12px 25px;
+  background: rgba(5, 7, 6, .96);
+  border-bottom: 1px solid #1c2b22;
+  box-shadow: 0 8px 28px rgba(0,0,0,.22);
+  backdrop-filter: blur(16px);
 }
 .header-inner {
-  width: min(1200px, 92%);
-  min-height: 10px;
+  max-width: 1450px;
   margin: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  padding: 6px 0;
+  gap: 25px;
 }
-.brand { display: inline-flex; align-items: center; text-decoration: none; min-width: 0; }
-.brand img { display: block; width: min(400px, 100%); max-height: 40px; object-fit: contain; }
-.header-actions { display: flex; align-items: center; gap: 10px; }
-.theme-toggle, .home-button {
+.brand { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
+.brand img { display: block; width: auto; height: 42px; object-fit: contain; }
+.article-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.35vw, 21px);
+  flex-wrap: wrap;
+  flex: 1;
+}
+.article-nav a {
+  color: #dce6df;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color .2s ease, text-shadow .2s ease;
+}
+.article-nav a:hover { color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,.25); }
+.article-nav .support-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 42px;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface-2);
-  color: var(--text);
-  font-weight: 700;
-  text-decoration: none;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid #00ff88;
+  border-radius: 8px;
+  background: #00ff88;
+  color: #06140d;
+  font-weight: 800;
   cursor: pointer;
-  transition: transform .18s ease, border-color .18s ease, background .18s ease;
 }
-.theme-toggle:hover, .home-button:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-}
+.article-nav .support-button:hover { background: #00c875; }
 .support-overlay {
   display: none;
   position: fixed;
@@ -388,10 +397,11 @@ footer {
   .related-card img { width: 78px; height: 68px; }
 }
 @media (max-width: 760px) {
-  .header-inner { width: 92%; min-height: 0; flex-wrap: wrap; gap: 12px; padding: 12px 0; }
-  .brand { flex: 1 1 100%; justify-content: center; }
-  .brand img { width: min(260px, 82vw); max-height: 66px; }
-  .header-actions { width: 100%; justify-content: space-between; }
+  .site-header { padding: 12px 18px; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 13px; }
+  .brand img { height: 40px; max-width: 82vw; }
+  .article-nav { width: 100%; gap: 11px; }
+  .article-nav a { font-size: 12px; }
   .page-wrap { margin-top: 22px; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar-card { position: static; }
@@ -416,7 +426,7 @@ footer {
   .more-news .related-grid { grid-template-columns: minmax(0, 1fr); }
   .more-news .related-card { display: grid; grid-template-columns: 105px minmax(0, 1fr); }
   .more-news .related-card img { width: 105px; height: 88px; }
-  .theme-toggle, .home-button { font-size: 13px; padding: 9px 11px; }
+
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
@@ -482,18 +492,17 @@ footer {
     <a class="brand" href="../index.html" aria-label="CavaloGameNews - página inicial">
       <img src="../img/logo.png" alt="CavaloGameNews">
     </a>
-    <div class="header-actions">
-  <a class="home-button" href="../index.html">← Página inicial</a>
 
-  <button class="support-button" id="supportButton" type="button">
-    💚 Apoie
-  </button>
-
-  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
-    <span id="themeIcon" aria-hidden="true">☀</span>
-    <span id="themeLabel">Tema claro</span>
-  </button>
-</div>
+    <nav class="article-nav" aria-label="Navegação principal">
+      <a href="../index.html">INÍCIO</a>
+      <a href="../index.html?categoria=todos">NOTÍCIAS</a>
+      <a href="../index.html?categoria=Xbox">XBOX</a>
+      <a href="../index.html?categoria=PlayStation">PLAYSTATION</a>
+      <a href="../index.html?categoria=PC">PC</a>
+      <a href="../index.html?categoria=Nintendo">NINTENDO</a>
+      <a href="../index.html?categoria=Jogos%20Gr%C3%A1tis">JOGOS GRÁTIS</a>
+      <button class="support-button" id="supportButton" type="button">💚 APOIE</button>
+    </nav>
   </div>
 </header>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
@@ -543,12 +552,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/I/61ZHoeF3VaL._AC_SL1500_.jpg" alt="Controle PowerA Advantage branco com iluminação RGB para Nintendo Switch 2" loading="lazy">
+    <img src="https://m.media-amazon.com/images/I/51SBQS163vL._AC_SL1402_.jpg" alt="Mouse pad preto extra grande de 90x40 cm com base antiderrapante" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Controle para Nintendo Switch 2</span>
-      <h3>PowerA Advantage com Lumectra — Nintendo Switch 2</h3>
-      <p>Controle com fio oficialmente licenciado para Nintendo Switch 2, com iluminação RGB Lumectra, efeitos Hall, botões mapeáveis, botão C e recursos de controle Pro.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/B0iSx47DH" target="_blank"
+      <span class="anuncio-produto-categoria">🖱️ Mouse Pad Gamer</span>
+      <h3>Mouse Pad Grande 90x40 cm Preto</h3>
+      <p>Mouse pad extra grande de 90x40 cm na cor preta, com base antiderrapante, ideal para teclado, mouse, escritório, home office e setup gamer.</p>
+      <a class="anuncio-produto-botao" href="https://link.amazon/B0aWAV23l" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -701,31 +710,6 @@ footer {
     <a href="../politica-de-privacidade.html">Política de Privacidade</a>
 </footer>
 
-<script>
-(function() {
-  const root = document.documentElement;
-  const button = document.getElementById('themeToggle');
-  const icon = document.getElementById('themeIcon');
-  const label = document.getElementById('themeLabel');
-
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
-    const light = theme === 'light';
-    icon.textContent = light ? '☾' : '☀';
-    label.textContent = light ? 'Tema escuro' : 'Tema claro';
-    button.setAttribute('aria-label', light ? 'Ativar tema escuro' : 'Ativar tema claro');
-    try { localStorage.setItem('cgn-theme', theme); } catch (e) {}
-  }
-
-  let savedTheme = 'dark';
-  try { savedTheme = localStorage.getItem('cgn-theme') || 'dark'; } catch (e) {}
-  applyTheme(savedTheme === 'light' ? 'light' : 'dark');
-
-  button.addEventListener('click', function() {
-    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-  });
-})();
-</script>
 <script>
 (function() {
   const openButton = document.getElementById('supportButton');
