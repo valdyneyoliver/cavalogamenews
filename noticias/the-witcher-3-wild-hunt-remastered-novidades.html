@@ -368,12 +368,10 @@ h1 {
 }
 .sidebar-title::before { content: ""; display: inline-block; width: 4px; height: 19px; background: var(--accent); border-radius: 3px; margin-right: 9px; vertical-align: -3px; }
 .related-list { display: grid; gap: 14px; }
-.related-card {
-  display: grid;
-  grid-template-columns: 94px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-  padding: 10px;
+.sidebar-card .related-card {
+  display: block;
+  padding: 0;
+  overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 11px;
@@ -381,19 +379,22 @@ h1 {
   text-decoration: none;
   transition: transform .18s ease, border-color .18s ease;
 }
-.related-card:hover { transform: translateY(-2px); border-color: var(--accent); }
-.related-card img {
+.sidebar-card .related-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.sidebar-card .related-image {
   display: block;
-  width: 94px;
-  height: 78px;
+  width: 100%;
+  height: 145px;
   object-fit: cover;
-  border-radius: 7px;
+  border-radius: 0;
   background: var(--border);
 }
-.related-content { min-width: 0; }
-.related-content .category { font-size: 10px; margin: 0 0 3px; }
-.related-date { color: var(--muted); font-size: 11px; margin-bottom: 4px; }
-.related-content h3 { font-size: 13px; line-height: 1.35; margin: 0; overflow-wrap: anywhere; }
+.sidebar-card .related-content { min-width: 0; padding: 10px 11px 11px; }
+.sidebar-card .related-content h3 { font-size: 14px; line-height: 1.3; margin: 0 0 7px; overflow-wrap: anywhere; }
+.related-summary { color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 9px; }
+.related-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.related-tag { padding: 2px 6px; border-radius: 4px; background: #a51e2b; color: #fff; font-size: 9px; line-height: 1.5; font-weight: 800; text-transform: uppercase; }
+.related-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; color: var(--muted); font-size: 10px; line-height: 1.4; }
+.human-authorship { display: block; margin-top: 5px; color: var(--accent); font-size: 10px; font-weight: 700; }
 .more-news {
   margin-top: 30px;
   padding-top: 24px;
@@ -431,10 +432,8 @@ footer {
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar-card { position: static; }
   .related-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .related-card { display: block; padding: 0; overflow: hidden; }
-  .related-card img { width: 100%; height: 115px; border-radius: 0; }
-  .related-content { padding: 10px; }
-  .related-content h3 { font-size: 13px; }
+  .sidebar-card .related-image { height: 115px; }
+  .sidebar-card .related-content h3 { font-size: 13px; }
   .more-news .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 480px) {
@@ -446,8 +445,7 @@ footer {
   .text p { font-size: 16px; line-height: 1.8; margin-bottom: 19px; }
   .paragrafo-titulo { font-size: 19px; }
   .related-list { grid-template-columns: minmax(0, 1fr); }
-  .related-card { display: grid; grid-template-columns: 100px minmax(0, 1fr); }
-  .related-card img { width: 100px; height: 82px; border-radius: 0; }
+  .sidebar-card .related-image { height: 160px; }
   .more-news .related-grid { grid-template-columns: minmax(0, 1fr); }
   .more-news .related-card { display: grid; grid-template-columns: 105px minmax(0, 1fr); }
   .more-news .related-card img { width: 105px; height: 88px; }
@@ -580,12 +578,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="../img/produtos/havit-h2015d.png" alt="Fone de ouvido gamer Headset Havit H2015D para PC, Xbox, PS4 e PS5" loading="lazy">
+    <img src="../img/produtos/redragon-predator-m612.png" alt="Mouse Redragon Predator M612 RGB" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎧 Headset gamer</span>
-      <h3>Headset Gamer Havit H2015D</h3>
-      <p>Headset gamer compatível com PC, Xbox, PS4 e PS5, com microfone integrado para conversar durante as partidas.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/B07GWkZ0I" target="_blank"
+      <span class="anuncio-produto-categoria">🖱️ Mouse gamer</span>
+      <h3>Mouse Redragon Predator M612 RGB</h3>
+      <p>Mouse gamer com iluminação RGB para completar seu setup.</p>
+      <a class="anuncio-produto-botao" href="https://www.amazon.com.br/dp/B08T68T1T6?tag=cavalogamenew-20" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -722,47 +720,57 @@ footer {
       <div class="related-list">
         
 <a href="../noticias/world-of-warcraft-forever-disponivel-azeroth-mil-missoes.html" class="related-card">
-  <img src="https://pbs.twimg.com/media/HWW2Hd6WoAAJuQZ?format=jpg&amp;name=large" alt="World of Warcraft: Forever já está disponível em Azeroth; nova experiência chega com mais de mil missões" loading="lazy">
+  <img class="related-image" src="https://pbs.twimg.com/media/HWW2Hd6WoAAJuQZ?format=jpg&amp;name=large" alt="World of Warcraft: Forever já está disponível em Azeroth; nova experiência chega com mais de mil missões" loading="lazy">
   <div class="related-content">
-    <div class="category">PC</div>
-    <div class="related-date">05/11/2026</div>
     <h3>World of Warcraft: Forever já está disponível em Azeroth; nova experiência chega com mais de mil missões</h3>
+    <p class="related-summary">World of Warcraft: Forever foi lançado em 4 de novembro com mais de mil missões, novas regiões, uma...</p>
+    <div class="related-tags"><span class="related-tag">PC</span></div>
+    <div class="related-meta"><span>@CavaloGameNews</span><span> · </span><span>05/11/2026</span></div>
+    
   </div>
 </a>
 
 <a href="../noticias/discord-abandona-electron-rust-aplicativo-pc.html" class="related-card">
-  <img src="https://cdn2.unrealengine.com/what-is-discord-1920x1080-c3d90ca45f57.jpg" alt="Discord vai abandonar o Electron e reconstruir seu aplicativo usando Rust" loading="lazy">
+  <img class="related-image" src="https://cdn2.unrealengine.com/what-is-discord-1920x1080-c3d90ca45f57.jpg" alt="Discord vai abandonar o Electron e reconstruir seu aplicativo usando Rust" loading="lazy">
   <div class="related-content">
-    <div class="category">PC</div>
-    <div class="related-date">05/11/2026</div>
     <h3>Discord vai abandonar o Electron e reconstruir seu aplicativo usando Rust</h3>
+    <p class="related-summary">O Discord pretende reconstruir seu aplicativo para computadores utilizando Rust e GPUI. A mudança...</p>
+    <div class="related-tags"><span class="related-tag">PC</span></div>
+    <div class="related-meta"><span>@CavaloGameNews</span><span> · </span><span>05/11/2026</span></div>
+    
   </div>
 </a>
 
 <a href="../noticias/xbox-series-x-bite-jacare-sorteio-console-personalizado.html" class="related-card">
-  <img src="https://xboxwire.thesourcemediaassets.com/sites/2/2026/11/Introducing_XBOX_Series_16x9_NO_TEXT-cd8b848ba743a5977563-1536x864.jpg" alt="Xbox cria Series X dentro de um jacaré e vai sortear console personalizado" loading="lazy">
+  <img class="related-image" src="https://xboxwire.thesourcemediaassets.com/sites/2/2026/11/Introducing_XBOX_Series_16x9_NO_TEXT-cd8b848ba743a5977563-1536x864.jpg" alt="Xbox cria Series X dentro de um jacaré e vai sortear console personalizado" loading="lazy">
   <div class="related-content">
-    <div class="category">Xbox</div>
-    <div class="related-date">05/11/2026</div>
     <h3>Xbox cria Series X dentro de um jacaré e vai sortear console personalizado</h3>
+    <p class="related-summary">A Microsoft apresentou o Xbox Series X-BITE, um console funcional instalado dentro de uma réplica de...</p>
+    <div class="related-tags"><span class="related-tag">Xbox</span></div>
+    <div class="related-meta"><span>@CavaloGameNews</span><span> · </span><span>05/11/2026</span></div>
+    
   </div>
 </a>
 
 <a href="../noticias/amd-fsr-4-xbox-series-xs-melhorias-graficas.html" class="related-card">
-  <img src="https://gpuopen.com/images/amd_fsr_4_1_xbox_gdk_blog.BhtCCxU9.jpg" alt="AMD FSR 4 chega ao Xbox Series X|S e promete melhorar a qualidade gráfica dos jogos" loading="lazy">
+  <img class="related-image" src="https://gpuopen.com/images/amd_fsr_4_1_xbox_gdk_blog.BhtCCxU9.jpg" alt="AMD FSR 4 chega ao Xbox Series X|S e promete melhorar a qualidade gráfica dos jogos" loading="lazy">
   <div class="related-content">
-    <div class="category">Xbox</div>
-    <div class="related-date">05/11/2026</div>
     <h3>AMD FSR 4 chega ao Xbox Series X|S e promete melhorar a qualidade gráfica dos jogos</h3>
+    <p class="related-summary">A AMD disponibilizou o FSR 4.1.2 para desenvolvedores do Xbox Series X|S. A tecnologia utiliza...</p>
+    <div class="related-tags"><span class="related-tag">Xbox</span></div>
+    <div class="related-meta"><span>@CavaloGameNews</span><span> · </span><span>05/11/2026</span></div>
+    
   </div>
 </a>
 
 <a href="../noticias/phantom-blade-zero-atualizacao-melhorias-desempenho-pc-ps5.html" class="related-card">
-  <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5041150/0b53fc10d4118e932df3916b1c93fa04ad9f5806/ss_0b53fc10d4118e932df3916b1c93fa04ad9f5806.1920x1080.jpg?t=1793238502" alt="Phantom Blade Zero recebe atualização com melhorias de desempenho e novas opções" loading="lazy">
+  <img class="related-image" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/5041150/0b53fc10d4118e932df3916b1c93fa04ad9f5806/ss_0b53fc10d4118e932df3916b1c93fa04ad9f5806.1920x1080.jpg?t=1793238502" alt="Phantom Blade Zero recebe atualização com melhorias de desempenho e novas opções" loading="lazy">
   <div class="related-content">
-    <div class="category">Notícias</div>
-    <div class="related-date">04/11/2026</div>
     <h3>Phantom Blade Zero recebe atualização com melhorias de desempenho e novas opções</h3>
+    <p class="related-summary">Phantom Blade Zero recebeu uma atualização em 4 de novembro com melhorias de desempenho, ajustes no...</p>
+    <div class="related-tags"><span class="related-tag">Notícias</span></div>
+    <div class="related-meta"><span>@CavaloGameNews</span><span> · </span><span>04/11/2026</span></div>
+    
   </div>
 </a>
 
