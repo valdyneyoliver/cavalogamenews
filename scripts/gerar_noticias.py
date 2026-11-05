@@ -521,6 +521,7 @@ html[data-theme="light"] {{
 html {{ scroll-behavior: smooth; }}
 body {{
   margin: 0;
+  padding-top: 58px;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -953,17 +954,6 @@ footer {{
 </div>
   </div>
 </header>
-<script>
-(function () {
-  const header = document.querySelector('.site-header');
-  function ajustarEspacoDoCabecalho() {
-    if (header) document.body.style.paddingTop = header.offsetHeight + 'px';
-  }
-  ajustarEspacoDoCabecalho();
-  window.addEventListener('load', ajustarEspacoDoCabecalho);
-  window.addEventListener('resize', ajustarEspacoDoCabecalho);
-})();
-</script>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
   <div class="support-modal" role="dialog" aria-modal="true" aria-labelledby="supportTitle">
     <button class="support-close" id="supportClose" type="button" aria-label="Fechar janela">×</button>
