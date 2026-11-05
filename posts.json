@@ -1,5 +1,35 @@
 [
   {
+  "id": "discord-abandona-electron-rust-aplicativo-pc",
+  "titulo": "Discord vai abandonar o Electron e reconstruir seu aplicativo usando Rust",
+  "categoria": "PC",
+  "data": "05/11/2026",
+  "imagem": "https://cdn2.unrealengine.com/what-is-discord-1920x1080-c3d90ca45f57.jpg",
+  "resumo": "O Discord pretende reconstruir seu aplicativo para computadores utilizando Rust e GPUI. A mudança busca reduzir o consumo de memória RAM e melhorar o desempenho, com uma versão experimental utilizando cerca de 290 MB.",
+  "conteudo": [
+    "O Discord está preparando uma grande mudança em seu aplicativo para computadores. A empresa confirmou que pretende abandonar o Electron e reconstruir seu cliente utilizando a linguagem de programação Rust, com o objetivo de melhorar o desempenho e reduzir o consumo de memória RAM.",
+    "A informação foi revelada por Stanislav Vishnevskiy, cofundador e diretor de tecnologia do Discord, em uma publicação nas redes sociais.",
+    "─────────────",
+    "[verde]Novo Discord poderá consumir menos memória RAM[/verde]",
+    "Atualmente, o aplicativo para computadores utiliza Electron, uma tecnologia que permite desenvolver programas usando tecnologias da web, mas que também pode consumir bastante memória do sistema.",
+    "Com a mudança para Rust, o Discord pretende tornar o aplicativo mais leve e eficiente.",
+    "Uma imagem compartilhada pelo diretor mostrou uma versão experimental do novo cliente para Windows utilizando aproximadamente 290 MB de memória RAM, mesmo com duas contas abertas simultaneamente.",
+    "Para comparação, a versão atual pode ultrapassar 1 GB de consumo, dependendo da utilização e da quantidade de servidores abertos.",
+    "─────────────",
+    "[verde]Aplicativo será desenvolvido com Rust e GPUI[/verde]",
+    "A reconstrução também utilizará o GPUI, uma estrutura para criação de interfaces nativas desenvolvida em Rust.",
+    "Segundo Vishnevskiy, a mudança significa que o Electron deixará de fazer parte do aplicativo para computadores. O React Native também será abandonado na estrutura compartilhada com os dispositivos móveis.",
+    "Nos celulares, o Discord continuará utilizando interfaces nativas, mas compartilhará parte do código com a versão para computadores por meio do Rust.",
+    "─────────────",
+    "[verde]Quando a novidade estará disponível?[/verde]",
+    "O Discord ainda não anunciou uma data de lançamento para a nova versão.",
+    "Segundo o diretor de tecnologia, a empresa espera começar os testes com usuários em breve. Portanto, os números de consumo de memória apresentados até agora pertencem a uma versão experimental e ainda precisam ser avaliados em testes mais amplos.",
+    "A mudança pode representar uma melhoria importante para quem utiliza o Discord enquanto joga no computador, especialmente em máquinas com pouca memória RAM.",
+    "─────────────",
+    "[verde][Fonte: The Verge](https://www.theverge.com/news/1027379/discord-ditching-electron-web-app)[/verde]"
+  ]
+},
+  {
   "id": "xbox-series-x-bite-jacare-sorteio-console-personalizado",
   "titulo": "Xbox cria Series X dentro de um jacaré e vai sortear console personalizado",
   "categoria": "Xbox",
