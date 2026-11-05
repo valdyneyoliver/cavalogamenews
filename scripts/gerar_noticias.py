@@ -396,16 +396,39 @@ for post in posts:
             if not related_id:
                 continue
             related_titulo = str(related.get("titulo", "CavaloGameNews"))
+            related_resumo = str(related.get("resumo", "")).strip()
             related_imagem = str(related.get("imagem", ""))
             related_categoria = str(related.get("categoria", "Notícia"))
-            related_data = str(related.get("data", ""))
+            related_data = str(related.get("data", "")).strip()
+            related_autor = str(related.get("autor", "CavaloGameNews")).strip()
+            related_views = related.get("visualizacoes", related.get("views", ""))
+            resumo_curto = related_resumo if len(related_resumo) <= 105 else related_resumo[:102].rsplit(" ", 1)[0] + "..."
+            categorias = [c.strip() for c in re.split(r"[,|/]", related_categoria) if c.strip()]
+            categorias_html = "".join(
+                f'<span class="related-tag">{html.escape(tag)}</span>' for tag in categorias[:2]
+            )
+            meta_partes = []
+            if related_autor:
+                meta_partes.append(f'<span>@{html.escape(related_autor.lstrip("@"))}</span>')
+            if related_data:
+                meta_partes.append(f'<span>{html.escape(related_data)}</span>')
+            if related_views not in (None, ""):
+                meta_partes.append(f'<span>◉ {html.escape(str(related_views))}</span>')
+            meta_html = "<div class=\"related-meta\">" + "<span> · </span>".join(meta_partes) + "</div>" if meta_partes else ""
+            autoria_humana = (
+                '<span class="human-authorship">✓ Autoria humana</span>'
+                if related.get("autoria_humana") is True else ""
+            )
+            resumo_html = f'<p class="related-summary">{html.escape(resumo_curto)}</p>' if resumo_curto else ""
             cards_html += f"""
 <a href="../noticias/{escape_attr(related_id)}.html" class="related-card">
-  <img src="{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
+  <img class="related-image" src="{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
   <div class="related-content">
-    <div class="category">{html.escape(related_categoria)}</div>
-    <div class="related-date">{html.escape(related_data)}</div>
     <h3>{html.escape(related_titulo)}</h3>
+    {resumo_html}
+    <div class="related-tags">{categorias_html}</div>
+    {meta_html}
+    {autoria_humana}
   </div>
 </a>
 """
@@ -826,12 +849,10 @@ h1 {{
 }}
 .sidebar-title::before {{ content: ""; display: inline-block; width: 4px; height: 19px; background: var(--accent); border-radius: 3px; margin-right: 9px; vertical-align: -3px; }}
 .related-list {{ display: grid; gap: 14px; }}
-.related-card {{
-  display: grid;
-  grid-template-columns: 94px minmax(0, 1fr);
-  gap: 12px;
-  align-items: start;
-  padding: 10px;
+.sidebar-card .related-card {{
+  display: block;
+  padding: 0;
+  overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 11px;
@@ -839,19 +860,22 @@ h1 {{
   text-decoration: none;
   transition: transform .18s ease, border-color .18s ease;
 }}
-.related-card:hover {{ transform: translateY(-2px); border-color: var(--accent); }}
-.related-card img {{
+.sidebar-card .related-card:hover {{ transform: translateY(-2px); border-color: var(--accent); }}
+.sidebar-card .related-image {{
   display: block;
-  width: 94px;
-  height: 78px;
+  width: 100%;
+  height: 145px;
   object-fit: cover;
-  border-radius: 7px;
+  border-radius: 0;
   background: var(--border);
 }}
-.related-content {{ min-width: 0; }}
-.related-content .category {{ font-size: 10px; margin: 0 0 3px; }}
-.related-date {{ color: var(--muted); font-size: 11px; margin-bottom: 4px; }}
-.related-content h3 {{ font-size: 13px; line-height: 1.35; margin: 0; overflow-wrap: anywhere; }}
+.sidebar-card .related-content {{ min-width: 0; padding: 10px 11px 11px; }}
+.sidebar-card .related-content h3 {{ font-size: 14px; line-height: 1.3; margin: 0 0 7px; overflow-wrap: anywhere; }}
+.related-summary {{ color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 9px; }}
+.related-tags {{ display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }}
+.related-tag {{ padding: 2px 6px; border-radius: 4px; background: #a51e2b; color: #fff; font-size: 9px; line-height: 1.5; font-weight: 800; text-transform: uppercase; }}
+.related-meta {{ display: flex; flex-wrap: wrap; align-items: center; gap: 3px; color: var(--muted); font-size: 10px; line-height: 1.4; }}
+.human-authorship {{ display: block; margin-top: 5px; color: var(--accent); font-size: 10px; font-weight: 700; }}
 .more-news {{
   margin-top: 30px;
   padding-top: 24px;
@@ -889,10 +913,8 @@ footer {{
   .layout {{ grid-template-columns: minmax(0, 1fr); }}
   .sidebar-card {{ position: static; }}
   .related-list {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
-  .related-card {{ display: block; padding: 0; overflow: hidden; }}
-  .related-card img {{ width: 100%; height: 115px; border-radius: 0; }}
-  .related-content {{ padding: 10px; }}
-  .related-content h3 {{ font-size: 13px; }}
+  .sidebar-card .related-image {{ height: 115px; }}
+  .sidebar-card .related-content h3 {{ font-size: 13px; }}
   .more-news .related-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
 }}
 @media (max-width: 480px) {{
@@ -904,8 +926,7 @@ footer {{
   .text p {{ font-size: 16px; line-height: 1.8; margin-bottom: 19px; }}
   .paragrafo-titulo {{ font-size: 19px; }}
   .related-list {{ grid-template-columns: minmax(0, 1fr); }}
-  .related-card {{ display: grid; grid-template-columns: 100px minmax(0, 1fr); }}
-  .related-card img {{ width: 100px; height: 82px; border-radius: 0; }}
+  .sidebar-card .related-image {{ height: 160px; }}
   .more-news .related-grid {{ grid-template-columns: minmax(0, 1fr); }}
   .more-news .related-card {{ display: grid; grid-template-columns: 105px minmax(0, 1fr); }}
   .more-news .related-card img {{ width: 105px; height: 88px; }}
