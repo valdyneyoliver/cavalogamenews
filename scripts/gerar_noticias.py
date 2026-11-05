@@ -400,7 +400,6 @@ for post in posts:
             related_imagem = str(related.get("imagem", ""))
             related_categoria = str(related.get("categoria", "Notícia"))
             related_data = str(related.get("data", "")).strip()
-            related_autor = str(related.get("autor", "CavaloGameNews")).strip()
             related_views = related.get("visualizacoes", related.get("views", ""))
             resumo_curto = related_resumo if len(related_resumo) <= 105 else related_resumo[:102].rsplit(" ", 1)[0] + "..."
             categorias = [c.strip() for c in re.split(r"[,|/]", related_categoria) if c.strip()]
@@ -408,8 +407,6 @@ for post in posts:
                 f'<span class="related-tag">{html.escape(tag)}</span>' for tag in categorias[:2]
             )
             meta_partes = []
-            if related_autor:
-                meta_partes.append(f'<span>@{html.escape(related_autor.lstrip("@"))}</span>')
             if related_data:
                 meta_partes.append(f'<span>{html.escape(related_data)}</span>')
             if related_views not in (None, ""):
@@ -873,7 +870,7 @@ h1 {{
 .sidebar-card .related-content h3 {{ font-size: 14px; line-height: 1.3; margin: 0 0 7px; overflow-wrap: anywhere; }}
 .related-summary {{ color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 9px; }}
 .related-tags {{ display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }}
-.related-tag {{ padding: 2px 6px; border-radius: 4px; background: #a51e2b; color: #fff; font-size: 9px; line-height: 1.5; font-weight: 800; text-transform: uppercase; }}
+.related-tag {{ padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #06140d; font-size: 9px; line-height: 1.5; font-weight: 800; text-transform: uppercase; }}
 .related-meta {{ display: flex; flex-wrap: wrap; align-items: center; gap: 3px; color: var(--muted); font-size: 10px; line-height: 1.4; }}
 .human-authorship {{ display: block; margin-top: 5px; color: var(--accent); font-size: 10px; font-weight: 700; }}
 .more-news {{
