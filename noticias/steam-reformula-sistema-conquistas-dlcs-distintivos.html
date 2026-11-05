@@ -123,6 +123,31 @@ a { color: inherit; }
   cursor: pointer;
 }
 .article-nav .support-button:hover { background: #00c875; }
+.article-nav .live-button {
+  color: #ff6666;
+}
+.article-nav .live-button:hover {
+  color: #ff8888;
+  text-shadow: 0 0 10px rgba(255,85,85,.25);
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #405047;
+  border-radius: 8px;
+  background: #171f28;
+  color: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+}
+.theme-toggle:hover {
+  border-color: #00e887;
+}
+
 .support-overlay {
   display: none;
   position: fixed;
@@ -501,7 +526,10 @@ footer {
       <a href="../index.html?categoria=PC">PC</a>
       <a href="../index.html?categoria=Nintendo">NINTENDO</a>
       <a href="../index.html?categoria=Jogos%20Gr%C3%A1tis">JOGOS GRÁTIS</a>
+      <a href="../ao-vivo.html" class="live-button">TRANSMITIR A TELA</a>
       <button class="support-button" id="supportButton" type="button">💚 APOIE</button>
+      <button class="theme-toggle" id="themeToggle" type="button"
+              aria-label="Alternar tema" title="Alternar tema">☀️</button>
     </nav>
   </div>
 </header>
@@ -553,12 +581,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/I/61S3dRsfanL._AC_SL1500_.jpg" alt="Controle sem fio Xbox X25 edição especial de 25 anos" loading="lazy">
+    <img src="../img/produtos/redragon-predator-m612.png" alt="Mouse Redragon Predator M612 RGB" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Controle para Xbox</span>
-      <h3>Controle sem fio Xbox — Edição Especial de 25 Anos</h3>
-      <p>Controle sem fio Xbox X25, edição especial de 25 anos, compatível com Xbox Series X|S, Xbox One, PCs, TVs e dispositivos móveis.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/B0gkfpCuo" target="_blank"
+      <span class="anuncio-produto-categoria">🖱️ Mouse gamer</span>
+      <h3>Mouse Redragon Predator M612 RGB</h3>
+      <p>Mouse gamer com iluminação RGB para completar seu setup.</p>
+      <a class="anuncio-produto-botao" href="https://www.amazon.com.br/dp/B08T68T1T6?tag=cavalogamenew-20" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -696,6 +724,50 @@ footer {
       feedback.textContent = 'Não foi possível copiar automaticamente. Selecione a chave e copie manualmente.';
     }
   });
+})();
+</script>
+
+<script>
+(function() {
+  const themeToggle = document.getElementById('themeToggle');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function aplicarTema(modo, salvar = true) {
+    const tema = modo === 'light' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', tema);
+
+    if (themeToggle) {
+      themeToggle.textContent = tema === 'light' ? '🌙' : '☀️';
+      themeToggle.title = tema === 'light'
+        ? 'Mudar para tema escuro'
+        : 'Mudar para tema claro';
+      themeToggle.setAttribute('aria-label', themeToggle.title);
+    }
+
+    if (themeMeta) {
+      themeMeta.setAttribute('content', tema === 'light' ? '#f2f5f7' : '#0b0f14');
+    }
+
+    if (salvar) {
+      try {
+        localStorage.setItem('tema-cavalogamenews', tema === 'light' ? 'claro' : 'escuro');
+      } catch (error) {}
+    }
+  }
+
+  let temaSalvo = 'escuro';
+  try {
+    temaSalvo = localStorage.getItem('tema-cavalogamenews') || 'escuro';
+  } catch (error) {}
+
+  aplicarTema(temaSalvo === 'claro' ? 'light' : 'dark', false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function() {
+      const temaAtual = document.documentElement.getAttribute('data-theme');
+      aplicarTema(temaAtual === 'light' ? 'dark' : 'light');
+    });
+  }
 })();
 </script>
 
