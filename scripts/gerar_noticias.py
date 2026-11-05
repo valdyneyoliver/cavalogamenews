@@ -529,8 +529,10 @@ body {{
 }}
 a {{ color: inherit; }}
 .site-header {{
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   background: var(--surface);
   border-bottom: 3px solid var(--accent);
@@ -951,6 +953,17 @@ footer {{
 </div>
   </div>
 </header>
+<script>
+(function () {
+  const header = document.querySelector('.site-header');
+  function ajustarEspacoDoCabecalho() {
+    if (header) document.body.style.paddingTop = header.offsetHeight + 'px';
+  }
+  ajustarEspacoDoCabecalho();
+  window.addEventListener('load', ajustarEspacoDoCabecalho);
+  window.addEventListener('resize', ajustarEspacoDoCabecalho);
+})();
+</script>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
   <div class="support-modal" role="dialog" aria-modal="true" aria-labelledby="supportTitle">
     <button class="support-close" id="supportClose" type="button" aria-label="Fechar janela">×</button>
