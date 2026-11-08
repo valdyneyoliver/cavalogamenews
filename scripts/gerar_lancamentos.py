@@ -12,16 +12,16 @@ from urllib.error import HTTPError, URLError
 # ==========================================
 
 API_URL = "https://api.rawg.io/api/games"
-
 ARQUIVO_SAIDA = "lancamentos.json"
 
 DIAS_FUTUROS = 120
-
 LIMITE = 100
 
+# Limites para evitar que o GitHub Actions fique preso por muitos minutos.
 TENTATIVAS = 5
-TEMPO_ESPERA = 10
-TIMEOUT = 60
+TEMPO_ESPERA = 5
+TIMEOUT = 20
+ESPERA_MAXIMA = 30
 
 
 # ==========================================
@@ -31,7 +31,7 @@ TIMEOUT = 60
 API_KEY = os.environ.get("RAWG_API_KEY")
 
 if not API_KEY:
-    print("ERRO: RAWG_API_KEY não encontrada.")
+    print("ERRO: RAWG_API_KEY não encontrada.", flush=True)
     raise SystemExit(1)
 
 
@@ -45,14 +45,11 @@ fim = hoje + timedelta(days=DIAS_FUTUROS)
 data_inicio = hoje.strftime("%Y-%m-%d")
 data_fim = fim.strftime("%Y-%m-%d")
 
-
-print("===================================")
-print("CavaloGameNews")
-print("Gerador de Lançamentos")
-print("===================================")
-
-print("Período:")
-print(data_inicio, "até", data_fim)
+print("===================================", flush=True)
+print("CavaloGameNews", flush=True)
+print("Gerador de Lançamentos", flush=True)
+print("===================================", flush=True)
+print("Período:", data_inicio, "até", data_fim, flush=True)
 
 
 # ==========================================
@@ -74,7 +71,10 @@ def consultar_rawg():
     erros_temporarios = {429, 500, 502, 503, 504, 522}
 
     for tentativa in range(1, TENTATIVAS + 1):
-        print(f"Consultando RAWG... tentativa {tentativa}/{TENTATIVAS}")
+        print(
+            f"Consultando RAWG... tentativa {tentativa}/{TENTATIVAS}",
+            flush=True
+        )
 
         request = Request(
             url,
@@ -86,10 +86,13 @@ def consultar_rawg():
 
         try:
             with urlopen(request, timeout=TIMEOUT) as resposta:
-                return json.loads(resposta.read().decode("utf-8"))
+                dados = json.loads(resposta.read().decode("utf-8"))
+
+            print("Resposta da RAWG recebida.", flush=True)
+            return dados
 
         except HTTPError as erro:
-            print(f"Erro HTTP {erro.code}: {erro.reason}")
+            print(f"Erro HTTP {erro.code}: {erro.reason}", flush=True)
 
             if erro.code not in erros_temporarios:
                 raise
@@ -97,21 +100,23 @@ def consultar_rawg():
             if tentativa == TENTATIVAS:
                 raise
 
-            # Se o servidor informar quando tentar novamente, respeita esse prazo.
+            retry_after = erro.headers.get("Retry-After")
             try:
-                espera = int(erro.headers.get("Retry-After", TEMPO_ESPERA * tentativa))
+                espera = int(retry_after) if retry_after else TEMPO_ESPERA * tentativa
             except (TypeError, ValueError):
                 espera = TEMPO_ESPERA * tentativa
 
+            espera = max(1, min(espera, ESPERA_MAXIMA))
+
         except (URLError, TimeoutError, ConnectionError, json.JSONDecodeError) as erro:
-            print(f"Falha temporária de conexão/resposta: {erro}")
+            print(f"Falha temporária de conexão/resposta: {erro}", flush=True)
 
             if tentativa == TENTATIVAS:
                 raise
 
-            espera = TEMPO_ESPERA * tentativa
+            espera = min(TEMPO_ESPERA * tentativa, ESPERA_MAXIMA)
 
-        print(f"Nova tentativa em {espera} segundos...")
+        print(f"Nova tentativa em {espera} segundos...", flush=True)
         time.sleep(espera)
 
     raise RuntimeError("Não foi possível consultar a RAWG após várias tentativas.")
@@ -119,10 +124,12 @@ def consultar_rawg():
 
 try:
     dados = consultar_rawg()
-
 except Exception as erro:
-    print("ERRO: não foi possível consultar a RAWG após várias tentativas.")
-    print(erro)
+    print(
+        "ERRO: não foi possível consultar a RAWG após várias tentativas.",
+        flush=True
+    )
+    print(erro, flush=True)
     raise SystemExit(1)
 
 
@@ -131,9 +138,7 @@ except Exception as erro:
 # ==========================================
 
 resultados = dados.get("results", [])
-
-print("Jogos recebidos:", len(resultados))
-
+print("Jogos recebidos:", len(resultados), flush=True)
 
 jogos = []
 
@@ -149,10 +154,6 @@ for jogo in resultados:
     slug = jogo.get("slug")
 
     plataformas = []
-
-    # --------------------------------------
-    # PLATAFORMAS
-    # --------------------------------------
 
     for item in jogo.get("platforms", []) or []:
         plataforma = item.get("platform", {})
@@ -175,28 +176,16 @@ for jogo in resultados:
             if "Switch" not in plataformas:
                 plataformas.append("Switch")
 
-    # --------------------------------------
-    # IGNORAR JOGO INCOMPLETO
-    # --------------------------------------
-
+    # Ignorar jogos com informações incompletas.
     if not nome or not data_lancamento or not imagem or not plataformas:
         continue
 
-    # --------------------------------------
-    # DATA FORMATADA
-    # --------------------------------------
-
     partes = data_lancamento.split("-")
-
     data_formatada = (
         f"{partes[2]}/{partes[1]}/{partes[0]}"
         if len(partes) == 3
         else data_lancamento
     )
-
-    # --------------------------------------
-    # ADICIONAR JOGO
-    # --------------------------------------
 
     jogos.append({
         "id": jogo.get("id"),
@@ -206,11 +195,7 @@ for jogo in resultados:
         "data_formatada": data_formatada,
         "imagem": imagem,
         "plataformas": plataformas,
-        "link_rawg": (
-            f"https://rawg.io/games/{slug}"
-            if slug
-            else ""
-        )
+        "link_rawg": f"https://rawg.io/games/{slug}" if slug else ""
     })
 
 
@@ -227,7 +212,7 @@ jogos = list(unicos.values())
 
 
 # ==========================================
-# ORDENAR
+# ORDENAR E LIMITAR
 # ==========================================
 
 jogos.sort(
@@ -237,14 +222,9 @@ jogos.sort(
     )
 )
 
-
-# ==========================================
-# LIMITE
-# ==========================================
-
 jogos = jogos[:LIMITE]
 
-print("Jogos válidos:", len(jogos))
+print("Jogos válidos:", len(jogos), flush=True)
 
 
 # ==========================================
@@ -262,11 +242,7 @@ dados_saida = {
 # SALVAR
 # ==========================================
 
-with open(
-    ARQUIVO_SAIDA,
-    "w",
-    encoding="utf-8"
-) as arquivo:
+with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as arquivo:
     json.dump(
         dados_saida,
         arquivo,
@@ -274,8 +250,7 @@ with open(
         indent=2
     )
 
-
-print("===================================")
-print("lancamentos.json criado!")
-print("Jogos:", len(jogos))
-print("===================================")
+print("===================================", flush=True)
+print("lancamentos.json criado!", flush=True)
+print("Jogos:", len(jogos), flush=True)
+print("===================================", flush=True)
