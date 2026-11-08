@@ -2325,129 +2325,6 @@ body.modo-claro #themeToggle {
       .home-featured-banner .featured { height: 390px; }
     }
 
-
-
-    /* CALENDÁRIO COMPACTO CAVALOGAMENEWS */
-    .release-calendar {
-      padding: 18px;
-      background: linear-gradient(145deg,#101713,#090d0b);
-      border-color: #263b2e;
-    }
-    .release-header { margin-bottom: 13px; }
-    .release-title { font-size: 20px; line-height: 1.2; }
-    .release-subtitle { font-size: 12px; }
-    .release-filters { gap: 6px; margin-bottom: 12px; }
-    .release-filter { padding: 6px 10px; border-radius: 20px; font-size: 11px; }
-    .release-games {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      max-height: 430px;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 2px 3px 4px;
-      scrollbar-width: thin;
-      scrollbar-color: #28784f transparent;
-    }
-    .release-card {
-      display: grid;
-      grid-template-columns: 68px minmax(0,1fr);
-      align-items: center;
-      gap: 11px;
-      width: 100%;
-      min-width: 0;
-      height: auto;
-      min-height: 76px;
-      padding: 7px;
-      border-radius: 10px;
-      text-align: left;
-      cursor: pointer;
-      background: #121a15;
-      border: 1px solid #26352b;
-      color: #fff;
-    }
-    .release-card::after { display: none; }
-    .release-card:hover { transform: translateY(-2px); border-color: #00e887; box-shadow: 0 7px 18px rgba(0,232,135,.09); }
-    .release-image {
-      width: 68px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 7px;
-      background: #202a23;
-    }
-    .release-info { position: static; min-width: 0; }
-    .release-date {
-      position: static;
-      display: inline-block;
-      margin-bottom: 3px;
-      padding: 2px 6px;
-      border-radius: 5px;
-      background: rgba(0,232,135,.12);
-      color: #00e887;
-      font-size: 10px;
-      text-align: left;
-      backdrop-filter: none;
-    }
-    .release-name {
-      min-height: 0;
-      display: block;
-      margin: 0 0 5px;
-      color: #f3f7f4;
-      font-size: 13px;
-      line-height: 1.25;
-      text-shadow: none;
-    }
-    .release-platforms { gap: 4px; }
-    .release-platform { padding: 2px 5px; font-size: 9px; }
-    .release-arrow { display: none !important; }
-    body.modo-claro .release-card { background: #f7faf8; color: #202820; border-color: #dce5de; }
-    body.modo-claro .release-name { color: #202820; }
-    body.modo-claro .release-date { background: #e4f8ed; color: #087a45; }
-
-    .release-modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99990;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(0,0,0,.82);
-      backdrop-filter: blur(6px);
-    }
-    .release-modal-overlay.is-open { display: flex; }
-    .release-modal {
-      position: relative;
-      width: min(560px, 100%);
-      max-height: 90vh;
-      overflow-y: auto;
-      border: 1px solid #00e887;
-      border-radius: 17px;
-      background: #101713;
-      color: #f2f5f3;
-      box-shadow: 0 22px 70px rgba(0,0,0,.55);
-    }
-    .release-modal-image { display:block; width:100%; max-height:270px; object-fit:cover; background:#1b251e; }
-    .release-modal-body { padding: 20px; }
-    .release-modal-date { color:#00e887; font-size:12px; font-weight:800; margin-bottom:7px; }
-    .release-modal-title { font-size:25px; line-height:1.2; margin:0 42px 12px 0; }
-    .release-modal-description { color:#bdc9c0; font-size:14px; line-height:1.65; margin:12px 0; }
-    .release-modal-platforms { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
-    .release-modal-close {
-      position:absolute; top:10px; right:10px; z-index:2;
-      width:36px; height:36px; border:1px solid rgba(255,255,255,.35);
-      border-radius:50%; background:rgba(0,0,0,.72); color:#fff;
-      font-size:24px; cursor:pointer;
-    }
-    body.modo-claro .release-modal { background:#fff; color:#202820; }
-    body.modo-claro .release-modal-description { color:#536057; }
-    @media (max-width: 600px) {
-      .release-calendar { padding: 14px; }
-      .release-games { max-height: 390px; }
-      .release-modal-image { max-height:210px; }
-      .release-modal-title { font-size:21px; }
-    }
-
   </style>
 
 </head>
@@ -3104,11 +2981,11 @@ function mostrarLancamentos(plataforma) {
 
       return `
 
-        <button
+        <a
           class="release-card"
-          type="button"
-          data-release-index="${releaseGames.indexOf(jogo)}"
-          aria-label="Ver detalhes de ${nome}"
+          href="${escapeReleaseHTML(jogo.link_rawg || '#')}"
+          target="_blank"
+          rel="noopener noreferrer"
         >
 
           <img
@@ -3135,7 +3012,7 @@ function mostrarLancamentos(plataforma) {
 
           </div>
 
-        </button>
+        </a>
 
       `;
 
@@ -3146,51 +3023,6 @@ function mostrarLancamentos(plataforma) {
 
 }
 
-
-/* =====================================================
-   JANELA DE DETALHES DO JOGO
-===================================================== */
-const releaseModal = document.getElementById("releaseModal");
-const releaseModalClose = document.getElementById("releaseModalClose");
-const releaseModalImage = document.getElementById("releaseModalImage");
-const releaseModalTitle = document.getElementById("releaseModalTitle");
-const releaseModalDate = document.getElementById("releaseModalDate");
-const releaseModalDescription = document.getElementById("releaseModalDescription");
-const releaseModalPlatforms = document.getElementById("releaseModalPlatforms");
-
-function fecharReleaseModal() {
-  releaseModal.classList.remove("is-open");
-  releaseModal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-releaseContainer.addEventListener("click", function(event) {
-  const card = event.target.closest("[data-release-index]");
-  if (!card) return;
-  const jogo = releaseGames[Number(card.dataset.releaseIndex)];
-  if (!jogo) return;
-
-  releaseModalImage.src = jogo.imagem || "";
-  releaseModalImage.alt = jogo.nome || "Capa do jogo";
-  releaseModalImage.style.display = jogo.imagem ? "block" : "none";
-  releaseModalTitle.textContent = jogo.nome || "Jogo sem nome";
-  releaseModalDate.textContent = "📅 " + (jogo.data_formatada || jogo.data || "Data não informada");
-  releaseModalDescription.textContent = jogo.descricao || jogo.sinopse || jogo.resumo || "Confira em breve mais informações sobre este lançamento no CavaloGameNews.";
-  const plataformas = Array.isArray(jogo.plataformas) ? jogo.plataformas : [];
-  releaseModalPlatforms.innerHTML = plataformas.map(p => `<span class="release-platform ${classePlataforma(p)}">${escapeReleaseHTML(p)}</span>`).join("");
-  releaseModal.classList.add("is-open");
-  releaseModal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-  releaseModalClose.focus();
-});
-
-releaseModalClose.addEventListener("click", fecharReleaseModal);
-releaseModal.addEventListener("click", function(event) {
-  if (event.target === releaseModal) fecharReleaseModal();
-});
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Escape" && releaseModal.classList.contains("is-open")) fecharReleaseModal();
-});
 
 /* =====================================================
    SETAS
@@ -4196,20 +4028,6 @@ document.querySelectorAll('.instant-gaming-carousel').forEach(carrossel => {
   proxima.addEventListener('click', () => lista.scrollBy({ left: 250, behavior: 'smooth' }));
 });
 </script>
-
-
-<div class="release-modal-overlay" id="releaseModal" aria-hidden="true">
-  <section class="release-modal" role="dialog" aria-modal="true" aria-labelledby="releaseModalTitle">
-    <button class="release-modal-close" id="releaseModalClose" type="button" aria-label="Fechar">×</button>
-    <img class="release-modal-image" id="releaseModalImage" src="" alt="">
-    <div class="release-modal-body">
-      <div class="release-modal-date" id="releaseModalDate"></div>
-      <h2 class="release-modal-title" id="releaseModalTitle"></h2>
-      <p class="release-modal-description" id="releaseModalDescription"></p>
-      <div class="release-modal-platforms" id="releaseModalPlatforms"></div>
-    </div>
-  </section>
-</div>
 
 </body>
 
