@@ -2325,179 +2325,6 @@ body.modo-claro #themeToggle {
       .home-featured-banner .featured { height: 390px; }
     }
 
-
-    /* =====================================================
-       NOVO VISUAL DO CALENDÁRIO — mantém os filtros e dados atuais
-    ===================================================== */
-    .home-sidebar .release-calendar {
-      padding: 15px;
-      background: #171b21;
-      border: 1px solid #252b33;
-      border-radius: 9px;
-      box-shadow: none;
-    }
-    .home-sidebar .release-header {
-      margin: 0 0 12px;
-      padding-bottom: 9px;
-      border-bottom: 2px solid #00e887;
-      position: relative;
-    }
-    .home-sidebar .release-title {
-      margin: 0;
-      color: #f2f4f6;
-      font-size: 14px;
-      line-height: 1.2;
-      font-weight: 800;
-      letter-spacing: -.025em;
-      text-transform: uppercase;
-    }
-    .home-sidebar .release-title::first-letter { color: #00e887; }
-    .home-sidebar .release-subtitle { display: none; }
-    .home-sidebar .release-filters {
-      gap: 5px;
-      margin-bottom: 10px;
-    }
-    .home-sidebar .release-filter {
-      padding: 5px 9px;
-      min-height: 22px;
-      border: 1px solid #303741;
-      border-radius: 999px;
-      background: #242a33;
-      color: #c5cbd2;
-      font-size: 10px;
-      line-height: 1;
-      font-weight: 700;
-    }
-    .home-sidebar .release-filter.active {
-      color: #fff;
-      background: #00a967;
-      border-color: #00e887;
-      box-shadow: none;
-    }
-    .home-sidebar .release-wrapper { overflow: visible; }
-    .home-sidebar .release-games {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      padding: 0;
-      overflow: visible;
-      scrollbar-width: none;
-    }
-    .home-sidebar .release-games::-webkit-scrollbar { display: none; }
-    .home-sidebar .release-card {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      width: 100%;
-      min-width: 0;
-      height: auto;
-      min-height: 42px;
-      padding: 0;
-      overflow: visible;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      transform: none;
-    }
-    .home-sidebar .release-card:hover {
-      border: 0;
-      box-shadow: none;
-      transform: translateX(2px);
-    }
-    .home-sidebar .release-image,
-    .home-sidebar .release-card::after { display: none; }
-    .home-sidebar .release-date {
-      position: static;
-      flex: 0 0 33px;
-      width: 33px;
-      min-height: 39px;
-      padding: 4px 2px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1px;
-      border: 1px solid #343c47;
-      border-radius: 7px;
-      background: #222832;
-      color: #f1f3f5;
-      font-size: 0;
-      line-height: 1;
-      text-align: center;
-      backdrop-filter: none;
-    }
-    .home-sidebar .release-date strong {
-      color: inherit;
-      font-size: 14px;
-      font-weight: 800;
-      line-height: 1;
-    }
-    .home-sidebar .release-date small {
-      color: #aeb7c1;
-      font-size: 7px;
-      font-weight: 800;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-    .home-sidebar .release-date::first-letter { color: inherit; }
-    .home-sidebar .release-info {
-      position: static;
-      min-width: 0;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
-    .home-sidebar .release-name {
-      display: block;
-      min-height: 0;
-      margin: 0;
-      color: #f0f2f4;
-      font-size: 12px;
-      line-height: 1.25;
-      font-weight: 700;
-      text-shadow: none;
-    }
-    .home-sidebar .release-platforms { gap: 4px; }
-    .home-sidebar .release-platform {
-      padding: 2px 5px;
-      border: 0;
-      border-radius: 4px;
-      background: #252c35;
-      color: #c5ccd4;
-      font-size: 8px;
-      line-height: 1.2;
-    }
-    .home-sidebar .release-platform.pc,
-    .home-sidebar .release-platform.xbox,
-    .home-sidebar .release-platform.playstation,
-    .home-sidebar .release-platform.switch {
-      color: #c5ccd4;
-      border: 0;
-    }
-    .home-sidebar .release-arrow { display: none !important; }
-    .home-sidebar .release-loading,
-    .home-sidebar .release-empty,
-    .home-sidebar .release-error {
-      padding: 18px 8px;
-      font-size: 11px;
-    }
-    body.modo-claro .home-sidebar .release-calendar { background: #fff; border-color: #dce5de; }
-    body.modo-claro .home-sidebar .release-title,
-    body.modo-claro .home-sidebar .release-name { color: #202820; }
-    body.modo-claro .home-sidebar .release-filter { background: #eef2ef; color: #4d5a51; border-color: #dce5de; }
-    body.modo-claro .home-sidebar .release-filter.active { background: #087a45; color: #fff; border-color: #087a45; }
-    body.modo-claro .home-sidebar .release-date,
-    body.modo-claro .home-sidebar .release-platform { background: #edf1ee; color: #405047; border-color: #dce5de; }
-    body.modo-claro .home-sidebar .release-date small { color: #657269; }
-
-    /* Data em duas linhas: dia em destaque e mês abaixo. */
-    @media (max-width: 800px) {
-      .home-sidebar .release-calendar { height: auto; }
-    }
-
   </style>
 
 </head>
@@ -2678,7 +2505,7 @@ body.modo-claro #themeToggle {
       <section class="release-calendar">
         <div class="release-header">
           <div>
-            <h2 class="release-title">PRÓXIMOS LANÇAMENTOS</h2>
+            <h2 class="release-title">🎮 Calendário de Lançamentos</h2>
             <p class="release-subtitle">Confira os próximos jogos que chegam ao PC e consoles.</p>
           </div>
         </div>
@@ -3151,20 +2978,12 @@ function mostrarLancamentos(plataforma) {
           "Data não informada"
         );
 
-      const partesData = data.includes("/")
-        ? data.split("/")
-        : data.split("-").reverse();
-      const diaData = partesData.length === 3 ? partesData[0] : "--";
-      const mesNumero = partesData.length === 3 ? partesData[1] : "";
-      const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
-      const mesData = meses[Number(mesNumero) - 1] || "";
-
 
       return `
 
         <a
           class="release-card"
-          href="${escapeReleaseHTML(jogo.link || '#')}"
+          href="${escapeReleaseHTML(jogo.link_rawg || '#')}"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -3180,8 +2999,7 @@ function mostrarLancamentos(plataforma) {
           <div class="release-info">
 
             <div class="release-date">
-              <strong>${escapeReleaseHTML(diaData)}</strong>
-              <small>${escapeReleaseHTML(mesData)}</small>
+              📅 ${data}
             </div>
 
             <div class="release-name">
