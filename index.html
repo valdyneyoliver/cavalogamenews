@@ -2325,6 +2325,104 @@ body.modo-claro #themeToggle {
       .home-featured-banner .featured { height: 390px; }
     }
 
+
+
+    /* =====================================================
+       CALENDÁRIO DE LANÇAMENTOS - VISUAL EM COLUNA
+       Alteração isolada: mantém filtros, dados e cartões existentes.
+    ===================================================== */
+    .release-calendar .release-wrapper {
+      padding-right: 34px;
+      min-width: 0;
+    }
+    .release-calendar .release-games {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      height: 310px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 2px 3px 2px 2px;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+    }
+    .release-calendar .release-games::-webkit-scrollbar {
+      display: none;
+    }
+    .release-calendar .release-card {
+      position: relative;
+      display: block;
+      flex: 0 0 68px;
+      width: 100%;
+      min-width: 0;
+      height: 68px;
+      scroll-snap-align: start;
+      border-radius: 9px;
+    }
+    .release-calendar .release-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .release-calendar .release-card::after {
+      background: linear-gradient(90deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.48) 42%, rgba(0,0,0,.88) 100%);
+    }
+    .release-calendar .release-date {
+      position: absolute;
+      left: auto;
+      right: 8px;
+      top: 6px;
+      bottom: auto;
+      width: auto;
+      padding: 3px 6px;
+      font-size: 9px;
+    }
+    .release-calendar .release-info {
+      left: 10px;
+      right: 8px;
+      bottom: 6px;
+    }
+    .release-calendar .release-name {
+      min-height: 0;
+      margin: 0 0 4px;
+      font-size: 12px;
+      line-height: 1.15;
+      display: block;
+    }
+    .release-calendar .release-platforms {
+      gap: 3px;
+    }
+    .release-calendar .release-platform {
+      padding: 2px 5px;
+      font-size: 8px;
+    }
+    .release-calendar .release-arrow {
+      width: 30px;
+      height: 36px;
+      border-radius: 9px;
+    }
+    .release-calendar .release-arrow-left {
+      display: none !important;
+    }
+    .release-calendar .release-arrow-right {
+      right: -1px;
+      top: 50%;
+    }
+    @media (max-width: 900px) {
+      .release-calendar .release-games { height: 310px; }
+      .release-calendar .release-arrow { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .release-calendar .release-games { height: 310px; }
+      .release-calendar .release-card {
+        width: 100%;
+        min-width: 0;
+        height: 68px;
+        flex-basis: 68px;
+      }
+      .release-calendar .release-arrow { display: flex; }
+    }
+
   </style>
 
 </head>
@@ -3041,7 +3139,7 @@ releasePrev.addEventListener(
 
     releaseContainer.scrollBy({
 
-      left: -500,
+      top: -310,
 
       behavior: "smooth"
 
@@ -3057,7 +3155,7 @@ releaseNext.addEventListener(
 
     releaseContainer.scrollBy({
 
-      left: 500,
+      top: 310,
 
       behavior: "smooth"
 
@@ -3075,21 +3173,18 @@ function atualizarSetas() {
 
   setTimeout(() => {
 
-    if (
-      releaseContainer.scrollWidth <=
-      releaseContainer.clientWidth
-    ) {
+    releasePrev.style.display = "none";
 
-      releasePrev.style.display = "none";
+    if (
+      releaseContainer.scrollHeight <=
+      releaseContainer.clientHeight
+    ) {
 
       releaseNext.style.display = "none";
 
       return;
 
     }
-
-
-    releasePrev.style.display = "flex";
 
     releaseNext.style.display = "flex";
 
