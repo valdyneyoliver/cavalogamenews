@@ -2423,7 +2423,138 @@ body.modo-claro #themeToggle {
       .release-calendar .release-arrow { display: flex; }
     }
 
-  </style>
+  
+
+    /* =====================================================
+       ÚLTIMAS NOTÍCIAS — CARDS HORIZONTAIS
+       Alteração visual isolada: mantém carregamento e paginação.
+    ===================================================== */
+    .home-news-column .news-grid {
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: none;
+      gap: 14px;
+    }
+
+    .home-news-column .news-link {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .home-news-column .news-card-horizontal {
+      display: flex;
+      align-items: stretch;
+      min-height: 178px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #141d17, #0e1511);
+    }
+
+    .home-news-column .news-card-horizontal > img {
+      flex: 0 0 38%;
+      width: 38%;
+      height: auto;
+      min-height: 178px;
+      object-fit: cover;
+      align-self: stretch;
+    }
+
+    .home-news-column .news-card-horizontal .card-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 17px 19px;
+    }
+
+    .home-news-column .news-card-horizontal .category {
+      margin-bottom: 7px;
+      font-size: 10px;
+    }
+
+    .home-news-column .news-card-horizontal h3 {
+      margin: 0 0 8px;
+      color: #f2f7f3;
+      font-size: clamp(18px, 1.45vw, 22px);
+      line-height: 1.22;
+      font-weight: 800;
+    }
+
+    .home-news-column .news-card-horizontal p {
+      margin: 0 0 12px;
+      color: #aebbb2;
+      font-size: 13px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 13px;
+      margin-top: auto;
+      color: #8d9b91;
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .news-card-time { color: #aebbb2; }
+    .news-card-author { color: #00e887; font-weight: 700; }
+
+    body.modo-claro .home-news-column .news-card-horizontal {
+      background: #fff;
+      border-color: #dce7df;
+    }
+
+    body.modo-claro .home-news-column .news-card-horizontal h3 {
+      color: #1b2920;
+    }
+
+    body.modo-claro .home-news-column .news-card-horizontal p,
+    body.modo-claro .news-card-time {
+      color: #58675d;
+    }
+
+    @media (max-width: 700px) {
+      .home-news-column .news-card-horizontal {
+        min-height: 145px;
+      }
+      .home-news-column .news-card-horizontal > img {
+        flex-basis: 36%;
+        width: 36%;
+        min-height: 145px;
+      }
+      .home-news-column .news-card-horizontal .card-content {
+        padding: 12px;
+      }
+      .home-news-column .news-card-horizontal h3 {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      .home-news-column .news-card-horizontal p {
+        font-size: 12px;
+        -webkit-line-clamp: 2;
+      }
+      .news-card-meta { font-size: 10px; gap: 4px 8px; }
+    }
+
+    @media (max-width: 420px) {
+      .home-news-column .news-card-horizontal > img {
+        flex-basis: 34%;
+        width: 34%;
+      }
+      .home-news-column .news-card-horizontal .card-content {
+        padding: 10px;
+      }
+      .home-news-column .news-card-horizontal h3 { font-size: 14px; }
+      .home-news-column .news-card-horizontal .category { font-size: 9px; }
+    }
+
+</style>
 
 </head>
 
@@ -3302,48 +3433,35 @@ function renderizarPagina(posts, pagina = 1) {
 ===================================================== */
 
 function criarCardNoticia(post) {
+  const horarioPublicacao =
+    post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
+
+  const autorPublicacao = post.autor || "Valdiney Oliver";
 
   return `
-
-    <a
-      href="${linkDaNoticia(post)}"
-      class="news-link"
-    >
-
-      <div class="card">
-
+    <a href="${linkDaNoticia(post)}" class="news-link">
+      <article class="card news-card-horizontal">
         <img
           src="${post.imagem}"
-          alt="${post.titulo}"
+          alt="${escaparTextoHTML(post.titulo)}"
           loading="lazy"
         >
 
         <div class="card-content">
+          <div class="category">${escaparTextoHTML(post.categoria || "Notícia")}</div>
 
-          <div class="category">
-            ${post.categoria}
+          <h3>${escaparTextoHTML(post.titulo)}</h3>
+
+          <p>${escaparTextoHTML(post.resumo || "")}</p>
+
+          <div class="news-card-meta">
+            <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
+            <span class="news-card-author">Por ${escaparTextoHTML(autorPublicacao)}</span>
           </div>
-
-          <div class="date">
-            ${post.data}
-          </div>
-
-          <h3>
-            ${post.titulo}
-          </h3>
-
-          <p>
-            ${post.resumo}
-          </p>
-
         </div>
-
-      </div>
-
+      </article>
     </a>
-
   `;
-
 }
 
 
