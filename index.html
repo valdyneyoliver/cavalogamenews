@@ -2688,25 +2688,21 @@ body.modo-claro #themeToggle {
     }
 
 
-    /* CABEÇALHO: POSIÇÃO DOS CONTROLES E ANIMAÇÃO ESTÁVEL */
+    /* CABEÇALHO: ANIMAÇÃO ESTÁVEL, SEM ALTERAR A ALTURA DA PÁGINA */
     header {
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    header .header-inner {
-      position: relative;
-      gap: 14px;
-    }
+
     header .logo,
-    header .header-tools {
-      opacity: 1;
-      visibility: visible;
-      max-height: 70px;
-      overflow: visible;
-      transition: opacity .22s ease, max-height .28s ease,
-                  transform .28s ease, margin .28s ease;
+    header .header-tools,
+    header nav {
+      transition: opacity .25s ease, transform .35s ease;
+      will-change: transform, opacity;
     }
+
+    /* Controles no canto superior direito também em telas pequenas */
     header .header-tools {
       position: absolute;
       top: 7px;
@@ -2717,30 +2713,20 @@ body.modo-claro #themeToggle {
       margin: 0;
       z-index: 20;
     }
-    header .logo { transform: translateY(0); }
 
-    header.header-compact {
-      padding-top: 7px;
-      padding-bottom: 7px;
-    }
-    header.header-compact .header-inner { gap: 0; }
+    /* Ao rolar, escondemos os elementos de cima sem recolher o cabeçalho.
+       Assim a altura não fica mudando e a animação não entra em repetição. */
     header.header-compact .logo,
     header.header-compact .header-tools {
       opacity: 0;
-      visibility: hidden;
-      max-height: 0;
-      margin: 0;
-      transform: translateY(-8px);
-      overflow: hidden;
+      transform: translateY(-12px);
       pointer-events: none;
     }
+
     header.header-compact nav {
-      min-height: 40px;
-      padding-top: 8px;
-      padding-bottom: 8px;
+      transform: translateY(-76px);
     }
 
-    /* Celular: lupa e tema ficam no canto superior direito, nunca centralizados */
     @media (max-width: 900px) {
       header { padding: 12px 12px 14px; }
       header .header-inner {
@@ -2781,14 +2767,9 @@ body.modo-claro #themeToggle {
       }
       header nav::-webkit-scrollbar { display: none; }
       header nav a { flex: 0 0 auto; white-space: nowrap; }
-      header.header-compact { padding: 5px 8px; }
-      header.header-compact .header-inner { gap: 0; }
-      header.header-compact nav {
-        min-height: 40px;
-        padding: 7px 10px;
-        border-radius: 8px;
-      }
+      header.header-compact nav { transform: translateY(-70px); }
     }
+
     @media (max-width: 560px) {
       header nav { gap: 9px; padding: 10px 9px; }
       header nav a { font-size: 11px; }
@@ -2799,8 +2780,9 @@ body.modo-claro #themeToggle {
         width: min(210px, 70vw);
       }
     }
+
     @media (prefers-reduced-motion: reduce) {
-      header .logo, header .header-tools { transition: none; }
+      header .logo, header .header-tools, header nav { transition: none; }
     }
 
 </style>
@@ -2846,10 +2828,18 @@ body.modo-claro #themeToggle {
   (() => {
     const cabecalho = document.querySelector('header');
     if (!cabecalho) return;
+
+    let compacto = false;
     let quadroPendente = false;
 
     const atualizarCabecalho = () => {
-      cabecalho.classList.toggle('header-compact', window.scrollY > 90);
+      const posicao = window.scrollY || document.documentElement.scrollTop;
+
+      // Faixas diferentes para entrar e sair do modo compacto evitam oscilações.
+      if (!compacto && posicao > 130) compacto = true;
+      else if (compacto && posicao < 55) compacto = false;
+
+      cabecalho.classList.toggle('header-compact', compacto);
       quadroPendente = false;
     };
 
