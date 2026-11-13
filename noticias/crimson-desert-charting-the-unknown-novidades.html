@@ -76,28 +76,41 @@ a { color: inherit; }
   top: 0;
   z-index: 1000;
   width: 100%;
-  padding: 12px 25px;
-  background: rgba(5, 7, 6, .96);
+  padding: 10px 25px 0;
+  background: rgba(5, 7, 6, .97);
   border-bottom: 1px solid #1c2b22;
   box-shadow: 0 8px 28px rgba(0,0,0,.22);
   backdrop-filter: blur(16px);
+  transition: padding .28s ease;
 }
 .header-inner {
   max-width: 1450px;
   margin: auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 25px;
+  column-gap: 18px;
 }
-.brand { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; justify-self: start; text-decoration: none; min-height: 48px; transition: opacity .22s ease, transform .22s ease, min-height .22s ease; }
 .brand img { display: block; width: auto; height: 42px; object-fit: contain; }
 .article-nav {
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: clamp(10px, 1.35vw, 21px);
   flex-wrap: wrap;
-  flex: 1;
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 14px;
+  background: #087b4b;
+  border-radius: 9px 9px 0 0;
+  transition: min-height .22s ease, padding .22s ease, border-radius .22s ease;
 }
+.site-header.compact { padding-top: 5px; }
+.site-header.compact .brand { display: none; }
+.site-header.compact .theme-toggle { display: none; }
+.site-header.compact .article-nav { min-height: 42px; border-radius: 8px 8px 0 0; }
 .article-nav a {
   color: #dce6df;
   text-decoration: none;
@@ -423,11 +436,14 @@ footer {
   .related-card img { width: 78px; height: 68px; }
 }
 @media (max-width: 760px) {
-  .site-header { padding: 12px 18px; }
-  .header-inner { flex-direction: column; align-items: flex-start; gap: 13px; }
-  .brand img { height: 40px; max-width: 82vw; }
-  .article-nav { width: 100%; gap: 11px; }
-  .article-nav a { font-size: 12px; }
+  .site-header { padding: 8px 12px 0; }
+  .header-inner { grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; }
+  .brand { min-height: 44px; }
+  .brand img { height: 38px; max-width: 72vw; }
+  .article-nav { justify-content: flex-start; gap: 10px 14px; padding: 9px 10px; }
+  .article-nav a { font-size: 11px; }
+  .site-header.compact { padding: 4px 8px 0; }
+  .site-header.compact .article-nav { justify-content: center; gap: 8px 12px; padding: 8px; }
   .page-wrap { margin-top: 22px; }
   .layout { grid-template-columns: minmax(0, 1fr); }
   .sidebar-card { position: static; }
@@ -526,9 +542,9 @@ footer {
       <a href="../index.html?categoria=Jogos%20Gr%C3%A1tis">JOGOS GRÁTIS</a>
       <a href="../ao-vivo.html" class="live-button">TRANSMITIR A TELA</a>
       <button class="support-button" id="supportButton" type="button">💚 APOIE</button>
-      <button class="theme-toggle" id="themeToggle" type="button"
-              aria-label="Alternar tema" title="Alternar tema">☀️</button>
     </nav>
+    <button class="theme-toggle" id="themeToggle" type="button"
+            aria-label="Alternar tema" title="Alternar tema">☀️</button>
   </div>
 </header>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
@@ -579,12 +595,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/I/41Io2nD-KiL._AC_SL1024_.jpg" alt="Mouse pad gamer RGB LED de 80x30 cm com iluminação de 14 modos" loading="lazy">
+    <img src="https://m.media-amazon.com/images/I/71VTmM-EbNL._AC_SL1500_.jpg" alt="Redragon Controle Gamer Rift G710 preto para PC e PS3" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🖱️ Mouse Pad Gamer</span>
-      <h3>Mouse Pad Gamer RGB LED 80x30cm</h3>
-      <p>Mouse pad gamer estendido de 80x30 cm com 14 modos de iluminação RGB, superfície macia de velocidade, base antiderrapante em borracha e bordas costuradas.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/A05sIikL4" target="_blank"
+      <span class="anuncio-produto-categoria">🎮 Controle para PC e PS3</span>
+      <h3>Redragon Controle Gamer Rift G710</h3>
+      <p>Controle gamer USB Redragon Rift G710, compatível com PC e PS3, com vibração e botões extras programáveis na cor preta.</p>
+      <a class="anuncio-produto-botao" href="https://link.amazon/A0iyintKa" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -785,6 +801,36 @@ footer {
       aplicarTema(temaAtual === 'light' ? 'dark' : 'light');
     });
   }
+})();
+</script>
+
+<script>
+(function() {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  let compacto = false;
+  let aguardando = false;
+
+  function atualizarCabecalho() {
+    const posicao = window.scrollY || document.documentElement.scrollTop;
+    if (!compacto && posicao > 130) {
+      compacto = true;
+      header.classList.add('compact');
+    } else if (compacto && posicao < 55) {
+      compacto = false;
+      header.classList.remove('compact');
+    }
+    aguardando = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!aguardando) {
+      window.requestAnimationFrame(atualizarCabecalho);
+      aguardando = true;
+    }
+  }, { passive: true });
+  atualizarCabecalho();
 })();
 </script>
 
