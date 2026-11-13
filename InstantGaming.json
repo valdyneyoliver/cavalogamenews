@@ -3,7 +3,7 @@
     "nome": "Call of Duty: Modern Warfare 4 - PC & XBOX Series X|S (Microsoft Store)",
     "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/16809/380x218/16809-cover.jpg?v=1792479050",
-    "preco": "R$ 333,26",
+    "preco": "R$ 335,55",
     "desconto": "-33%",
     "url": "https://www.instant-gaming.com/pt/16809-comprar-xbox-series-x-s-call-of-duty-modern-warfare-4-xbox-series-x-s-pc-microsoft-store/?igr=gamer-c0b7c0b"
   },
@@ -11,7 +11,7 @@
     "nome": "Phantom Blade Zero - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/14205/380x218/14205-cover.jpg?v=1793261391",
-    "preco": "R$ 280,79",
+    "preco": "R$ 282,73",
     "desconto": "-24%",
     "url": "https://www.instant-gaming.com/pt/14205-comprar-steam-phantom-blade-zero-pc-steam/?igr=gamer-c0b7c0b"
   },
@@ -19,135 +19,215 @@
     "nome": "Probably Stolen - Cyberpunk Shopkeeper Sim - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/23573/380x218/23573-cover.jpg?v=1793624865",
-    "preco": "R$ 74,01",
+    "preco": "R$ 74,52",
     "desconto": "-40%",
     "url": "https://www.instant-gaming.com/pt/23573-comprar-steam-probably-stolen-cyberpunk-shopkeeper-sim-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Crimson Desert Enhanced: Charting the Unknown - PC & Mac (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23880/380x218/23880-cover.jpg?v=1793265413",
-    "preco": "R$ 122,16",
-    "desconto": "-21%",
-    "url": "https://www.instant-gaming.com/pt/23880-comprar-steam-crimson-desert-enhanced-charting-the-unknown-pc-mac-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "WARDOGS - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/21740/380x218/21740-cover.jpg?v=1788778229",
-    "preco": "R$ 184,50",
+    "preco": "R$ 185,77",
     "desconto": "-25%",
     "url": "https://www.instant-gaming.com/pt/21740-comprar-steam-wardogs-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Main Sequence - PC (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/24415/380x218/24415-cover.jpg?v=1794499547",
+    "preco": "R$ 83,84",
+    "desconto": "-46%",
+    "url": "https://www.instant-gaming.com/pt/24415-comprar-steam-main-sequence-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "EA Sports FC 27 - PC (EA App)",
     "plataforma": "PC (EA app)",
     "imagem": "https://gaming-cdn.com/images/products/21656/380x218/21656-cover.jpg?v=1790312899",
-    "preco": "R$ 311,04",
+    "preco": "R$ 313,18",
     "desconto": "-28%",
     "url": "https://www.instant-gaming.com/pt/21656-comprar-ea-app-ea-sports-fc-27-pc-ea-app/?igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Planet Zoo 2 - PC (Steam) - Europe & US & Canada",
+    "nome": "Crimson Desert Enhanced: Charting the Unknown - PC & Mac (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/21064/380x218/21064-cover.jpg?v=1793013471",
-    "preco": "R$ 214,13",
-    "desconto": "-31%",
-    "url": "https://www.instant-gaming.com/pt/21064-comprar-steam-planet-zoo-2-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Planet Zoo 2 Deluxe Edition - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/24091/380x218/24091-cover.jpg?v=1792687714",
-    "preco": "R$ 290,05",
-    "desconto": "-28%",
-    "url": "https://www.instant-gaming.com/pt/24091-comprar-steam-planet-zoo-2-deluxe-edition-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "No More Room In Hell 2 - PC (Steam)",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/12335/380x218/12335-cover.jpg?v=1787643061",
-    "preco": "R$ 74,01",
-    "desconto": "-17%",
-    "url": "https://www.instant-gaming.com/pt/12335-comprar-steam-no-more-room-in-hell-2-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Phantom Blade Zero Digital Deluxe Edition - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23617/380x218/23617-cover.jpg?v=1793261315",
-    "preco": "R$ 327,08",
-    "desconto": "Sem desconto informado",
-    "url": "https://www.instant-gaming.com/pt/23617-comprar-steam-phantom-blade-zero-digital-deluxe-edition-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Forza Horizon 6 - PC & XBOX Series X|S (Microsoft Store)",
-    "plataforma": "Xbox Series X|S",
-    "imagem": "https://gaming-cdn.com/images/products/19535/380x218/19535-cover.jpg?v=1778747414",
-    "preco": "R$ 296,22",
-    "desconto": "-31%",
-    "url": "https://www.instant-gaming.com/pt/19535-comprar-xbox-series-x-s-forza-horizon-6-xbox-series-x-s-pc-microsoft-store/?igr=gamer-c0b7c0b"
+    "imagem": "https://gaming-cdn.com/images/products/23880/380x218/23880-cover.jpg?v=1793265413",
+    "preco": "Preço não informado",
+    "desconto": "-21%",
+    "url": "https://www.instant-gaming.com/pt/23880-comprar-steam-crimson-desert-enhanced-charting-the-unknown-pc-mac-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Enshrouded - PC (Steam)",
     "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/14129/380x218/14129-cover.jpg?v=1792590729",
-    "preco": "R$ 212,27",
+    "preco": "R$ 213,74",
     "desconto": "-14%",
     "url": "https://www.instant-gaming.com/pt/14129-comprar-steam-enshrouded-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Final Fantasy Resonance - PC (Steam)",
+    "nome": "Planet Zoo 2 - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/22936/380x218/22936-cover.jpg?v=1793275643",
-    "preco": "R$ 243,75",
-    "desconto": "-21%",
-    "url": "https://www.instant-gaming.com/pt/22936-comprar-steam-final-fantasy-resonance-pc-steam/?igr=gamer-c0b7c0b"
+    "imagem": "https://gaming-cdn.com/images/products/21064/380x218/21064-cover.jpg?v=1793013471",
+    "preco": "R$ 215,60",
+    "desconto": "-31%",
+    "url": "https://www.instant-gaming.com/pt/21064-comprar-steam-planet-zoo-2-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
-    "nome": "ReStory: Chill Electronics Repairs - PC (Steam) - Europe & US & Canada",
+    "nome": "No More Room In Hell 2 - PC (Steam)",
     "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23124/380x218/23124-cover.jpg?v=1792070824",
-    "preco": "R$ 77,71",
-    "desconto": "-37%",
-    "url": "https://www.instant-gaming.com/pt/23124-comprar-steam-restory-chill-electronics-repairs-pc-steam/?igr=gamer-c0b7c0b"
+    "imagem": "https://gaming-cdn.com/images/products/12335/380x218/12335-cover.jpg?v=1787643061",
+    "preco": "R$ 74,52",
+    "desconto": "-16%",
+    "url": "https://www.instant-gaming.com/pt/12335-comprar-steam-no-more-room-in-hell-2-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Escape Academy 2: Back 2 School - PC (Steam)",
+    "nome": "ArcheAge Chronicles - PC (Steam)",
     "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/19555/380x218/19555-cover.jpg?v=1794328932",
-    "preco": "R$ 67,22",
-    "desconto": "-36%",
-    "url": "https://www.instant-gaming.com/pt/19555-comprar-steam-escape-academy-2-back-2-school-pc-steam/?igr=gamer-c0b7c0b"
+    "imagem": "https://gaming-cdn.com/images/products/17585/380x218/17585-cover.jpg?v=1793804007",
+    "preco": "R$ 129,83",
+    "desconto": "-30%",
+    "url": "https://www.instant-gaming.com/pt/17585-comprar-steam-archeage-chronicles-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
-    "nome": "Age of Empires IV: Raiders of the North - PC (Steam)",
+    "nome": "Planet Zoo 2 Deluxe Edition - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/22865/380x218/22865-cover.jpg?v=1793607887",
-    "preco": "R$ 106,72",
-    "desconto": "-14%",
-    "url": "https://www.instant-gaming.com/pt/22865-comprar-steam-age-of-empires-iv-raiders-of-the-north-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Valheim - PC & Mac (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/7119/380x218/7119-cover.jpg?v=1789125638",
-    "preco": "R$ 132,65",
+    "imagem": "https://gaming-cdn.com/images/products/24091/380x218/24091-cover.jpg?v=1792687714",
+    "preco": "R$ 292,05",
     "desconto": "-28%",
-    "url": "https://www.instant-gaming.com/pt/7119-comprar-steam-valheim-pc-mac-steam/?igr=gamer-c0b7c0b"
+    "url": "https://www.instant-gaming.com/pt/24091-comprar-steam-planet-zoo-2-deluxe-edition-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Forza Horizon 6 - PC & XBOX Series X|S (Microsoft Store)",
+    "plataforma": "Xbox Series X|S",
+    "imagem": "https://gaming-cdn.com/images/products/19535/380x218/19535-cover.jpg?v=1778747414",
+    "preco": "R$ 298,26",
+    "desconto": "-31%",
+    "url": "https://www.instant-gaming.com/pt/19535-comprar-xbox-series-x-s-forza-horizon-6-xbox-series-x-s-pc-microsoft-store/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Call of Duty: Modern Warfare 4 - Edição Vault - PC & XBOX Series X|S (Microsoft Store)",
     "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/22745/380x218/22745-cover.jpg?v=1792479069",
-    "preco": "R$ 493,74",
+    "preco": "R$ 497,15",
     "desconto": "-27%",
     "url": "https://www.instant-gaming.com/pt/22745-comprar-xbox-series-x-s-call-of-duty-modern-warfare-4-edicao-vault-xbox-series-x-s-pc-microsoft-store/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Valheim - PC & Mac (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/7119/380x218/7119-cover.jpg?v=1789125638",
+    "preco": "R$ 133,56",
+    "desconto": "-28%",
+    "url": "https://www.instant-gaming.com/pt/7119-comprar-steam-valheim-pc-mac-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "ReStory: Chill Electronics Repairs - PC (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/23124/380x218/23124-cover.jpg?v=1792070824",
+    "preco": "R$ 78,25",
+    "desconto": "-37%",
+    "url": "https://www.instant-gaming.com/pt/23124-comprar-steam-restory-chill-electronics-repairs-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "CONTROL Resonant Digital Deluxe Edition - PC (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/23785/380x218/23785-cover.jpg?v=1790314493",
+    "preco": "R$ 229,90",
+    "desconto": "-12%",
+    "url": "https://www.instant-gaming.com/pt/23785-comprar-steam-control-resonant-digital-deluxe-edition-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Warhammer 40,000: Dawn of War IV Commander Edition + Acesso avançado - PC (Steam) + Acesso avançado - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/22688/380x218/22688-cover.jpg?v=1793970472",
+    "preco": "R$ 360,42",
+    "desconto": "Sem desconto informado",
+    "url": "https://www.instant-gaming.com/pt/22688-comprar-steam-warhammer-40-000-dawn-of-war-iv-commander-edition-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "S.O.N.A.R. - Submarine Operators Not Actually Ready - PC (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/23292/380x218/23292-cover.jpg?v=1793291031",
+    "preco": "R$ 41,58",
+    "desconto": "-29%",
+    "url": "https://www.instant-gaming.com/pt/23292-comprar-steam-s-o-n-a-r-submarine-operators-not-actually-ready-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Loftia - PC & Mac (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/24352/380x218/24352-cover.jpg?v=1793787397",
+    "preco": "R$ 94,41",
+    "desconto": "Sem desconto informado",
+    "url": "https://www.instant-gaming.com/pt/24352-comprar-steam-loftia-pc-mac-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Transport Fever 3 - PC & Mac (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/19382/380x218/19382-cover.jpg?v=1790781258",
+    "preco": "R$ 210,63",
+    "desconto": "-32%",
+    "url": "https://www.instant-gaming.com/pt/19382-comprar-steam-transport-fever-3-pc-mac-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Final Fantasy Resonance - PC (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/22936/380x218/22936-cover.jpg?v=1793275643",
+    "preco": "R$ 245,44",
+    "desconto": "-21%",
+    "url": "https://www.instant-gaming.com/pt/22936-comprar-steam-final-fantasy-resonance-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Farming Simulator 25: Beans & Alpacas - PC & Mac (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/23241/380x218/23241-cover.jpg?v=1793112717",
+    "preco": "R$ 105,60",
+    "desconto": "-20%",
+    "url": "https://www.instant-gaming.com/pt/23241-comprar-steam-farming-simulator-25-beans-alpacas-pc-mac-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Age of Empires IV: Raiders of the North - PC (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/22865/380x218/22865-cover.jpg?v=1793607887",
+    "preco": "R$ 107,46",
+    "desconto": "-14%",
+    "url": "https://www.instant-gaming.com/pt/22865-comprar-steam-age-of-empires-iv-raiders-of-the-north-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "BALL x PIT: Risen Ballbylon - PC & Mac (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/24076/380x218/24076-cover.jpg?v=1794567762",
+    "preco": "R$ 35,36",
+    "desconto": "Sem desconto informado",
+    "url": "https://www.instant-gaming.com/pt/24076-comprar-steam-ball-x-pit-risen-ballbylon-pc-mac-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "WARDOGS Supporter Edition - PC (Steam) - Europe & US & Canada",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/23831/380x218/23831-cover.jpg?v=1788778293",
+    "preco": "R$ 223,06",
+    "desconto": "-28%",
+    "url": "https://www.instant-gaming.com/pt/23831-comprar-steam-wardogs-supporter-edition-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Escape Academy 2: Back 2 School - PC (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/19555/380x218/19555-cover.jpg?v=1794328932",
+    "preco": "R$ 67,68",
+    "desconto": "-36%",
+    "url": "https://www.instant-gaming.com/pt/19555-comprar-steam-escape-academy-2-back-2-school-pc-steam/?igr=gamer-c0b7c0b"
+  },
+  {
+    "nome": "Ashes of the Singularity II - PC (Steam)",
+    "plataforma": "PC (Steam)",
+    "imagem": "https://gaming-cdn.com/images/products/20016/380x218/20016-cover.jpg?v=1794499581",
+    "preco": "R$ 108,70",
+    "desconto": "-16%",
+    "url": "https://www.instant-gaming.com/pt/20016-comprar-steam-ashes-of-the-singularity-ii-pc-steam/?igr=gamer-c0b7c0b"
   },
   {
     "nome": "Star Wars: Galactic Racer - PC (Steam) - Europe & US & Canada",
     "plataforma": "PC (Steam)",
     "imagem": "https://gaming-cdn.com/images/products/21378/380x218/21378-cover.jpg?v=1791279165",
-    "preco": "R$ 243,75",
+    "preco": "R$ 245,44",
     "desconto": "-34%",
     "url": "https://www.instant-gaming.com/pt/21378-comprar-steam-star-wars-galactic-racer-pc-steam/?igr=gamer-c0b7c0b"
   },
@@ -155,88 +235,8 @@
     "nome": "EA Sports FC 27 - XBOX One & XBOX Series X|S",
     "plataforma": "Xbox Series X|S",
     "imagem": "https://gaming-cdn.com/images/products/23585/380x218/23585-cover.jpg?v=1792739294",
-    "preco": "R$ 345,60",
+    "preco": "R$ 347,99",
     "desconto": "-30%",
     "url": "https://www.instant-gaming.com/pt/23585-comprar-xbox-series-x-s-ea-sports-fc-27-xbox-series-x-s-xbox-one-microsoft-store/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Farming Simulator 25: Beans & Alpacas - PC & Mac (Steam)",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23241/380x218/23241-cover.jpg?v=1793112717",
-    "preco": "R$ 104,87",
-    "desconto": "-21%",
-    "url": "https://www.instant-gaming.com/pt/23241-comprar-steam-farming-simulator-25-beans-alpacas-pc-mac-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Transport Fever 3 - PC & Mac (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/19382/380x218/19382-cover.jpg?v=1790781258",
-    "preco": "R$ 209,19",
-    "desconto": "-32%",
-    "url": "https://www.instant-gaming.com/pt/19382-comprar-steam-transport-fever-3-pc-mac-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "WARDOGS Supporter Edition - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23831/380x218/23831-cover.jpg?v=1788778293",
-    "preco": "R$ 221,53",
-    "desconto": "-28%",
-    "url": "https://www.instant-gaming.com/pt/23831-comprar-steam-wardogs-supporter-edition-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Warhammer 40,000: Dawn of War IV Commander Edition + Acesso avançado - PC (Steam) + Acesso avançado - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/22688/380x218/22688-cover.jpg?v=1793970472",
-    "preco": "R$ 357,95",
-    "desconto": "Sem desconto informado",
-    "url": "https://www.instant-gaming.com/pt/22688-comprar-steam-warhammer-40-000-dawn-of-war-iv-commander-edition-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "CONTROL Resonant Digital Deluxe Edition - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23785/380x218/23785-cover.jpg?v=1790314493",
-    "preco": "R$ 228,32",
-    "desconto": "-12%",
-    "url": "https://www.instant-gaming.com/pt/23785-comprar-steam-control-resonant-digital-deluxe-edition-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Wanderburg - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/20070/380x218/20070-cover.jpg?v=1789026631",
-    "preco": "R$ 43,15",
-    "desconto": "Sem desconto informado",
-    "url": "https://www.instant-gaming.com/pt/20070-comprar-steam-wanderburg-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Alchemy Factory - PC (Steam)",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/21430/380x218/21430-cover.jpg?v=1770212201",
-    "preco": "R$ 59,81",
-    "desconto": "-45%",
-    "url": "https://www.instant-gaming.com/pt/21430-comprar-steam-alchemy-factory-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Casualties: Unknown - PC (Steam) - Europe & US & Canada",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/22436/380x218/22436-cover.jpg?v=1794328917",
-    "preco": "R$ 80,18",
-    "desconto": "-41%",
-    "url": "https://www.instant-gaming.com/pt/22436-comprar-steam-casualties-unknown-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "Resonance: A Plague Tale Legacy - PC (Steam)",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/19517/380x218/19517-cover.jpg?v=1787824628",
-    "preco": "R$ 153,64",
-    "desconto": "-15%",
-    "url": "https://www.instant-gaming.com/pt/19517-comprar-steam-resonance-a-plague-tale-legacy-pc-steam/?igr=gamer-c0b7c0b"
-  },
-  {
-    "nome": "S.O.N.A.R. - Submarine Operators Not Actually Ready - PC (Steam)",
-    "plataforma": "PC (Steam)",
-    "imagem": "https://gaming-cdn.com/images/products/23292/380x218/23292-cover.jpg?v=1793291031",
-    "preco": "R$ 41,29",
-    "desconto": "-29%",
-    "url": "https://www.instant-gaming.com/pt/23292-comprar-steam-s-o-n-a-r-submarine-operators-not-actually-ready-pc-steam/?igr=gamer-c0b7c0b"
   }
 ]
