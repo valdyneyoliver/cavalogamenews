@@ -92,23 +92,13 @@ a { color: inherit; }
   position: absolute; top: 7px; right: 0; display: flex; align-items: center;
   gap: 9px; z-index: 20; transition: opacity .25s ease, transform .3s ease;
 }
-.search-box { width: 42px; height: 42px; flex: 0 0 42px; position: relative; }
-.search-button, .theme-toggle {
+.theme-toggle {
   width: 42px; height: 42px; display: inline-flex; align-items: center;
   justify-content: center; border: 1px solid rgba(0,232,135,.42);
   border-radius: 12px; background: #101914; color: #fff; cursor: pointer;
   font-size: 17px; transition: background .2s ease, border-color .2s ease, transform .2s ease;
 }
-.search-button:hover, .theme-toggle:hover { background: #173323; border-color: #00e887; transform: translateY(-2px); }
-.search-box input {
-  position: absolute; top: 50px; left: auto; right: 0; width: 230px;
-  padding: 12px 17px; border: 1px solid rgba(0,232,135,.4); border-radius: 10px;
-  background: #101914; color: #fff; font-size: 14px; outline: none;
-  opacity: 0; visibility: hidden; transform: translateY(-5px); transition: .25s; z-index: 50;
-}
-.search-box.open input { opacity: 1; visibility: visible; transform: translateY(0); }
-.search-box input:focus { border-color: #00e887; box-shadow: 0 0 12px rgba(0,232,135,.18); }
-.search-box input::placeholder { color: #888; }
+.theme-toggle:hover { background: #173323; border-color: #00e887; transform: translateY(-2px); }
 .article-nav {
   width: 100%; min-height: 52px; box-sizing: border-box; display: flex;
   align-items: center; justify-content: center; flex-wrap: wrap;
@@ -124,17 +114,15 @@ a { color: inherit; }
 .article-nav a:hover { color: #fff; opacity: .78; transform: translateY(-1px); }
 .article-nav .support-button {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: 36px; padding: 8px 12px; border: 1px solid rgba(255,255,255,.55);
-  border-radius: 8px; background: rgba(255,255,255,.12); color: #fff;
-  font-weight: 800; cursor: pointer;
+  min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: transparent; color: #fff; font: inherit; cursor: pointer;
 }
-.article-nav .support-button:hover { background: rgba(255,255,255,.24); }
+.article-nav .support-button:hover { color: #fff; opacity: .78; transform: translateY(-1px); }
 .article-nav .live-button { color: #fff; }
 body[data-theme="light"] .site-header { background: rgba(248,251,249,.98); border-color: #dce7df; }
-body[data-theme="light"] .search-button, body[data-theme="light"] .theme-toggle {
+body[data-theme="light"] .theme-toggle {
   background: #fff; color: #24352a; border-color: #cbded1;
 }
-body[data-theme="light"] .search-box input { background: #fff; color: #1b2920; }
 .site-header, .site-header .brand img, .site-header .header-tools, .site-header .article-nav {
   transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
 }
@@ -155,7 +143,7 @@ body[data-theme="light"] .search-box input { background: #fff; color: #1b2920; }
   .site-header .header-inner { flex-direction: column; align-items: center; gap: 13px; }
   .site-header .brand img { height: 46px; max-width: 65vw; margin: 3px auto 0; }
   .site-header .header-tools { position: absolute; top: 2px; right: 0; }
-  .site-header .search-box, .site-header .search-button, .site-header .theme-toggle { width: 38px; height: 38px; flex-basis: 38px; }
+  .site-header .theme-toggle { width: 38px; height: 38px; }
   .article-nav { justify-content: flex-start; flex-wrap: nowrap; gap: 10px; overflow-x: auto; overflow-y: hidden; white-space: nowrap; }
   .article-nav a { font-size: 11px; }
   .site-header.header-compact { padding: 4px 12px; }
@@ -164,7 +152,6 @@ body[data-theme="light"] .search-box input { background: #fff; color: #1b2920; }
   .site-header { padding: 12px 12px 14px; }
   .site-header .brand img { height: 46px; max-width: 65vw; }
   .article-nav { gap: 10px 14px; padding: 12px 10px; }
-  .search-box input { right: -48px; width: min(230px, 75vw); }
   .letreiro-cgn { padding: 8px 0; }
   .letreiro-cgn-grupo { gap: 22px; padding-right: 22px; }
   .letreiro-cgn-grupo span { font-size: 11px; }
@@ -540,10 +527,6 @@ footer {
       <img src="../img/logo.png" alt="CavaloGameNews">
     </a>
     <div class="header-tools">
-      <div class="search-box" id="articleSearchBox">
-        <button class="search-button" id="articleSearchButton" type="button" aria-label="Pesquisar" title="Pesquisar">🔍</button>
-        <input type="text" id="articleSearchInput" placeholder="Buscar notícia..." aria-label="Buscar notícia">
-      </div>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema" title="Alternar entre tema claro e escuro">☀️</button>
     </div>
     <nav class="article-nav" aria-label="Navegação principal">
@@ -627,12 +610,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/W/BW_MEDIAX_AVIF_MEASUREMENT_1306696-T4/images/I/61BlWZ6nKYL._AC_SL1200_.jpg" alt="Teclado mecânico PCYES Kuromori White Ghost 60% com Switch Blue e LED Rainbow" loading="lazy">
+    <img src="https://m.media-amazon.com/images/I/61qR51HbFxL._AC_SL1080_.jpg" alt="Teclado Gamer RGB LED Rainbow MTS ABNT2" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">⌨️ Teclado Mecânico Gamer</span>
-      <h3>PCYES Kuromori White Ghost 60% — Switch Blue</h3>
-      <p>Teclado mecânico PCYES Kuromori White Ghost com layout compacto de 60%, switches Blue, iluminação LED Rainbow e design branco. Ideal para setups gamers e quem busca praticidade e desempenho.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/B03VXqFKV" target="_blank"
+      <span class="anuncio-produto-categoria">⌨️ Teclado Gamer</span>
+      <h3>Teclado Gamer RGB LED Rainbow MTS</h3>
+      <p>Teclado gamer de membrana com iluminação LED Rainbow, Anti-Ghosting, padrão ABNT2, conexão USB-A, teclas multimídia FN e design elegante para jogos e digitação.</p>
+      <a class="anuncio-produto-botao" href="https://link.amazon/B0eBxomx1" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -849,24 +832,7 @@ footer {
   }, { passive: true });
 })();
 </script>
-<script>
-(function() {
-  const box = document.getElementById('articleSearchBox');
-  const button = document.getElementById('articleSearchButton');
-  const input = document.getElementById('articleSearchInput');
-  if (!box || !button || !input) return;
-  button.addEventListener('click', () => {
-    box.classList.toggle('open');
-    if (box.classList.contains('open')) input.focus();
-  });
-  input.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && input.value.trim()) {
-      window.location.href = '../index.html?busca=' + encodeURIComponent(input.value.trim());
-    }
-    if (event.key === 'Escape') box.classList.remove('open');
-  });
-})();
-</script>
+
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
