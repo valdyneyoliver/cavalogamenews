@@ -2695,10 +2695,12 @@ body.modo-claro #themeToggle {
       z-index: 1000;
     }
 
+    header,
+    header .header-inner,
     header .logo,
     header .header-tools,
     header nav {
-      transition: opacity .25s ease, transform .35s ease;
+      transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
       will-change: transform, opacity;
     }
 
@@ -2716,7 +2718,26 @@ body.modo-claro #themeToggle {
 
     /* Ao rolar, escondemos os elementos de cima sem recolher o cabeçalho.
        Assim a altura não fica mudando e a animação não entra em repetição. */
-    header.header-compact .logo,
+    header.header-compact {
+      padding: 4px 24px;
+    }
+
+    header.header-compact .header-inner {
+      height: 40px;
+      min-height: 40px;
+      gap: 0;
+    }
+
+    header.header-compact .logo {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin: 0;
+      opacity: 0;
+      transform: translate(-50%, -12px);
+      pointer-events: none;
+    }
+
     header.header-compact .header-tools {
       opacity: 0;
       transform: translateY(-12px);
@@ -2724,7 +2745,10 @@ body.modo-claro #themeToggle {
     }
 
     header.header-compact nav {
-      transform: translateY(-76px);
+      min-height: 40px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      transform: none;
     }
 
     @media (max-width: 900px) {
@@ -2767,7 +2791,14 @@ body.modo-claro #themeToggle {
       }
       header nav::-webkit-scrollbar { display: none; }
       header nav a { flex: 0 0 auto; white-space: nowrap; }
-      header.header-compact nav { transform: translateY(-70px); }
+      header.header-compact { padding: 4px 12px; }
+      header.header-compact .header-inner { height: 38px; min-height: 38px; }
+      header.header-compact nav {
+        min-height: 38px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        transform: none;
+      }
     }
 
     @media (max-width: 560px) {
