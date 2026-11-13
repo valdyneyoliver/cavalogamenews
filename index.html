@@ -2687,6 +2687,46 @@ body.modo-claro #themeToggle {
       header .search-box input { right: -48px; width: min(230px, 75vw); }
     }
 
+
+    /* ANIMAÇÃO DO CABEÇALHO AO ROLAR */
+    header,
+    header .header-inner,
+    header .logo,
+    header .header-tools,
+    header nav {
+      transition: padding .3s ease, gap .3s ease, min-height .3s ease,
+                  opacity .22s ease, transform .3s ease, margin .3s ease;
+    }
+
+    header.header-compact {
+      padding-top: 7px;
+      padding-bottom: 7px;
+    }
+    header.header-compact .header-inner {
+      gap: 0;
+    }
+    header.header-compact .logo,
+    header.header-compact .header-tools {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      height: 0;
+      min-height: 0;
+      margin: 0;
+      transform: translateY(-10px);
+      overflow: hidden;
+    }
+    header.header-compact nav {
+      min-height: 42px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      header, header .header-inner, header .logo,
+      header .header-tools, header nav { transition: none; }
+    }
+
 </style>
 
 </head>
@@ -2725,6 +2765,25 @@ body.modo-claro #themeToggle {
     </nav>
   </div>
 </header>
+
+<script>
+  (() => {
+    const cabecalho = document.querySelector('header');
+    if (!cabecalho) return;
+
+    let quadroPendente = false;
+    window.addEventListener('scroll', () => {
+      if (quadroPendente) return;
+      quadroPendente = true;
+
+      requestAnimationFrame(() => {
+        cabecalho.classList.toggle('header-compact', window.scrollY > 80);
+        quadroPendente = false;
+      });
+    }, { passive: true });
+  })();
+</script>
+
 
   <!-- LETREIRO ANIMADO CAVALOGAMENEWS -->
 
