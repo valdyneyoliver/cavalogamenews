@@ -71,96 +71,104 @@ body {
   transition: background .2s ease, color .2s ease;
 }
 a { color: inherit; }
+
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-  padding: 10px 25px 0;
-  background: rgba(5, 7, 6, .97);
-  border-bottom: 1px solid #1c2b22;
+  position: sticky; top: 0; z-index: 1000; width: 100%;
+  padding: 14px 24px 16px;
+  background: rgba(5, 9, 7, .97);
+  border-bottom: 1px solid rgba(0,232,135,.22);
   box-shadow: 0 8px 28px rgba(0,0,0,.22);
   backdrop-filter: blur(16px);
-  transition: padding .28s ease;
+  transition: padding .3s ease;
 }
 .header-inner {
-  max-width: 1450px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  column-gap: 18px;
+  position: relative; max-width: 1500px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
 }
-.brand { display: inline-flex; align-items: center; justify-self: start; text-decoration: none; min-height: 48px; transition: opacity .22s ease, transform .22s ease, min-height .22s ease; }
-.brand img { display: block; width: auto; height: 42px; object-fit: contain; }
+.brand { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; min-height: 58px; transition: opacity .22s ease, transform .22s ease; }
+.brand img { display: block; width: auto; height: 54px; max-width: min(70vw, 360px); object-fit: contain; margin: 2px auto 0; transition: height .3s ease, opacity .25s ease, transform .3s ease; }
+.header-tools {
+  position: absolute; top: 7px; right: 0; display: flex; align-items: center;
+  gap: 9px; z-index: 20; transition: opacity .25s ease, transform .3s ease;
+}
+.search-box { width: 42px; height: 42px; flex: 0 0 42px; position: relative; }
+.search-button, .theme-toggle {
+  width: 42px; height: 42px; display: inline-flex; align-items: center;
+  justify-content: center; border: 1px solid rgba(0,232,135,.42);
+  border-radius: 12px; background: #101914; color: #fff; cursor: pointer;
+  font-size: 17px; transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.search-button:hover, .theme-toggle:hover { background: #173323; border-color: #00e887; transform: translateY(-2px); }
+.search-box input {
+  position: absolute; top: 50px; left: auto; right: 0; width: 230px;
+  padding: 12px 17px; border: 1px solid rgba(0,232,135,.4); border-radius: 10px;
+  background: #101914; color: #fff; font-size: 14px; outline: none;
+  opacity: 0; visibility: hidden; transform: translateY(-5px); transition: .25s; z-index: 50;
+}
+.search-box.open input { opacity: 1; visibility: visible; transform: translateY(0); }
+.search-box input:focus { border-color: #00e887; box-shadow: 0 0 12px rgba(0,232,135,.18); }
+.search-box input::placeholder { color: #888; }
 .article-nav {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 1.35vw, 21px);
-  flex-wrap: wrap;
-  width: 100%;
-  min-height: 48px;
-  padding: 8px 14px;
-  background: #087b4b;
-  border-radius: 9px 9px 0 0;
-  transition: min-height .22s ease, padding .22s ease, border-radius .22s ease;
+  width: 100%; min-height: 52px; box-sizing: border-box; display: flex;
+  align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: 8px clamp(12px, 1.65vw, 25px); padding: 13px 18px;
+  border: 1px solid rgba(0,232,135,.42); border-radius: 9px;
+  background: linear-gradient(100deg, #06351f 0%, #087b43 48%, #00a95f 100%);
+  box-shadow: 0 7px 22px rgba(0,180,100,.16);
 }
-.site-header.compact { padding-top: 5px; }
-.site-header.compact .brand { display: none; }
-.site-header.compact .theme-toggle { display: none; }
-.site-header.compact .article-nav { min-height: 42px; border-radius: 8px 8px 0 0; }
-.article-nav a {
-  color: #dce6df;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: .045em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color .2s ease, text-shadow .2s ease;
+.article-nav a, .article-nav button {
+  color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .025em;
+  text-decoration: none; white-space: nowrap; transition: opacity .2s ease, transform .2s ease;
 }
-.article-nav a:hover { color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,.25); }
+.article-nav a:hover { color: #fff; opacity: .78; transform: translateY(-1px); }
 .article-nav .support-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 36px;
-  padding: 8px 12px;
-  border: 1px solid #00ff88;
-  border-radius: 8px;
-  background: #00ff88;
-  color: #06140d;
-  font-weight: 800;
-  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 36px; padding: 8px 12px; border: 1px solid rgba(255,255,255,.55);
+  border-radius: 8px; background: rgba(255,255,255,.12); color: #fff;
+  font-weight: 800; cursor: pointer;
 }
-.article-nav .support-button:hover { background: #00c875; }
-.article-nav .live-button {
-  color: #ff6666;
+.article-nav .support-button:hover { background: rgba(255,255,255,.24); }
+.article-nav .live-button { color: #fff; }
+body[data-theme="light"] .site-header { background: rgba(248,251,249,.98); border-color: #dce7df; }
+body[data-theme="light"] .search-button, body[data-theme="light"] .theme-toggle {
+  background: #fff; color: #24352a; border-color: #cbded1;
 }
-.article-nav .live-button:hover {
-  color: #ff8888;
-  text-shadow: 0 0 10px rgba(255,85,85,.25);
+body[data-theme="light"] .search-box input { background: #fff; color: #1b2920; }
+.site-header, .site-header .brand img, .site-header .header-tools, .site-header .article-nav {
+  transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
 }
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 38px;
-  width: 38px;
-  height: 38px;
-  border: 1px solid #405047;
-  border-radius: 8px;
-  background: #171f28;
-  color: #ffffff;
-  font-size: 18px;
-  cursor: pointer;
+.site-header.header-compact { padding: 4px 24px; }
+.site-header.header-compact .header-inner { height: 40px; min-height: 40px; gap: 0; }
+.site-header.header-compact .brand { position: absolute; top: 0; left: 50%; opacity: 0; transform: translate(-50%, -12px); pointer-events: none; }
+.site-header.header-compact .header-tools { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+.site-header.header-compact .article-nav { min-height: 40px; padding-top: 8px; padding-bottom: 8px; transform: none; }
+.letreiro-cgn { width: 100%; overflow: hidden; position: relative; background: linear-gradient(90deg, rgba(0,232,135,.055), transparent 25%, transparent 75%, rgba(0,232,135,.055)); border-bottom: 1px solid rgba(0,232,135,.15); padding: 11px 0; }
+.letreiro-cgn-conteudo { display: flex; width: max-content; animation: mover-letreiro-cgn 50s linear infinite; }
+.letreiro-cgn-grupo { display: flex; align-items: center; flex-shrink: 0; gap: 35px; padding-right: 35px; }
+.letreiro-cgn-grupo span { color: #fff; font-size: 12px; font-weight: bold; white-space: nowrap; letter-spacing: .055em; }
+.letreiro-cgn-grupo span b { color: #00ff88; }
+.letreiro-cgn:hover .letreiro-cgn-conteudo { animation-play-state: paused; }
+@keyframes mover-letreiro-cgn { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 900px) {
+  .site-header { padding: 12px 12px 14px; }
+  .site-header .header-inner { flex-direction: column; align-items: center; gap: 13px; }
+  .site-header .brand img { height: 46px; max-width: 65vw; margin: 3px auto 0; }
+  .site-header .header-tools { position: absolute; top: 2px; right: 0; }
+  .site-header .search-box, .site-header .search-button, .site-header .theme-toggle { width: 38px; height: 38px; flex-basis: 38px; }
+  .article-nav { justify-content: flex-start; flex-wrap: nowrap; gap: 10px; overflow-x: auto; overflow-y: hidden; white-space: nowrap; }
+  .article-nav a { font-size: 11px; }
+  .site-header.header-compact { padding: 4px 12px; }
 }
-.theme-toggle:hover {
-  border-color: #00e887;
+@media (max-width: 560px) {
+  .site-header { padding: 12px 12px 14px; }
+  .site-header .brand img { height: 46px; max-width: 65vw; }
+  .article-nav { gap: 10px 14px; padding: 12px 10px; }
+  .search-box input { right: -48px; width: min(230px, 75vw); }
+  .letreiro-cgn { padding: 8px 0; }
+  .letreiro-cgn-grupo { gap: 22px; padding-right: 22px; }
+  .letreiro-cgn-grupo span { font-size: 11px; }
 }
-
 .support-overlay {
   display: none;
   position: fixed;
@@ -531,10 +539,16 @@ footer {
     <a class="brand" href="../index.html" aria-label="CavaloGameNews - página inicial">
       <img src="../img/logo.png" alt="CavaloGameNews">
     </a>
-
+    <div class="header-tools">
+      <div class="search-box" id="articleSearchBox">
+        <button class="search-button" id="articleSearchButton" type="button" aria-label="Pesquisar" title="Pesquisar">🔍</button>
+        <input type="text" id="articleSearchInput" placeholder="Buscar notícia..." aria-label="Buscar notícia">
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema" title="Alternar entre tema claro e escuro">☀️</button>
+    </div>
     <nav class="article-nav" aria-label="Navegação principal">
       <a href="../index.html">INÍCIO</a>
-      <a href="../index.html?categoria=todos">NOTÍCIAS</a>
+      <a href="../index.html?categoria=Notícias">NOTÍCIAS</a>
       <a href="../index.html?categoria=Xbox">XBOX</a>
       <a href="../index.html?categoria=PlayStation">PLAYSTATION</a>
       <a href="../index.html?categoria=PC">PC</a>
@@ -543,10 +557,29 @@ footer {
       <a href="../ao-vivo.html" class="live-button">TRANSMITIR A TELA</a>
       <button class="support-button" id="supportButton" type="button">💚 APOIE</button>
     </nav>
-    <button class="theme-toggle" id="themeToggle" type="button"
-            aria-label="Alternar tema" title="Alternar tema">☀️</button>
   </div>
 </header>
+<div class="letreiro-cgn">
+  <div class="letreiro-cgn-conteudo">
+    <div class="letreiro-cgn-grupo">
+      <span><b>🎮 CAVALOGAMENEWS — SEU UNIVERSO GAMER!</b> FIQUE POR DENTRO DAS ÚLTIMAS NOTÍCIAS, LANÇAMENTOS, NOVIDADES DO XBOX, PLAYSTATION, PC E NINTENDO, ALÉM DE DESCOBRIR JOGOS GRÁTIS E OFERTAS IMPERDÍVEIS!</span>
+      <span><b>💚</b> OBRIGADO A QUEM APOIA CAVALOGAMENEWS ▶▶</span>
+      <span><b>💚VIP ARCADE💚VALNEY💚FASTERGAMER💚RAGNER💚LEANDROSOAD💚KAZUMINHA💚VINI💚TIOJOE💚</b></span>
+      <span><b>CANAIS PARCEIROS CAVALOGAMENEWS ▶▶</b></span>
+      <span>◆ <a href="https://www.youtube.com/@CanaldoRagner" target="_blank" rel="noopener noreferrer" style="color:#ff0000;text-decoration:none;">RAGNER — YOUTUBE</a></span>
+      <span>◆ <a href="https://www.twitch.tv/canaldoragner" target="_blank" rel="noopener noreferrer" style="color:#a970ff;text-decoration:none;">RAGNER — TWITCH</a></span>
+      <span>◆ <a href="https://www.youtube.com/@tiojoe" target="_blank" rel="noopener noreferrer" style="color:#ff0000;text-decoration:none;">TIO JOE — YOUTUBE</a></span>
+      <span>◆ <a href="https://www.twitch.tv/tio_joe" target="_blank" rel="noopener noreferrer" style="color:#a970ff;text-decoration:none;">TIO JOE — TWITCH</a></span>
+      <span>◆ <a href="https://www.twitch.tv/kazumixd_/about" target="_blank" rel="noopener noreferrer" style="color:#a970ff;text-decoration:none;">KAZUMINHA — TWITCH</a></span>
+    </div>
+    <div class="letreiro-cgn-grupo" aria-hidden="true">
+      <span><b>🎮 CAVALOGAMENEWS — SEU UNIVERSO GAMER!</b> FIQUE POR DENTRO DAS ÚLTIMAS NOTÍCIAS, LANÇAMENTOS, NOVIDADES DO XBOX, PLAYSTATION, PC E NINTENDO, ALÉM DE DESCOBRIR JOGOS GRÁTIS E OFERTAS IMPERDÍVEIS!</span>
+      <span><b>💚</b> OBRIGADO A QUEM APOIA CAVALOGAMENEWS ▶▶</span>
+      <span><b>💚VIP ARCADE💚VALNEY💚FASTERGAMER💚RAGNER💚LEANDROSOAD💚KAZUMINHA💚VINI💚TIOJOE💚</b></span>
+      <span><b>CANAIS PARCEIROS CAVALOGAMENEWS ▶▶</b></span>
+    </div>
+  </div>
+</div>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
   <div class="support-modal" role="dialog" aria-modal="true" aria-labelledby="supportTitle">
     <button class="support-close" id="supportClose" type="button" aria-label="Fechar janela">×</button>
@@ -595,12 +628,12 @@ footer {
 <aside class="anuncio-produto" aria-label="Produto recomendado">
   <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
   <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/W/BW_MEDIAX_AVIF_MEASUREMENT_1306696-T4/images/I/51iZ2hj9orL._AC_SL1000_.jpg" alt="Controle GameSir Tegenaria Lite com fio na cor cinza retrô" loading="lazy">
+    <img src="../img/produtos/8bitdo-ultimate-2c-mint.png" alt="Controle 8BitDo Ultimate 2C Wired Mint" loading="lazy">
     <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Controle Gamer</span>
-      <h3>GameSir Tegenaria Lite com Fio — Cinza Retrô</h3>
-      <p>Controle GameSir Tegenaria Lite com fio, compatível com Nintendo Switch, PC, Android, iOS e Steam. Possui design retrô inspirado nos anos 90, analógicos Hall Effect anti-drift, polling rate de 1000Hz, baixa latência, botões programáveis e vibração dupla.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/B01ESokuU" target="_blank"
+      <span class="anuncio-produto-categoria">🎮 Controle para PC</span>
+      <h3>Controle 8BitDo Ultimate 2C Wired</h3>
+      <p>Controle com fio para jogar no PC, com sticks e gatilhos responsivos.</p>
+      <a class="anuncio-produto-botao" href="https://www.amazon.com.br/8Bitdo-Ultimate-Controller-Joysticks-Remappable/dp/B0D72WYT8Z?tag=cavalogamenew-20" target="_blank"
          rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
       <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
     </div>
@@ -807,29 +840,39 @@ footer {
 (function() {
   const header = document.querySelector('.site-header');
   if (!header) return;
-
   let compacto = false;
-  let aguardando = false;
-
-  function atualizarCabecalho() {
+  let quadroPendente = false;
+  const atualizar = () => {
     const posicao = window.scrollY || document.documentElement.scrollTop;
-    if (!compacto && posicao > 130) {
-      compacto = true;
-      header.classList.add('compact');
-    } else if (compacto && posicao < 55) {
-      compacto = false;
-      header.classList.remove('compact');
-    }
-    aguardando = false;
-  }
-
-  window.addEventListener('scroll', function() {
-    if (!aguardando) {
-      window.requestAnimationFrame(atualizarCabecalho);
-      aguardando = true;
-    }
+    if (!compacto && posicao > 130) compacto = true;
+    else if (compacto && posicao < 55) compacto = false;
+    header.classList.toggle('header-compact', compacto);
+    quadroPendente = false;
+  };
+  atualizar();
+  window.addEventListener('scroll', () => {
+    if (quadroPendente) return;
+    quadroPendente = true;
+    requestAnimationFrame(atualizar);
   }, { passive: true });
-  atualizarCabecalho();
+})();
+</script>
+<script>
+(function() {
+  const box = document.getElementById('articleSearchBox');
+  const button = document.getElementById('articleSearchButton');
+  const input = document.getElementById('articleSearchInput');
+  if (!box || !button || !input) return;
+  button.addEventListener('click', () => {
+    box.classList.toggle('open');
+    if (box.classList.contains('open')) input.focus();
+  });
+  input.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' && input.value.trim()) {
+      window.location.href = '../index.html?busca=' + encodeURIComponent(input.value.trim());
+    }
+    if (event.key === 'Escape') box.classList.remove('open');
+  });
 })();
 </script>
 
