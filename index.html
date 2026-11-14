@@ -2834,25 +2834,70 @@ body.modo-claro #themeToggle {
       letter-spacing: .02em;
     }
 
-    .release-calendar .release-date {
-      z-index: 4;
+    /* Data, nome e plataformas ficam em linhas separadas no cartão. */
+    .release-calendar .release-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
       left: 9px;
+      right: 9px;
+      bottom: 5px;
+      min-width: 0;
+    }
+
+    .release-calendar .release-date {
+      position: relative;
+      z-index: 4;
+      display: inline-block;
+      left: auto;
       right: auto;
-      top: 7px;
+      top: auto;
       bottom: auto;
-      max-width: calc(100% - 18px);
-      padding: 5px 9px;
+      width: auto;
+      max-width: 100%;
+      padding: 2px 6px;
       border: 1px solid rgba(0, 232, 135, .75);
-      border-radius: 6px;
+      border-radius: 5px;
       background: linear-gradient(135deg, rgba(0, 35, 20, .96), rgba(0, 15, 9, .92));
       color: #65ffb5;
-      font-size: 10px;
+      font-size: 8px;
       font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: .035em;
+      line-height: 1.15;
+      letter-spacing: .025em;
       text-align: left;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, .35), 0 0 12px rgba(0, 232, 135, .16);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
       backdrop-filter: blur(7px);
+    }
+
+    .release-calendar .release-name {
+      display: block;
+      width: 100%;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.15;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .release-calendar .release-platforms {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 3px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .release-calendar .release-platform {
+      flex: 0 0 auto;
+      padding: 1px 4px;
+      font-size: 7px;
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
     .release-calendar .release-date::first-letter {
