@@ -2816,6 +2816,101 @@ body.modo-claro #themeToggle {
       header .logo, header .header-tools, header nav { transition: none; }
     }
 
+
+
+    /* =====================================================
+       ACABAMENTO VISUAL DO CALENDÁRIO
+       Alterações somente dentro de .release-calendar.
+    ===================================================== */
+    .release-calendar .release-title::first-letter {
+      color: inherit;
+    }
+
+    .release-calendar .release-filter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      letter-spacing: .02em;
+    }
+
+    .release-calendar .release-date {
+      z-index: 4;
+      left: 9px;
+      right: auto;
+      top: 7px;
+      bottom: auto;
+      max-width: calc(100% - 18px);
+      padding: 5px 9px;
+      border: 1px solid rgba(0, 232, 135, .75);
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(0, 35, 20, .96), rgba(0, 15, 9, .92));
+      color: #65ffb5;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: .035em;
+      text-align: left;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, .35), 0 0 12px rgba(0, 232, 135, .16);
+      backdrop-filter: blur(7px);
+    }
+
+    .release-calendar .release-date::first-letter {
+      color: inherit;
+    }
+
+    .release-calendar .release-card {
+      isolation: isolate;
+      animation: calendarioEntrada .45s ease both;
+    }
+
+    .release-calendar .release-image {
+      transform: scale(1);
+      transition: transform .75s cubic-bezier(.2, .7, .2, 1), filter .75s ease;
+      will-change: transform;
+    }
+
+    .release-calendar .release-card:hover .release-image {
+      transform: scale(1.12);
+      filter: brightness(1.12) saturate(1.12);
+    }
+
+    .release-calendar .release-card::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.13) 48%, transparent 70%);
+      transform: translateX(-130%);
+      transition: transform .8s ease;
+    }
+
+    .release-calendar .release-card:hover::before {
+      transform: translateX(130%);
+    }
+
+    @keyframes calendarioEntrada {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    body.modo-claro .release-calendar .release-date {
+      color: #006b3c;
+      background: linear-gradient(135deg, rgba(224, 255, 239, .98), rgba(245, 255, 249, .96));
+      border-color: rgba(0, 150, 82, .55);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .12), 0 0 10px rgba(0, 150, 82, .10);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .release-calendar .release-card,
+      .release-calendar .release-image,
+      .release-calendar .release-card::before {
+        animation: none;
+        transition: none;
+      }
+    }
+
 </style>
 
 </head>
@@ -2940,21 +3035,21 @@ body.modo-claro #themeToggle {
       <section class="release-calendar">
         <div class="release-header">
           <div>
-            <h2 class="release-title"> Calendário de Lançamentos</h2>
+            <h2 class="release-title">Calendário de Lançamentos</h2>
             <p class="release-subtitle">Confira os próximos jogos que chegam ao PC e consoles.</p>
           </div>
         </div>
         <div class="release-filters">
-          <button class="release-filter active" data-platform="todos">▦ Todos</button>
-          <button class="release-filter" data-platform="PC">🖥️ PC</button>
-          <button class="release-filter" data-platform="Xbox">🎮 Xbox</button>
-          <button class="release-filter" data-platform="PlayStation">🎮 PlayStation</button>
-          <button class="release-filter" data-platform="Switch">🎮 Switch</button>
+          <button class="release-filter active" data-platform="todos">Todos</button>
+          <button class="release-filter" data-platform="PC">PC</button>
+          <button class="release-filter" data-platform="Xbox">Xbox</button>
+          <button class="release-filter" data-platform="PlayStation">PlayStation</button>
+          <button class="release-filter" data-platform="Switch">Switch</button>
         </div>
         <div class="release-wrapper">
           <button class="release-arrow release-arrow-left" id="releasePrev" aria-label="Jogos anteriores">‹</button>
           <div id="releaseGames" class="release-games">
-            <div class="release-loading">🎮 Carregando lançamentos...</div>
+            <div class="release-loading">Carregando lançamentos...</div>
           </div>
           <button class="release-arrow release-arrow-right" id="releaseNext" aria-label="Próximos jogos">↓</button>
         </div>
@@ -3299,8 +3394,7 @@ async function carregarLancamentos() {
 
       <div class="release-error">
 
-        ⚠️ Não foi possível carregar
-        os lançamentos no momento.
+        Não foi possível carregar os lançamentos no momento.
 
       </div>
 
@@ -3351,7 +3445,7 @@ function mostrarLancamentos(plataforma) {
 
       <div class="release-empty">
 
-        🎮 Nenhum lançamento encontrado.
+        Nenhum lançamento encontrado.
 
       </div>
 
@@ -3434,7 +3528,7 @@ function mostrarLancamentos(plataforma) {
           <div class="release-info">
 
             <div class="release-date">
-              📅 ${data}
+              ${data}
             </div>
 
             <div class="release-name">
