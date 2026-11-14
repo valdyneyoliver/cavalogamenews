@@ -92,6 +92,18 @@
       "link_rawg": "https://rawg.io/games/rayman-legends-retold"
     },
     {
+      "id": 1020759,
+      "nome": "Elements Destiny",
+      "slug": "elements-destiny",
+      "data": "2026-12-07",
+      "data_formatada": "07/12/2026",
+      "imagem": "https://media.rawg.io/media/screenshots/afd/afd48dc02c76ee43edf376c4f9e7788e.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/elements-destiny"
+    },
+    {
       "id": 1018409,
       "nome": "Guns of Eschaton",
       "slug": "guns-of-eschaton",
@@ -181,6 +193,18 @@
         "Xbox"
       ],
       "link_rawg": "https://rawg.io/games/titan-quest-2"
+    },
+    {
+      "id": 1020761,
+      "nome": "Crystals Of Irm",
+      "slug": "crystals-of-irm",
+      "data": "2027-01-20",
+      "data_formatada": "20/01/2027",
+      "imagem": "https://media.rawg.io/media/screenshots/978/97825eb3f822fbcf73db83c5c9e148cc.jpg",
+      "plataformas": [
+        "PC"
+      ],
+      "link_rawg": "https://rawg.io/games/crystals-of-irm"
     },
     {
       "id": 1020693,
