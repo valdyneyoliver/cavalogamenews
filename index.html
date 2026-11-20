@@ -1142,29 +1142,6 @@ body.modo-claro .free-games-error {
       .featured-slide img, .read-button { transition: none; }
     }
 
-    
-    /* RADAR DE GAMES - agregador externo, separado das notícias autorais */
-    .radar-section{width:calc(100% - 40px);max-width:1450px;margin:28px auto 34px;padding:22px;background:linear-gradient(145deg,#0c110e,#080b09);border:1px solid #27352c;border-radius:15px;}
-    .radar-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px;}
-    .radar-heading h2{font-size:25px;color:#00ff88;margin-bottom:6px;}
-    .radar-heading p{color:#aab4ad;font-size:13px;line-height:1.5;}
-    .radar-badge{font-size:10px;font-weight:bold;letter-spacing:.7px;color:#07100a;background:#00ff88;padding:7px 10px;border-radius:6px;white-space:nowrap;}
-    .radar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:13px;}
-    .radar-card{display:block;padding:16px;background:#101612;border:1px solid #2c3930;border-radius:10px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,background .2s;}
-    .radar-card:hover{transform:translateY(-3px);border-color:#00ff88;background:#131d16;}
-    .radar-card h3{font-size:16px;line-height:1.4;color:#fff;margin:0 0 9px;}
-    .radar-card p{font-size:13px;line-height:1.55;color:#c0c9c2;margin:0 0 13px;}
-    .radar-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;color:#8d9a90;font-size:11px;}
-    .radar-meta strong{color:#00d979;font-weight:bold;}
-    .radar-status{grid-column:1/-1;color:#aab4ad;padding:20px;text-align:center;}
-    body.modo-claro .radar-section{background:#fff;border-color:#dce5de;}
-    body.modo-claro .radar-heading p,body.modo-claro .radar-status{color:#5f6b62;}
-    body.modo-claro .radar-card{background:#f7faf8;border-color:#dce5de;}
-    body.modo-claro .radar-card h3{color:#202820;}
-    body.modo-claro .radar-card p{color:#4b554e;}
-    body.modo-claro .radar-meta{color:#68736b;}
-    @media(max-width:600px){.radar-section{width:calc(100% - 24px);padding:15px}.radar-heading{align-items:flex-start}.radar-heading h2{font-size:21px}.radar-grid{grid-template-columns:1fr}}
-
     /* =====================================================
        TÍTULO NOTÍCIAS
     ===================================================== */
@@ -3085,20 +3062,6 @@ body.modo-claro #themeToggle {
 </div>
 
 <!-- =====================================================
-     RADAR DE GAMES - NOTÍCIAS DE OUTRAS FONTES
-===================================================== -->
-<section class="radar-section" aria-labelledby="radarTitle">
-  <div class="radar-heading">
-    <div>
-      <h2 id="radarTitle">Radar de Games</h2>
-      <p>Manchetes e resumos em português. Clique para ler na publicação original.</p>
-    </div>
-    <span class="radar-badge">FONTES EXTERNAS</span>
-  </div>
-  <div id="radarNews" class="radar-grid"><p class="radar-status">Carregando notícias do Radar...</p></div>
-</section>
-
-<!-- =====================================================
      ÚLTIMAS NOTÍCIAS + COLUNA LATERAL
 ===================================================== -->
 <div class="home-content-layout">
@@ -4624,31 +4587,6 @@ document.querySelectorAll('.instant-gaming-carousel').forEach(carrossel => {
 });
 </script>
 
-
-/* =====================================================
-   RADAR DE GAMES - abre sempre a fonte original
-===================================================== */
-function carregarRadarGames(){
-  const area=document.getElementById('radarNews');
-  if(!area)return;
-  fetch('radar.json?atualizar='+Date.now(),{cache:'no-store'})
-    .then(r=>{if(!r.ok)throw new Error('radar.json indisponível');return r.json();})
-    .then(items=>{
-      if(!Array.isArray(items)||!items.length){area.innerHTML='<p class="radar-status">Ainda não há notícias no Radar. A próxima atualização automática preencherá esta área.</p>';return;}
-      area.innerHTML=items.map(item=>{
-        const link=String(item.link||'');
-        if(!/^https?:\/\//i.test(link))return '';
-        return `<a class="radar-card" href="${escaparTextoHTML(link)}" target="_blank" rel="noopener noreferrer">
-          <h3>${escaparTextoHTML(item.titulo||'Notícia')}</h3>
-          <p>${escaparTextoHTML(item.resumo||'Confira a notícia na fonte original.')}</p>
-          <div class="radar-meta"><strong>${escaparTextoHTML(item.fonte||'Fonte original')}</strong><span>${escaparTextoHTML(item.data||'')}</span></div>
-        </a>`;
-      }).join('')||'<p class="radar-status">Nenhuma notícia válida disponível no momento.</p>';
-    })
-    .catch(()=>{area.innerHTML='<p class="radar-status">Não foi possível carregar o Radar agora. Tente novamente mais tarde.</p>';});
-}
-
-<script>document.addEventListener("DOMContentLoaded", carregarRadarGames);</script>
 </body>
 
 </html>
