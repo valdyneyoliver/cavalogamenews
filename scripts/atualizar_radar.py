@@ -2,6 +2,8 @@ import json
 import re
 import hashlib
 import time
+import calendar
+
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -9,7 +11,7 @@ from difflib import SequenceMatcher
 from urllib.request import Request, urlopen
 
 import feedparser
-from deep_translator import GoogleTranslator, MyMemoryTranslator
+from deep_translator import GoogleTranslator
 
 
 FEEDS = [
@@ -23,17 +25,21 @@ FEEDS = [
 ]
 
 MAX_AGE_DAYS = 5
-MAX_ITEMS = 35
-MAX_PER_FEED = 12
+MAX_ITEMS = 25
+MAX_PER_FEED = 8
 
 OUT = Path("radar.json")
 
-cache_traducao = {}
+TRANSLATION_VERSION = 2
+TRANSLATION_DELAY = 1.5
+
+translation_blocked = False
 
 
 # LIMPAR HTML
 
 def clean_html(value):
+
     value = re.sub(r"<[^>]+>", " ", value or "")
     value = re.sub(r"&nbsp;|&#160;", " ", value)
     value = re.sub(r"&amp;", "&", value)
@@ -47,15 +53,19 @@ def clean_html(value):
 
 def published_date(entry):
 
-    for key in ("published_parsed", "updated_parsed", "created_parsed"):
+    for key in (
+        "published_parsed",
+        "updated_parsed",
+        "created_parsed"
+    ):
 
         value = entry.get(key)
 
         if value:
-            try:
-                from time import mktime
 
-                timestamp = mktime(value)
+            try:
+
+                timestamp = calendar.timegm(value)
 
                 return datetime.fromtimestamp(
                     timestamp,
@@ -70,7 +80,9 @@ def published_date(entry):
         raw = entry.get(key)
 
         if raw:
+
             try:
+
                 dt = parsedate_to_datetime(raw)
 
                 if dt.tzinfo is None:
@@ -79,7 +91,9 @@ def published_date(entry):
                 return dt.astimezone(timezone.utc)
 
             except Exception:
+
                 try:
+
                     dt = datetime.fromisoformat(
                         raw.replace("Z", "+00:00")
                     )
@@ -138,7 +152,7 @@ def platform_for(text, source):
     )):
         found.append("PC")
 
-    # Prioridade para a plataforma da própria publicação
+    # PRIORIDADE DA PUBLICAÇÃO
 
     if "Xbox" in source:
         return "Xbox"
@@ -152,12 +166,8 @@ def platform_for(text, source):
     if "PC Gamer" in source:
         return "PC"
 
-    # Se houver apenas uma plataforma identificada
-
     if len(found) == 1:
         return found[0]
-
-    # Se houver várias plataformas
 
     if len(found) > 1:
         return "Multiplataforma"
@@ -187,6 +197,8 @@ def is_news(title, summary):
         "everything you need to know",
         "complete guide",
         "buying guide",
+        "gta 6 guide",
+        "gta 6 walkthrough",
     ]
 
     if any(word in text for word in unwanted):
@@ -195,74 +207,102 @@ def is_news(title, summary):
     return True
 
 
-# TRADUÇÃO
+# CARREGAR NOTÍCIAS ANTERIORES
 
-def translate(text, limit=500):
+def load_previous():
 
-    text = clean_html(text)[:limit]
-
-    if not text:
-        return ""
-
-    if text in cache_traducao:
-        return cache_traducao[text]
-
-    # Primeira tentativa: Google Tradutor
-
-    for attempt in range(2):
-
-        try:
-            translator = GoogleTranslator(
-                source="auto",
-                target="pt"
-            )
-
-            result = translator.translate(text)
-
-            if result and result.strip():
-
-                result = result.strip()
-
-                cache_traducao[text] = result
-
-                time.sleep(0.4)
-
-                return result
-
-        except Exception as exc:
-
-            print(f"Google Tradutor: {exc}")
-
-            time.sleep(2)
-
-    # Segunda tentativa: MyMemory
+    if not OUT.exists():
+        return {}
 
     try:
 
-        translator = MyMemoryTranslator(
-            source="en-US",
-            target="pt-BR"
+        previous = json.loads(
+            OUT.read_text(encoding="utf-8")
         )
 
-        result = translator.translate(text)
+        return {
+            item.get("url", "").split("?")[0].rstrip("/"): item
+            for item in previous
+            if item.get("url")
+        }
 
-        if result and result.strip():
+    except Exception:
 
-            result = result.strip()
+        return {}
 
-            cache_traducao[text] = result
 
-            time.sleep(0.4)
+# TRADUZIR TÍTULO E RESUMO JUNTOS
 
-            return result
+def translate_article(title, summary, previous=None):
+
+    global translation_blocked
+
+    # REAPROVEITAR TRADUÇÃO ANTERIOR
+
+    if previous and previous.get("traducao_v") == TRANSLATION_VERSION:
+
+        return (
+            previous.get("titulo", title),
+            previous.get("resumo", summary),
+            True
+        )
+
+    if translation_blocked:
+
+        return title, summary, False
+
+    separator = "\n###RESUMO_CGN###\n"
+
+    original = title + separator + summary
+
+    print("Traduzindo notícia:", title[:70])
+
+    try:
+
+        # INTERVALO ENTRE SOLICITAÇÕES
+
+        time.sleep(TRANSLATION_DELAY)
+
+        translator = GoogleTranslator(
+            source="auto",
+            target="pt"
+        )
+
+        result = translator.translate(original)
+
+        if not result or not result.strip():
+            raise Exception("Tradução vazia.")
+
+        result = result.strip()
+
+        # SEPARAR TÍTULO E RESUMO
+
+        if "###RESUMO_CGN###" not in result:
+
+            raise Exception("Separador da tradução não encontrado.")
+
+        title_pt, summary_pt = result.split(
+            "###RESUMO_CGN###",
+            1
+        )
+
+        title_pt = title_pt.strip()
+        summary_pt = summary_pt.strip()
+
+        if not title_pt or not summary_pt:
+            raise Exception("Tradução incompleta.")
+
+        return title_pt, summary_pt, True
 
     except Exception as exc:
 
-        print(f"MyMemory: {exc}")
+        print("Erro na tradução:", exc)
 
-    print("Aviso: não foi possível traduzir:", text[:70])
+        print("Pausando traduções nesta execução.")
 
-    return text
+        translation_blocked = True
+
+        return title, summary, False
 
 
 # EVITAR NOTÍCIAS REPETIDAS
@@ -324,6 +364,8 @@ def main():
 
     items = []
 
+    previous_items = load_previous()
+
     for source, feed_url in FEEDS:
 
         print(f"\nBuscando: {source}")
@@ -354,7 +396,6 @@ def main():
                 dt = published_date(entry)
 
                 if not dt:
-                    print("Notícia ignorada: sem data válida.")
                     continue
 
                 if dt > now + timedelta(hours=12):
@@ -382,21 +423,21 @@ def main():
                 if len(summary) < 45:
                     summary = title
 
-                # FILTRAR GUIAS E CONTEÚDOS REPETITIVOS
-
                 if not is_news(title, summary):
                     continue
-
-                # EVITAR TÍTULOS MUITO PARECIDOS
 
                 if similar_title(title, seen_titles):
                     continue
 
-                print("Traduzindo:", title[:80])
+                # RECUPERAR TRADUÇÃO ANTERIOR
 
-                title_pt = translate(title, 220)
+                previous = previous_items.get(canonical_url)
 
-                summary_pt = translate(summary, 500)
+                title_pt, summary_pt, translated = translate_article(
+                    title,
+                    summary,
+                    previous
+                )
 
                 category = platform_for(
                     title + " " + summary,
@@ -417,7 +458,11 @@ def main():
 
                     "fonte": source,
 
-                    "url": url
+                    "url": url,
+
+                    "traducao_v": (
+                        TRANSLATION_VERSION if translated else 0
+                    )
 
                 })
 
