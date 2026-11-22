@@ -2458,6 +2458,11 @@ body.modo-claro #themeToggle {
       align-self: stretch;
     }
 
+    .home-news-column .radar-news-card .card-content {
+      width: 100%;
+      flex: 1 1 100%;
+    }
+
     .home-news-column .news-card-horizontal .card-content {
       flex: 1;
       min-width: 0;
@@ -3713,13 +3718,15 @@ releaseFilters.forEach(botao => {
 ===================================================== */
 
 function linkDaNoticia(post) {
-
-  return (
-    "noticias/" +
-    post.id +
-    ".html"
-  );
-
+  if (post && post.tipoRadar) {
+    const destino = post.url || post.link || post.original_url || "";
+    try {
+      const url = new URL(destino);
+      if (url.protocol === "https:" || url.protocol === "http:") return url.href;
+    } catch (e) {}
+    return "#";
+  }
+  return "noticias/" + post.id + ".html";
 }
 
 
@@ -3780,25 +3787,35 @@ function renderizarPagina(posts, pagina = 1) {
 function criarCardNoticia(post) {
   const horarioPublicacao =
     post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
-
   const autorPublicacao = post.autor || "Valdiney Oliver";
+
+  if (post && post.tipoRadar) {
+    const url = linkDaNoticia(post);
+    return `
+      <a href="${url}" class="news-link" target="_blank" rel="noopener noreferrer">
+        <article class="card news-card-horizontal radar-news-card">
+          <div class="card-content">
+            <div class="category">${escaparTextoHTML(post.categoria || "Games")}</div>
+            <h3>${escaparTextoHTML(post.titulo || "Notícia de games")}</h3>
+            <p>${escaparTextoHTML(post.resumo || "")}</p>
+            <div class="news-card-meta">
+              <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
+              <span class="news-card-author">Fonte: ${escaparTextoHTML(post.fonte || "Fonte original")}</span>
+            </div>
+          </div>
+        </article>
+      </a>
+    `;
+  }
 
   return `
     <a href="${linkDaNoticia(post)}" class="news-link">
       <article class="card news-card-horizontal">
-        <img
-          src="${post.imagem}"
-          alt="${escaparTextoHTML(post.titulo)}"
-          loading="lazy"
-        >
-
+        <img src="${post.imagem}" alt="${escaparTextoHTML(post.titulo)}" loading="lazy">
         <div class="card-content">
           <div class="category">${escaparTextoHTML(post.categoria || "Notícia")}</div>
-
           <h3>${escaparTextoHTML(post.titulo)}</h3>
-
           <p>${escaparTextoHTML(post.resumo || "")}</p>
-
           <div class="news-card-meta">
             <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
             <span class="news-card-author">Por ${escaparTextoHTML(autorPublicacao)}</span>
@@ -3941,6 +3958,37 @@ function reiniciarTemporizadorDestaque() {
    CARREGAR NOTÍCIAS
 ===================================================== */
 
+async function carregarNoticiasRadar() {
+  try {
+    const resposta = await fetch("radar.json?atualizado=" + Date.now(), { cache: "no-store" });
+    if (!resposta.ok) return [];
+    const dados = await resposta.json();
+    if (!Array.isArray(dados)) return [];
+    return dados.filter(item => item && (item.titulo || item.title) && (item.url || item.link || item.original_url))
+      .map(item => ({
+        ...item,
+        tipoRadar: true,
+        titulo: item.titulo || item.title || "",
+        resumo: item.resumo || item.summary || "",
+        categoria: item.categoria || item.category || item.plataforma || "Games",
+        data: item.data || item.date || item.published || "",
+        fonte: item.fonte || item.source || "Fonte original",
+        url: item.url || item.link || item.original_url
+      }));
+  } catch (e) {
+    return [];
+  }
+}
+
+function dataOrdenacaoNoticia(post) {
+  const valor = post.data || post.published || post.date || "";
+  const data = new Date(valor);
+  if (!Number.isNaN(data.getTime())) return data.getTime();
+  const br = String(valor).match(/^(\\d{2})\/(\\d{2})\/(\\d{4})/);
+  if (br) return new Date(Number(br[3]), Number(br[2]) - 1, Number(br[1])).getTime();
+  return 0;
+}
+
 function carregarNoticias() {
 
   fetch("posts.json")
@@ -3961,7 +4009,17 @@ function carregarNoticias() {
     })
 
 
-    .then(posts => {
+    .then(async posts => {
+      const radar = await carregarNoticiasRadar();
+      const noticiasManuais = Array.isArray(posts) ? posts : [];
+      const linksManuais = new Set(noticiasManuais.map(p => String(p.link || p.url || "").trim()).filter(Boolean));
+      const titulosManuais = new Set(noticiasManuais.map(p => String(p.titulo || "").trim().toLowerCase()));
+      const radarSemDuplicatas = radar.filter(item =>
+        !linksManuais.has(String(item.url || "").trim()) &&
+        !titulosManuais.has(String(item.titulo || "").trim().toLowerCase())
+      );
+      const todasNoticias = [...noticiasManuais, ...radarSemDuplicatas]
+        .sort((a, b) => dataOrdenacaoNoticia(b) - dataOrdenacaoNoticia(a));
 
       const featured =
         document.getElementById(
@@ -3980,12 +4038,12 @@ function carregarNoticias() {
       container.innerHTML = "";
 
 
-      if (posts.length > 0) {
-        montarBannerDestaque(posts.slice(0, 4));
+      if (noticiasManuais.length > 0) {
+        montarBannerDestaque(noticiasManuais.slice(0, 4));
       }
 
-      // A lista de últimas notícias também inclui a notícia que aparece no banner.
-      noticiasDaPaginaInicial = posts.slice(0);
+      // Notícias automáticas entram na mesma lista de Últimas Notícias.
+      noticiasDaPaginaInicial = todasNoticias;
       renderizarPagina(noticiasDaPaginaInicial, 1);
 
     })
