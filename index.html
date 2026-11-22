@@ -2458,20 +2458,6 @@ body.modo-claro #themeToggle {
       align-self: stretch;
     }
 
-    .home-news-column .news-card-horizontal > .radar-card-placeholder {
-      flex: 0 0 38%;
-      width: 38%;
-      min-height: 178px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: radial-gradient(circle at 30% 20%, #1d3a2a, #0b120e 72%);
-      color: #00e887;
-      font-size: 42px;
-      font-weight: bold;
-    }
-
     .home-news-column .news-card-horizontal .card-content {
       flex: 1;
       min-width: 0;
@@ -3727,54 +3713,13 @@ releaseFilters.forEach(botao => {
 ===================================================== */
 
 function linkDaNoticia(post) {
-  if (post && post._radar && post.url) return post.url;
-  return "noticias/" + post.id + ".html";
-}
 
-function normalizarCategoria(valor) {
-  return String(valor || "").normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
-}
+  return (
+    "noticias/" +
+    post.id +
+    ".html"
+  );
 
-function dataEmMilissegundos(post) {
-  const valor = String(post?.data || post?.horario || "");
-  const iso = Date.parse(valor);
-  if (!Number.isNaN(iso)) return iso;
-  const brasileira = valor.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
-  if (brasileira) return new Date(Number(brasileira[3]), Number(brasileira[2])-1, Number(brasileira[1])).getTime();
-  return 0;
-}
-
-async function carregarTodasAsNoticias() {
-  const respostaPosts = await fetch("posts.json", { cache: "no-cache" });
-  if (!respostaPosts.ok) throw new Error("Erro ao carregar posts.json");
-  const posts = await respostaPosts.json();
-  if (!Array.isArray(posts)) throw new Error("posts.json precisa conter uma lista.");
-
-  let radar = [];
-  try {
-    const respostaRadar = await fetch("radar.json", { cache: "no-store" });
-    if (respostaRadar.ok) {
-      const dadosRadar = await respostaRadar.json();
-      if (Array.isArray(dadosRadar)) {
-        radar = dadosRadar.filter(item => item && item.titulo && item.url).map(item => ({
-          ...item, _radar: true, imagem: "", categoria: item.categoria || "Notícias",
-          resumo: item.resumo || "", data: item.data || "", fonte: item.fonte || "Radar CavaloGameNews"
-        }));
-      }
-    } else console.warn("radar.json não respondeu:", respostaRadar.status);
-  } catch (erroRadar) {
-    console.warn("Não foi possível carregar radar.json:", erroRadar);
-  }
-
-  const urlsManuais = new Set(posts.map(post =>
-    String(post.link || post.url || "").split("?")[0].replace(/\/$/, "")
-  ).filter(Boolean));
-  radar = radar.filter(item => !urlsManuais.has(String(item.url).split("?")[0].replace(/\/$/, "")));
-
-  const combinadas = [...posts, ...radar];
-  combinadas.sort((a, b) => dataEmMilissegundos(b) - dataEmMilissegundos(a));
-  return { posts, todas: combinadas };
 }
 
 
@@ -3833,27 +3778,30 @@ function renderizarPagina(posts, pagina = 1) {
 ===================================================== */
 
 function criarCardNoticia(post) {
-  const horarioPublicacao = post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
-  const autorPublicacao = post._radar
-    ? ("Fonte: " + (post.fonte || "Radar CavaloGameNews"))
-    : ("Por " + (post.autor || "Valdiney Oliver"));
-  const imagem = post._radar
-    ? `<div class="radar-card-placeholder" aria-hidden="true">🎮</div>`
-    : `<img src="${escaparTextoHTML(post.imagem || "")}" alt="${escaparTextoHTML(post.titulo)}" loading="lazy">`;
-  const destino = escaparTextoHTML(linkDaNoticia(post));
-  const externo = post._radar ? ' target="_blank" rel="noopener noreferrer"' : "";
+  const horarioPublicacao =
+    post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
+
+  const autorPublicacao = post.autor || "Valdiney Oliver";
 
   return `
-    <a href="${destino}" class="news-link"${externo}>
+    <a href="${linkDaNoticia(post)}" class="news-link">
       <article class="card news-card-horizontal">
-        ${imagem}
+        <img
+          src="${post.imagem}"
+          alt="${escaparTextoHTML(post.titulo)}"
+          loading="lazy"
+        >
+
         <div class="card-content">
           <div class="category">${escaparTextoHTML(post.categoria || "Notícia")}</div>
+
           <h3>${escaparTextoHTML(post.titulo)}</h3>
+
           <p>${escaparTextoHTML(post.resumo || "")}</p>
+
           <div class="news-card-meta">
             <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
-            <span class="news-card-author">${escaparTextoHTML(autorPublicacao)}</span>
+            <span class="news-card-author">Por ${escaparTextoHTML(autorPublicacao)}</span>
           </div>
         </div>
       </article>
@@ -3861,6 +3809,10 @@ function criarCardNoticia(post) {
   `;
 }
 
+
+/* =====================================================
+   BANNER ROTATIVO: 4 NOTÍCIAS MAIS RECENTES
+===================================================== */
 
 let noticiasDestaque = [];
 let indiceDestaque = 0;
@@ -3989,27 +3941,73 @@ function reiniciarTemporizadorDestaque() {
    CARREGAR NOTÍCIAS
 ===================================================== */
 
-async function carregarNoticias() {
-  const featured = document.getElementById("featured");
-  const container = document.getElementById("news");
+function carregarNoticias() {
 
-  try {
-    const { posts, todas } = await carregarTodasAsNoticias();
-    featured.innerHTML = "";
-    container.innerHTML = "";
+  fetch("posts.json")
 
-    // O banner principal continua usando somente notícias manuais com imagem.
-    const destaquesManuais = posts.filter(post => post && post.id && post.imagem);
-    if (destaquesManuais.length) montarBannerDestaque(destaquesManuais.slice(0, 4));
-    else noticiasDestaque = [];
+    .then(response => {
 
-    noticiasDaPaginaInicial = todas;
-    renderizarPagina(noticiasDaPaginaInicial, 1);
-    console.info(`CavaloGameNews: ${posts.length} manuais + ${todas.length - posts.length} do radar.`);
-  } catch (error) {
-    console.error("Erro ao carregar notícias:", error);
-    container.innerHTML = "<p>Não foi possível carregar as notícias.</p>";
-  }
+      if (!response.ok) {
+
+        throw new Error(
+          "Erro ao carregar posts.json"
+        );
+
+      }
+
+
+      return response.json();
+
+    })
+
+
+    .then(posts => {
+
+      const featured =
+        document.getElementById(
+          "featured"
+        );
+
+
+      const container =
+        document.getElementById(
+          "news"
+        );
+
+
+      featured.innerHTML = "";
+
+      container.innerHTML = "";
+
+
+      if (posts.length > 0) {
+        montarBannerDestaque(posts.slice(0, 4));
+      }
+
+      // A lista de últimas notícias também inclui a notícia que aparece no banner.
+      noticiasDaPaginaInicial = posts.slice(0);
+      renderizarPagina(noticiasDaPaginaInicial, 1);
+
+    })
+
+
+    .catch(error => {
+
+      console.error(error);
+
+
+      document.getElementById(
+        "news"
+      ).innerHTML = `
+
+        <p>
+          Nenhuma notícia encontrada.
+        </p>
+
+      `;
+
+    });
+
 }
 
 
@@ -4077,27 +4075,46 @@ function filtrarNoticias(categoria) {
   container.innerHTML = "";
 
 
-  carregarTodasAsNoticias()
-    .then(({ todas }) => {
-      const categoriaEscolhida = normalizarCategoria(categoria);
-      const filtradas = todas.filter(post => {
-        const cat = normalizarCategoria(post.categoria);
-        if (categoriaEscolhida === "noticias") {
-          return cat === "noticias" || cat === "multiplataforma" || cat === "noticia";
-        }
-        return cat === categoriaEscolhida;
-      });
-      if (!filtradas.length) {
+  fetch("posts.json")
+
+    .then(response =>
+      response.json()
+    )
+
+    .then(posts => {
+
+      const filtradas =
+        posts.filter(post =>
+
+          post.categoria
+            .toLowerCase() ===
+          categoria.toLowerCase()
+
+        );
+
+
+      if (filtradas.length === 0) {
         document.getElementById("pagination").innerHTML = "";
-        container.innerHTML = "<p>Nenhuma notícia encontrada nessa categoria.</p>";
+        container.innerHTML = `<p>Nenhuma notícia encontrada nessa categoria.</p>`;
         return;
       }
+
       noticiasDaPaginaInicial = filtradas;
       renderizarPagina(noticiasDaPaginaInicial, 1);
+
     })
-    .catch(error => {
-      console.error("Erro ao filtrar notícias:", error);
-      container.innerHTML = "<p>Erro ao carregar notícias.</p>";
+
+
+    .catch(() => {
+
+      container.innerHTML = `
+
+        <p>
+          Erro ao carregar notícias.
+        </p>
+
+      `;
+
     });
 
 }
@@ -4167,23 +4184,58 @@ function buscarNoticias() {
   container.innerHTML = "";
 
 
-  carregarTodasAsNoticias()
-    .then(({ todas }) => {
-      const resultados = todas.filter(post =>
-        [post.titulo, post.resumo, post.categoria, post.fonte]
-          .some(valor => String(valor || "").toLowerCase().includes(termo))
-      );
-      if (!resultados.length) {
+  fetch("posts.json")
+
+    .then(response =>
+      response.json()
+    )
+
+    .then(posts => {
+
+      const resultados =
+        posts.filter(post =>
+
+          post.titulo
+            .toLowerCase()
+            .includes(termo)
+
+          ||
+
+          post.resumo
+            .toLowerCase()
+            .includes(termo)
+
+          ||
+
+          post.categoria
+            .toLowerCase()
+            .includes(termo)
+
+        );
+
+
+      if (resultados.length === 0) {
         document.getElementById("pagination").innerHTML = "";
-        container.innerHTML = "<p>Nenhuma notícia encontrada.</p>";
+        container.innerHTML = `<p>Nenhuma notícia encontrada.</p>`;
         return;
       }
+
       noticiasDaPaginaInicial = resultados;
       renderizarPagina(noticiasDaPaginaInicial, 1);
+
     })
-    .catch(error => {
-      console.error("Erro ao pesquisar notícias:", error);
-      container.innerHTML = "<p>Erro ao pesquisar notícias.</p>";
+
+
+    .catch(() => {
+
+      container.innerHTML = `
+
+        <p>
+          Erro ao pesquisar notícias.
+        </p>
+
+      `;
+
     });
 
 }
@@ -4271,39 +4323,51 @@ document
    INICIAR
 ===================================================== */
 
-async function carregarJogosGratis() {
+function carregarJogosGratis() {
+
   const container = document.getElementById("freeGamesList");
+
   if (!container) return;
 
-  try {
-    const response = await fetch("posts.json", { cache: "no-cache" });
-    if (!response.ok) throw new Error("Erro ao carregar posts.json");
-    const posts = await response.json();
-    if (!Array.isArray(posts)) throw new Error("Formato inválido de posts.json");
+  fetch("posts.json")
+    .then(response => {
+      if (!response.ok) throw new Error("Erro ao carregar jogos grátis");
+      return response.json();
+    })
+    .then(posts => {
 
-    const jogosGratis = posts
-      .filter(post => normalizarCategoria(post.categoria) === "jogos gratis")
-      .sort((a, b) => dataEmMilissegundos(b) - dataEmMilissegundos(a))
-      .slice(0, 2);
+      const jogosGratis = posts.filter(post =>
+        String(post.categoria || "").toLowerCase() === "jogos grátis"
+      );
 
-    if (!jogosGratis.length) {
-      container.innerHTML = `<div class="free-games-empty">🎁 Nenhum jogo grátis encontrado.</div>`;
-      return;
-    }
+      if (jogosGratis.length === 0) {
+        container.innerHTML = `
+          <div class="free-games-empty">
+            🎁 Nenhum jogo grátis encontrado.
+          </div>
+        `;
+        return;
+      }
 
-    container.innerHTML = jogosGratis.map(post => `
-      <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="free-game-card">
-        <img src="${escaparTextoHTML(post.imagem || "")}" alt="${escaparTextoHTML(post.titulo || "Jogo grátis")}" loading="lazy">
-        <div class="free-game-info">
-          <span class="free-game-label">GRÁTIS</span>
-          <h3>${escaparTextoHTML(post.titulo || "")}</h3>
+      container.innerHTML = jogosGratis.slice(0, 2).map(post => `
+        <a href="${linkDaNoticia(post)}" class="free-game-card">
+          <img src="${post.imagem}" alt="${post.titulo}" loading="lazy">
+          <div class="free-game-info">
+            <span class="free-game-label">GRÁTIS</span>
+            <h3>${post.titulo}</h3>
+          </div>
+        </a>
+      `).join("");
+
+    })
+    .catch(error => {
+      console.error("Erro ao carregar jogos grátis:", error);
+      container.innerHTML = `
+        <div class="free-games-error">
+          ⚠️ Não foi possível carregar os jogos grátis.
         </div>
-      </a>
-    `).join("");
-  } catch (error) {
-    console.error("Erro ao carregar jogos grátis:", error);
-    container.innerHTML = `<div class="free-games-error">⚠️ Não foi possível carregar os jogos grátis.</div>`;
-  }
+      `;
+    });
 }
 
 
