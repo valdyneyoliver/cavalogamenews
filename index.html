@@ -3663,13 +3663,22 @@ releaseFilters.forEach(botao => {
 ===================================================== */
 
 function linkDaNoticia(post) {
+  // Se o posts.json tiver um link http/https, abre diretamente a fonte original.
+  // Se estiver vazio, ausente ou inválido, abre a página interna do CavaloGameNews.
+  const linkOriginal = String(post?.link ?? "").trim();
 
-  return (
-    "noticias/" +
-    post.id +
-    ".html"
-  );
+  if (linkOriginal) {
+    try {
+      const url = new URL(linkOriginal);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        return url.href;
+      }
+    } catch (erro) {
+      // Link inválido: usa a página interna abaixo.
+    }
+  }
 
+  return "noticias/" + encodeURIComponent(String(post?.id ?? "")) + ".html";
 }
 
 
@@ -3734,7 +3743,7 @@ function criarCardNoticia(post) {
   const autorPublicacao = post.autor || "Valdiney Oliver";
 
   return `
-    <a href="${linkDaNoticia(post)}" class="news-link">
+    <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="news-link">
       <article class="card news-card-horizontal">
         <img
           src="${post.imagem}"
@@ -3849,7 +3858,7 @@ function mostrarDestaque(indice) {
   if (!current) return;
 
   current.innerHTML = `
-    <a href="${linkDaNoticia(post)}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
+    <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
       <img src="${escaparTextoHTML(post.imagem)}" alt="${escaparTextoHTML(post.titulo)}">
       <div class="featured-overlay">
         <span class="category">${escaparTextoHTML(post.categoria || "Notícia")}</span>
@@ -4300,7 +4309,7 @@ function carregarJogosGratis() {
       }
 
       container.innerHTML = jogosGratis.slice(0, 2).map(post => `
-        <a href="${linkDaNoticia(post)}" class="free-game-card">
+        <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="free-game-card">
           <img src="${post.imagem}" alt="${post.titulo}" loading="lazy">
           <div class="free-game-info">
             <span class="free-game-label">GRÁTIS</span>
