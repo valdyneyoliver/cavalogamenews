@@ -2467,10 +2467,33 @@ body.modo-claro #themeToggle {
       color: #8d9b91;
       font-size: 11px;
       line-height: 1.35;
+      width: 100%;
     }
 
     .news-card-time { color: #aebbb2; }
     .news-card-author { color: #00e887; font-weight: 700; }
+    .news-card-source {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      max-width: 45%;
+      padding: 5px 9px;
+      border: 1px solid rgba(0, 232, 135, .42);
+      border-radius: 6px;
+      background: rgba(0, 232, 135, .10);
+      color: #00e887;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    body.modo-claro .news-card-source {
+      color: #087a45;
+      background: rgba(0, 201, 107, .09);
+      border-color: rgba(8, 122, 69, .35);
+    }
 
     body.modo-claro .home-news-column .news-card-horizontal {
       background: #fff;
@@ -3737,10 +3760,9 @@ function renderizarPagina(posts, pagina = 1) {
 ===================================================== */
 
 function criarCardNoticia(post) {
-  const horarioPublicacao =
-    post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
-
+  const dataPublicacao = post.data || post.horario || post.hora || post.data_hora || post.dataHora || "";
   const autorPublicacao = post.autor || "Valdiney Oliver";
+  const fontePublicacao = String(post.fonte || "").trim();
 
   return `
     <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="news-link">
@@ -3759,8 +3781,9 @@ function criarCardNoticia(post) {
           <p>${escaparTextoHTML(post.resumo || "")}</p>
 
           <div class="news-card-meta">
-            <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
+            <span class="news-card-time">${escaparTextoHTML(dataPublicacao)}</span>
             <span class="news-card-author">Por ${escaparTextoHTML(autorPublicacao)}</span>
+            ${fontePublicacao ? `<span class="news-card-source">Fonte: ${escaparTextoHTML(fontePublicacao)}</span>` : ""}
           </div>
         </div>
       </article>
