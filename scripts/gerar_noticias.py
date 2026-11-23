@@ -136,6 +136,38 @@ def escape_attr(value):
     return html.escape(str(value or ""), quote=True)
 
 
+
+
+def obter_categorias(post):
+    """Aceita categoria como texto antigo ou como lista de categorias."""
+    valor = post.get("categoria", "Notícia")
+    categorias = valor if isinstance(valor, list) else [valor]
+    resultado = []
+    for categoria in categorias:
+        texto = str(categoria or "").strip()
+        if texto and texto not in resultado:
+            resultado.append(texto)
+    return resultado or ["Notícia"]
+
+
+def formatar_autor(post):
+    """Lê o autor diretamente do posts.json, sem autoria fixa."""
+    autor = str(post.get("autor", "") or "").strip()
+    if not autor:
+        return ""
+    if autor.casefold() == "valdiney":
+        autor = "Valdiney Oliver"
+    return autor if autor.casefold().startswith("por ") else f"Por {autor}"
+
+
+def link_da_noticia(post, post_id):
+    """Abre a fonte original quando houver link válido; senão, a página interna."""
+    link = str(post.get("link", "") or "").strip()
+    if re.match(r"^https?://", link, flags=re.IGNORECASE):
+        return link
+    return f"../noticias/{post_id}.html"
+
+
 def formatar_data_publicacao(data_hora):
     meses = [
         "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -330,7 +362,8 @@ for post in posts:
     titulo_texto = str(post.get("titulo", "CavaloGameNews"))
     resumo_texto = str(post.get("resumo", ""))
     imagem_texto = str(post.get("imagem", ""))
-    categoria_texto = str(post.get("categoria", "Notícia"))
+    categorias_post = obter_categorias(post)
+    categoria_texto = " • ".join(categorias_post)
     data_texto = str(post.get("data", ""))
 
     titulo = html.escape(titulo_texto)
@@ -398,14 +431,15 @@ for post in posts:
             related_titulo = str(related.get("titulo", "CavaloGameNews"))
             related_resumo = str(related.get("resumo", "")).strip()
             related_imagem = str(related.get("imagem", ""))
-            related_categoria = str(related.get("categoria", "Notícia"))
+            related_categorias = obter_categorias(related)
             related_data = str(related.get("data", "")).strip()
             related_views = related.get("visualizacoes", related.get("views", ""))
             resumo_curto = related_resumo if len(related_resumo) <= 105 else related_resumo[:102].rsplit(" ", 1)[0] + "..."
-            categorias = [c.strip() for c in re.split(r"[,|/]", related_categoria) if c.strip()]
             categorias_html = "".join(
-                f'<span class="related-tag">{html.escape(tag)}</span>' for tag in categorias[:2]
+                f'<span class="related-tag">{html.escape(tag)}</span>'
+                for tag in related_categorias[:3]
             )
+            related_link = escape_attr(link_da_noticia(related, related_id))
             meta_partes = []
             if related_data:
                 meta_partes.append(f'<span>{html.escape(related_data)}</span>')
@@ -418,7 +452,7 @@ for post in posts:
             )
             resumo_html = f'<p class="related-summary">{html.escape(resumo_curto)}</p>' if resumo_curto else ""
             cards_html += f"""
-<a href="../noticias/{escape_attr(related_id)}.html" class="related-card">
+<a href="{related_link}" class="related-card">
   <img class="related-image" src="{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
   <div class="related-content">
     <h3>{html.escape(related_titulo)}</h3>
@@ -434,47 +468,40 @@ for post in posts:
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
 
-    # Mantém a autoria e a data/hora quando a notícia já foi gerada.
+    # A autoria vem sempre do posts.json; a data/hora original é preservada.
+    autor_formatado = formatar_autor(post)
+    autor_html = (
+        f'<div class="info autor">{html.escape(autor_formatado)}</div>'
+        if autor_formatado else ""
+    )
 
-    metadados_antigos = ""
+    data_publicacao_html = ""
     if os.path.exists(caminho):
         try:
             with open(caminho, "r", encoding="utf-8") as arquivo_existente:
                 html_antigo = arquivo_existente.read()
-
-            inicio = html_antigo.find('<div class="info autor">')
-            fim = html_antigo.find("</div>", inicio)
-
-            if inicio != -1 and fim != -1:
-                fim += len("</div>")
-                metadados_antigos = html_antigo[inicio:fim]
-
-                inicio_data = html_antigo.find(
-                    '<div class="info data-publicacao">',
-                    fim
-                )
-
-                if inicio_data != -1:
-                    fim_data = html_antigo.find("</div>", inicio_data)
-                    if fim_data != -1:
-                        fim_data += len("</div>")
-                        metadados_antigos += "\n" + html_antigo[inicio_data:fim_data]
-
+            match_data = re.search(
+                r'<div class="info data-publicacao">.*?</div>',
+                html_antigo,
+                flags=re.IGNORECASE | re.DOTALL
+            )
+            if match_data:
+                data_publicacao_html = match_data.group(0)
         except (OSError, UnicodeError):
-            metadados_antigos = ""
+            pass
 
-    if metadados_antigos:
-        metadados_noticia_html = metadados_antigos
-    elif os.path.exists(caminho):
-        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
-    else:
-        data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
-        data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
+    if not data_publicacao_html:
+        if os.path.exists(caminho):
+            data_publicacao_html = f'<div class="info">{data} · CavaloGameNews</div>'
+        else:
+            data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
+            data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
+            data_publicacao_html = (
+                f'<div class="info data-publicacao">'
+                f'{html.escape(data_publicacao_formatada)}</div>'
+            )
 
-        metadados_noticia_html = f"""
-        <div class="info autor">Por Valdiney Oliver</div>
-        <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
-        """
+    metadados_noticia_html = autor_html + data_publicacao_html
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
