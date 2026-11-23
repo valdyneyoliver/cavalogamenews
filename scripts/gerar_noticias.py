@@ -2,7 +2,6 @@ import json
 import os
 import html
 import re
-import random
 from urllib.parse import urlparse, parse_qs
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
@@ -18,25 +17,6 @@ NEWS_DIR = os.path.join(BASE_DIR, "noticias")
 SITEMAP_FILE = os.path.join(BASE_DIR, "sitemap.xml")
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
-PRODUCTS_FILE = os.path.join(BASE_DIR, "produtos.json")
-
-# Produtos vêm do produtos.json (fonte única do catálogo).
-try:
-    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
-        produtos_json = json.load(f)
-    if not isinstance(produtos_json, list):
-        raise ValueError("O arquivo produtos.json precisa conter uma lista de produtos.")
-    PRODUTOS_AFILIADOS = [
-        produto for produto in produtos_json
-        if isinstance(produto, dict)
-        and produto.get("nome")
-        and produto.get("imagem")
-        and produto.get("url")
-    ]
-except FileNotFoundError:
-    print("Aviso: produtos.json não encontrado. As notícias serão geradas sem anúncio de produto.")
-    PRODUTOS_AFILIADOS = []
-
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
 
@@ -151,13 +131,8 @@ def obter_categorias(post):
 
 
 def formatar_autor(post):
-    """Lê o autor diretamente do posts.json, sem autoria fixa."""
-    autor = str(post.get("autor", "") or "").strip()
-    if not autor:
-        return ""
-    if autor.casefold() == "valdiney":
-        autor = "Valdiney Oliver"
-    return autor if autor.casefold().startswith("por ") else f"Por {autor}"
+    """Exibe exatamente o texto informado no campo autor do posts.json."""
+    return str(post.get("autor", "") or "").strip()
 
 
 def link_da_noticia(post, post_id):
@@ -179,43 +154,7 @@ def formatar_data_publicacao(data_hora):
     )
 
 
-def gerar_anuncio_produto(post):
-    """Escolhe aleatoriamente um produto do produtos.json para a notícia nova."""
-    if not PRODUTOS_AFILIADOS:
-        return ""
-
-    produto = random.choice(PRODUTOS_AFILIADOS)
-    nome = html.escape(str(produto.get("nome", "Produto recomendado")))
-    categoria = html.escape(str(produto.get("categoria", "Games")))
-    descricao = html.escape(str(produto.get("descricao", "")))
-    alt = html.escape(str(produto.get("alt", produto.get("nome", "Produto recomendado"))), quote=True)
-    url = html.escape(str(produto["url"]), quote=True)
-
-    imagem_arquivo = str(produto["imagem"]).strip()
-    if imagem_arquivo.startswith(("https://", "http://")):
-        imagem = html.escape(imagem_arquivo, quote=True)
-    else:
-        imagem = html.escape("../img/produtos/" + imagem_arquivo.lstrip("/"), quote=True)
-
-    return f"""
-<aside class="anuncio-produto" aria-label="Produto recomendado">
-  <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
-  <div class="anuncio-produto-conteudo">
-    <img src="{imagem}" alt="{alt}" loading="lazy">
-    <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">{categoria}</span>
-      <h3>{nome}</h3>
-      <p>{descricao}</p>
-      <a class="anuncio-produto-botao" href="{url}" target="_blank"
-         rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
-      <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
-    </div>
-  </div>
-</aside>
-"""
-
-
-def renderizar_conteudo(post, incluir_anuncio=False):
+def renderizar_conteudo(post):
     paragrafos = post.get("conteudo")
     if not isinstance(paragrafos, list):
         paragrafos = [post.get("resumo", "")]
@@ -338,17 +277,6 @@ def renderizar_conteudo(post, incluir_anuncio=False):
     if x_html and len(validos) == 1:
         conteudo_html += x_html
 
-    # Para não alterar notícias antigas, o anúncio só entra nas páginas novas.
-    if incluir_anuncio:
-        anuncio_html = gerar_anuncio_produto(post)
-        if anuncio_html:
-            primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
-            if primeiro_paragrafo:
-                posicao = primeiro_paragrafo.end()
-                conteudo_html = conteudo_html[:posicao] + anuncio_html + conteudo_html[posicao:]
-            else:
-                conteudo_html += anuncio_html
-
     return conteudo_html
 
 
@@ -376,38 +304,7 @@ for post in posts:
     generated_news_urls.append(news_url)
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
     pagina_existente = os.path.exists(caminho)
-    incluir_anuncio = not pagina_existente
-    conteudo_html = renderizar_conteudo(post, incluir_anuncio=incluir_anuncio)
-
-    # Ao regenerar o site, preserva o produto que já estava nesta notícia.
-    # Assim, publicar uma notícia nova não apaga os anúncios das notícias anteriores.
-    if pagina_existente:
-        try:
-            with open(caminho, "r", encoding="utf-8") as arquivo_existente:
-                html_existente_produto = arquivo_existente.read()
-            anuncio_existente = re.search(
-                r'<aside class="anuncio-produto"\b.*?</aside>',
-                html_existente_produto,
-                flags=re.IGNORECASE | re.DOTALL
-            )
-            if 'class="anuncio-produto"' not in conteudo_html:
-                # Preserva o anúncio antigo quando ele ainda existe no HTML.
-                # Se já tiver sido apagado em uma execução anterior, recria um
-                # anúncio usando o catálogo atual de produtos.json.
-                if anuncio_existente:
-                    bloco_anuncio = anuncio_existente.group(0)
-                else:
-                    bloco_anuncio = gerar_anuncio_produto(post)
-
-                if bloco_anuncio:
-                    primeiro_paragrafo = re.search(r"</p>\s*", conteudo_html, flags=re.IGNORECASE)
-                    if primeiro_paragrafo:
-                        posicao = primeiro_paragrafo.end()
-                        conteudo_html = conteudo_html[:posicao] + "\n" + bloco_anuncio + "\n" + conteudo_html[posicao:]
-                    else:
-                        conteudo_html += "\n" + bloco_anuncio
-        except (OSError, UnicodeError):
-            pass
+    conteudo_html = renderizar_conteudo(post)
 
     videos_html = gerar_videos(post)
 
@@ -959,59 +856,6 @@ footer {{
 }}
 @media (prefers-reduced-motion: reduce) {{
   *, *::before, *::after {{ scroll-behavior: auto !important; transition: none !important; }}
-}}
-.anuncio-produto {{
-  margin: 28px 0;
-  padding: 18px;
-  border: 1px solid var(--accent);
-  border-radius: 14px;
-  background: var(--surface-2);
-  overflow: hidden;
-}}
-.anuncio-produto-label {{
-  display: inline-block;
-  margin-bottom: 12px;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .06em;
-}}
-.anuncio-produto-conteudo {{
-  display: grid;
-  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-}}
-.anuncio-produto-conteudo > img {{
-  display: block;
-  width: 100%;
-  max-height: 190px;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 10px;
-  background: #fff;
-}}
-.anuncio-produto-categoria {{ color: var(--accent); font-size: 11px; font-weight: 800; }}
-.anuncio-produto-info h3 {{ margin: 5px 0 8px; font-size: 19px; line-height: 1.35; }}
-.anuncio-produto-info p {{ margin: 0 0 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }}
-.anuncio-produto-botao {{
-  display: inline-block;
-  padding: 11px 14px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #06140d;
-  font-size: 12px;
-  font-weight: 800;
-  text-decoration: none;
-}}
-.anuncio-produto-botao:hover {{ filter: brightness(.92); }}
-.anuncio-produto-info small {{ display: block; margin-top: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }}
-@media (max-width: 480px) {{
-  .anuncio-produto {{ padding: 13px; }}
-  .anuncio-produto-conteudo {{ grid-template-columns: minmax(0, 1fr); gap: 12px; }}
-  .anuncio-produto-conteudo > img {{ max-height: 150px; }}
-  .anuncio-produto-info h3 {{ font-size: 17px; }}
-  .anuncio-produto-botao {{ display: block; text-align: center; }}
 }}
 </style>
 </head>
