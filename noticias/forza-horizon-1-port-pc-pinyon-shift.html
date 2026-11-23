@@ -455,59 +455,6 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
-.anuncio-produto {
-  margin: 28px 0;
-  padding: 18px;
-  border: 1px solid var(--accent);
-  border-radius: 14px;
-  background: var(--surface-2);
-  overflow: hidden;
-}
-.anuncio-produto-label {
-  display: inline-block;
-  margin-bottom: 12px;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .06em;
-}
-.anuncio-produto-conteudo {
-  display: grid;
-  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-}
-.anuncio-produto-conteudo > img {
-  display: block;
-  width: 100%;
-  max-height: 190px;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 10px;
-  background: #fff;
-}
-.anuncio-produto-categoria { color: var(--accent); font-size: 11px; font-weight: 800; }
-.anuncio-produto-info h3 { margin: 5px 0 8px; font-size: 19px; line-height: 1.35; }
-.anuncio-produto-info p { margin: 0 0 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }
-.anuncio-produto-botao {
-  display: inline-block;
-  padding: 11px 14px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #06140d;
-  font-size: 12px;
-  font-weight: 800;
-  text-decoration: none;
-}
-.anuncio-produto-botao:hover { filter: brightness(.92); }
-.anuncio-produto-info small { display: block; margin-top: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }
-@media (max-width: 480px) {
-  .anuncio-produto { padding: 13px; }
-  .anuncio-produto-conteudo { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .anuncio-produto-conteudo > img { max-height: 150px; }
-  .anuncio-produto-info h3 { font-size: 17px; }
-  .anuncio-produto-botao { display: block; text-align: center; }
-}
 </style>
 </head>
 <body>
@@ -574,23 +521,6 @@ footer {
       <img class="cover" src="https://store-images.s-microsoft.com/image/apps.17592.70158812030598618.d392f4f7-994d-4142-9423-85b22caff779.3ce497ca-b22d-47e5-b8bb-8d9370dd5dab" alt="Forza Horizon 1 ganha port não oficial para PC com Windows" fetchpriority="high">
       <div class="text">
         <p>🏎️ Os fãs de corrida ganharam uma nova maneira de jogar <span class="texto-verde">Forza Horizon 1</span> no PC. O projeto não oficial <span class="texto-verde">Pinyon Shift</span> disponibilizou uma versão de preview jogável que permite executar no Windows o jogo originalmente lançado como exclusivo do Xbox 360 em 2012.</p>
-
-
-<aside class="anuncio-produto" aria-label="Produto recomendado">
-  <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
-  <div class="anuncio-produto-conteudo">
-    <img src="https://m.media-amazon.com/images/W/BW_MEDIAX_AVIF_MEASUREMENT_1306696-T4/images/I/817h1VEWILL._AC_SL1500_.jpg" alt="The Legend of Zelda Ocarina of Time para Nintendo Switch 2 com capa padrão" loading="lazy">
-    <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Jogos para Nintendo Switch 2</span>
-      <h3>The Legend of Zelda: Ocarina of Time — Nintendo Switch 2</h3>
-      <p>The Legend of Zelda: Ocarina of Time para Nintendo Switch 2, edição com capa padrão. Uma aventura clássica do universo Zelda para os fãs da Nintendo.</p>
-      <a class="anuncio-produto-botao" href="https://link.amazon/A02PjY0iu" target="_blank"
-         rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
-      <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
-    </div>
-  </div>
-</aside>
-
 <p>O projeto utiliza uma recompilação do jogo para gerar código nativo para computadores, possibilitando um port para PC e abrindo caminho para aproveitar o clássico de corrida fora do console original.</p>
 <p>─────────────</p>
 <p><span class="texto-verde">Tempo de instalação e espaço necessário</span></p>

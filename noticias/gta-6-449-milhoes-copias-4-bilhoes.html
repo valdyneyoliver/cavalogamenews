@@ -455,59 +455,6 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
-.anuncio-produto {
-  margin: 28px 0;
-  padding: 18px;
-  border: 1px solid var(--accent);
-  border-radius: 14px;
-  background: var(--surface-2);
-  overflow: hidden;
-}
-.anuncio-produto-label {
-  display: inline-block;
-  margin-bottom: 12px;
-  color: var(--accent);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .06em;
-}
-.anuncio-produto-conteudo {
-  display: grid;
-  grid-template-columns: minmax(110px, 180px) minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-}
-.anuncio-produto-conteudo > img {
-  display: block;
-  width: 100%;
-  max-height: 190px;
-  object-fit: contain;
-  padding: 10px;
-  border-radius: 10px;
-  background: #fff;
-}
-.anuncio-produto-categoria { color: var(--accent); font-size: 11px; font-weight: 800; }
-.anuncio-produto-info h3 { margin: 5px 0 8px; font-size: 19px; line-height: 1.35; }
-.anuncio-produto-info p { margin: 0 0 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }
-.anuncio-produto-botao {
-  display: inline-block;
-  padding: 11px 14px;
-  border-radius: 8px;
-  background: var(--accent);
-  color: #06140d;
-  font-size: 12px;
-  font-weight: 800;
-  text-decoration: none;
-}
-.anuncio-produto-botao:hover { filter: brightness(.92); }
-.anuncio-produto-info small { display: block; margin-top: 10px; color: var(--muted); font-size: 10px; line-height: 1.5; }
-@media (max-width: 480px) {
-  .anuncio-produto { padding: 13px; }
-  .anuncio-produto-conteudo { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .anuncio-produto-conteudo > img { max-height: 150px; }
-  .anuncio-produto-info h3 { font-size: 17px; }
-  .anuncio-produto-botao { display: block; text-align: center; }
-}
 </style>
 </head>
 <body>
@@ -569,28 +516,11 @@ footer {
       <div class="article-head">
         <div class="category">Notícias</div>
         <h1>GTA 6 teria vendido 44,9 milhões de cópias em apenas quatro dias e arrecadado mais de US$ 4 bilhões, aponta estimativa</h1>
-        <div class="info autor">Por Valdiney Oliver</div><div class="info data-publicacao">Em 23 de novembro de 2026 às 09:52</div>
+        <div class="info autor">valdiney</div><div class="info data-publicacao">Em 23 de novembro de 2026 às 09:52</div>
       </div>
       <img class="cover" src="https://pbs.twimg.com/media/HXzo3KRXMAA6s6U?format=jpg&amp;name=large" alt="GTA 6 teria vendido 44,9 milhões de cópias em apenas quatro dias e arrecadado mais de US$ 4 bilhões, aponta estimativa" fetchpriority="high">
       <div class="text">
         <p>Uma estimativa da Alinea Analytics, divulgada por Rhys Elliott, aponta que GTA 6 teria vendido 44,9 milhões de cópias até o encerramento do primeiro fim de semana, considerando as vendas efetivas e excluindo estoques não vendidos no varejo. Desse total, aproximadamente 33,7 milhões seriam no PS5 (75,1%) e 11,2 milhões no Xbox (24,9%). O levantamento também estima uma arrecadação superior a US$ 4 bilhões em apenas quatro dias, com mais de US$ 3 bilhões provenientes do PlayStation. Além disso, cerca de 40,8 milhões de jogadores teriam acessado o game no domingo, 22 de novembro. Os números são estimativas independentes, não dados oficiais divulgados pela Rockstar Games.</p>
-
-
-<aside class="anuncio-produto" aria-label="Produto recomendado">
-  <span class="anuncio-produto-label">🛒 PRODUTO RECOMENDADO</span>
-  <div class="anuncio-produto-conteudo">
-    <img src="../img/produtos/gamesir-nova-lite.png" alt="Controle GameSir Nova Lite" loading="lazy">
-    <div class="anuncio-produto-info">
-      <span class="anuncio-produto-categoria">🎮 Controle gamer</span>
-      <h3>GameSir Nova Lite</h3>
-      <p>Uma opção versátil de controle para suas sessões de jogo.</p>
-      <a class="anuncio-produto-botao" href="https://www.amazon.com.br/dp/B0DQY49JJ9?tag=cavalogamenew-20" target="_blank"
-         rel="sponsored nofollow noopener noreferrer">CONFERIR NA AMAZON</a>
-      <small>Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas.</small>
-    </div>
-  </div>
-</aside>
-
 
         
         <a class="back-button" href="../index.html">← Voltar para as notícias</a>
