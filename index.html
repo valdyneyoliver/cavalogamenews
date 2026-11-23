@@ -3788,7 +3788,7 @@ function criarCardNoticia(post) {
         >
 
         <div class="card-content">
-          <div class="category">${escaparTextoHTML(post.categoria || "Notícia")}</div>
+          <div class="category">${escaparTextoHTML(exibirCategorias(post))}</div>
 
           <h3>${escaparTextoHTML(post.titulo)}</h3>
 
@@ -3898,7 +3898,7 @@ function mostrarDestaque(indice) {
     <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
       <img src="${escaparTextoHTML(post.imagem)}" alt="${escaparTextoHTML(post.titulo)}">
       <div class="featured-overlay">
-        <span class="category">${escaparTextoHTML(post.categoria || "Notícia")}</span>
+        <span class="category">${escaparTextoHTML(exibirCategorias(post))}</span>
         <h2>${escaparTextoHTML(post.titulo)}</h2>
         <div class="date">${escaparTextoHTML(post.data || "")}</div>
         <p>${escaparTextoHTML(post.resumo || "")}</p>
@@ -3932,6 +3932,27 @@ function reiniciarTemporizadorDestaque() {
   iniciarTemporizadorDestaque();
 }
 
+
+/* =====================================================
+   CATEGORIAS — ACEITA TEXTO ANTIGO OU LISTA DE CATEGORIAS
+===================================================== */
+
+function obterCategorias(post) {
+  const valor = post?.categoria;
+
+  const categorias = Array.isArray(valor)
+    ? valor
+    : (valor ? [valor] : []);
+
+  return categorias
+    .map(categoria => String(categoria || "").trim())
+    .filter(Boolean);
+}
+
+function exibirCategorias(post) {
+  const categorias = obterCategorias(post);
+  return categorias.length ? categorias.join(" • ") : "Notícia";
+}
 
 /* =====================================================
    CARREGAR NOTÍCIAS
@@ -4079,14 +4100,11 @@ function filtrarNoticias(categoria) {
 
     .then(posts => {
 
-      const filtradas =
-        posts.filter(post =>
-
-          post.categoria
-            .toLowerCase() ===
-          categoria.toLowerCase()
-
-        );
+      const filtradas = posts.filter(post =>
+        obterCategorias(post).some(item =>
+          item.toLowerCase() === categoria.toLowerCase()
+        )
+      );
 
 
       if (filtradas.length === 0) {
@@ -4203,9 +4221,8 @@ function buscarNoticias() {
 
           ||
 
-          post.categoria
-            .toLowerCase()
-            .includes(termo)
+          obterCategorias(post)
+            .some(categoria => categoria.toLowerCase().includes(termo))
 
         );
 
@@ -4333,7 +4350,9 @@ function carregarJogosGratis() {
     .then(posts => {
 
       const jogosGratis = posts.filter(post =>
-        String(post.categoria || "").toLowerCase() === "jogos grátis"
+        obterCategorias(post).some(categoria =>
+          categoria.toLowerCase() === "jogos grátis"
+        )
       );
 
       if (jogosGratis.length === 0) {
