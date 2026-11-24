@@ -3093,6 +3093,60 @@ body.modo-claro #themeToggle {
       }
     }
 
+
+
+    /* AJUSTE DA LOGO NO CELULAR: evita sobreposição com busca e tema */
+    @media (max-width: 560px) {
+      header .header-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px 8px;
+      }
+      header .logo {
+        display: block;
+        flex: 1 1 0;
+        min-width: 0;
+        width: auto;
+        max-width: calc(100% - 92px);
+        height: auto;
+        max-height: 42px;
+        margin: 0;
+        object-fit: contain;
+        object-position: left center;
+      }
+      header .header-tools {
+        position: static;
+        flex: 0 0 auto;
+        align-self: center;
+        margin: 0;
+        gap: 7px;
+        transform: none;
+      }
+      header .header-tools .search-box,
+      header .header-tools .search-button,
+      header .header-tools #themeToggle {
+        flex: 0 0 38px;
+        width: 38px;
+        height: 38px;
+      }
+      header nav {
+        flex: 0 0 100%;
+        width: 100%;
+      }
+      header.header-compact .logo {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      header.header-compact .header-tools {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
 </style>
 
 </head>
