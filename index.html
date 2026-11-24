@@ -1040,8 +1040,10 @@ body.modo-claro .free-games-error {
       max-width: 750px;
       line-height: 1.55;
       margin-bottom: 18px;
-      display: block;
-      overflow: visible;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .read-button {
@@ -1128,7 +1130,7 @@ body.modo-claro .free-games-error {
       .featured { height: 390px; border-radius: 13px; }
       .featured-overlay { width: 100%; padding: 22px 18px 48px; }
       .featured-overlay h2 { font-size: 24px; }
-      .featured-overlay p { font-size: 14px; display: block; overflow: visible; }
+      .featured-overlay p { font-size: 14px; -webkit-line-clamp: 3; }
       .featured-arrow { width: 34px; height: 34px; font-size: 20px; }
       .featured-arrow.prev { left: 9px; }
       .featured-arrow.next { right: 9px; }
@@ -1966,6 +1968,39 @@ body.modo-claro #themeToggle {
 
 
     /* =====================================================
+       OFERTAS INSTANT GAMING
+    ===================================================== */
+    .instant-gaming-section { width: calc(100% - 40px); max-width: 1450px; margin: 18px auto 28px; }
+    .instant-gaming-heading { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:8px; }
+    .instant-gaming-section h2 { color:#ff6548; font-size:27px; margin-bottom:8px; }
+    .instant-gaming-subtitle { color:#aab4ad; font-size:14px; line-height:1.5; margin-bottom:18px; }
+    .instant-gaming-pill { display:inline-flex; align-items:center; gap:6px; padding:7px 11px; border:1px solid rgba(255,101,72,.4); border-radius:999px; color:#ff8a72; background:rgba(255,101,72,.08); font-size:11px; font-weight:bold; white-space:nowrap; }
+    .instant-gaming-section .produto-imagem { background:linear-gradient(145deg,#191d1b,#0d100e); height:150px; padding:0; position:relative; overflow:hidden; }
+    .instant-gaming-section .produto-imagem img { object-fit:cover; transition:transform .3s; }
+    .instant-gaming-section .produto-card:hover .produto-imagem img { transform:scale(1.045); }
+    .instant-gaming-section .produto-info { padding:14px; }
+    .instant-gaming-section .produto-categoria { color:#ff8a72; }
+    .instant-gaming-section .produto-info h3 { min-height:44px; }
+    .instant-gaming-section .produto-descricao { min-height:38px; }
+    .instant-gaming-section .produto-preco { margin:12px 0 15px; font-size:22px; }
+    .instant-gaming-section .produto-botao { background:#ff6548; color:#1a0905; }
+    .instant-gaming-section .produto-botao:hover { filter:brightness(1.12); }
+    .instant-gaming-section .produto-aviso { margin-top:9px; }
+    .instant-gaming-loading { color:#8f9992; padding:25px 10px; }
+    body.modo-claro .instant-gaming-subtitle { color:#5f6b62; }
+    body.modo-claro .instant-gaming-section .produto-imagem { background:#e9eeeb; }
+    @media(max-width:600px) {
+      .instant-gaming-section { width:calc(100% - 24px); margin:18px auto 24px; }
+      .instant-gaming-section h2 { font-size:23px; }
+      .instant-gaming-heading { align-items:flex-start; }
+      .instant-gaming-pill { font-size:10px; padding:6px 8px; }
+      .instant-gaming-section .produto-card { flex-basis:200px; }
+      .instant-gaming-section .produto-imagem { height:135px; }
+    }
+
+
+
+    /* =====================================================
        NOVA IDENTIDADE VISUAL — PORTAL GAMER + TECNOLOGIA
        Camada visual adicionada sem substituir os recursos atuais.
     ===================================================== */
@@ -2450,10 +2485,8 @@ body.modo-claro #themeToggle {
       color: #aebbb2;
       font-size: 13px;
       line-height: 1.45;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      display: block;
+      overflow: visible;
     }
 
     .news-card-meta {
@@ -2465,47 +2498,10 @@ body.modo-claro #themeToggle {
       color: #8d9b91;
       font-size: 11px;
       line-height: 1.35;
-      width: 100%;
     }
 
     .news-card-time { color: #aebbb2; }
-    .news-card-author {
-      display: inline-flex;
-      align-items: center;
-      max-width: 45%;
-      padding: 5px 9px;
-      border: 1px solid rgba(0, 232, 135, .42);
-      border-radius: 6px;
-      background: rgba(0, 232, 135, .10);
-      color: #00e887;
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1.2;
-      overflow-wrap: anywhere;
-    }
-    .news-card-source {
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      max-width: 45%;
-      padding: 5px 9px;
-      border: 1px solid rgba(0, 232, 135, .42);
-      border-radius: 6px;
-      background: rgba(0, 232, 135, .10);
-      color: #00e887;
-      font-size: 10px;
-      font-weight: 800;
-      line-height: 1.2;
-      text-align: right;
-      overflow-wrap: anywhere;
-    }
-
-    body.modo-claro .news-card-author,
-    body.modo-claro .news-card-source {
-      color: #087a45;
-      background: rgba(0, 201, 107, .09);
-      border-color: rgba(8, 122, 69, .35);
-    }
+    .news-card-author { color: #00e887; font-weight: 700; }
 
     body.modo-claro .home-news-column .news-card-horizontal {
       background: #fff;
@@ -2539,6 +2535,8 @@ body.modo-claro #themeToggle {
       }
       .home-news-column .news-card-horizontal p {
         font-size: 12px;
+        display: block;
+        overflow: visible;
       }
       .news-card-meta { font-size: 10px; gap: 4px 8px; }
     }
@@ -2817,146 +2815,6 @@ body.modo-claro #themeToggle {
       header .logo, header .header-tools, header nav { transition: none; }
     }
 
-
-
-    /* =====================================================
-       ACABAMENTO VISUAL DO CALENDÁRIO
-       Alterações somente dentro de .release-calendar.
-    ===================================================== */
-    .release-calendar .release-title::first-letter {
-      color: inherit;
-    }
-
-    .release-calendar .release-filter {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      letter-spacing: .02em;
-    }
-
-    /* Data, nome e plataformas ficam em linhas separadas no cartão. */
-    .release-calendar .release-info {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 3px;
-      left: 9px;
-      right: 9px;
-      bottom: 5px;
-      min-width: 0;
-    }
-
-    .release-calendar .release-date {
-      position: relative;
-      z-index: 4;
-      display: inline-block;
-      left: auto;
-      right: auto;
-      top: auto;
-      bottom: auto;
-      width: auto;
-      max-width: 100%;
-      padding: 2px 6px;
-      border: 1px solid rgba(0, 232, 135, .75);
-      border-radius: 5px;
-      background: linear-gradient(135deg, rgba(0, 35, 20, .96), rgba(0, 15, 9, .92));
-      color: #65ffb5;
-      font-size: 8px;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: .025em;
-      text-align: left;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
-      backdrop-filter: blur(7px);
-    }
-
-    .release-calendar .release-name {
-      display: block;
-      width: 100%;
-      min-height: 0;
-      margin: 0;
-      overflow: hidden;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 800;
-      line-height: 1.15;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .release-calendar .release-platforms {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 3px;
-      max-width: 100%;
-      overflow: hidden;
-    }
-
-    .release-calendar .release-platform {
-      flex: 0 0 auto;
-      padding: 1px 4px;
-      font-size: 7px;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    .release-calendar .release-date::first-letter {
-      color: inherit;
-    }
-
-    .release-calendar .release-card {
-      isolation: isolate;
-      animation: calendarioEntrada .45s ease both;
-    }
-
-    .release-calendar .release-image {
-      transform: scale(1);
-      transition: transform .75s cubic-bezier(.2, .7, .2, 1), filter .75s ease;
-      will-change: transform;
-    }
-
-    .release-calendar .release-card:hover .release-image {
-      transform: scale(1.12);
-      filter: brightness(1.12) saturate(1.12);
-    }
-
-    .release-calendar .release-card::before {
-      content: "";
-      position: absolute;
-      z-index: 2;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,.13) 48%, transparent 70%);
-      transform: translateX(-130%);
-      transition: transform .8s ease;
-    }
-
-    .release-calendar .release-card:hover::before {
-      transform: translateX(130%);
-    }
-
-    @keyframes calendarioEntrada {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    body.modo-claro .release-calendar .release-date {
-      color: #006b3c;
-      background: linear-gradient(135deg, rgba(224, 255, 239, .98), rgba(245, 255, 249, .96));
-      border-color: rgba(0, 150, 82, .55);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .12), 0 0 10px rgba(0, 150, 82, .10);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .release-calendar .release-card,
-      .release-calendar .release-image,
-      .release-calendar .release-card::before {
-        animation: none;
-        transition: none;
-      }
-    }
-
 </style>
 
 </head>
@@ -3081,21 +2939,21 @@ body.modo-claro #themeToggle {
       <section class="release-calendar">
         <div class="release-header">
           <div>
-            <h2 class="release-title">Calendário de Lançamentos</h2>
+            <h2 class="release-title"> Calendário de Lançamentos</h2>
             <p class="release-subtitle">Confira os próximos jogos que chegam ao PC e consoles.</p>
           </div>
         </div>
         <div class="release-filters">
-          <button class="release-filter active" data-platform="todos">Todos</button>
-          <button class="release-filter" data-platform="PC">PC</button>
-          <button class="release-filter" data-platform="Xbox">Xbox</button>
-          <button class="release-filter" data-platform="PlayStation">PlayStation</button>
-          <button class="release-filter" data-platform="Switch">Switch</button>
+          <button class="release-filter active" data-platform="todos">▦ Todos</button>
+          <button class="release-filter" data-platform="PC">🖥️ PC</button>
+          <button class="release-filter" data-platform="Xbox">🎮 Xbox</button>
+          <button class="release-filter" data-platform="PlayStation">🎮 PlayStation</button>
+          <button class="release-filter" data-platform="Switch">🎮 Switch</button>
         </div>
         <div class="release-wrapper">
           <button class="release-arrow release-arrow-left" id="releasePrev" aria-label="Jogos anteriores">‹</button>
           <div id="releaseGames" class="release-games">
-            <div class="release-loading">Carregando lançamentos...</div>
+            <div class="release-loading">🎮 Carregando lançamentos...</div>
           </div>
           <button class="release-arrow release-arrow-right" id="releaseNext" aria-label="Próximos jogos">↓</button>
         </div>
@@ -3110,10 +2968,27 @@ body.modo-claro #themeToggle {
           <div class="free-games-loading">🎁 Carregando jogos grátis...</div>
         </div>
         <div class="supporters-area">
-          <h3></h3>
+          <h3>🎮 Aumente sua biblioteca sem gastar nada! 💚 ⏳ **ÚLTIMA CHANCE!** Resgate os jogos grátis ANTES QUE O PRAZO ACABE! 🔥</h3>
         </div>
       </div>
     </div>
+
+    <section class="instant-gaming-section" aria-labelledby="tituloInstantGaming">
+      <div class="instant-gaming-heading">
+        <div>
+          <h2 id="tituloInstantGaming">🔥 Ofertas Instant Gaming</h2>
+          <p class="instant-gaming-subtitle">Nova seleção de ofertas para aproveitar.</p>
+        </div>
+        <span class="instant-gaming-pill">🎮 OFERTAS PARA JOGAR</span>
+      </div>
+      <div class="produtos-carrossel instant-gaming-carousel">
+        <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver ofertas anteriores">&#8249;</button>
+        <div class="produtos-grid" id="instantGamingGrid" aria-live="polite">
+          <p class="instant-gaming-loading">🔥 Carregando ofertas...</p>
+        </div>
+        <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximas ofertas">&#8250;</button>
+      </div>
+    </section>
 
     <section class="produtos-recomendados" aria-labelledby="tituloProdutos">
       <h2 id="tituloProdutos">🛒 Produtos Recomendados</h2>
@@ -3423,7 +3298,8 @@ async function carregarLancamentos() {
 
       <div class="release-error">
 
-        Não foi possível carregar os lançamentos no momento.
+        ⚠️ Não foi possível carregar
+        os lançamentos no momento.
 
       </div>
 
@@ -3474,7 +3350,7 @@ function mostrarLancamentos(plataforma) {
 
       <div class="release-empty">
 
-        Nenhum lançamento encontrado.
+        🎮 Nenhum lançamento encontrado.
 
       </div>
 
@@ -3557,7 +3433,7 @@ function mostrarLancamentos(plataforma) {
           <div class="release-info">
 
             <div class="release-date">
-              ${data}
+              📅 ${data}
             </div>
 
             <div class="release-name">
@@ -3697,22 +3573,13 @@ releaseFilters.forEach(botao => {
 ===================================================== */
 
 function linkDaNoticia(post) {
-  // Se o posts.json tiver um link http/https, abre diretamente a fonte original.
-  // Se estiver vazio, ausente ou inválido, abre a página interna do CavaloGameNews.
-  const linkOriginal = String(post?.link ?? "").trim();
 
-  if (linkOriginal) {
-    try {
-      const url = new URL(linkOriginal);
-      if (url.protocol === "http:" || url.protocol === "https:") {
-        return url.href;
-      }
-    } catch (erro) {
-      // Link inválido: usa a página interna abaixo.
-    }
-  }
+  return (
+    "noticias/" +
+    post.id +
+    ".html"
+  );
 
-  return "noticias/" + encodeURIComponent(String(post?.id ?? "")) + ".html";
 }
 
 
@@ -3771,12 +3638,13 @@ function renderizarPagina(posts, pagina = 1) {
 ===================================================== */
 
 function criarCardNoticia(post) {
-  const dataPublicacao = post.data || post.horario || post.hora || post.data_hora || post.dataHora || "";
-  const autorPublicacao = String(post.autor || "").trim();
-  const fontePublicacao = String(post.fonte || "").trim();
+  const horarioPublicacao =
+    post.horario || post.hora || post.data_hora || post.dataHora || post.data || "";
+
+  const autorPublicacao = post.autor || "Valdiney Oliver";
 
   return `
-    <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="news-link">
+    <a href="${linkDaNoticia(post)}" class="news-link">
       <article class="card news-card-horizontal">
         <img
           src="${post.imagem}"
@@ -3785,16 +3653,15 @@ function criarCardNoticia(post) {
         >
 
         <div class="card-content">
-          <div class="category">${escaparTextoHTML(exibirCategorias(post))}</div>
+          <div class="category">${escaparTextoHTML(post.categoria || "Notícia")}</div>
 
           <h3>${escaparTextoHTML(post.titulo)}</h3>
 
           <p>${escaparTextoHTML(post.resumo || "")}</p>
 
           <div class="news-card-meta">
-            <span class="news-card-time">${escaparTextoHTML(dataPublicacao)}</span>
-            ${autorPublicacao ? `<span class="news-card-author">Autor: ${escaparTextoHTML(autorPublicacao)}</span>` : ""}
-            ${fontePublicacao ? `<span class="news-card-source">Fonte: ${escaparTextoHTML(fontePublicacao)}</span>` : ""}
+            <span class="news-card-time">🕒 ${escaparTextoHTML(horarioPublicacao)}</span>
+            <span class="news-card-author">Por ${escaparTextoHTML(autorPublicacao)}</span>
           </div>
         </div>
       </article>
@@ -3892,10 +3759,10 @@ function mostrarDestaque(indice) {
   if (!current) return;
 
   current.innerHTML = `
-    <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
+    <a href="${linkDaNoticia(post)}" class="featured-slide" aria-label="Ler notícia: ${escaparTextoHTML(post.titulo)}">
       <img src="${escaparTextoHTML(post.imagem)}" alt="${escaparTextoHTML(post.titulo)}">
       <div class="featured-overlay">
-        <span class="category">${escaparTextoHTML(exibirCategorias(post))}</span>
+        <span class="category">${escaparTextoHTML(post.categoria || "Notícia")}</span>
         <h2>${escaparTextoHTML(post.titulo)}</h2>
         <div class="date">${escaparTextoHTML(post.data || "")}</div>
         <p>${escaparTextoHTML(post.resumo || "")}</p>
@@ -3929,27 +3796,6 @@ function reiniciarTemporizadorDestaque() {
   iniciarTemporizadorDestaque();
 }
 
-
-/* =====================================================
-   CATEGORIAS — ACEITA TEXTO ANTIGO OU LISTA DE CATEGORIAS
-===================================================== */
-
-function obterCategorias(post) {
-  const valor = post?.categoria;
-
-  const categorias = Array.isArray(valor)
-    ? valor
-    : (valor ? [valor] : []);
-
-  return categorias
-    .map(categoria => String(categoria || "").trim())
-    .filter(Boolean);
-}
-
-function exibirCategorias(post) {
-  const categorias = obterCategorias(post);
-  return categorias.length ? categorias.join(" • ") : "Notícia";
-}
 
 /* =====================================================
    CARREGAR NOTÍCIAS
@@ -4097,11 +3943,14 @@ function filtrarNoticias(categoria) {
 
     .then(posts => {
 
-      const filtradas = posts.filter(post =>
-        obterCategorias(post).some(item =>
-          item.toLowerCase() === categoria.toLowerCase()
-        )
-      );
+      const filtradas =
+        posts.filter(post =>
+
+          post.categoria
+            .toLowerCase() ===
+          categoria.toLowerCase()
+
+        );
 
 
       if (filtradas.length === 0) {
@@ -4218,8 +4067,9 @@ function buscarNoticias() {
 
           ||
 
-          obterCategorias(post)
-            .some(categoria => categoria.toLowerCase().includes(termo))
+          post.categoria
+            .toLowerCase()
+            .includes(termo)
 
         );
 
@@ -4347,9 +4197,7 @@ function carregarJogosGratis() {
     .then(posts => {
 
       const jogosGratis = posts.filter(post =>
-        obterCategorias(post).some(categoria =>
-          categoria.toLowerCase() === "jogos grátis"
-        )
+        String(post.categoria || "").toLowerCase() === "jogos grátis"
       );
 
       if (jogosGratis.length === 0) {
@@ -4362,7 +4210,7 @@ function carregarJogosGratis() {
       }
 
       container.innerHTML = jogosGratis.slice(0, 2).map(post => `
-        <a href="${escaparTextoHTML(linkDaNoticia(post))}" class="free-game-card">
+        <a href="${linkDaNoticia(post)}" class="free-game-card">
           <img src="${post.imagem}" alt="${post.titulo}" loading="lazy">
           <div class="free-game-info">
             <span class="free-game-label">GRÁTIS</span>
@@ -4527,7 +4375,77 @@ document.querySelectorAll('.produtos-carrossel').forEach(carrossel => {
 </script>
 
 
+<script>
+(async function carregarOfertasInstantGaming() {
+  const grade = document.getElementById("instantGamingGrid");
+  if (!grade) return;
 
+  const elemento = (tag, classe, texto) => {
+    const el = document.createElement(tag);
+    if (classe) el.className = classe;
+    if (texto !== undefined) el.textContent = texto;
+    return el;
+  };
+
+  try {
+    const resposta = await fetch("InstantGaming.json", { cache: "no-cache" });
+    if (!resposta.ok) throw new Error("Não foi possível carregar InstantGaming.json");
+    const jogos = await resposta.json();
+    if (!Array.isArray(jogos)) throw new Error("O arquivo precisa conter uma lista JSON");
+
+    const validos = jogos.filter(j => j && typeof j.nome === "string" && j.nome.trim() &&
+      typeof j.imagem === "string" && j.imagem.trim() &&
+      typeof j.url === "string" && /^https:\/\//i.test(j.url));
+    grade.replaceChildren();
+
+    if (!validos.length) {
+      grade.appendChild(elemento("p", "instant-gaming-loading", "As ofertas serão adicionadas em breve."));
+      return;
+    }
+
+    validos.forEach(jogo => {
+      const card = elemento("article", "produto-card");
+      const caixaImagem = elemento("div", "produto-imagem");
+      const imagem = document.createElement("img");
+      imagem.src = jogo.imagem;
+      imagem.alt = jogo.alt || ("Capa de " + jogo.nome);
+      imagem.loading = "lazy";
+      imagem.onerror = () => { imagem.onerror = null; imagem.style.display = "none"; };
+      caixaImagem.appendChild(imagem);
+
+      const info = elemento("div", "produto-info");
+      info.appendChild(elemento("span", "produto-categoria", [jogo.plataforma || "Jogo", jogo.categoria].filter(Boolean).join(" · ")));
+      info.appendChild(elemento("h3", "", jogo.nome));
+      info.appendChild(elemento("p", "produto-descricao", jogo.descricao || "Confira os detalhes e a disponibilidade na loja."));
+      if (jogo.desconto && String(jogo.desconto).trim()) {
+        const desconto = elemento("span", "instant-gaming-pill", "🔥 " + String(jogo.desconto).trim());
+        desconto.style.marginBottom = "8px";
+        info.appendChild(desconto);
+      }
+      info.appendChild(elemento("div", "produto-preco", jogo.preco ? String(jogo.preco) : "Confira o preço na loja"));
+      const link = elemento("a", "produto-botao", "VEJA MAIS");
+      link.href = jogo.url;
+      link.target = "_blank";
+      link.rel = "sponsored nofollow noopener noreferrer";
+      info.appendChild(link);
+      info.appendChild(elemento("small", "produto-aviso", "Preço e disponibilidade podem mudar. Link de afiliado."));
+      card.append(caixaImagem, info);
+      grade.appendChild(card);
+    });
+  } catch (erro) {
+    console.error("Erro ao carregar ofertas Instant Gaming:", erro);
+    grade.replaceChildren(elemento("p", "instant-gaming-loading", "Não foi possível carregar as ofertas no momento."));
+  }
+})();
+
+document.querySelectorAll('.instant-gaming-carousel').forEach(carrossel => {
+  const lista = carrossel.querySelector('.produtos-grid');
+  const anterior = carrossel.querySelector('.produtos-seta-anterior');
+  const proxima = carrossel.querySelector('.produtos-seta-proxima');
+  anterior.addEventListener('click', () => lista.scrollBy({ left: -250, behavior: 'smooth' }));
+  proxima.addEventListener('click', () => lista.scrollBy({ left: 250, behavior: 'smooth' }));
+});
+</script>
 
 </body>
 
