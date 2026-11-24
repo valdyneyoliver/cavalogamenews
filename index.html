@@ -1040,10 +1040,8 @@ body.modo-claro .free-games-error {
       max-width: 750px;
       line-height: 1.55;
       margin-bottom: 18px;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      display: block;
+      overflow: visible;
     }
 
     .read-button {
@@ -1130,7 +1128,7 @@ body.modo-claro .free-games-error {
       .featured { height: 390px; border-radius: 13px; }
       .featured-overlay { width: 100%; padding: 22px 18px 48px; }
       .featured-overlay h2 { font-size: 24px; }
-      .featured-overlay p { font-size: 14px; -webkit-line-clamp: 3; }
+      .featured-overlay p { font-size: 14px; display: block; overflow: visible; }
       .featured-arrow { width: 34px; height: 34px; font-size: 20px; }
       .featured-arrow.prev { left: 9px; }
       .featured-arrow.next { right: 9px; }
@@ -2541,7 +2539,6 @@ body.modo-claro #themeToggle {
       }
       .home-news-column .news-card-horizontal p {
         font-size: 12px;
-        -webkit-line-clamp: 2;
       }
       .news-card-meta { font-size: 10px; gap: 4px 8px; }
     }
