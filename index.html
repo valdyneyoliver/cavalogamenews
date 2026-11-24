@@ -2231,6 +2231,8 @@ body.modo-claro #themeToggle {
       display: flex;
       flex-direction: column;
       gap: 22px;
+      /* Alinha o topo do calendário à linha do título "Últimas Notícias" */
+      margin-top: 31px;
       /* Mantém a lateral acompanhando a rolagem da página */
       position: sticky;
       top: 18px;
@@ -2272,6 +2274,7 @@ body.modo-claro #themeToggle {
     @media (max-width: 800px) {
       .home-content-layout { grid-template-columns: 1fr; width: calc(100% - 24px); }
       .home-sidebar {
+        margin-top: 0;
         position: static;
         top: auto;
         max-height: none;
