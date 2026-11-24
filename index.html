@@ -3435,6 +3435,31 @@ async function carregarLancamentos() {
 
 
 /* =====================================================
+   ORDENAÇÃO POR DATA DE LANÇAMENTO
+===================================================== */
+
+function dataLancamentoParaOrdenacao(jogo) {
+  const valor = String(jogo?.data ?? jogo?.data_formatada ?? "").trim();
+  if (!valor) return Number.POSITIVE_INFINITY;
+
+  // Datas ISO: AAAA-MM-DD
+  const iso = valor.match(/^(\\d{4})-(\\d{1,2})-(\\d{1,2})/);
+  if (iso) {
+    return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3])).getTime();
+  }
+
+  // Datas brasileiras: DD/MM/AAAA
+  const br = valor.match(/^(\\d{1,2})[\\/. -](\\d{1,2})[\\/. -](\\d{4})$/);
+  if (br) {
+    return new Date(Number(br[3]), Number(br[2]) - 1, Number(br[1])).getTime();
+  }
+
+  const timestamp = Date.parse(valor);
+  return Number.isNaN(timestamp) ? Number.POSITIVE_INFINITY : timestamp;
+}
+
+
+/* =====================================================
    MOSTRAR LANÇAMENTOS
 ===================================================== */
 
@@ -3463,6 +3488,12 @@ function mostrarLancamentos(plataforma) {
 
   }
 
+
+  // Exibe primeiro os jogos com lançamento mais próximo.
+  // Datas não informadas ou não reconhecidas ficam no final.
+  jogos.sort((a, b) =>
+    dataLancamentoParaOrdenacao(a) - dataLancamentoParaOrdenacao(b)
+  );
 
   jogos =
     jogos.slice(0, 100);
