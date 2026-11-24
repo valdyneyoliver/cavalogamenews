@@ -3115,17 +3115,7 @@ body.modo-claro #themeToggle {
       </div>
     </div>
 
-    <section class="produtos-recomendados" aria-labelledby="tituloProdutos">
-      <h2 id="tituloProdutos">🛒 Produtos Recomendados</h2>
-      <p class="produtos-subtitulo">Acessórios e equipamentos para sua jogatina.</p>
-      <div class="produtos-carrossel">
-        <button class="produtos-seta produtos-seta-anterior" type="button" aria-label="Ver produtos anteriores">&#8249;</button>
-        <div class="produtos-grid" id="produtosGrid" aria-live="polite">
-          <p class="produtos-loading">Carregando produtos...</p>
-        </div>
-        <button class="produtos-seta produtos-seta-proxima" type="button" aria-label="Ver próximos produtos">&#8250;</button>
-      </div>
-    </section>
+
 
   </aside>
 </div>
@@ -3146,37 +3136,7 @@ body.modo-claro #themeToggle {
     </a>
   </p>
 
-  <section id="apoie">
 
-    <h2>
-      💚 Apoie o CavaloGameNews
-    </h2>
-
-    <p>
-      Gostou das notícias? Você pode ajudar a manter
-      o CavaloGameNews com uma doação via Pix.
-    </p>
-
-    <img
-      src="img/qrcode_pix_cavalogamenews.png"
-      alt="QR Code para doação via Pix"
-      onclick="copiarPix()"
-      style="cursor:pointer;"
-    >
-
-    <p
-      style="
-        color:#888;
-        margin-top:15px;
-        margin-bottom:0;
-        font-size:14px;
-      "
-    >
-      📱 Aponte a câmera do celular para o QR Code.
-      QR Code clicável: toque no QR Code para copiar a chave Pix.
-    </p>
-
-  </section>
 
 </footer>
 
@@ -4067,7 +4027,7 @@ function filtrarNoticias(categoria) {
   const mostrarSecoesIniciais = categoria === "todos";
 
   document.querySelectorAll(
-    ".home-top, .instant-gaming-section, .produtos-recomendados"
+    ".home-top, .instant-gaming-section"
   ).forEach(secao => {
     secao.style.display = mostrarSecoesIniciais ? "" : "none";
   });
@@ -4457,105 +4417,7 @@ if (themeToggle) {
 
 </script>
 
-<script>
-(async function carregarProdutosAfiliados() {
-  const grade = document.getElementById("produtosGrid");
-  if (!grade) return;
 
-  function criarElemento(tag, classe, texto) {
-    const el = document.createElement(tag);
-    if (classe) el.className = classe;
-    if (texto !== undefined) el.textContent = texto;
-    return el;
-  }
-
-  try {
-    const resposta = await fetch("produtos.json", { cache: "no-cache" });
-    if (!resposta.ok) throw new Error("Não foi possível carregar produtos.json");
-    const produtos = await resposta.json();
-    if (!Array.isArray(produtos)) throw new Error("Formato inválido de produtos.json");
-
-    const validos = produtos.filter(p =>
-      p && typeof p.nome === "string" && p.nome.trim() &&
-      typeof p.categoria === "string" && p.categoria.trim() &&
-      typeof p.descricao === "string" && p.descricao.trim() &&
-      typeof p.imagem === "string" && p.imagem.trim() &&
-      typeof p.url === "string" && /^https?:\/\//i.test(p.url)
-    );
-    grade.replaceChildren();
-
-    if (!validos.length) {
-      grade.appendChild(criarElemento("p", "produtos-loading", "Nenhum produto disponível no momento."));
-      return;
-    }
-
-    validos.forEach(produto => {
-      const card = criarElemento("article", "produto-card");
-      const caixaImagem = criarElemento("div", "produto-imagem");
-      const imagem = document.createElement("img");
-      const caminhoImagem = String(produto.imagem).trim();
-      // Aceita URL completa ou caminho/nome de arquivo dentro de img/produtos/.
-      if (/^https?:\/\//i.test(caminhoImagem) || caminhoImagem.startsWith("data:")) {
-        imagem.src = caminhoImagem;
-      } else if (caminhoImagem.startsWith("/")) {
-        imagem.src = caminhoImagem;
-      } else if (caminhoImagem.startsWith("img/")) {
-        imagem.src = caminhoImagem;
-      } else {
-        imagem.src = "img/produtos/" + caminhoImagem.replace(/^\/+/, "");
-      }
-      imagem.alt = produto.alt || produto.nome;
-      imagem.loading = "lazy";
-      imagem.onerror = () => {
-        imagem.onerror = null;
-        imagem.alt = "Imagem indisponível: " + (produto.alt || produto.nome);
-        imagem.style.display = "none";
-      };
-      caixaImagem.appendChild(imagem);
-
-      const info = criarElemento("div", "produto-info");
-      info.appendChild(criarElemento("span", "produto-categoria", produto.categoria));
-      info.appendChild(criarElemento("h3", "", produto.nome));
-      info.appendChild(criarElemento("p", "produto-descricao", produto.descricao));
-      info.appendChild(criarElemento("div", "produto-preco", "Confira o preço na Amazon"));
-
-      const link = criarElemento("a", "produto-botao", "CONFERIR NA AMAZON");
-      link.href = produto.url;
-      link.target = "_blank";
-      link.rel = "sponsored nofollow noopener noreferrer";
-      info.appendChild(link);
-      info.appendChild(criarElemento("small", "produto-aviso",
-        "Preço e disponibilidade podem mudar. Como associado da Amazon, o CavaloGameNews recebe por compras qualificadas."));
-      card.append(caixaImagem, info);
-      grade.appendChild(card);
-    });
-  } catch (erro) {
-    console.error("Erro ao carregar produtos:", erro);
-    grade.replaceChildren(criarElemento("p", "produtos-loading",
-      "Não foi possível carregar os produtos. Tente novamente mais tarde."));
-  }
-})();
-
-document.querySelectorAll('.produtos-carrossel').forEach(carrossel => {
-  const lista = carrossel.querySelector('.produtos-grid');
-  const anterior = carrossel.querySelector('.produtos-seta-anterior');
-  const proxima = carrossel.querySelector('.produtos-seta-proxima');
-
-  anterior.addEventListener('click', () => {
-    lista.scrollBy({
-      left: -250,
-      behavior: 'smooth'
-    });
-  });
-
-  proxima.addEventListener('click', () => {
-    lista.scrollBy({
-      left: 250,
-      behavior: 'smooth'
-    });
-  });
-});
-</script>
 
 
 
