@@ -11,12 +11,12 @@ from xml.sax.saxutils import escape as xml_escape
 # CONFIGURAÇÕES
 # =========================================================
 BASE_URL = "https://cavalogamenews.com.br"
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-POSTS_FILE = os.path.join(BASE_DIR, "posts.json")
-NEWS_DIR = os.path.join(BASE_DIR, "noticias")
-SITEMAP_FILE = os.path.join(BASE_DIR, "sitemap.xml")
+POSTS_FILE = "posts.json"
+NEWS_DIR = "noticias"
+SITEMAP_FILE = "sitemap.xml"
 LOGO_PATH = "../img/logo.png"
 FAVICON_PATH = "../img/logo_cavalo.png"
+
 with open(POSTS_FILE, "r", encoding="utf-8") as f:
     posts = json.load(f)
 
@@ -114,33 +114,6 @@ def gerar_post_x(post):
 
 def escape_attr(value):
     return html.escape(str(value or ""), quote=True)
-
-
-
-
-def obter_categorias(post):
-    """Aceita categoria como texto antigo ou como lista de categorias."""
-    valor = post.get("categoria", "Notícia")
-    categorias = valor if isinstance(valor, list) else [valor]
-    resultado = []
-    for categoria in categorias:
-        texto = str(categoria or "").strip()
-        if texto and texto not in resultado:
-            resultado.append(texto)
-    return resultado or ["Notícia"]
-
-
-def formatar_autor(post):
-    """Exibe exatamente o texto informado no campo autor do posts.json."""
-    return str(post.get("autor", "") or "").strip()
-
-
-def link_da_noticia(post, post_id):
-    """Abre a fonte original quando houver link válido; senão, a página interna."""
-    link = str(post.get("link", "") or "").strip()
-    if re.match(r"^https?://", link, flags=re.IGNORECASE):
-        return link
-    return f"../noticias/{post_id}.html"
 
 
 def formatar_data_publicacao(data_hora):
@@ -276,7 +249,6 @@ def renderizar_conteudo(post):
 
     if x_html and len(validos) == 1:
         conteudo_html += x_html
-
     return conteudo_html
 
 
@@ -290,8 +262,7 @@ for post in posts:
     titulo_texto = str(post.get("titulo", "CavaloGameNews"))
     resumo_texto = str(post.get("resumo", ""))
     imagem_texto = str(post.get("imagem", ""))
-    categorias_post = obter_categorias(post)
-    categoria_texto = " • ".join(categorias_post)
+    categoria_texto = str(post.get("categoria", "Notícia"))
     data_texto = str(post.get("data", ""))
 
     titulo = html.escape(titulo_texto)
@@ -302,10 +273,7 @@ for post in posts:
 
     news_url = f"{BASE_URL}/noticias/{post_id}.html"
     generated_news_urls.append(news_url)
-    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
-    pagina_existente = os.path.exists(caminho)
     conteudo_html = renderizar_conteudo(post)
-
     videos_html = gerar_videos(post)
 
     # As primeiras notícias de posts.json são consideradas as mais recentes.
@@ -326,37 +294,20 @@ for post in posts:
             if not related_id:
                 continue
             related_titulo = str(related.get("titulo", "CavaloGameNews"))
-            related_resumo = str(related.get("resumo", "")).strip()
             related_imagem = str(related.get("imagem", ""))
-            related_categorias = obter_categorias(related)
-            related_data = str(related.get("data", "")).strip()
-            related_views = related.get("visualizacoes", related.get("views", ""))
-            resumo_curto = related_resumo if len(related_resumo) <= 105 else related_resumo[:102].rsplit(" ", 1)[0] + "..."
-            categorias_html = "".join(
-                f'<span class="related-tag">{html.escape(tag)}</span>'
-                for tag in related_categorias[:3]
-            )
-            related_link = escape_attr(link_da_noticia(related, related_id))
-            meta_partes = []
-            if related_data:
-                meta_partes.append(f'<span>{html.escape(related_data)}</span>')
-            if related_views not in (None, ""):
-                meta_partes.append(f'<span>◉ {html.escape(str(related_views))}</span>')
-            meta_html = "<div class=\"related-meta\">" + "<span> · </span>".join(meta_partes) + "</div>" if meta_partes else ""
-            autoria_humana = (
-                '<span class="human-authorship">✓ Autoria humana</span>'
-                if related.get("autoria_humana") is True else ""
-            )
-            resumo_html = f'<p class="related-summary">{html.escape(resumo_curto)}</p>' if resumo_curto else ""
+            related_categoria = str(related.get("categoria", "Notícia"))
+            related_data = str(related.get("data", ""))
+            related_autor = str(related.get("autor", "Valdiney"))
             cards_html += f"""
-<a href="{related_link}" class="related-card">
-  <img class="related-image" src="{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
+<a href="../noticias/{escape_attr(related_id)}.html" class="related-card">
+  <img src="../{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
   <div class="related-content">
+    <div class="category">{html.escape(related_categoria)}</div>
     <h3>{html.escape(related_titulo)}</h3>
-    {resumo_html}
-    <div class="related-tags">{categorias_html}</div>
-    {meta_html}
-    {autoria_humana}
+    <div class="related-meta">
+      <span class="related-author">Autor: {html.escape(related_autor)}</span>
+      <time class="related-date">{html.escape(related_data)}</time>
+    </div>
   </div>
 </a>
 """
@@ -365,40 +316,18 @@ for post in posts:
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
 
-    # A autoria vem sempre do posts.json; a data/hora original é preservada.
-    autor_formatado = formatar_autor(post)
-    autor_html = (
-        f'<div class="info autor">{html.escape(autor_formatado)}</div>'
-        if autor_formatado else ""
-    )
-
-    data_publicacao_html = ""
-    if os.path.exists(caminho):
-        try:
-            with open(caminho, "r", encoding="utf-8") as arquivo_existente:
-                html_antigo = arquivo_existente.read()
-            match_data = re.search(
-                r'<div class="info data-publicacao">.*?</div>',
-                html_antigo,
-                flags=re.IGNORECASE | re.DOTALL
-            )
-            if match_data:
-                data_publicacao_html = match_data.group(0)
-        except (OSError, UnicodeError):
-            pass
-
-    if not data_publicacao_html:
-        if os.path.exists(caminho):
-            data_publicacao_html = f'<div class="info">{data} · CavaloGameNews</div>'
-        else:
-            data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
-            data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
-            data_publicacao_html = (
-                f'<div class="info data-publicacao">'
-                f'{html.escape(data_publicacao_formatada)}</div>'
-            )
-
-    metadados_noticia_html = autor_html + data_publicacao_html
+    # Adiciona autoria apenas às páginas criadas a partir desta versão do gerador.
+    # Páginas antigas continuam sem a linha de autoria, mesmo quando regeneradas.
+    caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
+    if not os.path.exists(caminho):
+        data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
+        data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
+        metadados_noticia_html = f"""
+        <div class="info autor">Por Valdiney Oliver</div>
+        <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
+        """
+    else:
+        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
@@ -465,7 +394,6 @@ html[data-theme="light"] {{
 html {{ scroll-behavior: smooth; }}
 body {{
   margin: 0;
-  padding-top: 0;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -473,80 +401,43 @@ body {{
   transition: background .2s ease, color .2s ease;
 }}
 a {{ color: inherit; }}
-
 .site-header {{
-  position: sticky; top: 0; z-index: 1000; width: 100%;
-  padding: 14px 24px 16px;
-  background: rgba(5, 9, 7, .97);
-  border-bottom: 1px solid rgba(0,232,135,.22);
-  box-shadow: 0 8px 28px rgba(0,0,0,.22);
-  backdrop-filter: blur(16px);
-  transition: padding .3s ease;
+  background: var(--surface);
+  border-bottom: 3px solid var(--accent);
+  box-shadow: var(--shadow);
 }}
 .header-inner {{
-  position: relative; max-width: 1500px; margin: 0 auto;
-  display: flex; flex-direction: column; align-items: center; gap: 14px;
-  transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
+  width: min(1200px, 92%);
+  min-height: 10px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 6px 0;
 }}
-.brand {{ display: inline-flex; align-items: center; justify-content: center; text-decoration: none; min-height: 58px; transition: opacity .22s ease, transform .22s ease; }}
-.brand img {{ display: block; width: auto; height: 54px; max-width: min(70vw, 360px); object-fit: contain; margin: 2px auto 0; transition: height .3s ease, opacity .25s ease, transform .3s ease; }}
-.header-tools {{
-  position: absolute; top: 7px; right: 0; display: flex; align-items: center;
-  gap: 9px; z-index: 20; transition: opacity .25s ease, transform .3s ease;
+.brand {{ display: inline-flex; align-items: center; text-decoration: none; min-width: 0; }}
+.brand img {{ display: block; width: min(400px, 100%); max-height: 40px; object-fit: contain; }}
+.header-actions {{ display: flex; align-items: center; gap: 10px; }}
+.theme-toggle, .home-button {{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
 }}
-.theme-toggle {{
-  width: 42px; height: 42px; display: inline-flex; align-items: center;
-  justify-content: center; border: 1px solid rgba(0,232,135,.42);
-  border-radius: 12px; background: #101914; color: #fff; cursor: pointer;
-  font-size: 17px; transition: background .2s ease, border-color .2s ease, transform .2s ease;
-}}
-.theme-toggle:hover {{ background: #173323; border-color: #00e887; transform: translateY(-2px); }}
-.article-nav {{
-  width: 100%; min-height: 52px; box-sizing: border-box; display: flex;
-  align-items: center; justify-content: center; flex-wrap: wrap;
-  gap: 8px clamp(12px, 1.65vw, 25px); padding: 13px 18px;
-  border: 1px solid rgba(0,232,135,.42); border-radius: 9px;
-  background: linear-gradient(100deg, #06351f 0%, #087b43 48%, #00a95f 100%);
-  box-shadow: 0 7px 22px rgba(0,180,100,.16);
-}}
-.article-nav a, .article-nav button {{
-  color: #fff; font-size: 13px; font-weight: 800; letter-spacing: .025em;
-  text-decoration: none; white-space: nowrap; transition: opacity .2s ease, transform .2s ease;
-}}
-.article-nav a:hover {{ color: #fff; opacity: .78; transform: translateY(-1px); }}
-.article-nav .support-button {{
-  display: inline-flex; align-items: center; justify-content: center;
-  min-height: 0; margin: 0; padding: 0; border: 0; border-radius: 0;
-  background: transparent; color: #fff; font: inherit; cursor: pointer;
-}}
-.article-nav .support-button:hover {{ color: #fff; opacity: .78; transform: translateY(-1px); }}
-.article-nav .live-button {{ color: #fff; }}
-body[data-theme="light"] .site-header {{ background: rgba(248,251,249,.98); border-color: #dce7df; }}
-body[data-theme="light"] .theme-toggle {{
-  background: #fff; color: #24352a; border-color: #cbded1;
-}}
-.site-header, .site-header .brand img, .site-header .header-tools, .site-header .article-nav {{
-  transition: padding .3s ease, height .3s ease, opacity .25s ease, transform .3s ease;
-}}
-.site-header.header-compact {{ padding: 4px 24px; }}
-.site-header.header-compact .header-inner {{ height: 40px; min-height: 40px; gap: 0; }}
-.site-header.header-compact .brand {{ position: absolute; top: 0; left: 50%; opacity: 0; transform: translate(-50%, -12px); pointer-events: none; }}
-.site-header.header-compact .header-tools {{ opacity: 0; transform: translateY(-12px); pointer-events: none; }}
-.site-header.header-compact .article-nav {{ min-height: 40px; padding-top: 8px; padding-bottom: 8px; transform: none; }}
-@media (max-width: 900px) {{
-  .site-header {{ padding: 12px 12px 14px; }}
-  .site-header .header-inner {{ flex-direction: column; align-items: center; gap: 13px; }}
-  .site-header .brand img {{ height: 46px; max-width: 65vw; margin: 3px auto 0; }}
-  .site-header .header-tools {{ position: absolute; top: 2px; right: 0; }}
-  .site-header .theme-toggle {{ width: 38px; height: 38px; }}
-  .article-nav {{ justify-content: flex-start; flex-wrap: nowrap; gap: 10px; overflow-x: auto; overflow-y: hidden; white-space: nowrap; }}
-  .article-nav a {{ font-size: 11px; }}
-  .site-header.header-compact {{ padding: 4px 12px; }}
-}}
-@media (max-width: 560px) {{
-  .site-header {{ padding: 12px 12px 14px; }}
-  .site-header .brand img {{ height: 46px; max-width: 65vw; }}
-  .article-nav {{ gap: 10px 14px; padding: 12px 10px; }}
+.theme-toggle:hover, .home-button:hover {{
+  border-color: var(--accent);
+  transform: translateY(-2px);
 }}
 .support-overlay {{
   display: none;
@@ -720,6 +611,7 @@ h1 {{
 .text p a {{ color: var(--accent); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }}
 .text p a:hover {{ color: var(--accent-strong); }}
 .texto-verde {{ color: var(--accent); font-weight: 800; }}
+.paragrafo-titulo {{ display:block; color:var(--accent); font-weight:800; font-size:1.08em; margin:18px 0 8px; }}
 .paragrafo-titulo {{
   display: block;
   color: var(--accent);
@@ -768,10 +660,12 @@ h1 {{
 }}
 .sidebar-title::before {{ content: ""; display: inline-block; width: 4px; height: 19px; background: var(--accent); border-radius: 3px; margin-right: 9px; vertical-align: -3px; }}
 .related-list {{ display: grid; gap: 14px; }}
-.sidebar-card .related-card {{
-  display: block;
+.related-card {{
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: stretch;
   padding: 0;
-  overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 11px;
@@ -779,22 +673,22 @@ h1 {{
   text-decoration: none;
   transition: transform .18s ease, border-color .18s ease;
 }}
-.sidebar-card .related-card:hover {{ transform: translateY(-2px); border-color: var(--accent); }}
-.sidebar-card .related-image {{
+.related-card:hover {{ transform: translateY(-2px); border-color: var(--accent); }}
+.related-card img {{
   display: block;
   width: 100%;
-  height: 145px;
+  height: 170px;
   object-fit: cover;
-  border-radius: 0;
+  border-radius: 9px 9px 0 0;
   background: var(--border);
 }}
-.sidebar-card .related-content {{ min-width: 0; padding: 10px 11px 11px; }}
-.sidebar-card .related-content h3 {{ font-size: 14px; line-height: 1.3; margin: 0 0 7px; overflow-wrap: anywhere; }}
-.related-summary {{ color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0 0 9px; }}
-.related-tags {{ display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }}
-.related-tag {{ padding: 2px 6px; border-radius: 4px; background: var(--accent); color: #06140d; font-size: 9px; line-height: 1.5; font-weight: 800; text-transform: uppercase; }}
-.related-meta {{ display: flex; flex-wrap: wrap; align-items: center; gap: 3px; color: var(--muted); font-size: 10px; line-height: 1.4; }}
-.human-authorship {{ display: block; margin-top: 5px; color: var(--accent); font-size: 10px; font-weight: 700; }}
+.related-content {{ min-width: 0; }}
+.related-content .category {{ color: var(--accent) !important; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }}
+.related-date {{ color: var(--muted); font-size: 11px; margin-bottom: 4px; }}
+.related-meta {{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:9px; padding-top:7px; border-top:1px solid var(--border); color:var(--muted); font-size:10px; }}
+.related-meta .related-date {{ margin:0; white-space:nowrap; }}
+.related-content h3 {{ font-size: 16px; line-height: 1.3; font-weight: 800; margin: 0; overflow-wrap: anywhere; }}
+.related-author::before, .related-meta::before {{ content: none !important; display: none !important; }}
 .more-news {{
   margin-top: 30px;
   padding-top: 24px;
@@ -819,24 +713,22 @@ footer {{
   .cover {{ width: calc(100% - 48px); margin: 20px 24px 24px; }}
   .text {{ padding: 0 24px 24px; }}
   .sidebar-card {{ padding: 15px; }}
-  .related-card {{ grid-template-columns: 78px minmax(0, 1fr); gap: 9px; }}
-  .related-card img {{ width: 78px; height: 68px; }}
+  .related-card {{ display: flex; flex-direction: column; gap: 0; }}
+  .related-card img {{ width: 100%; height: 170px; }}
 }}
 @media (max-width: 760px) {{
-  .site-header {{ padding: 8px 12px 0; }}
-  .header-inner {{ grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; }}
-  .brand {{ min-height: 44px; }}
-  .brand img {{ height: 38px; max-width: 72vw; }}
-  .article-nav {{ justify-content: flex-start; gap: 10px 14px; padding: 9px 10px; }}
-  .article-nav a {{ font-size: 11px; }}
-  .site-header.compact {{ padding: 4px 8px 0; }}
-  .site-header.compact .article-nav {{ justify-content: center; gap: 8px 12px; padding: 8px; }}
+  .header-inner {{ width: 92%; min-height: 0; flex-wrap: wrap; gap: 12px; padding: 12px 0; }}
+  .brand {{ flex: 1 1 100%; justify-content: center; }}
+  .brand img {{ width: min(260px, 82vw); max-height: 66px; }}
+  .header-actions {{ width: 100%; justify-content: space-between; }}
   .page-wrap {{ margin-top: 22px; }}
   .layout {{ grid-template-columns: minmax(0, 1fr); }}
   .sidebar-card {{ position: static; }}
   .related-list {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
-  .sidebar-card .related-image {{ height: 115px; }}
-  .sidebar-card .related-content h3 {{ font-size: 13px; }}
+  .related-card {{ display: block; padding: 0; overflow: hidden; }}
+  .related-card img {{ width: 100%; height: 115px; border-radius: 0; }}
+  .related-content {{ padding: 10px; }}
+  .related-content h3 {{ font-size: 13px; }}
   .more-news .related-grid {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
 }}
 @media (max-width: 480px) {{
@@ -848,11 +740,12 @@ footer {{
   .text p {{ font-size: 16px; line-height: 1.8; margin-bottom: 19px; }}
   .paragrafo-titulo {{ font-size: 19px; }}
   .related-list {{ grid-template-columns: minmax(0, 1fr); }}
-  .sidebar-card .related-image {{ height: 160px; }}
+  .related-card {{ display: flex; flex-direction: column; }}
+  .related-card img {{ width: 100%; height: 170px; border-radius: 9px 9px 0 0; }}
   .more-news .related-grid {{ grid-template-columns: minmax(0, 1fr); }}
   .more-news .related-card {{ display: grid; grid-template-columns: 105px minmax(0, 1fr); }}
   .more-news .related-card img {{ width: 105px; height: 88px; }}
-
+  .theme-toggle, .home-button {{ font-size: 13px; padding: 9px 11px; }}
 }}
 @media (prefers-reduced-motion: reduce) {{
   *, *::before, *::after {{ scroll-behavior: auto !important; transition: none !important; }}
@@ -865,20 +758,18 @@ footer {{
     <a class="brand" href="../index.html" aria-label="CavaloGameNews - página inicial">
       <img src="{LOGO_PATH}" alt="CavaloGameNews">
     </a>
-    <div class="header-tools">
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema" title="Alternar entre tema claro e escuro">☀️</button>
-    </div>
-    <nav class="article-nav" aria-label="Navegação principal">
-      <a href="../index.html">INÍCIO</a>
-      <a href="../index.html?categoria=Notícias">NOTÍCIAS</a>
-      <a href="../index.html?categoria=Xbox">XBOX</a>
-      <a href="../index.html?categoria=PlayStation">PLAYSTATION</a>
-      <a href="../index.html?categoria=PC">PC</a>
-      <a href="../index.html?categoria=Nintendo">NINTENDO</a>
-      <a href="../index.html?categoria=Jogos%20Gr%C3%A1tis">JOGOS GRÁTIS</a>
-      <a href="../ao-vivo.html" class="live-button">TRANSMITIR A TELA</a>
-      <button class="support-button" id="supportButton" type="button">💚 APOIE</button>
-    </nav>
+    <div class="header-actions">
+  <a class="home-button" href="../index.html">← Página inicial</a>
+
+  <button class="support-button" id="supportButton" type="button">
+    💚 Apoie
+  </button>
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">
+    <span id="themeIcon" aria-hidden="true">☀</span>
+    <span id="themeLabel">Tema claro</span>
+  </button>
+</div>
   </div>
 </header>
 <div class="support-overlay" id="supportOverlay" aria-hidden="true">
@@ -945,6 +836,31 @@ footer {{
 
 <script>
 (function() {{
+  const root = document.documentElement;
+  const button = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+
+  function applyTheme(theme) {{
+    root.setAttribute('data-theme', theme);
+    const light = theme === 'light';
+    icon.textContent = light ? '☾' : '☀';
+    label.textContent = light ? 'Tema escuro' : 'Tema claro';
+    button.setAttribute('aria-label', light ? 'Ativar tema escuro' : 'Ativar tema claro');
+    try {{ localStorage.setItem('cgn-theme', theme); }} catch (e) {{}}
+  }}
+
+  let savedTheme = 'dark';
+  try {{ savedTheme = localStorage.getItem('cgn-theme') || 'dark'; }} catch (e) {{}}
+  applyTheme(savedTheme === 'light' ? 'light' : 'dark');
+
+  button.addEventListener('click', function() {{
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }});
+}})();
+</script>
+<script>
+(function() {{
   const openButton = document.getElementById('supportButton');
   const overlay = document.getElementById('supportOverlay');
   const closeButton = document.getElementById('supportClose');
@@ -993,73 +909,6 @@ footer {{
   }});
 }})();
 </script>
-
-<script>
-(function() {{
-  const themeToggle = document.getElementById('themeToggle');
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-
-  function aplicarTema(modo, salvar = true) {{
-    const tema = modo === 'light' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', tema);
-
-    if (themeToggle) {{
-      themeToggle.textContent = tema === 'light' ? '🌙' : '☀️';
-      themeToggle.title = tema === 'light'
-        ? 'Mudar para tema escuro'
-        : 'Mudar para tema claro';
-      themeToggle.setAttribute('aria-label', themeToggle.title);
-    }}
-
-    if (themeMeta) {{
-      themeMeta.setAttribute('content', tema === 'light' ? '#f2f5f7' : '#0b0f14');
-    }}
-
-    if (salvar) {{
-      try {{
-        localStorage.setItem('tema-cavalogamenews', tema === 'light' ? 'claro' : 'escuro');
-      }} catch (error) {{}}
-    }}
-  }}
-
-  let temaSalvo = 'escuro';
-  try {{
-    temaSalvo = localStorage.getItem('tema-cavalogamenews') || 'escuro';
-  }} catch (error) {{}}
-
-  aplicarTema(temaSalvo === 'claro' ? 'light' : 'dark', false);
-
-  if (themeToggle) {{
-    themeToggle.addEventListener('click', function() {{
-      const temaAtual = document.documentElement.getAttribute('data-theme');
-      aplicarTema(temaAtual === 'light' ? 'dark' : 'light');
-    }});
-  }}
-}})();
-</script>
-
-<script>
-(function() {{
-  const header = document.querySelector('.site-header');
-  if (!header) return;
-  let compacto = false;
-  let quadroPendente = false;
-  const atualizar = () => {{
-    const posicao = window.scrollY || document.documentElement.scrollTop;
-    if (!compacto && posicao > 130) compacto = true;
-    else if (compacto && posicao < 55) compacto = false;
-    header.classList.toggle('header-compact', compacto);
-    quadroPendente = false;
-  }};
-  atualizar();
-  window.addEventListener('scroll', () => {{
-    if (quadroPendente) return;
-    quadroPendente = true;
-    requestAnimationFrame(atualizar);
-  }}, {{ passive: true }});
-}})();
-</script>
-
 
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
