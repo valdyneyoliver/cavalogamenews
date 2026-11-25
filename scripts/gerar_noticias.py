@@ -369,18 +369,34 @@ for post in posts:
     autor_html = html.escape(autor_texto)
 
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
-    if not os.path.exists(caminho):
+
+    # Mantém o horário que já estava publicado; se a página antiga não tinha
+    # horário, acrescenta o horário atual de Fortaleza durante esta atualização.
+    data_publicacao_formatada = ""
+    if os.path.exists(caminho):
+        try:
+            with open(caminho, "r", encoding="utf-8") as arquivo_existente:
+                html_existente = arquivo_existente.read()
+            horario_existente = re.search(
+                r'<div class="info data-publicacao">(.*?)</div>',
+                html_existente,
+                flags=re.IGNORECASE | re.DOTALL
+            )
+            if horario_existente:
+                texto_existente = html.unescape(re.sub(r"<[^>]+>", "", horario_existente.group(1))).strip()
+                if re.search(r"\bàs\s+\d{1,2}:\d{2}\b", texto_existente, flags=re.IGNORECASE):
+                    data_publicacao_formatada = texto_existente
+        except (OSError, UnicodeError):
+            pass
+
+    if not data_publicacao_formatada:
         data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
         data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
-        metadados_noticia_html = f"""
-        <div class="info autor">Autor: {autor_html}</div>
-        <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
-        """
-    else:
-        metadados_noticia_html = f"""
-        <div class="info autor">Autor: {autor_html}</div>
-        <div class="info data-publicacao">{data} · CavaloGameNews</div>
-        """
+
+    metadados_noticia_html = f"""
+    <div class="info autor">Autor: {autor_html}</div>
+    <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
+    """
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
