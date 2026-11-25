@@ -1,5 +1,16 @@
 [
   {
+  "id": "rust-built-different-atualizacao-junho-2026",
+  "titulo": "Rust recebe atualização Built Different com novos modelos de personagens, animações e melhorias gráficas",
+  "categoria": "Notícias",
+  "data": "25/11/2026",
+  "imagem": "https://img.youtube.com/vi/_D9HEFkHCdo/maxresdefault.jpg",
+  "resumo": "A Facepunch Studios lançou a atualização Built Different para Rust, trazendo uma das maiores reformulações dos personagens do jogo nos últimos anos. A atualização apresenta novos modelos de jogadores, animações aprimoradas, cabelos e rostos mais detalhados, além de melhorias nas roupas e no sistema de movimentação. O pacote também inclui uma reformulação técnica com a chegada da Unity 6, otimizações de desempenho, melhorias na interface e diversas correções de bugs. Outras novidades incluem novos equipamentos, mudanças no sistema de navegação dos NPCs e melhorias na infraestrutura do jogo. A atualização foi lançada em 4 de junho de 2026.",
+  "link": "https://rust.facepunch.com/news/built-different",
+  "fonte": "Facepunch Studios",
+  "autor": "valdiney"
+},
+  {
   "id": "playstation-plus-jogos-dezembro-2026",
   "titulo": "PlayStation Plus anuncia jogos gratuitos de dezembro com Tony Hawk’s Pro Skater 3+4, Dragon Ball Xenoverse 2 e Amnesia: The Bunker",
   "categoria": "PlayStation",
