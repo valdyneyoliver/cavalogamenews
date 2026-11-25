@@ -116,6 +116,18 @@ def escape_attr(value):
     return html.escape(str(value or ""), quote=True)
 
 
+def caminho_imagem_relacionada(value):
+    """Mantém URLs externas intactas e ajusta apenas caminhos locais para /noticias/."""
+    value = str(value or "").strip()
+    if not value:
+        return ""
+    if value.startswith(("https://", "http://", "data:", "//")):
+        return value
+    if value.startswith("/"):
+        return value
+    return "../" + value.lstrip("./")
+
+
 def formatar_data_publicacao(data_hora):
     meses = [
         "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -275,6 +287,11 @@ for post in posts:
     generated_news_urls.append(news_url)
     conteudo_html = renderizar_conteudo(post)
     videos_html = gerar_videos(post)
+    fonte_url = str(post.get("link", "")).strip()
+    if fonte_url.startswith(("https://", "http://")):
+        fonte_html = f'<a class="source-button" href="{escape_attr(fonte_url)}" target="_blank" rel="noopener noreferrer">Acessar fonte original ↗</a>'
+    else:
+        fonte_html = ""
 
     # As primeiras notícias de posts.json são consideradas as mais recentes.
     relacionadas = [
@@ -298,9 +315,10 @@ for post in posts:
             related_categoria = str(related.get("categoria", "Notícia"))
             related_data = str(related.get("data", ""))
             related_autor = str(related.get("autor", "Valdiney"))
+            related_imagem_url = caminho_imagem_relacionada(related_imagem)
             cards_html += f"""
 <a href="../noticias/{escape_attr(related_id)}.html" class="related-card">
-  <img src="../{escape_attr(related_imagem)}" alt="{escape_attr(related_titulo)}" loading="lazy">
+  <img src="{escape_attr(related_imagem_url)}" alt="{escape_attr(related_titulo)}" loading="lazy">
   <div class="related-content">
     <div class="category">{html.escape(related_categoria)}</div>
     <h3>{html.escape(related_titulo)}</h3>
@@ -650,6 +668,8 @@ h1 {{
   transition: transform .18s ease, background .18s ease;
 }}
 .back-button:hover {{ background: var(--accent-strong); transform: translateY(-2px); }}
+.source-button {{ display: inline-flex; align-items: center; margin: 0 10px 12px 0; padding: 11px 16px; border: 1px solid var(--accent); border-radius: 9px; color: var(--accent); font-weight: 800; text-decoration: none; }}
+.source-button:hover {{ background: var(--accent); color: #06140d; }}
 .sidebar-card {{ padding: 20px; position: sticky; top: 20px; }}
 .sidebar-title {{
   margin: 0 0 16px;
@@ -815,6 +835,7 @@ footer {{
       <div class="text">
         {conteudo_html}
         {videos_html}
+        {fonte_html}
         <a class="back-button" href="../index.html">← Voltar para as notícias</a>
       </div>
     </article>
