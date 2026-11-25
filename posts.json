@@ -2,7 +2,7 @@
     {
     "id": "test-2039-test-oficial-pre-venda",
     "titulo": "test",
-    "categoria": "Notícias",
+    "categoria": ["Game", "PC", "PlayStation", "Xbox"],
     "data": "13/10/2026",
     "imagem": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2590240/dd6631ec67370cc7c95aa19763b12b37288edd9b/ss_dd6631ec67370cc7c95aa19763b12b37288edd9b.jpg",
     "resumo": "Metro 2039 recebeuxxx seu trailer oficial de pré-venda, apresentando um pouco do terror e da ação do novo capítulo da franquia. O jogo será lançado em 4 de fevereiro de 2027 para PS5, Xbox Series X|S e PC.",
