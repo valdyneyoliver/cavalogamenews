@@ -1728,73 +1728,71 @@ body.modo-claro #themeToggle {
     font-size: 18px;
 }
 /* =====================================================
-   LETREIRO ANIMADO CAVALOGAMENEWS
+   LETREIRO CGN — IDENTIDADE E FOCO EM FONTES
 ===================================================== */
-
 .letreiro-cgn {
     width: 100%;
-    overflow: hidden;
     position: relative;
-    background: transparent;
-    border-bottom: 1px solid rgba(0, 255, 136, 0.15);
-    padding: 10px 0;
+    overflow: hidden;
+    padding: 12px 0;
+    background: linear-gradient(90deg, #07130c 0%, #101a13 48%, #07130c 100%);
+    border-top: 1px solid rgba(0,255,136,.18);
+    border-bottom: 1px solid rgba(0,255,136,.28);
+    box-shadow: 0 8px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.025);
 }
-
+.letreiro-cgn::before,
+.letreiro-cgn::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    pointer-events: none;
+}
+.letreiro-cgn::before { left: 0; background: linear-gradient(90deg, #07130c, transparent); }
+.letreiro-cgn::after { right: 0; background: linear-gradient(270deg, #07130c, transparent); }
 .letreiro-cgn-conteudo {
     display: flex;
     width: max-content;
-    animation: mover-letreiro-cgn 50s linear infinite;
+    animation: mover-letreiro-cgn 58s linear infinite;
+    will-change: transform;
 }
-
 .letreiro-cgn-grupo {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    gap: 35px;
-    padding-right: 35px;
+    gap: 18px;
+    padding-right: 18px;
 }
-
 .letreiro-cgn-grupo span {
-    color: #ffffff;
-    font-size: 13px;
-    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 34px;
+    padding: 7px 13px;
+    color: #dce8df;
+    background: rgba(255,255,255,.035);
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
     white-space: nowrap;
-    letter-spacing: 1px;
+    letter-spacing: .35px;
 }
-
-.letreiro-cgn-grupo span b {
-    color: #00ff88;
-}
-
-.letreiro-cgn:hover .letreiro-cgn-conteudo {
-    animation-play-state: paused;
-}
-
+.letreiro-cgn-grupo span b { color: #00ff88; }
+.letreiro-cgn-grupo span a { font-weight: 800; }
+.letreiro-cgn:hover .letreiro-cgn-conteudo { animation-play-state: paused; }
 @keyframes mover-letreiro-cgn {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-50%);
-    }
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
-
 @media (max-width: 600px) {
-    .letreiro-cgn {
-        padding: 8px 0;
-    }
-
-    .letreiro-cgn-grupo {
-        gap: 22px;
-        padding-right: 22px;
-    }
-
-    .letreiro-cgn-grupo span {
-        font-size: 11px;
-    }
+    .letreiro-cgn { padding: 9px 0; }
+    .letreiro-cgn::before, .letreiro-cgn::after { width: 22px; }
+    .letreiro-cgn-grupo { gap: 9px; padding-right: 9px; }
+    .letreiro-cgn-grupo span { min-height: 30px; padding: 6px 10px; font-size: 10px; letter-spacing: .2px; }
 }
-
 
 
     /* =====================================================
@@ -3221,10 +3219,13 @@ body.modo-claro #themeToggle {
     <div class="letreiro-cgn-conteudo" id="letreiroCGN">
 
         <div class="letreiro-cgn-grupo" id="letreiroGrupoOriginal">
-<span><b style="color:#00ff88;">🎮 CAVALOGAMENEWS — SEU UNIVERSO GAMER!</b> <b style="color:#ffffff;">FIQUE POR DENTRO DAS ÚLTIMAS NOTÍCIAS, LANÇAMENTOS, NOVIDADES DO XBOX, PLAYSTATION, PC E NINTENDO, ALÉM DE DESCOBRIR JOGOS GRÁTIS E OFERTAS IMPERDÍVEIS!</b></span>
-<span><b>💚</b> OBRIGADO A QUEM APOIA CAVALOGAMENEWS ▶▶</span>
-<span><b style="color:#00ff88;">💚VIP ARCADE💚VALNEY💚FASTERGAMER💚RAGNER💚LEANDROSOAD💚KAZUMINHA💚VINI💚TIOJOE💚</b></span>
-<span><b style="color:#00ff88;"> CANAIS PARCEIROS CAVALOGAMENEWS ▶▶</b></span>
+<span><b>🔎 CAVALOGAMENEWS</b> — A NOTÍCIA COMEÇA NA FONTE.</span>
+<span>📰 Nosso compromisso é <b>buscar, conferir e indicar a origem</b> de cada informação.</span>
+<span>✅ Mais transparência: priorizamos <b>fontes oficiais e veículos confiáveis</b> para você se informar.</span>
+<span>🎮 Xbox • PlayStation • PC • Nintendo — notícias, novidades e lançamentos com contexto.</span>
+<span>💚 <b>Obrigado a quem apoia o CavaloGameNews!</b></span>
+<span><b>APOIADORES:</b> 💚 VIP ARCADE • VALNEY • FASTERGAMER • RAGNER • LEANDROSOAD • KAZUMINHA • VINI • TIO JOE</span>
+<span><b>CANAIS PARCEIROS CAVALOGAMENEWS ▶▶</b></span>
 <span>◆ <a href="https://www.youtube.com/@VIP_Arcade_Gamer" target="_blank" rel="noopener noreferrer" style="color:#ff0000;text-decoration:none;">VIP ARCADE — YOUTUBE</a></span>
 <span>◆ <a href="https://www.youtube.com/@CanaldoRagner" target="_blank" rel="noopener noreferrer" style="color:#ff0000;text-decoration:none;">RAGNER — YOUTUBE</a></span>
 <span>◆ <a href="https://www.twitch.tv/canaldoragner" target="_blank" rel="noopener noreferrer" style="color:#a970ff;text-decoration:none;">RAGNER — TWITCH</a></span>
