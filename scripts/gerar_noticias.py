@@ -116,6 +116,32 @@ def escape_attr(value):
     return html.escape(str(value or ""), quote=True)
 
 
+def formatar_categoria(value):
+    """Aceita categoria como texto ou lista, sem exibir colchetes/aspas."""
+    if isinstance(value, (list, tuple, set)):
+        itens = [str(item).strip() for item in value if str(item).strip()]
+        return " · ".join(itens) if itens else "Notícia"
+    texto = str(value or "Notícia").strip()
+    # Compatibilidade caso a categoria tenha sido salva como texto de lista.
+    if texto.startswith("[") and texto.endswith("]"):
+        try:
+            convertido = json.loads(texto.replace("'", '"'))
+            if isinstance(convertido, list):
+                return " · ".join(str(item).strip() for item in convertido if str(item).strip())
+        except Exception:
+            pass
+    return texto or "Notícia"
+
+
+def url_fonte(post):
+    """Retorna somente uma URL explícita de fonte, sem tentar adivinhar."""
+    for chave in ("link", "fonte_url", "url", "fonte"):
+        valor = str(post.get(chave, "") or "").strip()
+        if valor.startswith(("https://", "http://")):
+            return valor
+    return ""
+
+
 def caminho_imagem_relacionada(value):
     """Mantém URLs externas intactas e ajusta apenas caminhos locais para /noticias/."""
     value = str(value or "").strip()
@@ -274,7 +300,7 @@ for post in posts:
     titulo_texto = str(post.get("titulo", "CavaloGameNews"))
     resumo_texto = str(post.get("resumo", ""))
     imagem_texto = str(post.get("imagem", ""))
-    categoria_texto = str(post.get("categoria", "Notícia"))
+    categoria_texto = formatar_categoria(post.get("categoria", "Notícia"))
     data_texto = str(post.get("data", ""))
 
     titulo = html.escape(titulo_texto)
@@ -287,7 +313,7 @@ for post in posts:
     generated_news_urls.append(news_url)
     conteudo_html = renderizar_conteudo(post)
     videos_html = gerar_videos(post)
-    fonte_url = str(post.get("link", "")).strip()
+    fonte_url = url_fonte(post)
     if fonte_url.startswith(("https://", "http://")):
         fonte_html = f'<a class="source-button" href="{escape_attr(fonte_url)}" target="_blank" rel="noopener noreferrer">Acessar fonte original ↗</a>'
     else:
@@ -312,12 +338,15 @@ for post in posts:
                 continue
             related_titulo = str(related.get("titulo", "CavaloGameNews"))
             related_imagem = str(related.get("imagem", ""))
-            related_categoria = str(related.get("categoria", "Notícia"))
+            related_categoria = formatar_categoria(related.get("categoria", "Notícia"))
             related_data = str(related.get("data", ""))
             related_autor = str(related.get("autor", "Valdiney"))
             related_imagem_url = caminho_imagem_relacionada(related_imagem)
+            related_source_url = url_fonte(related)
+            related_href = related_source_url or f"../noticias/{related_id}.html"
+            related_target = ' target="_blank" rel="noopener noreferrer"' if related_source_url else ""
             cards_html += f"""
-<a href="../noticias/{escape_attr(related_id)}.html" class="related-card">
+<a href="{escape_attr(related_href)}" class="related-card"{related_target}>
   <img src="{escape_attr(related_imagem_url)}" alt="{escape_attr(related_titulo)}" loading="lazy">
   <div class="related-content">
     <div class="category">{html.escape(related_categoria)}</div>
