@@ -1,4 +1,32 @@
 [
+    {
+    "id": "test-2039-test-oficial-pre-venda",
+    "titulo": "test",
+    "categoria": "Notícias",
+    "data": "13/10/2026",
+    "imagem": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2590240/dd6631ec67370cc7c95aa19763b12b37288edd9b/ss_dd6631ec67370cc7c95aa19763b12b37288edd9b.jpg",
+    "resumo": "Metro 2039 recebeuxxx seu trailer oficial de pré-venda, apresentando um pouco do terror e da ação do novo capítulo da franquia. O jogo será lançado em 4 de fevereiro de 2027 para PS5, Xbox Series X|S e PC.",
+    "conteudo": [
+      "A [verde]4A Games[/verde] divulgou o trailer oficial de pré-venda de [verde]Metro 2039[/verde], próximo capítulo da série de ação e terror em primeira pessoa. O vídeo apresenta um pouco da experiência que aguarda os jogadores, que precisarão descer novamente ao metrô para enfrentar os horrores que se escondem nas profundezas.",
+      "Inspirado na trilogia de livros Metro, escrita por Dmitry Glukhovsky, o novo jogo promete levar os jogadores de volta ao universo pós-apocalíptico da franquia. O trailer também apresenta informações sobre as diferentes edições disponíveis para compra.",
+      {
+        "tipo": "youtube",
+        "url": "https://www.youtube.com/watch?v=NTQgMol3IaY"
+      },
+      {
+        "tipo": "x",
+        "url": "https://x.com/swagbymistake/status/2110338529972617382?s=20"
+      },
+      {
+        "tipo": "imagem",
+        "url": "https://pbs.twimg.com/media/HUml2m8WsAAgswI?format=jpg&name=large"
+      },
+      "─────────────",
+      "[verde]Data de lançamentxxxxxo e plataformas[/verde]",
+      "[verde]Metro 2039[/verde] será lançado em 4 de fevereiro de 2027 para PlayStation 5, Xbox Series X|S e PC. No computador, o jogo estará disponível pelo Steam e pela Epic Games Store.",
+      "Os jogadores já podem conferir o trailer de pré-venda para conhecer um pouco mais da nova aventura antes do lançamento."
+    ]
+  },
   {
   "id": "the-division-2-spearfall-trailer-lancamento",
   "titulo": "The Division 2: Spearfall ganha trailer de lançamento e chega em 26 de novembro",
