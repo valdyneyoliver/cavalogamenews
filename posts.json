@@ -1,5 +1,16 @@
 [
   {
+  "id": "gta-6-xbox-series-x-desempenho-ps5-digital-foundry",
+  "titulo": "GTA 6 roda com desempenho mais estável no Xbox Series X do que no PS5, aponta Digital Foundry",
+  "categoria": ["Notícias", "xbox", "PlayStation"],
+  "data": "25/11/2026",
+  "imagem": "https://img.youtube.com/vi/lhx-NZmGAdQ/maxresdefault.jpg",
+  "resumo": "Uma análise da Digital Foundry comparando GTA 6 nos consoles aponta que o Xbox Series X apresenta maior estabilidade na taxa de quadros em relação ao PS5 padrão. Ambos os consoles possuem configurações gráficas semelhantes e buscam manter 30 FPS, mas o PlayStation 5 apresenta quedas mais frequentes em situações exigentes, como deslocamentos rápidos pela cidade e cenas com grande quantidade de elementos na tela. O Xbox Series X também pode se beneficiar do VRR em telas compatíveis, ajudando a suavizar algumas oscilações. Já o PS5 Pro continua sendo considerado a versão mais avançada entre os consoles, oferecendo melhor qualidade de imagem, sombras com Ray Tracing e desempenho mais consistente.",
+  "link": "https://www.youtube.com/watch?v=lhx-NZmGAdQ",
+  "fonte": "Digital Foundry",
+  "autor": "valdiney"
+},
+  {
   "id": "the-witcher-4-parceria-sony-cd-projekt",
   "titulo": "The Witcher 4 fecha parceria com a Sony para campanha de marketing no PlayStation",
   "categoria": "Notícias",
