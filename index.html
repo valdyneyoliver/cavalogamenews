@@ -3145,6 +3145,10 @@ body.modo-claro #themeToggle {
         pointer-events: none;
       }
     }
+
+/* Visualização interna dos artigos: estilos limitados ao conteúdo da notícia. */
+.cgn-article-view{max-width:1450px;width:94%;margin:28px auto 45px}.cgn-article-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}.cgn-article-view .article-card,.cgn-article-view .sidebar-card{background:#101713;border:1px solid #26382d;border-radius:13px;overflow:hidden;color:#f4f7f5}.cgn-article-view .article-head{padding:28px 30px 12px}.cgn-article-view .category{color:#00e887;font-weight:bold;margin-bottom:12px}.cgn-article-view h1{font-size:clamp(26px,4vw,40px);line-height:1.2;margin:0 0 15px}.cgn-article-view .info,.cgn-article-view .related-date{color:#9aa79e;font-size:13px;margin:5px 0}.cgn-article-view .cover{display:block;width:calc(100% - 60px);max-height:520px;object-fit:cover;margin:18px 30px 25px;border-radius:9px}.cgn-article-view .text{padding:0 30px 30px;font-size:17px;line-height:1.85;overflow-wrap:anywhere}.cgn-article-view .text p{margin:0 0 20px}.cgn-article-view .text a,.cgn-article-view .back-button{color:#00e887}.cgn-article-view .text img{max-width:100%;height:auto;border-radius:9px}.cgn-article-view .text iframe,.cgn-article-view .text video{max-width:100%}.cgn-article-view .back-button{display:inline-block;margin-top:22px;text-decoration:none;font-weight:bold}.cgn-article-view .sidebar-card{padding:20px}.cgn-article-view .sidebar-title{margin:0 0 15px;font-size:20px}.cgn-article-view .related-list{display:grid;gap:13px}.cgn-article-view .related-card{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;color:inherit;text-decoration:none;align-items:center}.cgn-article-view .related-card img{width:92px;height:70px;object-fit:cover;border-radius:6px}.cgn-article-view .related-content h3{font-size:13px;line-height:1.4}body.modo-claro .cgn-article-view .article-card,body.modo-claro .cgn-article-view .sidebar-card{background:#fff;border-color:#dce5de;color:#202820}body.modo-claro .cgn-article-view .info,body.modo-claro .cgn-article-view .related-date{color:#68736b}@media(max-width:850px){.cgn-article-layout{grid-template-columns:1fr}.cgn-article-view .sidebar-card{display:none}}@media(max-width:600px){.cgn-article-view{width:94%;margin:18px auto 30px}.cgn-article-view .article-head{padding:21px 17px 5px}.cgn-article-view .cover{width:calc(100% - 34px);margin:17px 17px 22px}.cgn-article-view .text{padding:0 17px 22px;font-size:16px}}
+
 </style>
 
 </head>
@@ -4607,6 +4611,33 @@ if (themeToggle) {
         aplicarTema(estaClaro ? "escuro" : "claro");
     });
 }
+
+
+/* Abertura interna das notícias, preservando o restante do site. */
+(function(){
+ const area=document.querySelector('.home-content-layout'),banner=document.querySelector('.home-featured-banner');
+ if(!area||!banner)return;
+ async function abrir(id,gravar=true){
+  if(!id)return; const caminho='noticias/'+encodeURIComponent(id)+'.html';
+  try{
+   const r=await fetch(caminho);if(!r.ok)throw new Error('Falha ao carregar artigo');
+   const doc=new DOMParser().parseFromString(await r.text(),'text/html');
+   const artigo=doc.querySelector('.article-card'),lateral=doc.querySelector('.sidebar-card');
+   if(!artigo)throw new Error('Artigo não encontrado');
+   area.innerHTML='';const sec=document.createElement('section');sec.className='cgn-article-view';
+   const layout=document.createElement('div');layout.className='cgn-article-layout';const artigoClonado=artigo.cloneNode(true);
+   const baseArtigo=new URL(caminho,location.href);
+   artigoClonado.querySelectorAll('[src], [poster]').forEach(el=>{['src','poster'].forEach(attr=>{const valor=el.getAttribute(attr);if(valor)el.setAttribute(attr,new URL(valor,baseArtigo).href);});});
+   layout.appendChild(artigoClonado);
+   if(lateral){const lateralClonada=lateral.cloneNode(true);lateralClonada.querySelectorAll('[src]').forEach(el=>{const valor=el.getAttribute('src');if(valor)el.setAttribute('src',new URL(valor,baseArtigo).href);});layout.appendChild(lateralClonada);}sec.appendChild(layout);area.appendChild(sec);
+   banner.style.display='none';document.title=(doc.querySelector('h1')?.textContent||'Notícia')+' - CavaloGameNews';
+   if(gravar)history.pushState({cgnArticle:true,id},'','?noticia='+encodeURIComponent(id));window.scrollTo(0,0);
+  }catch(e){console.error(e);if(gravar)location.href=caminho;}
+ }
+ document.addEventListener('click',e=>{const a=e.target.closest('a[href]');if(!a||e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;const u=new URL(a.href,location.href);if(u.origin!==location.origin)return;const m=u.pathname.match(/\/noticias\/([^/]+)\.html$/);if(!m)return;e.preventDefault();abrir(decodeURIComponent(m[1]));});
+ window.addEventListener('popstate',()=>{const id=new URLSearchParams(location.search).get('noticia');if(id)abrir(id,false);else location.reload();});
+ const inicial=new URLSearchParams(location.search).get('noticia');if(inicial)abrir(inicial,false);
+})();
 
 </script>
 
