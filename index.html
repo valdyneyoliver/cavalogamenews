@@ -3166,17 +3166,18 @@ body.modo-claro #themeToggle {
 .cgn-article-view .sidebar-card{display:block;padding:20px;position:sticky;top:18px}
 .cgn-article-view .sidebar-title{display:block;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid #26382d;font-size:19px;line-height:1.3}
 .cgn-article-view .related-list{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%}
-.cgn-article-view .related-card{display:grid!important;grid-template-columns:86px minmax(0,1fr)!important;gap:10px;align-items:start;width:100%;min-width:0;padding:8px;background:#151e18;border:1px solid #26382d;border-radius:9px;color:inherit;text-decoration:none;overflow:hidden}
-.cgn-article-view .related-card img{display:block;width:86px!important;height:72px!important;max-width:none;object-fit:cover;border-radius:6px}
-.cgn-article-view .related-content{display:block;min-width:0;width:auto;padding:0!important}
-.cgn-article-view .related-content .category{font-size:10px;margin:0 0 3px}
-.cgn-article-view .related-date{font-size:11px;margin:0 0 4px}
-.cgn-article-view .related-content h3{display:block;margin:0;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+.cgn-article-view .related-card{display:flex!important;flex-direction:column!important;gap:0;width:100%;min-width:0;padding:0;background:#151e18;border:1px solid #26382d;border-radius:9px;color:inherit;text-decoration:none;overflow:hidden}
+.cgn-article-view .related-card img{display:block;width:100%!important;height:112px!important;max-width:none;object-fit:cover;border-radius:0}
+.cgn-article-view .related-content{display:block;min-width:0;width:100%;padding:9px!important}
+.cgn-article-view .related-content .category{font-size:10px;margin:0 0 4px;color:#00e887;font-weight:800}
+.cgn-article-view .related-date{font-size:10px;margin:5px 0 0;color:#9aa79e}
+.cgn-article-view .related-content h3{display:block;margin:0;font-size:13px;line-height:1.3;overflow-wrap:anywhere}
+.cgn-article-view .related-content .related-summary{display:-webkit-box;margin:5px 0 0;color:#aeb9b1;font-size:11px;line-height:1.35;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 body.modo-claro .cgn-article-view .article-card,body.modo-claro .cgn-article-view .sidebar-card{background:#fff;border-color:#dce5de;color:#202820}
 body.modo-claro .cgn-article-view .related-card{background:#f5f8f6;border-color:#dce5de}
 body.modo-claro .cgn-article-view .info,body.modo-claro .cgn-article-view .related-date{color:#68736b}
 @media(max-width:850px){.cgn-article-layout{grid-template-columns:minmax(0,1fr)}.cgn-article-view .sidebar-card{position:static}.cgn-article-view .related-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.cgn-article-view{width:94%;margin:18px auto 30px}.cgn-article-view .article-head{padding:21px 17px 5px}.cgn-article-view .cover{width:calc(100% - 34px);margin:17px 17px 22px}.cgn-article-view .text{padding:0 17px 22px;font-size:16px}.cgn-article-view .text p{font-size:16px}.cgn-article-view .related-list{grid-template-columns:minmax(0,1fr)}.cgn-article-view .related-card{grid-template-columns:100px minmax(0,1fr)!important}.cgn-article-view .related-card img{width:100px!important;height:82px!important}}
+@media(max-width:600px){.cgn-article-view{width:94%;margin:18px auto 30px}.cgn-article-view .article-head{padding:21px 17px 5px}.cgn-article-view .cover{width:calc(100% - 34px);margin:17px 17px 22px}.cgn-article-view .text{padding:0 17px 22px;font-size:16px}.cgn-article-view .text p{font-size:16px}.cgn-article-view .related-list{grid-template-columns:minmax(0,1fr)}.cgn-article-view .related-card img{height:125px!important}}
 
 
 .home-content-layout > [hidden]{display:none!important}
@@ -4680,6 +4681,31 @@ if (themeToggle) {
    }
    visualizacao.appendChild(layout);area.appendChild(visualizacao);
    banner.style.display='none';
+   // Os scripts inseridos por fetch/DOMParser não são executados automaticamente.
+   // Carrega o widget oficial do X e pede que ele processe os posts do artigo.
+   const carregarWidgetX = () => {
+    if (window.twttr && window.twttr.widgets) {
+     window.twttr.widgets.load(visualizacao);
+     return;
+    }
+    if (!document.querySelector('script[data-cgn-x-widget]')) {
+     const script=document.createElement('script');
+     script.src='https://platform.twitter.com/widgets.js';
+     script.async=true;
+     script.charset='utf-8';
+     script.dataset.cgnXWidget='true';
+     script.onload=()=>{if(window.twttr&&window.twttr.widgets)window.twttr.widgets.load(visualizacao);};
+     document.head.appendChild(script);
+    } else {
+     let tentativas=0;
+     const aguardar=setInterval(()=>{
+      tentativas++;
+      if(window.twttr&&window.twttr.widgets){clearInterval(aguardar);window.twttr.widgets.load(visualizacao);}
+      else if(tentativas>30)clearInterval(aguardar);
+     },200);
+    }
+   };
+   carregarWidgetX();
    document.title=(doc.querySelector('h1')?.textContent||'Notícia')+' - CavaloGameNews';
    if(gravar)history.pushState({cgnArticle:true,id},'','?noticia='+encodeURIComponent(id));
    window.scrollTo(0,0);
