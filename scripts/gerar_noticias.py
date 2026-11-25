@@ -363,18 +363,24 @@ for post in posts:
     related_html = montar_cards(relacionadas_lateral)
     more_html = montar_cards(relacionadas_mais)
 
-    # Adiciona autoria apenas às páginas criadas a partir desta versão do gerador.
-    # Páginas antigas continuam sem a linha de autoria, mesmo quando regeneradas.
+    # Exibe o nome do autor informado no posts.json.
+    # Se o campo "autor" não existir, mantém Valdiney Oliver como padrão.
+    autor_texto = str(post.get("autor") or "Valdiney Oliver").strip()
+    autor_html = html.escape(autor_texto)
+
     caminho = os.path.join(NEWS_DIR, f"{post_id}.html")
     if not os.path.exists(caminho):
         data_hora_publicacao = datetime.now(ZoneInfo("America/Fortaleza"))
         data_publicacao_formatada = formatar_data_publicacao(data_hora_publicacao)
         metadados_noticia_html = f"""
-        <div class="info autor">Por Valdiney Oliver</div>
+        <div class="info autor">Autor: {autor_html}</div>
         <div class="info data-publicacao">{html.escape(data_publicacao_formatada)}</div>
         """
     else:
-        metadados_noticia_html = f'<div class="info">{data} · CavaloGameNews</div>'
+        metadados_noticia_html = f"""
+        <div class="info autor">Autor: {autor_html}</div>
+        <div class="info data-publicacao">{data} · CavaloGameNews</div>
+        """
 
     pagina = f"""<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
