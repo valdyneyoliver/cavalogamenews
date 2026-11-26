@@ -12,7 +12,6 @@ from urllib.request import Request, urlopen
 POSTS_FILE = "posts.json"
 
 MAX_OFERTAS = 10
-MAX_POSTS = 200
 
 HEADERS = {
     "User-Agent": (
@@ -588,11 +587,18 @@ def carregar_posts():
 
     except Exception as erro:
 
-        print(
-            f"Erro ao ler posts.json: {erro}"
+        raise RuntimeError(
+            f"Não foi possível ler {POSTS_FILE}. "
+            "O bot foi interrompido para não sobrescrever suas notícias."
+        ) from erro
+
+    if not isinstance(dados, list):
+        raise RuntimeError(
+            f"{POSTS_FILE} não contém uma lista JSON. "
+            "O bot foi interrompido para preservar o arquivo."
         )
 
-    return []
+    return dados
 
 
 # =========================================================
@@ -628,6 +634,7 @@ def adicionar_noticias():
     ids_existentes = {
         str(post.get("id", ""))
         for post in posts
+        if isinstance(post, dict)
     }
 
     ofertas = buscar_epic()
@@ -693,6 +700,7 @@ def adicionar_noticias():
             == titulo_normalizado
 
             for post in posts
+            if isinstance(post, dict)
 
         )
 
@@ -713,16 +721,22 @@ def adicionar_noticias():
             "id": post_id,
 
             "titulo": (
-                f"{titulo} está grátis por tempo limitado"
+                f"{titulo} fica gratuito na Epic Games Store por tempo limitado"
             ),
 
-            "categoria": "Jogos Grátis",
+            "categoria": ["PC", "Jogos Grátis"],
 
             "data": data_atual,
 
             "imagem": oferta["imagem"],
 
             "resumo": oferta["resumo"],
+
+            "link": oferta["link_jogo"],
+
+            "fonte": "Epic Games Store",
+
+            "autor": "valdiney",
 
             "x": "",
 
@@ -752,9 +766,9 @@ def adicionar_noticias():
 
         return
 
+    # Adiciona as novas ofertas no início sem limitar o tamanho da lista.
+    # Assim, nenhuma notícia antiga é descartada automaticamente.
     posts = novas + posts
-
-    posts = posts[:MAX_POSTS]
 
     salvar_posts(
         posts
