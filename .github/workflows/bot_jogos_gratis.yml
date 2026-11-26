@@ -6,6 +6,7 @@ on:
     - cron: "0 10 * * *"
 
   workflow_dispatch:
+
 permissions:
   contents: write
 
@@ -30,12 +31,16 @@ jobs:
         run: |
           python scripts/gerar_noticias.py
 
-      - name: Salvar alterações
+      - name: Salvar somente as notícias novas e os arquivos principais
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add posts.json noticias sitemap.xml
+          # Atualiza o arquivo principal e o sitemap.
+          git add posts.json sitemap.xml
+
+          # Adiciona somente páginas HTML novas (não modifica páginas antigas).
+          git ls-files --others --exclude-standard -z noticias/ | xargs -0 -r git add --
 
           if git diff --cached --quiet; then
             echo "Nenhuma alteração encontrada."
